@@ -1,8 +1,9 @@
 {
-    "name": "linhunix/lnxmcp",
+    "name": "linhunix/mcp",
     "description": "LinHUniX Master Control Program Package \n This package enable the mvc logic without use a big framework",
     "keywords": ["template", "composer", "package"],
     "license": "GPL-3.0-or-later",
+    "type":    "library",
     "version": "1.0.0",
     "authors": [
         {
@@ -22,5 +23,11 @@
             "LinHUniX\\Mcp\\": "src/Mcp/",
             "LinHUniX\\Pdo\\": "src/Pdo/"
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
     }
+
 }
