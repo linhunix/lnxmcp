@@ -1,8 +1,8 @@
 {
-    "name": "linhunix/mcp",
+    "name": "linhunix/lnxmcp",
     "description": "LinHUniX Master Control Program Package",
     "keywords": ["template", "composer", "package"],
-    "license": "LinHUniX's GPL v1 ",
+    "license": "LinHUniX's GPL v3 ",
     "authors": [
         {
             "name": "Andrea Morello (LinHUniX)",
@@ -18,8 +18,8 @@
     },
 	"autoload": {
         "psr-4": {
-            "LinHUniX\\Mcp": "src/Mcp/",
-            "LinHUniX\\Pdo": "src/Pdo/"
+            "LinHUniX\\Mcp\\": "src/Mcp/",
+            "LinHUniX\\Pdo\\": "src/Pdo/"
         }
     }
 }
