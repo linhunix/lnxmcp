@@ -199,13 +199,12 @@ if (isset($argv[2]))
             var_dump($cfg);
             break;
         case "lnxmcp-pharize":
-            include_once $mcp_path."pharize.php";
             if ($argv[2] == "shell")
             {
-                pharizeShell::run();
+                LinHUniX\Mcp\Tools\pharizeShell::run ();
             } else
             {
-                pharizeBase::run();
+                LinHUniX\Mcp\Tools\pharizeBase::run ();
             }
             break;
         default:
