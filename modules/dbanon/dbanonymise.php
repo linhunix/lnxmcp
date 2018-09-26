@@ -1,4 +1,3 @@
-#!/usr/bin/env php
 <?php
 /**
  * LinHUniX Web Application Framework

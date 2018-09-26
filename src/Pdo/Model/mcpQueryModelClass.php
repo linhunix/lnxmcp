@@ -2,8 +2,8 @@
 /**
  * LinHUniX Web Application Framework
  *
- * @author Andrea Morello <andrea.morello@freetimers.com>
- * @copyright LinHUniX Communications Ltd, 2018, UK
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
  * @version GIT:2018-v2
  */
@@ -47,7 +47,7 @@ class mcpQueryModelClass extends mcpBaseModelClass
      * var ["Z"] = stored in Zend Cache 
      * var ["S"] = stored in Session
      * var ["G"] = stored in Glboal cfg
-     * @author Andrea Morello <andrea.morello@freetimers.com>
+     * @author Andrea Morello <andrea.morello@linhunix.com>
      * @version GIT:2018-v1
      * @param Container $cfg Dipendecy injection for Pimple\Container
      * @param array $this->argIn temproraney array auto cleanable 

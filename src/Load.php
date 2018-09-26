@@ -9,25 +9,30 @@
 class mcpAutoload
 {
     public $results;
+    private $count=0;
 
     public function __construct ($dir="")
     {
         if ($dir==""){
             $dir=__DIR__;
         }
+        $this->results=array();
         $this->getDirContents ($dir);
         $this->load ();
+    }
+    function setres($resval){
+        $this->results[$this->count]=$resval;
+        $this->count++;
     }
     private function getDirContents ($dir)
     {
         $files = scandir ($dir);
         foreach ($files as $key => $value) {
             $path = realpath ($dir . DIRECTORY_SEPARATOR . $value);
-            if (!is_dir ($path)) {
-                $this->results[] = $path;
+            if (is_dir ($path)==false) {
+                $this->setres($path);
             } else if ($value != "." && $value != "..") {
                 $this->getDirContents ($path);
-                $this->results[] = $path;
             }
         }
     }
@@ -37,14 +42,11 @@ class mcpAutoload
         foreach ($this->results as $file) {
             $file_parts = pathinfo ($file);
             if ($file_parts['extension'] = "php") {
-                include $file;
+                include_once $file;
             }
         }
     }
 }
 
 /// AUTO RUN
-if (!isset($mcp_path)){
-    $mcp_path=__DIR__."/";
-}
 $mcp_autoload=new mcpAutoload($mcp_path);
