@@ -67,7 +67,8 @@ class mcpBaseModelClass {
      * @param array (reference of) $scopeIn temproraney array auto cleanable 
      * @param masterControlProgram to call back the father
      */
-    public function __construct(masterControlProgram $mcp, array $scopeCtl, array $scopeIn) {
+    public function __construct (masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
+    {
         $this->mcp = $mcp;
         $this->bootCtl = $scopeCtl;
         $this->bootData = $scopeIn;

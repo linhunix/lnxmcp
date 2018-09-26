@@ -26,7 +26,7 @@ class pdoService extends mcpBaseModelClass
      * @param array (reference of) $scopeCtl => calling Controlling definitions  
      * @param array (reference of) $scopeIn temproraney array auto cleanable 
      */
-    public function __construct(masterControlProgram $mcp, array $scopeCtl, array $scopeIn)
+    public function __construct (masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
     {
         parent::__construct($mcp, $scopeCtl, $scopeIn);
         $this->getMcp()->info("load var");

@@ -1,15 +1,14 @@
-Composer Library Template
+Master Control Program
 =========================
+Is a simple MCP/MVC framework with out compose or other features an compatible with php 5.3 and more 
 
-If you are trying to create a new PHP Composer library, whether it will be going to submitted to packagist.org or just in your Github account, this template of files will surely help you make the process a lot easier and faster.
-
-Features
---------
-
-* PSR-4 autoloading compliant structure
-* Unit-Testing with PHPUnit
-* Comprehensive Guides and tutorial
-* Easy to use to any framework or even a plain php file
+It's a reflection framework and not a solid framework 
 
 
-I encourage that you put more information on this readme file instead of leaving it as is. See [http://www.darwinbiler.com/designing-and-making-the-readme-file-for-your-github-repository/](How to make a README file) for more info.
+It is implement:
+ - simple log service 
+ - simple mail service 
+ - simple db pdo serice 
+ - simple data cache 
+ - simple shell command service 
+ 

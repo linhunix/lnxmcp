@@ -21,7 +21,7 @@ class mcpDebugModelClass
     private $setting;
     private $mcp;
 
-    private function __construct (masterControlProgram $mcp, $level, array $setting = array ())
+    public function __construct (masterControlProgram &$mcp, $level, array $setting = array ())
     {
         $this->mcp = $mcp;
         $this->level = intval ($level);

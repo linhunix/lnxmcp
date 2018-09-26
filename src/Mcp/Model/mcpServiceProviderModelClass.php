@@ -10,5 +10,5 @@ use LinHUniX\Mcp\masterControlProgram;
 
 interface mcpServiceProviderModelClass
 {
-    public function register(masterControlProgram $mcp,mcpConfigArrayModelClass &$cfg);
+    public function register (masterControlProgram &$mcp, mcpConfigArrayModelClass &$cfg);
 }

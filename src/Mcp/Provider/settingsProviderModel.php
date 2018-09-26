@@ -1,5 +1,12 @@
 <?php
-
+/**
+ * LinHUniX Web Application Framework
+ *
+ * @author    Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
+ * @license   Proprietary See LICENSE.md
+ * @version   GIT:2018-v2
+ */
 namespace LinHUniX\Mcp\Provider;
 
 
@@ -12,7 +19,8 @@ class settingsProviderModel implements mcpServiceProviderModelClass {
      * Register the settings as a provider with a Pimple container
      *
      */
-    public function register(masterControlProgram $mcp,mcpConfigArrayModelClass &$cfg) {
+    public function register (masterControlProgram &$mcp, mcpConfigArrayModelClass &$cfg)
+    {
         $env=$cfg['app.env'];
         date_default_timezone_set($cfg["app.timezone"]);
         //////////////////////////////////////////////////////
@@ -45,5 +53,6 @@ class settingsProviderModel implements mcpServiceProviderModelClass {
             }
         }
         date_default_timezone_set($cfg["app.timezone"]);
+        return $cfg;
     }
 }

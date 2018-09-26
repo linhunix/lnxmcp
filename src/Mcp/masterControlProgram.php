@@ -28,6 +28,8 @@ use LinHUniX\Mcp\Model\mcpConfigArrayModelClass;
 
 final class masterControlProgram
 {
+    const CLASS_LOGGER = "logClass";
+
     /**
      *
      * @var string path of the Applications locations 
@@ -112,7 +114,12 @@ final class masterControlProgram
      */
     public function register (mcpServiceProviderModelClass $service)
     {
-        $service->register($this,$this->cfg);
+        $res = $service->register ($this, $this->cfg);
+        if ($res instanceof mcpConfigArrayModelClass) {
+            $this->cfg = $res;
+            // LEGACY SETTINGS
+            $this->legacySetting ();
+        }
     }
     /**
      * @param null $resname
@@ -434,14 +441,7 @@ final class masterControlProgram
     {
         return $this->mcpTools->Req2Session($arguments, $onlyPost);
     }
-    /**
-     * Install a provider inside Slim>> Pimple Container
-     * @param ServiceProviderInterface $provider Standard Pimple Provider
-     */
-    public function RegiterPrivider(ServiceProviderInterface $provider)
-    {
-        $this->cfg->register($provider);
-    }
+
     /**
      * 
      * @param string $callname name of the functionality
@@ -563,19 +563,6 @@ final class masterControlProgram
     public function runMenu($action)
     {
 
-    }
-    /**
-     * Run Module as Check sequence
-     * @param string $cfgvalue name of the Doctrine
-     * @param string $modinit Module name where is present the code and be load and initalized
-     * @param string $path path where present the basedirectory of the data
-     * @param array $scopeIn Input Array with the value need to work
-     * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
-     * @return array $ScopeOut
-     */
-    public function runCheck($action)
-    {
-        include_once (__DIR__ . "Chk/CheckSuite.php");
     }
     /**
      * Run Module as Driver 
