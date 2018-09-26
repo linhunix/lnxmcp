@@ -11,6 +11,8 @@
 
 namespace LinHUniX\Mcp\Model;
 
+use LinHUniX\Mcp\masterControlProgram;
+
 /**
  * @see Head.php caller of the config
  * @see ftSimpleMCP Master Control Program
@@ -18,7 +20,7 @@ namespace LinHUniX\Mcp\Model;
 class mcpBaseModelClass {
 
     /**
-     * on this class need to set the number of the dependency need to use to work with this 
+     * on this class need to set the number of the dependency need to use to work with this
      * class ant that information was stored on $scopeCtl and share when execute this specific modules
      * @example $require=array("app.page","app.config");
      * @var array;
@@ -33,38 +35,38 @@ class mcpBaseModelClass {
 
     /**
      *
-     * @var array contains the boot data informations 
+     * @var array contains the boot data informations
      */
     protected $bootData;
 
     /**
-     * used this to set Control Argument during run of the moduleCore 
+     * used this to set Control Argument during run of the moduleCore
      * @var array
      */
     protected $argCtl;
 
     /**
-     * used this to set Input argument during run of the moduleCore 
+     * used this to set Input argument during run of the moduleCore
      * @var array
      */
     protected $argIn;
 
     /**
-     * used this to set output argument during run of the moduleCore 
+     * used this to set output argument during run of the moduleCore
      * is present on the scope auto as $scopeOut["return"];
      * @var array
      */
     protected $argOut;
 
     /**
-     * need for the call back 
+     * need for the call back
      * @var masterControlProgram
      */
     protected $mcp;
 
     /**
-     * @param array (reference of) $scopeCtl => calling Controlling definitions  
-     * @param array (reference of) $scopeIn temproraney array auto cleanable 
+     * @param array                (reference of) $scopeCtl => calling Controlling definitions
+     * @param array                (reference of) $scopeIn temproraney array auto cleanable
      * @param masterControlProgram to call back the father
      */
     public function __construct (masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
@@ -92,9 +94,9 @@ class mcpBaseModelClass {
     }
 
     /**
-     * Model Base to caputer execute an elabotrations about this 
-     * @param array (reference of) $scopeCtl => calling Controlling definitions  
-     * @param array (reference of) $scopeIn temproraney array auto cleanable 
+     * Model Base to caputer execute an elabotrations about this
+     * @param array (reference of) $scopeCtl => calling Controlling definitions
+     * @param array (reference of) $scopeIn temproraney array auto cleanable
      * @return array response of code = like scope out;
      */
     public function run(array $scopeCtl, array $scopeIn) {
@@ -117,9 +119,9 @@ class mcpBaseModelClass {
     }
 
     /**
-     * Is a confortable method to set data on scope out 
-     * @param type $name of the tags 
-     * @param type $value 
+     * Is a confortable method to set data on scope out
+     * @param type $name of the tags
+     * @param type $value
      */
     protected function setScopeOut($name, $value) {
         $this->getMcp()->setScopeOut($name, $value);
@@ -134,14 +136,14 @@ class mcpBaseModelClass {
     }
 
     /**
-     *  Ideally this method shuld be used to insert the model code and the other are to be used only as normal 
+     *  Ideally this method shuld be used to insert the model code and the other are to be used only as normal
      */
     protected function moduleCore() {
         /// is empty waith to be implemented 
     }
 
     /**
-     * only to have a confortable solutions to get data 
+     * only to have a confortable solutions to get data
      * @param string $name
      * @return any
      */
@@ -153,7 +155,7 @@ class mcpBaseModelClass {
     }
 
     /**
-     * only to have a confortable solutions to get data 
+     * only to have a confortable solutions to get data
      * @param string $name
      * @return any
      */
@@ -165,7 +167,7 @@ class mcpBaseModelClass {
     }
 
     /**
-     * only to have a confortable solutions to get data 
+     * only to have a confortable solutions to get data
      * @param string $name
      * @return any
      */
@@ -177,7 +179,7 @@ class mcpBaseModelClass {
     }
 
     /**
-     * only to have a confortable solutions to set data 
+     * only to have a confortable solutions to set data
      * @param string $name
      * @return any
      */

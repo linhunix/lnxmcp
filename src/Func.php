@@ -4,9 +4,9 @@
 ////////////////////////////////////////////////////////////////////////////////
 function DumpAndExit ($message = "")
 {
-    $GLOBALS["cfg"]["lnxmcp"]->debug ("DumpAndExit:" . $message);
+    $GLOBALS["mcp"]->info ("DumpAndExit:" . $message);
     foreach (debug_backtrace () as $row => $debug) {
-        $GLOBALS["cfg"]["lnxmcp"]->debug (implode ("|-|", $debug));
+        $GLOBALS["mcp"]->debug (implode ("|-|", $debug));
     }
     exit();
 }
@@ -75,8 +75,8 @@ function selfAutoLoad ($srcPath)
 
 function lnxmcp ()
 {
-    if (isset($GLOBALS["cfg"]["lnxmcp"])) {
-        return $GLOBALS["cfg"]["lnxmcp"];
+    if (isset($GLOBALS["mcp"])) {
+        return $GLOBALS["mcp"];
     } else {
         DumpOnFatal ("FATAL ERROR - lnxmcp is NOT SETTED!!! \n", true);
     }
@@ -94,26 +94,27 @@ function linhunixErrorHandlerDev ($errno, $errstr, $errfile, $errline)
         case E_ERROR:
             $exit = true;
         case E_USER_ERROR:
-            $GLOBALS["cfg"]["lnxmcp"]->error ($errstr . "[" . $errfile . "] [" . $errline . "]");
+            lnxmcp ()->error ($errstr . "[" . $errfile . "] [" . $errline . "]");
             break;
         case E_USER_DEPRECATED:
         case E_WARNING:
         case E_USER_WARNING:
-            $GLOBALS["cfg"]["lnxmcp"]->warning ($errstr . "[" . $errfile . "] [" . $errline . "]");
+            lnxmcp ()->warning ($errstr . "[" . $errfile . "] [" . $errline . "]");
             break;
         case E_NOTICE:
         case E_USER_NOTICE:
             $errtype = "INF";
-            $GLOBALS["cfg"]["lnxmcp"]->info ($errstr . "[" . $errfile . "] [" . $errline . "]");
+            lnxmcp ()->info ($errstr . "[" . $errfile . "] [" . $errline . "]");
             break;
         default:
             $errtype = "DBG";
-            $GLOBALS["cfg"]["lnxmcp"]->debug ($errstr . "[" . $errfile . "] [" . $errline . "]");
+            lnxmcp ()->debug ($errstr . "[" . $errfile . "] [" . $errline . "]");
             break;
     }
     if ($exit) {
         \header ("HTTP/1.1 302 Moved Temporarily", true, 302);
         \header ('Location: /500', true, 500);
+        exit(1);
         exit(1);
     }
     return true;

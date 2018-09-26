@@ -32,7 +32,7 @@ class mcpDebugClass
     public function __construct (masterControlProgram &$mcp)
     {
         $this->mcp =& $mcp;
-        if ($this->getLogger () != null) {
+        if ($this->getLogger () == null) {
             if ($mcp->getResource (masterControlProgram . CLASS_LOGGER) != null) {
                 $mcp->register (new ${$mcp->getResource (masterControlProgram . CLASS_LOGGER)}());
             } else {
@@ -249,6 +249,6 @@ class mcpDebugClass
      */
     private function getLogger ()
     {
-        return $this->getMCP ()->getCfg (masterControlProgram . CLASS_LOGGER);
+        return $this->getMCP ()->getCfg ("Logger");
     }
 }

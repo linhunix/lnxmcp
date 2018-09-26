@@ -74,13 +74,14 @@ if (in_array ("ENVIRONMENT",$_SERVER)){
 }
 if ($lnxmcp_vers["env"]==""){
     $lnxmcp_vers["env"]="debug";
+    $lnxmcp_vers["debug"] = "true";
 }
 if (!isset($scopeInit))
 {
     $scopeInit = array(
         "app.def" => "LinHUniX",
         "app.path" => $app_path,
-        "app.level" => "DEBUG",
+        "app.level" => "0",
         "app.evnlst" => array('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name')
     );
 }
@@ -88,14 +89,14 @@ if (!isset($scopePdo))
 {
     $scopePdo = array(
         "ENV" => array(
-            "ft.dst" => array(
+            "lnx.dst" => array (
                 "hostname" => "FT_DB_HOST",
                 "database" => "FT_DB_2_NAME",
                 "username" => "FT_DB_UID",
                 "password" => "FT_DB_PWD",
                 "driver" => "mysql"
             ),
-            "ft.src" => array(
+            "lnx.src" => array (
                 "hostname" => "FT_DB_HOST",
                 "database" => "FT_DB_1_NAME",
                 "username" => "FT_DB_UID",

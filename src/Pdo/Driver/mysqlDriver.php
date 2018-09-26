@@ -22,7 +22,8 @@ class mysqlDriver extends mcpBaseModelClass {
     var $debug;
     var $database;
 
-    function __construct(\LinHUniX\Mcp\masterControlProgram $mcp,array $scopeCtl, array $scopeIn) {
+    function __construct (\LinHUniX\Mcp\masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
+    {
         parent::__construct($mcp,$scopeCtl, $scopeIn);
         $this->debug = false;
         $hostname = getenv($scopeIn["hostname"]);

@@ -51,6 +51,8 @@ class settingsProviderModel implements mcpServiceProviderModelClass {
             } catch (\Exception $e) {
                 error_log("settingsProvider:" . $e->getMessage());
             }
+        } else {
+            $mcp->setCfg ("app.ver", "0.0.1");
         }
         date_default_timezone_set($cfg["app.timezone"]);
         return $cfg;

@@ -39,7 +39,6 @@ class pdoService extends mcpBaseModelClass
             $this->preloadData = $scopeIn["DATA"];
         }
         $this->getMcp()->info("preload var");
-        $this->getMcp()->RegiterPrivider(new ZendCachePdoProvider());
         $this->preload();
     }
     /**
@@ -73,11 +72,6 @@ class pdoService extends mcpBaseModelClass
         if ((empty($this->argIn["Q"]) || (empty($this->argIn["E"]))))
         {
             return false;
-        }
-
-        if ($this->getFromZendCache())
-        {
-            return;
         }
         if ($this->GetFromSession())
         {
@@ -158,7 +152,6 @@ class pdoService extends mcpBaseModelClass
                     $this->argOut = $this->getMcp()->getResource("db." . $this->argIn["Q"]);
                     break;
             }
-            $this->putToZendCache();
             $this->putToSession();
             $this->putToGlobal();
         } catch (Exception $e)
@@ -222,9 +215,9 @@ class pdoService extends mcpBaseModelClass
             foreach ($this->argIn["V"]["WhereSession"] as $key => $value)
             {
                 $strin = "";
-                if (isset($SESSION[$value]))
+                if (isset($_SESSION[$value]))
                 {
-                    $strin = $SESSION[$value];
+                    $strin = $_SESSION[$value];
                 }
                 $where .= " AND " . $key . " = '" . $strin . "' ";
             }
@@ -328,36 +321,6 @@ class pdoService extends mcpBaseModelClass
         }
         return false;
     }
-    private function getFromZendCache()
-    {
-        try
-        {
-            if (isset($GLOBALS["cfg"]["app.pdo.cache"]))
-            {
-                if (isset($this->argIn["Z"]))
-                {
-                    if (!empty($this->argIn["Z"]))
-                    {
-                        $lblZ = $this->argIn["Z"];
-                        $this->getMcp()->debug("try to read from global:" . $lblZ);
-                        if ($GLOBALS["cfg"]["app.pdo.cache"]->hasItem($lblZ))
-                        {
-                            $this->argOut = $GLOBALS["cfg"]["app.pdo.cache"]->getItem($lblZ);
-                            $this->getMcp()->debug("read from global:" . $lblZ);
-                            return true;
-                        } else
-                        {
-                            $this->getMcp()->debug("can't read (empty) from global:" . $lblZ);
-                        }
-                    }
-                }
-            }
-        } catch (Exception $e)
-        {
-            $this->getMcp()->warning($e->getMessage());
-        }
-        return false;
-    }
     private function putToGlobal()
     {
         if (isset($this->argIn["G"]))
@@ -395,28 +358,7 @@ class pdoService extends mcpBaseModelClass
             }
         }
     }
-    private function putToZendCache()
-    {
-        try
-        {
-            if (isset($GLOBALS["cfg"]["app.pdo.cache"]))
-            {
-                if (isset($this->argIn["Z"]))
-                {
-                    if (!empty($this->argIn["Z"]))
-                    {
-                        $lblZ = $this->argIn["Z"];
-                        $this->getMcp()->debug("try to write from zendcache:" . $lblZ);
-                        $GLOBALS["cfg"]["app.pdo.cache"]->setItem($lblZ, $this->argOut);
-                        $this->getMcp()->debug("write from zendcache:" . $lblZ);
-                    }
-                }
-            }
-        } catch (Exception $e)
-        {
-            $this->getMcp()->warning($e->getMessage());
-        }
-    }
+
     private function cleanAllCache()
     {
         if (isset($GLOBALS["cfg"]["app.pdo.cache"]))

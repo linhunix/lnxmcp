@@ -1,0 +1,8 @@
+{
+  "mcp_check_type": "cfg",
+  "mcp_check_name": "loggin",
+  "mcp_check_module": "Mcp",
+  "mcp_check_out": {
+    "Logging": "mcp_check_isset"
+  }
+}

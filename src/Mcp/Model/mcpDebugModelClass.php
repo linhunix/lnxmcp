@@ -16,7 +16,7 @@ class mcpDebugModelClass
     const ERROR = 75;
     const WARN = 50;
     const INFO = 25;
-    const DEBUG = 0;
+    const DEBUG = 1;
     private $level = 0;
     private $setting;
     private $mcp;
@@ -92,7 +92,7 @@ class mcpDebugModelClass
     public function writelog ($level, $message)
     {
         $app = $this->mcp->getCfg ("app.def");
-        $time = date ();
+        $time = date ("Y-m-d H:i:s");
         error_log ("[" . $app . "][" . $time . "][" . $level . "]:" . $message);
     }
 }
