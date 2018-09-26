@@ -2,14 +2,12 @@
 
 namespace LinHUniX\Pdo\Driver;
 
-use LinHUniX\Mvc\Environment;
-use Pimple\Container;
-use LinHUniX\Mcp\mcpBaseModelClass;
+use LinHUniX\Mcp\Model\mcpBaseModelClass;
 use \PDO;
 
 /*
- * @copyright Content copyright to freetimers.com 2003-2018
- * @author Andrea Morello <andrea.morello@freetimers.com>
+ * @copyright Content copyright to linhunix.com 2003-2018
+ * @author Andrea Morello <andrea.morello@linhunix.com>
  * @version GIT:2018-v1
  * this new class implement the PDO mode to connect on databases;
  * @see [vendor]/src/Head.php  
@@ -27,10 +25,10 @@ class mysqlDriver extends mcpBaseModelClass {
     function __construct(\LinHUniX\Mcp\masterControlProgram $mcp,array $scopeCtl, array $scopeIn) {
         parent::__construct($mcp,$scopeCtl, $scopeIn);
         $this->debug = false;
-        $hostname = Environment::getenv($scopeIn["hostname"]);
-        $username = Environment::getenv($scopeIn["username"]);
-        $password = Environment::getenv($scopeIn["password"]);
-        $this->database = Environment::getenv($scopeIn["database"]);
+        $hostname = getenv($scopeIn["hostname"]);
+        $username = getenv($scopeIn["username"]);
+        $password = getenv($scopeIn["password"]);
+        $this->database = getenv($scopeIn["database"]);
         $this->PDO = new PDO('mysql:host=' . $hostname . ';dbname=' . $this->database, $username, $password, array(PDO::ATTR_PERSISTENT => true));
         $data = $this->getTable("SHOW TABLES");
         $i = 0;
@@ -298,7 +296,7 @@ class mysqlDriver extends mcpBaseModelClass {
     }
 
 //Get Affected Database Rows
-    public function affectedRows($statement = FALSE) {
+    public function affectedRows($resultSet = FALSE) {
         return $this->numRows($resultSet);
     }
 
@@ -424,7 +422,7 @@ class mysqlDriver extends mcpBaseModelClass {
      *  other case return false;
      * var ["Q"] = query 
      * var ["V"] = contain the values that need to remplace on query scripts 
-     * @author Andrea Morello <andrea.morello@freetimers.com>
+     * @author Andrea Morello <andrea.morello@linhunix.com>
      * @version GIT:2018-v1
      * @param Container $GLOBALS["cfg"] Dipendecy injection for Pimple\Container
      * @param array $this->argIn temproraney array auto cleanable 

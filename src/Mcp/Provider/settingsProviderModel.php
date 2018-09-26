@@ -5,9 +5,9 @@ namespace LinHUniX\Mcp\Provider;
 
 use LinHUniX\Mcp\masterControlProgram;
 use LinHUniX\Mcp\Model\mcpConfigArrayModelClass;
-use LinHUniX\Mcp\Model\mcpServiceProviderClass;
+use LinHUniX\Mcp\Model\mcpServiceProviderModelClass;
 
-class settingsProvider implements mcpServiceProviderClass {
+class settingsProviderModel implements mcpServiceProviderModelClass {
     /**
      * Register the settings as a provider with a Pimple container
      *

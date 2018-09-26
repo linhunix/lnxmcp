@@ -2,8 +2,8 @@
 /**
  * LinHUniX Web Application Framework
  *
- * @author Andrea Morello <andrea.morello@freetimers.com>
- * @copyright LinHUniX Communications Ltd, 2018, UK
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
  * @version GIT:2018-v2
  */
@@ -23,19 +23,21 @@ class mcpDebugClass {
         $this->mcp=&$mcp;
     }
     public function debug($message) {
-        $this->cfg["Logger"]->debug($message);
+        if ($this->getLogger()!=null) {
+            $this->getCfg ("Logger")->debug ($message);
+        }
     }
     public function info($message) {
-        $this->cfg["Logger"]->info($message);
+        $this->getCfg ("Logger")->info($message);
     }
     public function warning($message) {
-        $this->cfg["Logger"]->warning($message);
+        $this->getCfg ("Logger")->warning($message);
     }
     public function error($message) {
-        $this->cfg["Logger"]->error($message);
+        $this->getCfg ("Logger")->error($message);
     }
     public function critical($message) {
-        $this->cfg["Logger"]->error($message);
+        $this->getCfg ("Logger")->error($message);
         $this->header('Location: /500', true, true, 500);
     }
     public function imhere() {
@@ -44,9 +46,9 @@ class mcpDebugClass {
         } else {
             array(1 => array("file" => "none", "line" => 0));
         }
-        if ($this->cfg["app.debug"] == true) {
+        if ($this->getCfg ("app.debug") == true) {
             $this->debug("[I am here]:" . $arr[1]['file'] . ":" . $arr[1]['line']);
-            $imhere = "/tmp/" . $this->cfg["app.def"] . "imhere";
+            $imhere = "/tmp/" .$this->getCfg ("app.def") . "imhere";
             if (!isset($GLOBALS["imhere"])) {
                 $GLOBALS["imhere"] = array();
                 if (file_exists($imhere)) {
@@ -103,7 +105,10 @@ class mcpDebugClass {
     private function getMCP(){
         return $this->mcp;
     }
-    private function getCfg(){
-        return $this->mcp->getCfg();
+    private function getCfg($string){
+        return $this->getMCP()->getCfg($string);
+    }
+    private function getLogger(){
+        return $this->getCfg ("Logger");
     }
 }

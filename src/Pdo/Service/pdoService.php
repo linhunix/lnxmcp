@@ -2,17 +2,16 @@
 /**
  * LinHUniX Web Application Framework
  *
- * @author Andrea Morello <andrea.morello@freetimers.com>
- * @copyright LinHUniX Communications Ltd, 2018, UK
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
  * @version GIT:2018-v2
  */
 
 namespace LinHUniX\Pdo\Service;
 
-use LinHUniX\Mcp\mcpBaseModelClass;
+use LinHUniX\Mcp\Model\mcpBaseModelClass;
 use LinHUniX\Mcp\masterControlProgram;
-use LinHUniX\ZendCache\Provider\ZendCachePdoProvider;
 
 class pdoService extends mcpBaseModelClass
 {
@@ -63,7 +62,7 @@ class pdoService extends mcpBaseModelClass
      * var ["V"] = contain the values that need to remplace on query scripts 
      * var ["S"] = stored in session 
      * var ["G"] = stored in globals 
-     * @author Andrea Morello <andrea.morello@freetimers.com>
+     * @author Andrea Morello <andrea.morello@linhunix.com>
      * @version GIT:2018-v1
      * @param Container $cfg Dipendecy injection for Pimple\Container
      * @param array $this->argIn temproraney array auto cleanable 

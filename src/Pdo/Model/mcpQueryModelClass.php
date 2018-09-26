@@ -8,9 +8,9 @@
  * @version GIT:2018-v2
  */
 
-namespace LinHUniX\Pdo;
+namespace LinHUniX\Pdo\Model;
 
-use LinHUniX\Mcp\mcpBaseModelClass;
+use LinHUniX\Mcp\Model\mcpBaseModelClass;
 use LinHUniX\Mcp\masterControlProgram;
 
 /**

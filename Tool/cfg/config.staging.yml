@@ -1,0 +1,6 @@
+url_primary: samsondoors.staging56.linhunix.com
+url_product: products.samsondoors.staging56.linhunix.com
+google_id: FT-FAKE-STAGING
+mailPort: 25
+mailHost: localhost
+prd_google_id: UA-6269913-4

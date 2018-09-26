@@ -2,16 +2,16 @@
 /**
  * LinHUniX Web Application Framework
  *
- * @author Andrea Morello <andrea.morello@freetimers.com>
- * @copyright LinHUniX Communications Ltd, 2018, UK
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
  * @version GIT:2018-v3
  */
 
 namespace LinHUniX\Mcp;
 
-use LinHUniX\Mcp\Provider\settingsProvider;
-use LinHUniX\Mcp\Model\mcpServiceProviderClass;
+use LinHUniX\Mcp\Provider\settingsProviderModel;
+use LinHUniX\Mcp\Model\mcpServiceProviderModelClass;
 use LinHUniX\Mcp\Model\mcpBaseModelClass;
 use LinHUniX\Mcp\Model\mcpConfigArrayModelClass;
 
@@ -89,7 +89,7 @@ final class masterControlProgram
         $this->cfg["app.timezone"] = "Europe/London";
         // LOGGING PROVIDER
         // intrigante devo ragionare su come gestire l'evento 
-        $this->register(new settingsProvider());
+        $this->register(new settingsProviderModel());
         $this->mcpCore = new Component\mcpCoreClass($this);
         $this->mcpLogging = new Component\mcpDebugClass($this);
         $this->mcpTools = new Component\mcpToolsClass();
@@ -110,7 +110,7 @@ final class masterControlProgram
     /**
      * @return string
      */
-    public function register (mcpServiceProviderClass $service)
+    public function register (mcpServiceProviderModelClass $service)
     {
         $service->register($this,$this->cfg);
     }
@@ -552,7 +552,7 @@ final class masterControlProgram
         return $this->module("tmp", $this->pathsrc, true, $scopeIn, $modinit, $subcall, $this->defvnd, "Loader");
     }
     /**
-     * Run Module as Doctrine 
+     * Run Module as Menu sequence
      * @param string $cfgvalue name of the Doctrine 
      * @param string $modinit Module name where is present the code and be load and initalized
      * @param string $path path where present the basedirectory of the data
@@ -560,10 +560,22 @@ final class masterControlProgram
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different 
      * @return array $ScopeOut 
      */
-    public function doctrine($cfgvalue, $modinit = null, $path = null, $scopeIn = array(), $subcall = null)
+    public function runMenu($action)
     {
-        $this->info("MCP>>".$this->defapp."doctrine>>" . $cfgvalue);
-        return $this->module($cfgvalue, $path, true, $scopeIn, $modinit, $subcall, $this->defapp, "Doctrine");
+
+    }
+    /**
+     * Run Module as Check sequence
+     * @param string $cfgvalue name of the Doctrine
+     * @param string $modinit Module name where is present the code and be load and initalized
+     * @param string $path path where present the basedirectory of the data
+     * @param array $scopeIn Input Array with the value need to work
+     * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
+     * @return array $ScopeOut
+     */
+    public function runCheck($action)
+    {
+        include_once (__DIR__ . "Chk/CheckSuite.php");
     }
     /**
      * Run Module as Driver 
@@ -605,7 +617,8 @@ final class masterControlProgram
     public function queryr($dbproc, $ispreload = true, $scopeIn = array(), $modinit = null, $subcall = null)
     {
         $this->info("MCP>>".$this->defapp.">>query[R]>>" . $dbproc);
-        return $this->module($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defapp, "Query")["return"];
+        $res=$this->module($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defapp, "Query");
+        return $res["return"];
     }
     /**
      * Run Module as controller 
@@ -646,7 +659,8 @@ final class masterControlProgram
      */ public function api($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
     {
         $this->info("MCP>>".$this->defapp.">>api>>" . $srvprc);
-        return $this->module($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defapp, "Api");
+        $res= $this->module($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defapp, "Api");
+        return json_encode ($res);
     }
     /**
      * Run Module as ToolApi Components  
@@ -659,7 +673,8 @@ final class masterControlProgram
      */ public function apiCommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
     {
         $this->info("MCP>>api(C)>>" . $srvprc);
-        return $this->module($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Api");
+        $res=$this->module($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Api");
+        return json_encode ($res);
     }
     /**
      * Run Module as service 
@@ -887,11 +902,5 @@ final class masterControlProgram
             $GLOBALS["pdo.cache"] = array();
         }
     }
-    /**
-     *  Call Slim that is loaded inside and Run it
-     */
-    public function runSlim()
-    {
-        $this->slim->run();
-    }
+
 }

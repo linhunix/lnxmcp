@@ -8,7 +8,7 @@
 namespace LinHUniX\Mcp\Model;
 use LinHUniX\Mcp\masterControlProgram;
 
-interface mcpServiceProviderClass
+interface mcpServiceProviderModelClass
 {
-    public function register(masterControlProgram $mcp,mcpConfigArrayModelClass &$cfg) ;
+    public function register(masterControlProgram $mcp,mcpConfigArrayModelClass &$cfg);
 }

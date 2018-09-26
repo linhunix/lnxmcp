@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: freetimers
+ * User: linhunix
  * Date: 9/4/2018
  * Time: 8:38 PM
  */
@@ -14,7 +14,7 @@ class mcpConfigArrayModelClass  implements \ArrayAccess
 
     public function __construct ()
     {
-        $this->container = [];
+        $this->container = array();
     }
 
     public function offsetSet ($offset, $value)

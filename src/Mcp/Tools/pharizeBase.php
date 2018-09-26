@@ -2,8 +2,8 @@
 /**
  * LinHUniX Web Application Framework
  *
- * @author Andrea Morello <andrea.morello@freetimers.com>
- * @copyright LinHUniX Communications Ltd, 2018, UK
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
  * @version GIT:2018-v2
  *
@@ -40,8 +40,8 @@ class pharizeBase {
 /**
  * LinHUniX Web Application Framework
  *
- * @author Andrea Morello <andrea.morello@freetimers.com>
- * @copyright LinHUniX Communications Ltd, 2018, UK
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
  * @version GIT:2018-v2
  *

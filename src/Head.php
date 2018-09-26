@@ -2,8 +2,8 @@
 /**
  * LinHUniX Web Application Framework
  *
- * @author Andrea Morello <andrea.morello@freetimers.com>
- * @copyright LinHUniX Communications Ltd, 2018, UK
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
  * @version GIT:2018-v2
  *
@@ -81,13 +81,13 @@ if (!isset($scopeInit))
         "app.def" => "LinHUniX",
         "app.path" => $app_path,
         "app.level" => "DEBUG",
-        "app.evnlst" => ['db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name']
+        "app.evnlst" => array('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name')
     );
 }
 if (!isset($scopePdo))
 {
     $scopePdo = array(
-        "ENV" => [
+        "ENV" => array(
             "ft.dst" => array(
                 "hostname" => "FT_DB_HOST",
                 "database" => "FT_DB_2_NAME",
@@ -102,7 +102,7 @@ if (!isset($scopePdo))
                 "password" => "FT_DB_PWD",
                 "driver" => "mysql"
             ),
-        ]
+        )
     );
 }
 foreach ($lnxmcp_vers as $ftk => $ftv)
@@ -111,7 +111,9 @@ foreach ($lnxmcp_vers as $ftk => $ftv)
 }
 $scopeInit["mcp.path"] = $mcp_path;
 $alrf = true;
-$funpath = $mcp_path. '/functions.php';
+$funpath = $mcp_path. '/Func.php';
+$shlpath = $mcp_path. '/Shell.php';
+$aldpath = $mcp_path. '/Load.php';
 if ($lnxmcp_vers["phar"] == true)
 {
     if (file_exists($lnxmcp_vers["purl"] . '/vendor/autoload.php'))
@@ -119,7 +121,9 @@ if ($lnxmcp_vers["phar"] == true)
         require($lnxmcp_vers["purl"] . '/vendor/autoload.php');
         $alrf = false;
     }
-    $funpath = $lnxmcp_vers["purl"] . '/src/LinHUniX/functions.php';
+    $funpath = $lnxmcp_vers["purl"] . '/src/LinHUniX/Func.php';
+    $shlpath = $lnxmcp_vers["purl"] . '/src/LinHUniX/Shell.php';
+    $aldpath = $lnxmcp_vers["purl"] . '/src/LinHUniX/Load.php';
 }
 if ($alrf) {
     if (file_exists ($app_path . '/vendor/autoload.php'))
@@ -127,6 +131,7 @@ if ($alrf) {
         require ($app_path . '/vendor/autoload.php');
     }
 }
+include_once $funpath;
 if (!isset($scopeInit["app.timezone"]))
 {
     $scopeInit["app.timezone"] = "Europe/London";
@@ -156,59 +161,40 @@ if (class_exists ("\Composer\Autoload\ClassLoader")){
     $classLoader->register();
     $classLoader->setUseIncludePath(true);
 }else{
-    include_once ($mcp_path."/autoload.php");
+   if (file_exists ($aldpath)) {
+       include_once ($aldpath);
+   }else{
+       selfAutoLoad ($app_path.DIRECTORY_SEPARATOR."src");
+   }
 }
-$mcp = new \LinHUniX\Mcp\masterControlProgram($scopeInit);
+if (class_exists ("\LinHUniX\Mcp\masterControlProgram")){
+    $mcp = new \LinHUniX\Mcp\masterControlProgram($scopeInit);
+}else{
+    $mcp = new masterControlProgram($scopeInit);
+}
+mcpErrorHandlerInit ();
 global $cfg;
-include_once $funpath;
 ////////////////////////////////////////////////////////////////////////////////
 // DB/CONFIG
 ////////////////////////////////////////////////////////////////////////////////
 lnxmcp()->serviceCommon("pdo", true, $scopePdo, "Pdo");
-if ($scopeInit["app.legacydb"])
-{
-    lnxmcp()->loaderCommon("mysqlLegacy", "Pdo", $scopeInit);
+////////////////////////////////////////////////////////////////////////////////
+// Application soluction
+////////////////////////////////////////////////////////////////////////////////
+if(file_exists ($app_path.DIRECTORY_SEPARATOR."main.php")){
+    include $app_path.DIRECTORY_SEPARATOR."main.php";
+    DumpAndExit ("End Of App");
 }
-lnxmcp()->api("database", true, array(), "Legacy");
-lnxmcp()->loaderApp("config", "Legacy");
-global $olddatabase_name;
-global $newdatabase_name;
-global $db;
-global $cn;
 ////////////////////////////////////////////////////////////////////////////////
 // shell soluction 
 ////////////////////////////////////////////////////////////////////////////////
-if (isset($argv[2]))
-{
-    lnxmcp()->debugVar("head-shell", "argv", $argv);
-    switch ($argv[1])
-    {
-        case "help":
-            echo "lnxmcp <action> <args.....>\n";
-            break;
-        case "lnxmcp":
-            lnxmcp()->$argv[2]();
-            break;
-        case "lnxmcp-ctl":
-            lnxmcp()->controllerCommon($argv[2], false, $argv, $arg[3]);
-            break;
-        case "lnxmcp-bcl":
-            lnxmcp()->showFullCommonBlock($argv[2], $argv, $arg[3]);
-            break;
-        case "lnxmcp-dmp":
-            var_dump($cfg);
-            break;
-        case "lnxmcp-pharize":
-            if ($argv[2] == "shell")
-            {
-                LinHUniX\Mcp\Tools\pharizeShell::run ();
-            } else
-            {
-                LinHUniX\Mcp\Tools\pharizeBase::run ();
-            }
-            break;
-        default:
-            echo "not valid argv";
-            var_dump($argv);
+if($_REQUEST["Menu"]!=null){
+    lnxmcp ()->runMenu($_REQUEST["Menu"]);
+}else{
+    if (file_exists ($shlpath)) {
+        include_once $shlpath;
+        mcpRunShell();
+    }else{
+        DumpAndExit ("App Not Configured!!!");
     }
 }

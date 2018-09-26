@@ -1,0 +1,50 @@
+{
+    "name": "linhunix/site.co.uk",
+    "description": "site Web Site",
+    "license": "(GPL V3+ and Proprietary)",
+    "homepage": "http://github.com/projects/site.co.uk/browse",
+    "authors": [
+        {
+            "name": "Andrea Morello",
+            "email": "Andrea.Morello@linhunix.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": ">=5.6",
+        "ext-intl": "*",
+        "monolog/monolog": ">=1.23.0,<2",
+        "vlucas/phpdotenv": ">=2.4.0,<3",
+        "pimple/pimple": ">=3.2.2,<4",
+        "doctrine/migrations": "1.5.0",
+        "dompdf/dompdf": "^0.8.1",
+        "zendframework/zend-servicemanager": "^2.5.2",
+        "zendframework/zend-mail": ">=2.5.2,<=2.8",
+        "zendframework/zend-i18n": "^2.7",
+        "chippyash/strong-type": ">=3.0.2,<4",
+        "linhunix/core-lib-version": ">=0.0.1,<1",
+        "linhunix/core-lib-mvc": ">=0.0.1,<1",
+        "projek-xyz/slim-monolog": "^0.1.6"
+    },
+    "require-dev": {
+        "symfony/console": ">=2.8,<3",
+        "codeception/codeception": ">=2.0.10,<3",
+        "zendframework/zend-db": ">=2.8.2,<3",
+        "mikey179/vfsstream": ">=1.6.5,<2",
+        "zendframework/zftool": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "LinHUniX\\Mcp\\": "src/LinHUniX/Mcp",
+            "LinHUniX\\Google\\": "src/LinHUniX/Google",
+            "LinHUniX\\Html\\": "src/LinHUniX/Html",
+            "LinHUniX\\Mail\\": "src/LinHUniX/Mail",
+            "LinHUniX\\Pdo\\": "src/LinHUniX/Pdo"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Sdk\\Tools\\Dbanon\\": "dbmigrations/Tools/"
+        }
+    }
+}
