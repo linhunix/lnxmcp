@@ -73,8 +73,8 @@ if (in_array ("ENVIRONMENT",$_SERVER)){
     $lnxmcp_vers["env"]=$_SERVER["ENVIRONMENT"];
 }
 if ($lnxmcp_vers["env"]==""){
-    $lnxmcp_vers["env"]="debug";
-    $lnxmcp_vers["debug"] = "true";
+    $lnxmcp_vers["env"] = "stg";
+    $lnxmcp_vers["debug"] = "false";
 }
 if (!isset($scopeInit))
 {

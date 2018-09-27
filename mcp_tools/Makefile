@@ -3,10 +3,10 @@
 # It has been modified manually
 #  DO NOT run php-packager-configure again
 
-NAME=samsondoors-co-uk-site
+NAME=lnxmcp
 VERSION=`cat VERSION`
 MAINTAINER=Andrea Morello <andrea.morello@linhunix.com>
-PACKAGENAME=samsondoors-co-uk-site
+PACKAGENAME=lnxmcp
 PACKAGETYPE=rpm
 URL=http://git.linhunix.com:7990/projects/DOVE/repos/samsondoors.co.uk/browse
 ARCH=all

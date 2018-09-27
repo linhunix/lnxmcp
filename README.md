@@ -12,3 +12,10 @@ It is implement:
  - simple data cache 
  - simple shell command service 
  
+ 
+ folder
+  - src: Mcp base code
+  - App: application code
+  - mcp_test : Mcp test suite
+  - mcp_module : Mcp extra module 
+  - Tools: Many tools and scripts 
