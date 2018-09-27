@@ -8,10 +8,10 @@ VERSION=`cat VERSION`
 MAINTAINER=Andrea Morello <andrea.morello@linhunix.com>
 PACKAGENAME=lnxmcp
 PACKAGETYPE=rpm
-URL=http://git.linhunix.com:7990/projects/DOVE/repos/samsondoors.co.uk/browse
+URL=https://github.com/linhunix/lnxmcp
 ARCH=all
 DEPENDS=
-DESCRIPTION=samsondoors.co.uk
+DESCRIPTION=LinHUniX - Master Control Program - MVC
 POSTINST=
 PREINST=
 POSTRM=
@@ -43,18 +43,12 @@ build: template
 	rsync -a    --exclude pkgtemplates \
 		    --exclude composer.json \
 		    --exclude composer.lock \
-		    --exclude older-code  \
 		    --exclude webstat  \
-		    --exclude dbmigrations/Tools/dbanonymise.php \
-		    --exclude lib/dbmigrations/Tools \
-		    --exclude lib/dbmigrations/dump \
 		    --exclude README.md \
-		    --exclude README.html \
 		    --exclude docs \
-		    --exclude mysql \
-		    --exclude UserFiles/Image \
-		    --exclude tests \
-		     $(PTMP)/src/ $(PTMP)/build/home/samsondoors/public_html/
+		    --exclude backup \
+		    --exclude mcp_tests \
+		     $(PTMP)/src/ $(PTMP)/build/opt/lnxmcp/
 
 package: build
 	fpm -s dir  -t $(PACKAGETYPE) \
@@ -75,14 +69,6 @@ package: build
 		-C $(PTMP)/build \
 		-p $(PTMP)/$(PACKAGENAME)_$(VERSION)_$(ARCH).$(PACKAGETYPE) .
 
-migratestatus:
-	vendor/bin/doctrine-migrations migrations:status  --db-configuration migrations-db.php
-	
-migratenext:
-	vendor/bin/doctrine-migrations migrations:migrate next  --db-configuration migrations-db.php
-
-migrateprev:
-	vendor/bin/doctrine-migrations migrations:migrate prev  --db-configuration migrations-db.php
-
-migrategen:
-	vendor/bin/doctrine-migrations migrations:generate  --db-configuration migrations-db.php
+test:
+php app.php lnxmcp-chk mcp/test
+php app.php lnxmcp-chk app/test
