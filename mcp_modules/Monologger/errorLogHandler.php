@@ -15,7 +15,7 @@
  * file that was distributed with this source code.
  */
 
-namespace LinHUniX\Mcp\Extra;
+namespace LinHUniX\McpModules\Monologger;
 
 use Monolog\Handler\AbstractProcessingHandler;
 use Monolog\Formatter\LineFormatter;

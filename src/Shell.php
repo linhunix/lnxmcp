@@ -40,7 +40,7 @@ function mcpRunShell()
                     echo "load Check Env on $mcpCheckFile..\n";
                     include_once ($mcpCheckFile);
                     echo "Run mcpCheck:\n";
-                    LinHUniX\McpModule\Chk\mcpCheck ();
+                    LinHUniX\McpModules\Chk\mcpCheck ();
                     echo "Check Complete!!\n";
                 }
             case "lnxmcp-cct":

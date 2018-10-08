@@ -564,6 +564,10 @@ final class mcpCoreClass
                 $this->setStatus (true, "load class " . $this->scopeCtl[$this->sub]["module"]);
                 $modclass = $this->scopeCtl[$this->sub]["module"];
                 $retobj = new $modclass($this->getMcp (), $this->scopeCtl[$this->sub], $this->scopeIn[$this->sub]);
+            } elseif (function_exists ($this->scopeCtl[$this->sub]["module"])){
+                $this->setStatus (true, "load function " . $this->scopeCtl[$this->sub]["module"]);
+                $modfunction = $this->scopeCtl[$this->sub]["module"];
+                $retobj = $modfunction($this->getMcp (), $this->scopeCtl[$this->sub], $this->scopeIn[$this->sub]);
             } else {
                 $this->setStatus (false, $this->scopeCtl[$this->sub]["module"] . " not a class ");
             }

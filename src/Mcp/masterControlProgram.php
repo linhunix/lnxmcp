@@ -70,7 +70,10 @@ final class masterControlProgram
      * @var class
      */
     private $mcpTools;
-
+    /////////////////////////////////////////////////////////////////////////////
+    // CONSTRUCTOR AND INIT  - LEGACY SETTING
+    /////////////////////////////////////////////////////////////////////////////
+    
     /**
      * Create a slim app integration, add container and set the log as
      * @param Container $cfg was load as master controller (lnxmcp)
@@ -98,7 +101,7 @@ final class masterControlProgram
         // LEGACY SETTINGS
         $this->legacySetting ();
     }
-
+    
     /**
      * generate the global vars like older system
      * update the data of the Input Array
@@ -110,6 +113,9 @@ final class masterControlProgram
         $GLOBALS["mcp"] = &$this;
     }
 
+    /////////////////////////////////////////////////////////////////////////////
+    // CFG CONTROLLER 
+    /////////////////////////////////////////////////////////////////////////////
     /**
      * @return string
      */
@@ -174,6 +180,9 @@ final class masterControlProgram
         }
         return null;
     }
+    /////////////////////////////////////////////////////////////////////////////
+    // SCOPE MANAGER 
+    /////////////////////////////////////////////////////////////////////////////
 
     /**
      * update the data of the Input Array
@@ -286,39 +295,10 @@ final class masterControlProgram
     {
         $this->mcpCore->setWorkingArea ($area);
     }
-
-    /**
-     *
-     * @param string $path
-     * @param string $callname
-     * @param bool $ispreload
-     * @param array $scopeIn
-     * @param string $modinit
-     * @param string $subcall
-     * @param string $vendor
-     * @param string $type
-     */
-    public function statmentModule ($path, $callname, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null, $vendor = null, $type = null)
-    {
-        $this->mcpCore->statmentModule ($path, $callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $type);
-    }
-
-    /**
-     * Load a module or a template and clear the vars
-     */
-    public function loadModule ()
-    {
-        $this->mcpCore->moduleLoader ();
-    }
-
-    /**
-     *  load and execute module and clear the vars after results
-     * @return array results
-     */
-    public function callModule ()
-    {
-        return $this->mcpCore->moduleCaller ();
-    }
+    
+    /////////////////////////////////////////////////////////////////////////////
+    // DEBUGGING AREA
+    /////////////////////////////////////////////////////////////////////////////
 
     /**
      * debug class (level debug)
@@ -419,14 +399,21 @@ final class masterControlProgram
     {
         $this->mcpLogging->webDump ($message, $var);
     }
+    /////////////////////////////////////////////////////////////////////////////
+    // SPECIAL FUNCTION
+    /////////////////////////////////////////////////////////////////////////////
 
     /**
-     * move to php file
-     * @param string $newphpfile
+     * move to php file and close if need 
+     * @param dest dest phpfile
+     * @param default if not exist use this phpfile
+     * @param ext  ".php" or more if need to add to $dest and $default
+     * @param path  if is different to the system path 
+     * @param andEnd (def true) if neet to exit at end of call 
      */
-    public function move ($newphpfile)
+    public function move ($dest,$default=null,$ext="",$path=null,$andEnd=true)
     {
-        $this->mcpLogging->move ($newphpfile);
+        $this->mcpLogging->move ($dest,$default,$ext,$path,$andEnd);
     }
 
     /**
@@ -470,7 +457,60 @@ final class masterControlProgram
     {
         return $this->mcpTools->Req2Session ($arguments, $onlyPost);
     }
+    /**
+     *  clean the cache if is active
+     */
+    public function flushCache ()
+    {
+        if (isset($GLOBALS["cfg"]["app.cache"])) {
+            $GLOBALS["cfg"]["app.cache"]->flush ();
+        }
+        if (isset($GLOBALS["cfg"]["app.pdo.cache"])) {
+            $GLOBALS["cfg"]["app.pdo.cache"]->flush ();
+        }
+        if (isset($_SESSION)) {
+            $_SESSION["pdo.cache"] = array ();
+        }
+        if (isset($GLOBALS["pdo.cache"])) {
+            $GLOBALS["pdo.cache"] = array ();
+        }
+    }
+    /////////////////////////////////////////////////////////////////////////////
+    // MODULE CONTROLLER 
+    /////////////////////////////////////////////////////////////////////////////
 
+    /**
+     *
+     * @param string $path
+     * @param string $callname
+     * @param bool $ispreload
+     * @param array $scopeIn
+     * @param string $modinit
+     * @param string $subcall
+     * @param string $vendor
+     * @param string $type
+     */
+    public function statmentModule ($path, $callname, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null, $vendor = null, $type = null)
+    {
+        $this->mcpCore->statmentModule ($path, $callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $type);
+    }
+
+    /**
+     * Load a module or a template and clear the vars
+     */
+    public function loadModule ()
+    {
+        $this->mcpCore->moduleLoader ();
+    }
+
+    /**
+     *  load and execute module and clear the vars after results
+     * @return array results
+     */
+    public function callModule ()
+    {
+        return $this->mcpCore->moduleCaller ();
+    }
     /**
      *
      * @param string $callname name of the functionality
@@ -539,6 +579,9 @@ final class masterControlProgram
         }
         exit($res);
     }
+    /////////////////////////////////////////////////////////////////////////////
+    // MODULE CALL  
+    /////////////////////////////////////////////////////////////////////////////
 
     /**
      * similar to module but to easy
@@ -549,36 +592,6 @@ final class masterControlProgram
     public function moduleRun ($libname, $scopeIn = array ())
     {
         return $this->module ($libname, $this->pathsrc, false, $scopeIn);
-    }
-
-    /**
-     * Run Module as Loader
-     * @param string $cfgvalue name of the Doctrine
-     * @param string $modinit  Module name where is present the code and be load and initalized
-     * @param string $path     path where present the basedirectory of the data
-     * @param array $scopeIn   Input Array with the value need to work
-     * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
-     * @return array $ScopeOut
-     */
-    public function loaderApp ($subcall, $modinit, $scopeIn = array ())
-    {
-        $this->info ("MCP>>" . $this->defapp . ">>loader>>" . $subcall);
-        return $this->module ("tmp", $this->pathsrc, true, $scopeIn, $modinit, $subcall, $this->defapp, "Loader");
-    }
-
-    /**
-     * Run Module as Loader
-     * @param string $cfgvalue name of the Doctrine
-     * @param string $modinit  Module name where is present the code and be load and initalized
-     * @param string $path     path where present the basedirectory of the data
-     * @param array $scopeIn   Input Array with the value need to work
-     * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
-     * @return array $ScopeOut
-     */
-    public function loaderCommon ($subcall, $modinit, $scopeIn = array ())
-    {
-        $this->info ("MCP>>loader(C)>>" . $subcall);
-        return $this->module ("tmp", $this->pathsrc, true, $scopeIn, $modinit, $subcall, $this->defvnd, "Loader");
     }
 
     /**
@@ -768,6 +781,9 @@ final class masterControlProgram
         $this->info ("MCP>>block(C)>>" . $block);
         $this->template ($block, $this->pathsrc, true, $scopeIn, $modinit, null, $this->defapp, "Block");
     }
+    /////////////////////////////////////////////////////////////////////////////
+    // MODULE CONTROLLER COMPLEX (MVC)
+    /////////////////////////////////////////////////////////////////////////////
 
     /**
      * Run Controller and then load a page with your ScopeIn
@@ -902,23 +918,6 @@ final class masterControlProgram
         }
     }
 
-    /**
-     *  clean the cache if is active
-     */
-    public function flushCache ()
-    {
-        if (isset($GLOBALS["cfg"]["app.cache"])) {
-            $GLOBALS["cfg"]["app.cache"]->flush ();
-        }
-        if (isset($GLOBALS["cfg"]["app.pdo.cache"])) {
-            $GLOBALS["cfg"]["app.pdo.cache"]->flush ();
-        }
-        if (isset($_SESSION)) {
-            $_SESSION["pdo.cache"] = array ();
-        }
-        if (isset($GLOBALS["pdo.cache"])) {
-            $GLOBALS["pdo.cache"] = array ();
-        }
-    }
+
 
 }

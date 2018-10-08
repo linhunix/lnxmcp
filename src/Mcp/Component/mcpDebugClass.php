@@ -182,18 +182,28 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function move ($string)
+    public function move ($string,$default=null,$ext="",$path=null,$andEnd=true)
     {
         if (empty($string)) {
             $this->critical ("Moving to Null Error");
         }
         $this->info ("moving to " . $string);
-        if (file_exists ($this->getRes ("path") . $string)) {
-            include $this->getRes ("path") . $string;
-        } else {
-            $this->critical ("Moving to " . $this->getRes ("path") . $string . " Error file not found");
+        if ($path==null){
+            $path=$this->getRes ("path");
         }
-        exit(0);
+        if ($default==null){
+            $default=$string;
+        }
+        if (file_exists  ($path. $string.$ext)) {
+            include $path.$string.$ext;
+        } else if(file_exists  ($path. $default.$ext)) {
+            include $path.$default.$ext;
+        } else {
+            $this->critical ("Moving to " . $path . $string . " Error file not found");
+        }
+        if ($andEnd==true){
+            exit(0);
+        }
     }
 
     /**

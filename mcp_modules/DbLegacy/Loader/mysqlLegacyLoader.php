@@ -9,7 +9,7 @@
  * @version GIT:2018-v2
  */
 
-namespace LinHUniX\Pdo\Loader;
+namespace LinHUniX\McpModules\DbLegacy\Loader;
 
 use \LinHUniX\Mcp\masterControlProgram;
 
