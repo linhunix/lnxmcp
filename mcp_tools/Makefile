@@ -30,10 +30,10 @@ clean:
 	rm -rf $(PTMP)
 
 structure: clean
-	mkdir -p $(PTMP)/src $(PTMP)/build $(PTMP)/misc
+	mkdir -p $(PTMP)/mcp $(PTMP)/build $(PTMP)/misc
 	rsync -rl --exclude packaging --exclude Makefile \
 		--exclude packaging_config.php --exclude '.git*' --exclude '.svn' \
-		--exclude '.CVS' --exclude "$(TMP)" . $(PTMP)/src
+		--exclude '.CVS' --exclude "$(TMP)" . $(PTMP)/mcp
 
 template: structure
 	php-packager-template $(PTMP)/mcp/$(TEMPLATEDIR) $(ENV)

@@ -132,12 +132,12 @@ if (class_exists ("\Composer\Autoload\ClassLoader")) {
     if ($lnxmcp_vers["phar"] == true) {
         $classLoader->addPsr4 ("LinHUniX\\Mcp\\", $lnxmcp_vers["purl"] . "/mcp/Mcp");
         $classLoader->addPsr4 ("LinHUniX\\Pdo\\", $lnxmcp_vers["purl"] . "/mcp/Pdo");
-        $classLoader->addPsr4 ("LinHUniX\\Html\\", $lnxmcp_vers["purl"] . "/mcp/Html");
+        $classLoader->addPsr4 ("LinHUniX\\Mail\\", $lnxmcp_vers["purl"] . "/mcp/Mail");
         $scopeInit["mcp.loader"] = "AutoLoadPhar";
     } else {
         $classLoader->addPsr4 ("LinHUniX\\Mcp\\", $app_path . "/mcp/Mcp");
         $classLoader->addPsr4 ("LinHUniX\\Pdo\\", $app_path . "/mcp/Pdo");
-        $classLoader->addPsr4 ("LinHUniX\\Html\\", $app_path . "/mcp/Html");
+        $classLoader->addPsr4 ("LinHUniX\\Mail\\", $app_path . "/mcp/Mail");
         $scopeInit["mcp.loader"] = "AutoLoadSrc";
     }
     $classLoader->register ();
@@ -148,7 +148,7 @@ if (class_exists ("\Composer\Autoload\ClassLoader")) {
         include_once ($aldpath);
     } else {
         $scopeInit["mcp.loader"] = "selfAutoLoad";
-        selfAutoLoad ($app_path . DIRECTORY_SEPARATOR . "src");
+        selfAutoLoad ($app_path . DIRECTORY_SEPARATOR . "mcp");
     }
 }
 if (class_exists ("\LinHUniX\Mcp\masterControlProgram")) {
