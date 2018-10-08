@@ -1,8 +1,9 @@
 <?php
+namespace LinHUniX\Mail\Component;
 /**
- * PHPMailer POP-Before-SMTP Authentication Class.
+ * PHPMailer RFC821 SMTP email transport class.
  * PHP Version 5
- * @package PHPMailer
+ * @package LinHUniX\Mail\Component; ex PHPMailer
  * @link https://github.com/PHPMailer/PHPMailer/
  * @author Marcus Bointon (Synchro/coolbru) <phpmailer@synchromedia.co.uk>
  * @author Jim Jagielski (jimjag) <jimjag@gmail.com>

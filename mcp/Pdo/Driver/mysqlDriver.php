@@ -32,11 +32,13 @@ class mysqlDriver extends mcpBaseModelClass {
         $this->database = getenv($scopeIn["database"]);
         $this->PDO = new PDO('mysql:host=' . $hostname . ';dbname=' . $this->database, $username, $password, array(PDO::ATTR_PERSISTENT => true));
         $data = $this->getTable("SHOW TABLES");
-        $i = 0;
-        foreach ($data as $dt) {
-            foreach ($dt as $k => $v) {
-                $this->tables[$i] = $v;
-                $i++;
+        if (is_array($data)){
+            $i = 0;
+            foreach ($data as $dt) {
+                foreach ($dt as $k => $v) {
+                    $this->tables[$i] = $v;
+                    $i++;
+                }
             }
         }
         $this->tabcount = $i;
