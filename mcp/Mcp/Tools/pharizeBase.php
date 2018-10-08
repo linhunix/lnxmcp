@@ -54,7 +54,7 @@ Phar::mapPhar();
  "purl"=>"phar://".__FILE__."/",
  "phar"=>true
  );            
-require 'phar://'.__FILE__.'/src/Head.php';
+require 'phar://'.__FILE__.'/mcp/Head.php';
 __HALT_COMPILER();
 EOF;
         try {
@@ -62,8 +62,8 @@ EOF;
             $phar = new \Phar($pharPath, 0, $filename);
             $phar->startBuffering();
             $cfg["lnxmcp"]->info("Pharize base phar file....(Ft) ");
-            self::addfile($phar, "$srcRoot/src/Head.php", $srcRoot);
-            self::addDir($phar, "$srcRoot/src/LinHUniX", $srcRoot);
+            self::addfile($phar, "$srcRoot/mcp/Head.php", $srcRoot);
+            self::addDir($phar, "$srcRoot/mcp/LinHUniX", $srcRoot);
             $phar->setStub($stub);
             $phar->stopBuffering();
             if (file_exists($pharPath)) {

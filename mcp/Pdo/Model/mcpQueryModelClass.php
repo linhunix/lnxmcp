@@ -14,7 +14,7 @@ use LinHUniX\Mcp\Model\mcpBaseModelClass;
 use LinHUniX\Mcp\masterControlProgram;
 
 /**
- * @see [vendor]/src/Head.php caller of the config
+ * @see [vendor]/mcp/Head.php caller of the config
  */
 class mcpQueryModelClass extends mcpBaseModelClass
 {

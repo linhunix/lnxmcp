@@ -116,9 +116,9 @@ if ($lnxmcp_vers["phar"] == true) {
         require ($lnxmcp_vers["purl"] . '/vendor/autoload.php');
         $alrf = false;
     }
-    $funpath = $lnxmcp_vers["purl"] . '/src/LinHUniX/Func.php';
-    $shlpath = $lnxmcp_vers["purl"] . '/src/LinHUniX/Shell.php';
-    $aldpath = $lnxmcp_vers["purl"] . '/src/LinHUniX/Load.php';
+    $funpath = $lnxmcp_vers["purl"] . '/mcp/LinHUniX/Func.php';
+    $shlpath = $lnxmcp_vers["purl"] . '/mcp/LinHUniX/Shell.php';
+    $aldpath = $lnxmcp_vers["purl"] . '/mcp/LinHUniX/Load.php';
 }
 if ($alrf) {
     if (file_exists ($app_path . '/vendor/autoload.php')) {
@@ -130,14 +130,14 @@ if (class_exists ("\Composer\Autoload\ClassLoader")) {
     $classLoader = new \Composer\Autoload\ClassLoader();
     $psr = array ();
     if ($lnxmcp_vers["phar"] == true) {
-        $classLoader->addPsr4 ("LinHUniX\\Mcp\\", $lnxmcp_vers["purl"] . "/src/Mcp");
-        $classLoader->addPsr4 ("LinHUniX\\Pdo\\", $lnxmcp_vers["purl"] . "/src/Pdo");
-        $classLoader->addPsr4 ("LinHUniX\\Html\\", $lnxmcp_vers["purl"] . "/src/Html");
+        $classLoader->addPsr4 ("LinHUniX\\Mcp\\", $lnxmcp_vers["purl"] . "/mcp/Mcp");
+        $classLoader->addPsr4 ("LinHUniX\\Pdo\\", $lnxmcp_vers["purl"] . "/mcp/Pdo");
+        $classLoader->addPsr4 ("LinHUniX\\Html\\", $lnxmcp_vers["purl"] . "/mcp/Html");
         $scopeInit["mcp.loader"] = "AutoLoadPhar";
     } else {
-        $classLoader->addPsr4 ("LinHUniX\\Mcp\\", $app_path . "/src/Mcp");
-        $classLoader->addPsr4 ("LinHUniX\\Pdo\\", $app_path . "/src/Pdo");
-        $classLoader->addPsr4 ("LinHUniX\\Html\\", $app_path . "/src/Html");
+        $classLoader->addPsr4 ("LinHUniX\\Mcp\\", $app_path . "/mcp/Mcp");
+        $classLoader->addPsr4 ("LinHUniX\\Pdo\\", $app_path . "/mcp/Pdo");
+        $classLoader->addPsr4 ("LinHUniX\\Html\\", $app_path . "/mcp/Html");
         $scopeInit["mcp.loader"] = "AutoLoadSrc";
     }
     $classLoader->register ();

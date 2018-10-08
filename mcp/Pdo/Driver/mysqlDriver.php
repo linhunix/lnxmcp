@@ -10,7 +10,7 @@ use \PDO;
  * @author Andrea Morello <andrea.morello@linhunix.com>
  * @version GIT:2018-v1
  * this new class implement the PDO mode to connect on databases;
- * @see [vendor]/src/Head.php  
+ * @see [vendor]/mcp/Head.php  
  */
 class mysqlDriver extends mcpBaseModelClass {
 

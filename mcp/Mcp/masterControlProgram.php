@@ -23,7 +23,7 @@ use LinHUniX\Mcp\Model\mcpConfigArrayModelClass;
  * and support the $GLOBAL vars like "cfg"
  * this class are exportable on the future as abstact controller 
  * 
- * @see [vendor]/src/Head.php  
+ * @see [vendor]/mcp/Head.php  
  */
 
 final class masterControlProgram

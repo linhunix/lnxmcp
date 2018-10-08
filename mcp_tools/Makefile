@@ -36,7 +36,7 @@ structure: clean
 		--exclude '.CVS' --exclude "$(TMP)" . $(PTMP)/src
 
 template: structure
-	php-packager-template $(PTMP)/src/$(TEMPLATEDIR) $(ENV)
+	php-packager-template $(PTMP)/mcp/$(TEMPLATEDIR) $(ENV)
 
 build: template
 	mkdir -p $(PTMP)/build/home/samsondoors/public_html
@@ -48,7 +48,7 @@ build: template
 		    --exclude docs \
 		    --exclude backup \
 		    --exclude mcp_tests \
-		     $(PTMP)/src/ $(PTMP)/build/opt/lnxmcp/
+		     $(PTMP)/mcp/ $(PTMP)/build/opt/lnxmcp/
 
 package: build
 	fpm -s dir  -t $(PACKAGETYPE) \
