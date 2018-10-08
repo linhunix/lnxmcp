@@ -2,6 +2,13 @@
 ////////////////////////////////////////////////////////////////////////////////
 // ERROR/CONFIG
 ////////////////////////////////////////////////////////////////////////////////
+/**
+ * DumpAndExit
+ *
+ * @param  mixed $message
+ *
+ * @return void
+ */
 function DumpAndExit ($message = "")
 {
     $GLOBALS["mcp"]->info ("DumpAndExit:" . $message);
@@ -58,7 +65,6 @@ function legacyAutoload ($className)
  */
 function selfAutoLoad ($srcPath)
 {
-
     global $autoLoadFolders;
     $srcPath = realpath ($srcPath);
     $scannedItems = scandir ($srcPath);
@@ -73,6 +79,12 @@ function selfAutoLoad ($srcPath)
     spl_autoload_register ('legacyAutoload', true/*, true*/);
 }
 
+
+/**
+ * lnxmcp
+ *
+ * @return mastercontrolprogram
+ */
 function lnxmcp ()
 {
     if (isset($GLOBALS["mcp"])) {
@@ -82,6 +94,16 @@ function lnxmcp ()
     }
 }
 
+/**
+ * linhunixErrorHandlerDev
+ *
+ * @param  mixed $errno
+ * @param  mixed $errstr
+ * @param  mixed $errfile
+ * @param  mixed $errline
+ *
+ * @return void
+ */
 function linhunixErrorHandlerDev ($errno, $errstr, $errfile, $errline)
 {
     if (!(error_reporting () & $errno)) {
@@ -120,7 +142,13 @@ function linhunixErrorHandlerDev ($errno, $errstr, $errfile, $errline)
     return true;
 }
 
+/**
+ * mcpErrorHandlerInit
+ *
+ * @return void
+ */
 function mcpErrorHandlerInit ()
 {
     $old_error_handler = set_error_handler ("linhunixErrorHandlerDev");
 }
+

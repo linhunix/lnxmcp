@@ -14,8 +14,30 @@ It is implement:
  
  
  folder
-  - src: Mcp base code
+  - mcp: Mcp base code
   - App: application code
   - mcp_test : Mcp test suite
   - mcp_module : Mcp extra module 
   - Tools: Many tools and scripts 
+
+
+  config.json
+  - app.level : loggin level 
+  - app.def: application tag name 
+
+  - [mail]
+  - app.mail.smtp.host
+  - app.mail.smtp.post
+  - app.mail.smtp.user
+  - app.mail.smtp.pass
+  - app.mail.smtp.type
+  - app.mail.pop3.host
+  - app.mail.pop3.post
+  - app.mail.pop3.user
+  - app.mail.pop3.pass
+  - app.mail.pop3.type
+  - app.mail.file.log
+  - app.mail.domaine
+  - app.mail.from   
+  
+   
