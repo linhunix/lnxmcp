@@ -508,11 +508,19 @@ final class mcpCoreClass
             $this->scopeCtl[$this->sub]["module"] = "\\" . $this->scopeCtl[$this->sub]["module"];
             $this->setStatus (true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
             return;
+        } elseif (function_exists ($this->scopeCtl[$this->sub]["module"])) {
+            $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["module"];
+            $this->setStatus (true, $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+            return;
+        } elseif (function_exists ("\\" . $this->scopeCtl[$this->sub]["module"])) {
+            $this->scopeCtl[$this->sub]["module"] = "\\" . $this->scopeCtl[$this->sub]["module"];
+            $this->setStatus (true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+            return;
         } else {
             $this->setStatus (false, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS NOT PRESENT - NEED TO BE LOAD ");
         }
         // prepare env to have load a new components - for full compatibility;
-        if (in_array ($this->scopeCtl[$this->sub]["type"], array ("Page", "Block"))) {
+        if (in_array ($this->scopeCtl[$this->sub]["type"], array ("Api","Page", "Block"))) {
             $this->scopeOut[$this->sub] = $this->scopeIn[$this->sub];
             if (isset($this->scopeIn[$this->sub]["return"])) {
                 $this->scopeOut[$this->sub] = $this->scopeIn[$this->sub]["return"];
@@ -576,7 +584,9 @@ final class mcpCoreClass
             }
             if (isset($retobj)) {
                 if (is_callable ($retobj) || is_object ($retobj)) {
-                    $this->setDic ($tag, $retobj);
+                    if (($tag!=null)&&($tag!="none")&&($tag!=".")){
+                        $this->setDic ($tag, $retobj);
+                    }
                 }
                 $this->setScopeOut ("return", $retobj);
             }

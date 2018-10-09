@@ -40,8 +40,15 @@ $app_path = realpath ($app_path) . "/";
 ////////////////////////////////////////////////////////////////////////////////
 // ENV/CONFIG JSON CONFIG AND SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
-if (file_exists ($app_path . "/cfg/mcp.settings.php")) {
-    include $app_path . "/cfg/mcp.settings.php";
+try{
+    if (file_exists ($app_path . "/cfg/mcp.settings.php")) {
+        include $app_path . "/cfg/mcp.settings.php";
+    }
+    if (file_exists ($app_path . "/cfg/mcp.settings.json")) {
+        $scopeInit=json_decode (file_get_contents ( $app_path . "/cfg/mcp.settings.json"));
+    }
+}catch(Exception $e){
+    error_log("LNXMCP HEAD CFG ERROR:".$e->get_message);
 }
 ////////////////////////////////////////////////////////////////////////////////
 // SCOPE - INIT
@@ -75,14 +82,15 @@ if (!isset($scopeInit)) {
         "app.env"=>"dev",
         "app.evnlst" => array ('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name'),
         "mcp.path.module"=>$app_path."/mcp_module/",
-        "app.path.module"=>$app_path."/app/",
         "app.path.query"=>$app_path."/dbj/",
+        "app.path.module"=>$app_path."/App/",
+        "app.path.template"=>$app_path."/tpl/",
         "app.path.config"=>$app_path."/cfg/",
-        "mcp.run.module" => array (
+        "app.menu.InitCommon" => array (
             "pdo" => array ("module" => "Pdo", "type" => "serviceCommon", "input" => $scopePdo),
-            "mail" => array ("module" => "Pdo", "type" => "serviceCommon", "input" => $scopePdo)
+            "mail" => array ("module" => "Mail", "type" => "serviceCommon", "input" => $scopePdo)
         ),
-        "app.run.module" => array (),
+        "app.menu.InitApp" => array (),
     );
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -112,14 +120,17 @@ $alrf = true;
 $funpath = $mcp_path . '/Func.php';
 $shlpath = $mcp_path . '/Shell.php';
 $aldpath = $mcp_path . '/Load.php';
-if ($lnxmcp_vers["phar"] == true) {
-    if (file_exists ($lnxmcp_vers["purl"] . '/vendor/autoload.php')) {
-        require ($lnxmcp_vers["purl"] . '/vendor/autoload.php');
+if(isset($lnxmcp_phar)==false){
+    $lnxmcp_phar=array();
+}
+if ($lnxmcp_phar["phar"] == true) {
+    if (file_exists ($lnxmcp_phar["purl"] . '/vendor/autoload.php')) {
+        require ($lnxmcp_phar["purl"] . '/vendor/autoload.php');
         $alrf = false;
     }
-    $funpath = $lnxmcp_vers["purl"] . '/mcp/LinHUniX/Func.php';
-    $shlpath = $lnxmcp_vers["purl"] . '/mcp/LinHUniX/Shell.php';
-    $aldpath = $lnxmcp_vers["purl"] . '/mcp/LinHUniX/Load.php';
+    $funpath = $lnxmcp_phar["purl"] . '/mcp/LinHUniX/Func.php';
+    $shlpath = $lnxmcp_phar["purl"] . '/mcp/LinHUniX/Shell.php';
+    $aldpath = $lnxmcp_phar["purl"] . '/mcp/LinHUniX/Load.php';
 }
 if ($alrf) {
     if (file_exists ($app_path . '/vendor/autoload.php')) {
@@ -130,10 +141,10 @@ include_once $funpath;
 if (class_exists ("\Composer\Autoload\ClassLoader")) {
     $classLoader = new \Composer\Autoload\ClassLoader();
     $psr = array ();
-    if ($lnxmcp_vers["phar"] == true) {
-        $classLoader->addPsr4 ("LinHUniX\\Mcp\\", $lnxmcp_vers["purl"] . "/mcp/Mcp");
-        $classLoader->addPsr4 ("LinHUniX\\Pdo\\", $lnxmcp_vers["purl"] . "/mcp/Pdo");
-        $classLoader->addPsr4 ("LinHUniX\\Mail\\", $lnxmcp_vers["purl"] . "/mcp/Mail");
+    if ($lnxmcp_phar["phar"] == true) {
+        $classLoader->addPsr4 ("LinHUniX\\Mcp\\", $lnxmcp_phar["purl"] . "/mcp/Mcp");
+        $classLoader->addPsr4 ("LinHUniX\\Pdo\\", $lnxmcp_phar["purl"] . "/mcp/Pdo");
+        $classLoader->addPsr4 ("LinHUniX\\Mail\\", $lnxmcp_phar["purl"] . "/mcp/Mail");
         $scopeInit["mcp.loader"] = "AutoLoadPhar";
     } else {
         $classLoader->addPsr4 ("LinHUniX\\Mcp\\", $app_path . "/mcp/Mcp");
@@ -160,22 +171,29 @@ if (class_exists ("\LinHUniX\Mcp\masterControlProgram")) {
 mcpErrorHandlerInit ();
 global $cfg, $mcp;
 ////////////////////////////////////////////////////////////////////////////////
-// Application soluction
+// Menu Calling
 ////////////////////////////////////////////////////////////////////////////////
-if (file_exists ($app_path . DIRECTORY_SEPARATOR . "main.php")) {
-    include $app_path . DIRECTORY_SEPARATOR . "main.php";
-    DumpAndExit ("End Of App");
-}
+lnxmcp()->runMenu("InitCommon");
+lnxmcp()->runMenu("InitApp");
+if( lnxmcp()->getCfg("PreloadOnly")!=true){
+////////////////////////////////////////////////////////////////////////////////
+// Application solution
+////////////////////////////////////////////////////////////////////////////////
+    if (file_exists ($app_path . DIRECTORY_SEPARATOR . "main.php")) {
+        include $app_path . DIRECTORY_SEPARATOR . "main.php";
+        DumpAndExit ("End Of App");
+    }
 ////////////////////////////////////////////////////////////////////////////////
 // shell soluction 
 ////////////////////////////////////////////////////////////////////////////////
-if ($_REQUEST["Menu"] != null) {
-    lnxmcp ()->runMenu ($_REQUEST["Menu"]);
-} else {
-    if (file_exists ($shlpath)) {
-        include_once $shlpath;
-        mcpRunShell ();
+    if ($_REQUEST["Menu"] != null) {
+        lnxmcp ()->runMenu ($_REQUEST["Menu"]);
     } else {
-        DumpAndExit ("App Not Configured!!!");
+        if (file_exists ($shlpath)) {
+            include_once $shlpath;
+            mcpRunShell ();
+        } else {
+            DumpAndExit ("App Not Configured!!!");
+        }
     }
 }

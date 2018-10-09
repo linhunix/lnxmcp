@@ -1,8 +1,9 @@
 <?php
+namespace LinHUniX\Mail\Component;
 /**
- * PHPMailer - PHP email creation and transport class.
+ * PHPMailer RFC821 SMTP email transport class.
  * PHP Version 5
- * @package PHPMailer
+ * @package LinHUniX\Mail\Component; ex PHPMailer
  * @link https://github.com/PHPMailer/PHPMailer/ The PHPMailer GitHub project
  * @author Marcus Bointon (Synchro/coolbru) <phpmailer@synchromedia.co.uk>
  * @author Jim Jagielski (jimjag) <jimjag@gmail.com>
@@ -568,13 +569,6 @@ class PHPMailer
     public function __construct($exceptions = false)
     {
         $this->exceptions = ($exceptions == true);
-        //Make sure our autoloader is loaded
-        if (version_compare(PHP_VERSION, '5.1.2', '>=')) {
-            $autoload = spl_autoload_functions();
-            if ($autoload === false or !in_array('PHPMailerAutoload', $autoload)) {
-                require 'PHPMailerAutoload.php';
-            }
-        }
     }
 
     /**
@@ -3402,7 +3396,7 @@ class PHPMailer
  * PHPMailer exception handler
  * @package PHPMailer
  */
-class phpmailerException extends Exception
+class phpmailerException extends \Exception
 {
     /**
      * Prettify error message output

@@ -42,6 +42,11 @@ final class masterControlProgram
     private $pathtpl;
     /**
      *
+     * @var string path of the template positions on the code
+     */
+    private $pathmcp;
+    /**
+     *
      * @var Slim Content as a test of integrations
      */
     private $cfg; // is a test class to integrate slim on the code 
@@ -82,8 +87,21 @@ final class masterControlProgram
     {
         $this->pathapp = $scopeIn["app.path"] . "/App/";
         $this->defapp = ucwords ($scopeIn["app.def"]);
-        $this->pathtpl = $this->pathapp . "Template/";
-        $this->pathsrc = $this->pathapp . "Module/";
+        if (isset($scopeIn["app.path.module"])){
+            $this->pathsrc = $scopeIn["app.path.module"];
+        }else{
+            $this->pathsrc = $this->pathapp . "Module/";
+        }
+        if (isset($scopeIn["app.path.template"])){
+            $this->pathtpl = $scopeIn["app.path.template"];
+        }else{
+            $this->pathtpl = $this->pathapp . "Template/";
+        }
+        if (isset($scopeIn["mcp.path.module"])){
+            $this->pathmcp = $scopeIn["mcp.path.module"];
+        }else{
+            $this->pathmcp =  $scopeIn["app.path"] . "mcp_module/";
+        }
         $this->cfg = new mcpConfigArrayModelClass();
         $this->cfg['php'] = PHP_VERSION;
         $this->cfg["app.debug"] = false;
@@ -166,7 +184,28 @@ final class masterControlProgram
         }
         return true;
     }
-
+    /**
+     * setMenu sequence  
+     *
+     * @param  mixed $name
+     * @param  mixed $sequence
+     *
+     * @return void
+     */
+    public function setMenu($name,array $sequence){
+        return $this->setCfg("app.menu.".$name,$sequence);
+    }
+   /**
+     * setTag sequence  
+     *
+     * @param  mixed $name
+     * @param  mixed $sequence
+     *
+     * @return void
+     */
+    public function setTag($name,array $sequence){
+        return $this->setCfg("app.tag.".$name,$sequence);
+    }
     /**
      * load a specific app resource
      * @param type $resource name ( - "app.")
@@ -594,19 +633,6 @@ final class masterControlProgram
         return $this->module ($libname, $this->pathsrc, false, $scopeIn);
     }
 
-    /**
-     * Run Module as Menu sequence
-     * @param string $cfgvalue name of the Doctrine
-     * @param string $modinit  Module name where is present the code and be load and initalized
-     * @param string $path     path where present the basedirectory of the data
-     * @param array $scopeIn   Input Array with the value need to work
-     * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
-     * @return array $ScopeOut
-     */
-    public function runMenu ($action)
-    {
-
-    }
 
     /**
      * Run Module as Driver
@@ -681,7 +707,7 @@ final class masterControlProgram
     public function controllerCommon ($ctrlproc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null)
     {
         $this->info ("MCP>>controller(C)>>" . $ctrlproc);
-        return $this->module ($ctrlproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Controller");
+        return $this->module ($ctrlproc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Controller");
     }
 
     /**
@@ -712,7 +738,7 @@ final class masterControlProgram
     public function apiCommon ($srvprc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null)
     {
         $this->info ("MCP>>api(C)>>" . $srvprc);
-        $res = $this->module ($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Api");
+        $res = $this->module ($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Api");
         return json_encode ($res);
     }
 
@@ -743,7 +769,7 @@ final class masterControlProgram
     public function serviceCommon ($srvprc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null)
     {
         $this->info ("MCP>>service(C)>>" . $srvprc);
-        return $this->module ($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Service");
+        return $this->module ($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Service");
     }
 
     /**
@@ -756,6 +782,26 @@ final class masterControlProgram
     {
         $this->info ("MCP>>page>>" . $page);
         $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $this->defapp, "Page");
+    }
+
+    /**
+     * Load a mail with your ScopeIn
+     * @param string $page    name of the Page
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     */
+    public function mail ($page=null, $scopeIn = array (), $modinit = null)
+    {
+        $this->info ("MCP>>mail>>" . $page);
+        if($$this->getCfg("app.mail")!=null){
+            if (($page!=null)||($page!="none")||($page!=".")){
+                ob_start();
+                $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $this->defapp, "Page");
+                $scopeIn["message"]=ob_clean();
+            }
+            return $this->moduleRun("mail",$scopeIn);
+        }
+        return null;
     }
 
     /**
@@ -779,7 +825,7 @@ final class masterControlProgram
     public function blockCommon ($block, $scopeIn = array (), $modinit = null)
     {
         $this->info ("MCP>>block(C)>>" . $block);
-        $this->template ($block, $this->pathsrc, true, $scopeIn, $modinit, null, $this->defapp, "Block");
+        $this->template ($block, $this->pathmcp, true, $scopeIn, $modinit, null, $this->defapp, "Block");
     }
     /////////////////////////////////////////////////////////////////////////////
     // MODULE CONTROLLER COMPLEX (MVC)
@@ -917,7 +963,169 @@ final class masterControlProgram
             return $this->blockCommon ($block, $CtrlOut, $blockModule);
         }
     }
+    /////////////////////////////////////////////////////////////////////////////
+    // ARRAY CALLER MODULE
+    /////////////////////////////////////////////////////////////////////////////
 
-
-
+    /**
+     * Run a command inside $scopeCtl
+     *
+     * @param  mixed $scopectl
+     * @param  mixed $scopeIn
+     * @return any $ScopeOut
+     */
+    public function runCommand(array $scopectl,array $scopeIn=array()){
+        $callname="none";
+        if(isset($scopectl["name"])){
+            $callname=$scopectl["name"];
+        }
+        $path = null;
+        if(isset($scopectl["path"])){
+            $path=$scopectl["path"];
+        }
+        $ispreload = false;
+        if(isset($scopectl["ispreload"])){
+            $ispreload=$scopectl["ispreload"];
+        }
+        $modinit=null;
+        if(isset($scopectl["modinit"])){
+            $modinit=$scopectl["modinit"];
+        }
+        $vendor = null;
+        if(isset($scopectl["vendor"])){
+            $vendor=$scopectl["vendor"];
+        }
+        $subcall = null;
+        if(isset($scopectl["subcall"])){
+            $subcall=$scopectl["subcall"];
+        }
+        $type=null;
+        if (isset($scopectl["type"])){
+            $type=$scopectl["type"];
+        }
+        $controllerModule=null;
+        if (isset($scopectl["controllerModule"])){
+            $controllerModule=$scopectl["controllerModule"];
+        }
+        $blockModule=null;
+        if (isset($scopectl["blockModule"])){
+            $blockModule=$scopectl["blockModule"];
+        }
+        $result=null;
+        $this->info ("command try to call ".$type.">> app." . $callname);
+        switch($type){
+            case "print":
+                echo $scopeIn;
+                break;
+            case "clear":
+                $scopeIn=array();
+                break;
+            case "run":
+                $result=$this->moduleRun($callname,$scopeIn);
+                break;
+            case "driver":
+                $result=$this->driver($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                break;
+            case "query":
+                $result=$this->query($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                break;
+            case "controller":
+                $result=$this->controller($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                break;
+            case "controllerCommon":
+                $result=$this->controllerCommon($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                break;
+            case "api":
+                $result=$this->api($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                break;
+            case "apiCommon":
+                $result=$this->apiCommon($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                break;
+            case "service":
+                $result=$this->service($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                break;
+            case "serviceCommon":
+                $result=$this->serviceCommon($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                break;
+            case "page":
+                $result=$this->page($callname,$scopeIn,$modinit);                 
+                break;
+            case "mail":
+                $result=$this->mail($callname,$scopeIn,$modinit);                 
+                break;
+            case "block":
+                $result=$this->block($callname,$scopeIn,$modinit);                 
+                break;
+            case "blockCommon":
+                $result=$this->blockCommon($callname,$scopeIn,$modinit);               
+                break;
+            case "showPage":
+                $result=$this->showPage($callname,$scopeIn,$controllerModule,$blockModule);               
+                break;
+            case "showCommonPage":
+                $result=$this->showCommonPage($callname,$scopeIn,$controllerModule,$blockModule);               
+                break;
+            case "showBlock":
+                $result=$this->showBlock($callname,$scopeIn,$controllerModule,$blockModule);               
+                break;
+            case "showCommonBlock":
+                $result=$this->showCommonBlock($callname,$scopeIn,$controllerModule,$blockModule);               
+                break;
+            case "showFullCommonBlock":    
+                $result=$this->showFullCommonBlock($callname,$scopeIn,$controllerModule,$blockModule);               
+                break;
+            default:
+                $result=$this->module($callname,$path,$ispreload,$scopeIn,$modinit,$subcall,$vendor,$type);                 
+        }
+        return $result;
+    }
+    
+    /**
+     * runSequence inside actions
+     * @param  mixed $actions
+     * @param  mixed $scopeIn
+     * @return any $ScopeOut
+     */
+    public function runSequence (array $actions,$scopeIn=array())
+    {  
+        foreach ($actions as $callname=>$scopeCtl){
+            $this->info ("Sequence call app." . $callname);
+            $scopeCtl["name"]=$callname;
+              if (isset($scopeCtl["input"])){
+                $scopeIn=$scopeCtl["input"];
+              }
+              $scopeIn=$this->runCommand($scopeCtl,$scopeIn);          
+        }
+        return $scopeIn;
+    }
+    /**
+     * Run Module as Menu sequence
+     * @param string $action name of the Doctrine
+     * @param array $scopeIn   Input Array with the value need to work
+     * @return any $ScopeOut
+     */
+    public function runMenu ($action,$scopeIn=array())
+    {
+        $sequence=$this->getResource("menu.".$action);
+        if ($sequence!=null){
+            return $this->runSequence($sequence,$scopeIn);
+        }else{
+            return false;
+        }
+    }
+    /**
+     * Run Module as Tags sequence
+     * @param string $action name of the Doctrine
+     * @param array $scopeIn   Input Array with the value need to work
+     * @return any $ScopeOut
+     */
+    public function runTag ($action,$scopeIn=array())
+    {
+        $sequence=$this->getResource("tag.".$action);
+        if ($sequence!=null){
+            return $this->runSequence($sequence,$scopeIn);
+        }else{
+            return false;
+        }
+    }
 }
