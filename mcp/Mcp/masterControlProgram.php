@@ -184,7 +184,28 @@ final class masterControlProgram
         }
         return true;
     }
-
+    /**
+     * setMenu sequence  
+     *
+     * @param  mixed $name
+     * @param  mixed $sequence
+     *
+     * @return void
+     */
+    public function setMenu($name,array $sequence){
+        return $this->setCfg("app.menu.".$name,$sequence);
+    }
+   /**
+     * setTag sequence  
+     *
+     * @param  mixed $name
+     * @param  mixed $sequence
+     *
+     * @return void
+     */
+    public function setTag($name,array $sequence){
+        return $this->setCfg("app.tag.".$name,$sequence);
+    }
     /**
      * load a specific app resource
      * @param type $resource name ( - "app.")
@@ -1092,6 +1113,19 @@ final class masterControlProgram
             return false;
         }
     }
-
-
+    /**
+     * Run Module as Tags sequence
+     * @param string $action name of the Doctrine
+     * @param array $scopeIn   Input Array with the value need to work
+     * @return any $ScopeOut
+     */
+    public function runTag ($action,$scopeIn=array())
+    {
+        $sequence=$this->getResource("tag.".$action);
+        if ($sequence!=null){
+            return $this->runSequence($sequence,$scopeIn);
+        }else{
+            return false;
+        }
+    }
 }

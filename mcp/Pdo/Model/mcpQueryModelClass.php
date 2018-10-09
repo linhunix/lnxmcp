@@ -44,7 +44,6 @@ class mcpQueryModelClass extends mcpBaseModelClass
      * var ["Q"] = query 
      * var ["E"] = env or instance of specific database 
      * var ["V"] = contain the values that need to remplace on query scripts 
-     * var ["Z"] = stored in Zend Cache 
      * var ["S"] = stored in Session
      * var ["G"] = stored in Glboal cfg
      * @author Andrea Morello <andrea.morello@linhunix.com>
