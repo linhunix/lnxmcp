@@ -74,9 +74,10 @@ if (!isset($scopeInit)) {
         "app.debug"=>"false",
         "app.env"=>"dev",
         "app.evnlst" => array ('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name'),
-        "mcp.path.module"=>$app_path."/mcp_module",
-        "app.path.module"=>$app_path."/app",
-        "app.path.config"=>$app_path."/cfg",
+        "mcp.path.module"=>$app_path."/mcp_module/",
+        "app.path.module"=>$app_path."/app/",
+        "app.path.query"=>$app_path."/dbj/",
+        "app.path.config"=>$app_path."/cfg/",
         "mcp.run.module" => array (
             "pdo" => array ("module" => "Pdo", "type" => "serviceCommon", "input" => $scopePdo),
             "mail" => array ("module" => "Pdo", "type" => "serviceCommon", "input" => $scopePdo)
