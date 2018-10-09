@@ -1121,7 +1121,7 @@ final class masterControlProgram
      */
     public function runTag ($action,$scopeIn=array())
     {
-        $sequence=$this->getResource("menu.".$action);
+        $sequence=$this->getResource("tag.".$action);
         if ($sequence!=null){
             return $this->runSequence($sequence,$scopeIn);
         }else{
