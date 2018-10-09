@@ -764,6 +764,26 @@ final class masterControlProgram
     }
 
     /**
+     * Load a mail with your ScopeIn
+     * @param string $page    name of the Page
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     */
+    public function mail ($page=null, $scopeIn = array (), $modinit = null)
+    {
+        $this->info ("MCP>>mail>>" . $page);
+        if($$this->getCfg("app.mail")!=null){
+            if (($page!=null)||($page!="none")||($page!=".")){
+                ob_start();
+                $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $this->defapp, "Page");
+                $scopeIn["message"]=ob_clean();
+            }
+            return $this->moduleRun("mail",$scopeIn);
+        }
+        return null;
+    }
+
+    /**
      * Load a Block with your ScopeIn
      * @param string $block   name of the Block
      * @param array $scopeIn  Input Array with the value need to work
@@ -1008,6 +1028,9 @@ final class masterControlProgram
                 break;
             case "page":
                 $result=$this->page($callname,$scopeIn,$modinit);                 
+                break;
+            case "mail":
+                $result=$this->mail($callname,$scopeIn,$modinit);                 
                 break;
             case "block":
                 $result=$this->block($callname,$scopeIn,$modinit);                 
