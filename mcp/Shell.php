@@ -14,6 +14,7 @@ function mcpRunShell()
     echo "";
     $help = array ();
     $help["lnxmcp-mnu"] = "Run a Menu \n req arg: <menu name>";
+    $help["lnxmcp-mnu"] = "Run a Tag \n req arg: <tag name>";
     $help["lnxmcp-chk"] = "Run a Check\n  req arg: <check name>";
     $help["lnxmcp-cct"] = "Run a common controller\n  req arg: <common controller name> <module name>";
     $help["lnxmcp-ctl"] = "Run a user controller\n  req arg: < controller name> <module name>";
@@ -24,6 +25,9 @@ function mcpRunShell()
         switch ($argv[1]) {
             case "lnxmcp-mnu":
                 lnxmcp ()->runMenu ($argv[2]);
+                break;
+            case "lnxmcp-tag":
+                lnxmcp ()->runTag ($argv[2]);
                 break;
             case "lnxmcp-chk":
                 /**
