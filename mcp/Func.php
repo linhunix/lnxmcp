@@ -79,6 +79,32 @@ function selfAutoLoad ($srcPath)
     spl_autoload_register ('legacyAutoload', true/*, true*/);
 }
 
+/**
+ * linhunix json array converter 
+ *
+ * @param  mixed $file
+ * @param  mixed $path if is need 
+ * @param  mixed $ext with out the '.'
+ *
+ * @return any json object converted 
+ */
+function lnxGetJsonFile($file,$path="",$ext=""){
+    $jfile=$path;
+    if ($jfile!=""){
+        $jfile.=DIRECTORY_SEPARATOR.$file;
+    }    
+    if ($ext!=""){
+        $jfile.=".".$ext;
+    }
+    if (file_exists($jfile)){
+        try{
+            return json_decode (file_get_contents ($jfile));
+        }catch(\Exception $e){
+            return false;
+        }
+    }
+    return null;
+}
 
 /**
  * lnxmcp
@@ -94,6 +120,18 @@ function lnxmcp ()
     }
 }
 
+/**
+ * LinHUnix Master Control Program 
+ * Fast Tag caller 
+ *
+ * @param  mixed $tagname
+ * @param  mixed $scopein
+ *
+ * @return void
+ */
+function lnxMcpTag($tagname,array $scopein=array()){
+    lnxmcp()->runTag ($tagname,$scopeIn);
+}
 /**
  * linhunixErrorHandlerDev
  *

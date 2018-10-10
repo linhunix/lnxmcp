@@ -33,8 +33,8 @@ class mcpDebugClass
     {
         $this->mcp =& $mcp;
         if ($this->getLogger () == null) {
-            if ($mcp->getResource (masterControlProgram . CLASS_LOGGER) != null) {
-                $mcp->register (new ${$mcp->getResource (masterControlProgram . CLASS_LOGGER)}());
+            if ($mcp->getResource (masterControlProgram::CLASS_LOGGER) != null) {
+                $mcp->register (new ${$mcp->getResource (masterControlProgram::CLASS_LOGGER)}());
             } else {
                 $mcp->register (new LoggerProviderModel());
             }

@@ -1014,11 +1014,22 @@ final class masterControlProgram
         $result=null;
         $this->info ("command try to call ".$type.">> app." . $callname);
         switch($type){
+            case "exit":
+                DumpAndExit(@$scopeIn["message"]);
+                break;
             case "print":
                 echo $scopeIn;
                 break;
             case "clear":
                 $scopeIn=array();
+                break;
+            case "header":
+                $header=@$scopeIn["header"];
+                lnxmcp()->header($header,false);
+                break;
+            case "headerClose":
+                $header=@$scopeIn["header"];
+                lnxmcp()->header($header,true);
                 break;
             case "run":
                 $result=$this->moduleRun($callname,$scopeIn);
@@ -1108,6 +1119,12 @@ final class masterControlProgram
     {
         $sequence=$this->getResource("menu.".$action);
         if ($sequence!=null){
+            $seqpth=$this->getResource("path.menus");
+            if ($seqpth!=null){
+                $sequence=lnxGetJsonFile($action,$seqpth,"json");
+            }
+        }
+        if (($sequence!=null)&&($sequence!=false)){
             return $this->runSequence($sequence,$scopeIn);
         }else{
             return false;
@@ -1123,6 +1140,12 @@ final class masterControlProgram
     {
         $sequence=$this->getResource("tag.".$action);
         if ($sequence!=null){
+            $seqpth=$this->getResource("path.tags");
+            if ($seqpth!=null){
+                $sequence=lnxGetJsonFile($action,$seqpth,"json");
+            }
+        }
+        if (($sequence!=null)&&($sequence!=false)){
             return $this->runSequence($sequence,$scopeIn);
         }else{
             return false;
