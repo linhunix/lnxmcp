@@ -1015,7 +1015,7 @@ final class masterControlProgram
         $this->info ("command try to call ".$type.">> app." . $callname);
         switch($type){
             case "exit":
-                DumpAndExit(@$scopeIn["message"]);
+                DumpAndExit(@$scopectl["message"]);
                 break;
             case "print":
                 echo $scopeIn;
@@ -1024,11 +1024,11 @@ final class masterControlProgram
                 $scopeIn=array();
                 break;
             case "header":
-                $header=@$scopeIn["header"];
+                $header=@$scopectl["header"];
                 lnxmcp()->header($header,false);
                 break;
             case "headerClose":
-                $header=@$scopeIn["header"];
+                $header=@$scopectl["header"];
                 lnxmcp()->header($header,true);
                 break;
             case "run":
@@ -1118,7 +1118,7 @@ final class masterControlProgram
     public function runMenu ($action,$scopeIn=array())
     {
         $sequence=$this->getResource("menu.".$action);
-        if ($sequence!=null){
+        if ($sequence==null){
             $seqpth=$this->getResource("path.menus");
             if ($seqpth!=null){
                 $sequence=lnxGetJsonFile($action,$seqpth,"json");
@@ -1139,7 +1139,7 @@ final class masterControlProgram
     public function runTag ($action,$scopeIn=array())
     {
         $sequence=$this->getResource("tag.".$action);
-        if ($sequence!=null){
+        if ($sequence==null){
             $seqpth=$this->getResource("path.tags");
             if ($seqpth!=null){
                 $sequence=lnxGetJsonFile($action,$seqpth,"json");

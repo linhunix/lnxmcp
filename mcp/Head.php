@@ -46,7 +46,7 @@ try{
         include $app_path . "/cfg/mcp.settings.php";
     }
     if (file_exists ($app_path . "/cfg/mcp.settings.json")) {
-        $scopeInit=json_decode (file_get_contents ( $app_path . "/cfg/mcp.settings.json"));
+        $scopeInit=json_decode (file_get_contents ( $app_path . "/cfg/mcp.settings.json"),true);
     }
 }catch(Exception $e){
     error_log("LNXMCP HEAD CFG ERROR:".$e->get_message);
@@ -95,6 +95,11 @@ if (!isset($scopeInit)) {
         ),
         "app.menu.InitApp" => array (),
     );
+}
+if(isset($lnxmcp_phar)){
+    foreach($lnxmcp_phar as $lmpk=>$lmpv){
+        $scopeInit[$lmpk]=$lmpv;
+    }
 }
 ////////////////////////////////////////////////////////////////////////////////
 // ENVIRONMENT

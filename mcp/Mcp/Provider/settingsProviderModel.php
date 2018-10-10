@@ -22,7 +22,7 @@ class settingsProviderModel implements mcpServiceProviderModelClass
     {
         if (file_exists ($cfgfile)) {
             try {
-                $cfgdata = json_decode (file_get_contents ($cfgfile));
+                $cfgdata = json_decode (file_get_contents ($cfgfile),true);
                 foreach ($cfgdata as $ck => $cv) {
                     $this->mcp->setCfg ($ck, $cv);
                 }

@@ -2,7 +2,7 @@
 function mcpRunHttp(){
     $urlpth=$_SERVER[REQUEST_URI];
     $urlarr=explode("/",$urlpth);
-    $cfgpth=lnxmcp()->getResources("path.config");
+    $cfgpth=lnxmcp()->getResource("path.config");
     $pathredirect=lnxGetJsonFile("PathRewrite",$cfgpth,"json");
     if (is_array($pathredirect)){
         if (in_array($urlpth,$pathredirect)){

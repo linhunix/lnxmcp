@@ -98,10 +98,14 @@ function lnxGetJsonFile($file,$path="",$ext=""){
     }
     if (file_exists($jfile)){
         try{
-            return json_decode (file_get_contents ($jfile));
+            lnxmcp()->info("lnxGetJsonFile:".$jfile);
+            return json_decode (file_get_contents ($jfile),true);
         }catch(\Exception $e){
+            lnxmcp()->warning("lnxGetJsonFile>>file:".$jfile." and err:".$e->get_message());
             return false;
         }
+    }else{
+        lnxmcp()->warning("lnxGetJsonFile>>file:".$jfile." and not found" );
     }
     return null;
 }
