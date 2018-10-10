@@ -191,12 +191,12 @@ if( lnxmcp()->getCfg("PreloadOnly")!=true){
     if (file_exists ($app_path . DIRECTORY_SEPARATOR . "main.php")) {
         include $app_path . DIRECTORY_SEPARATOR . "main.php";
         DumpAndExit ("End Of App");
-    }else if(isset ($_SERVER[REQUEST_URI])){
+    }else if(isset ($_SERVER["REQUEST_URI"])){
         if (file_exists ($httpath)) {
             include_once $httpath;
             mcpRunHttp();
         }
-    }else if ($_REQUEST["Menu"] != null) {
+    }else if (isset($_REQUEST["Menu"])) {
         lnxmcp ()->runMenu ($_REQUEST["Menu"]);
     } else {
         $GLOBALS["mcp_preload"].=ob_clean();
