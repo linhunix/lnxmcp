@@ -13,7 +13,11 @@ It's a reflection framework and not a solid framework
  for more info [[Wiki GitHub Pages|https://github.com/linhunix/lnxmcp/wiki/]] 
 
  
+**LNX** (LinHUniX) **MCP** (Master Control Program) is a share code with free license.
+ 
+Develop and Maintain by **LinHUniX Ltd**  - 2002/2020  - Author is **Andrea Morello (LinHUniX)**
 
+> is a parts of the LN4 Note projects 
 
 
   
