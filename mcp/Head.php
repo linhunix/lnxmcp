@@ -91,7 +91,7 @@ if (!isset($scopeInit)) {
         "app.path.config"=>$app_path."/cfg/",
         "app.menu.InitCommon" => array (
             "pdo" => array ("module" => "Pdo", "type" => "serviceCommon", "input" => $scopePdo),
-            "mail" => array ("module" => "Mail", "type" => "serviceCommon", "input" => $scopePdo)
+            "mail" => array ("module" => "Mail", "type" => "serviceCommon")
         ),
         "app.menu.InitApp" => array (),
     );

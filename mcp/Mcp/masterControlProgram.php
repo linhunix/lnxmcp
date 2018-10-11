@@ -679,7 +679,21 @@ final class masterControlProgram
         $res = $this->module ($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defapp, "Query");
         return $res["return"];
     }
-
+    /**
+     * Run Module as database query common intenal 
+     * @param string $dbproc  name of the driver by default json
+     * @param bool $ispreload is only a preload (ex page) or need to be execute (ex controller)
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized by default Pdo
+     * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
+     * @return array $ScopeOut
+     */
+    public function queryjr ($dbproc="Json", $ispreload = true, $scopeIn = array (), $modinit = "Pdo", $subcall = null)
+    {
+        $this->info ("MCP>>" . $this->defapp . ">>query[R]>>" . $dbproc);
+        $res = $this->module ($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Query");
+        return $res["return"];
+    }
     /**
      * Run Module as controller
      * @param string $ctrlproc name of the driver
@@ -1039,6 +1053,9 @@ final class masterControlProgram
                 break;
             case "query":
                 $result=$this->query($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                break;
+            case "queryJson":
+                $result=$this->queryjr($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
                 break;
             case "controller":
                 $result=$this->controller($callname,$ispreload,$scopeIn,$modinit,$subcall);                 

@@ -1,6 +1,6 @@
 <?php
 function mcpRunHttp(){
-    $urlpth=$_SERVER[REQUEST_URI];
+    $urlpth=$_SERVER["REQUEST_URI"];
     $urlarr=explode("/",$urlpth);
     $cfgpth=lnxmcp()->getResource("path.config");
     $pathredirect=lnxGetJsonFile("PathRewrite",$cfgpth,"json");

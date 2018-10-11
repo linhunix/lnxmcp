@@ -213,12 +213,12 @@ final class mcpCoreClass
                 $this->scopeCtl[$this->sub]["file"] = "/";
                 $this->scopeCtl[$this->sub]["auto"] = "/";
             } else {
-                $this->scopeCtl[$this->sub]["file"] .= "/" . $vendor . "/";
                 $this->scopeCtl[$this->sub]["auto"] .= "/" . $vendor . "/";
+                $this->scopeCtl[$this->sub]["module"] .= $vendor . "\\";
                 if ($vendor == $this->defapp) {
-                    $this->scopeCtl[$this->sub]["module"] .= "App\\";
-                } else {
-                    $this->scopeCtl[$this->sub]["module"] .= $vendor . "\\";
+                    $this->scopeCtl[$this->sub]["file"] .= "/";
+                }else{
+                    $this->scopeCtl[$this->sub]["file"] .= "/" . $vendor . "/";
                 }
             }
         }
@@ -375,6 +375,7 @@ final class mcpCoreClass
             return false;
         }
         try {
+            $this->getMcp()->debug("Config tag:".$tag." Loaded");
             $this->mcp->setCfg ($tag, $component);
         } catch (\Exception $e) {
             throw new Exception("MasterControlProgram Don't Found or Set Container Component! " . $e->getMessage ());
@@ -477,7 +478,7 @@ final class mcpCoreClass
                 $this->shareModuleVars ();
             }
         } catch (Exception $e) {
-            $res = "error in creqMod " . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
+            $res = "executeModule:error >" . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
             $this->setStatus (false, $res);
         }
         $this->setWorkingArea ("executeModule:run");
@@ -488,7 +489,7 @@ final class mcpCoreClass
                 return true;
             }
         } catch (Exception $e) {
-            $res = "error in creqMod " . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
+            $res = "executeModule:error >>" . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
             $this->setStatus (false, $res);
         }
         return false;

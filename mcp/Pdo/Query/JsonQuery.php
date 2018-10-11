@@ -43,7 +43,7 @@ use LinHUniX\Pdo\Model\mcpQueryModelClass;
      * @return boolean|array query results 
      * @see [vendor]/mcp/Head.php caller of the config
  */
-class jsonQuery  extends mcpQueryModelClass {
+class JsonQuery  extends mcpQueryModelClass {
     private $querypath;
     public function __construct (masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
     {
@@ -57,9 +57,13 @@ class jsonQuery  extends mcpQueryModelClass {
         }
         if (isset($scopeIn["J"])){
             if (file_exists($this->querypath.$scopeIn["J"])){
-                $this->query=json_decode (file_get_contents ($this->querypath.$scopeIn["J"]));
+                $this->getMcp()->debug("load:".$this->querypath.$scopeIn["J"]);
+                $this->query=json_decode (file_get_contents ($this->querypath.$scopeIn["J"]),1);
             }else if (file_exists($this->querypath.$scopeIn["J"].".json")){
-                $this->query=json_decode (file_get_contents ($this->querypath.$scopeIn["J"].".json"));
+                $this->getMcp()->debug("load:".$this->querypath.$scopeIn["J"].".json");
+                $this->query=json_decode (file_get_contents ($this->querypath.$scopeIn["J"].".json"),1);
+            }else{
+                $this->getMcp()->warning("Error on load:".$this->querypath.$scopeIn["J"]."[.json]");           
             }
         }
     }

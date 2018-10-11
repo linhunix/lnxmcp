@@ -63,7 +63,7 @@ class mcpQueryModelClass extends mcpBaseModelClass
     {
         parent::__construct($mcp, $scopeCtl, $scopeIn);
         $this->query = array();
-        $this->require = array("app.Service.pdo");
+        $this->require = array("App.Service.pdo");
     }
     /**
      * 
@@ -138,7 +138,7 @@ class mcpQueryModelClass extends mcpBaseModelClass
      */
     public function getPdo()
     {
-        return $this->getArgCtl("app.Service.pdo");
+        return $this->getMcp()->getCfg("App.Service.pdo");
     }
     /**
      * execute the query, verify the results and store and return 
@@ -151,6 +151,19 @@ class mcpQueryModelClass extends mcpBaseModelClass
         if (isset($res["return"]))
         {
             $this->argOut = $res["return"];
+        }
+    }
+    /**
+     * Model Base to caputer execute an elabotrations about this
+     * @param array (reference of) $scopeCtl => calling Controlling definitions
+     * @param array (reference of) $scopeIn temproraney array auto cleanable
+     * @return array response of code = like scope out;
+     */
+    public function run(array $scopeCtl, array $scopeIn) {
+        try{
+        return parent::run($scopeCtl,$scopeIn);
+        }catch(\Exception $e){
+            $this->getMcp()->waring("QueryError:".$e->get_message());
         }
     }
 }
