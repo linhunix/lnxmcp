@@ -138,7 +138,7 @@ class mcpQueryModelClass extends mcpBaseModelClass
      */
     public function getPdo()
     {
-        return $this->getMcp()->getCfg("App.Service.pdo");
+        return $this->getMcp()->getResource("Service.pdo");
     }
     /**
      * execute the query, verify the results and store and return 

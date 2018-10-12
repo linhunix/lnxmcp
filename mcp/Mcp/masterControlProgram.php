@@ -213,10 +213,11 @@ final class masterControlProgram
      */
     public function getResource ($resource)
     {
-        $this->info ("CALL DIRECT RESOURCE app." . $resource);
         if (isset($this->cfg["app." . $resource])) {
+            $this->info ("CALL DIRECT RESOURCE app." . $resource."=Ready");
             return $this->cfg["app." . $resource];
         }
+        $this->info ("CALL DIRECT RESOURCE app." . $resource."=Null");
         return null;
     }
     /////////////////////////////////////////////////////////////////////////////
@@ -643,10 +644,13 @@ final class masterControlProgram
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
      * @return array $ScopeOut
      */
-    public function driver ($libname, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null)
+    public function driver ($libname, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null,$vendor=null)
     {
-        $this->info ("MCP>>driver(C)>>" . $libname);
-        return $this->module ($libname, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Driver");
+        if ($vendor==null){
+            $vendor=$this->defvnd;
+        }
+        $this->info ("MCP>>" .$vendor . ">>driver>>" . $libname);
+        return $this->module ($libname, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall,$vendor, "Driver");
     }
 
     /**
@@ -658,10 +662,13 @@ final class masterControlProgram
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
      * @return array $ScopeOut
      */
-    public function query ($dbproc, $ispreload = true, $scopeIn = array (), $modinit = null, $subcall = null)
+    public function query ($dbproc, $ispreload = true, $scopeIn = array (), $modinit = null, $subcall = null,$vendor=null)
     {
-        $this->info ("MCP>>" . $this->defapp . ">>query>>" . $dbproc);
-        return $this->module ($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defapp, "Query");
+        if ($vendor==null){
+            $vendor=$this->defapp;
+        }
+        $this->info ("MCP>>" .$vendor . ">>query>>" . $dbproc);
+        return $this->module ($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Query");
     }
 
     /**
@@ -673,7 +680,7 @@ final class masterControlProgram
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
      * @return array $ScopeOut
      */
-    public function queryr ($dbproc, $ispreload = true, $scopeIn = array (), $modinit = null, $subcall = null)
+    public function queryR ($dbproc, $ispreload = true, $scopeIn = array (), $modinit = null, $subcall = null)
     {
         $this->info ("MCP>>" . $this->defapp . ">>query[R]>>" . $dbproc);
         $res = $this->module ($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defapp, "Query");
@@ -688,7 +695,7 @@ final class masterControlProgram
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
      * @return array $ScopeOut
      */
-    public function queryjr ($dbproc="Json", $ispreload = true, $scopeIn = array (), $modinit = "Pdo", $subcall = null)
+    public function queryCommonR ($dbproc="Json", $ispreload = true, $scopeIn = array (), $modinit = "Pdo", $subcall = null)
     {
         $this->info ("MCP>>" . $this->defapp . ">>query[R]>>" . $dbproc);
         $res = $this->module ($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Query");
@@ -703,10 +710,13 @@ final class masterControlProgram
      * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
      * @return array $ScopeOut
      */
-    public function controller ($ctrlproc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null)
+    public function controller ($ctrlproc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null,$vendor=null)
     {
-        $this->info ("MCP>>" . $this->defapp . ">>controller>>" . $ctrlproc);
-        return $this->module ($ctrlproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defapp, "Controller");
+        if ($vendor==null){
+            $vendor=$this->defapp;
+        }
+        $this->info ("MCP>>" .$vendor . ">>controller>>" . $ctrlproc);
+        return $this->module ($ctrlproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Controller");
     }
 
     /**
@@ -733,10 +743,13 @@ final class masterControlProgram
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
      * @return array $ScopeOut
      */
-    public function api ($srvprc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null)
+    public function api ($srvprc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null,$vendor=null)
     {
-        $this->info ("MCP>>" . $this->defapp . ">>api>>" . $srvprc);
-        $res = $this->module ($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defapp, "Api");
+        if ($vendor==null){
+            $vendor=$this->defapp;
+        }
+        $this->info ("MCP>>" .$vendor . ">>api>>" . $srvprc);
+        $res = $this->module ($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall,$vendor, "Api");
         return json_encode ($res);
     }
 
@@ -765,10 +778,13 @@ final class masterControlProgram
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
      * @return array $ScopeOut
      */
-    public function service ($srvprc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null)
+    public function service ($srvprc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null,$vendor=null)
     {
-        $this->info ("MCP>>service>>" . $srvprc);
-        return $this->module ($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defapp, "Service");
+        if ($vendor==null){
+            $vendor=$this->defapp;
+        }
+        $this->info ("MCP>>" .$vendor .">>service>>" . $srvprc);
+        return $this->module ($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Service");
     }
 
     /**
@@ -792,10 +808,13 @@ final class masterControlProgram
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
      */
-    public function page ($page, $scopeIn = array (), $modinit = null)
+    public function page ($page, $scopeIn = array (), $modinit = null,$vendor=null)
     {
-        $this->info ("MCP>>page>>" . $page);
-        $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $this->defapp, "Page");
+        if ($vendor==null){
+            $vendor=$this->defapp;
+        }
+        $this->info ("MCP>>" .$vendor .">>page>>" . $page);
+        $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $vendor, "Page");
     }
 
     /**
@@ -824,10 +843,13 @@ final class masterControlProgram
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
      */
-    public function block ($block, $scopeIn = array (), $modinit = null)
+    public function block ($block, $scopeIn = array (), $modinit = null,$vendor=null)
     {
-        $this->info ("MCP>>block>>" . $block);
-        $this->template ($block, $this->pathtpl, true, $scopeIn, $modinit, null, $this->defapp, "Block");
+        if ($vendor==null){
+            $vendor=$this->defapp;
+        }
+        $this->info ("MCP>>" .$vendor .">>block>>" . $block);
+        $this->template ($block, $this->pathtpl, true, $scopeIn, $modinit, null, $vendor, "Block");
     }
 
     /**
@@ -1049,40 +1071,40 @@ final class masterControlProgram
                 $result=$this->moduleRun($callname,$scopeIn);
                 break;
             case "driver":
-                $result=$this->driver($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                $result=$this->driver($callname,$ispreload,$scopeIn,$modinit,$subcall,$vendor);                 
                 break;
             case "query":
-                $result=$this->query($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                $result=$this->queryR($callname,$ispreload,$scopeIn,$modinit,$subcall,$vendor);                 
                 break;
-            case "queryJson":
-                $result=$this->queryjr($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+            case "queryCommon":
+                $result=$this->queryCommonR($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
                 break;
             case "controller":
-                $result=$this->controller($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                $result=$this->controller($callname,$ispreload,$scopeIn,$modinit,$subcall,$vendor);                 
                 break;
             case "controllerCommon":
                 $result=$this->controllerCommon($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
                 break;
             case "api":
-                $result=$this->api($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                $result=$this->api($callname,$ispreload,$scopeIn,$modinit,$subcall,$vendor);                 
                 break;
             case "apiCommon":
                 $result=$this->apiCommon($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
                 break;
             case "service":
-                $result=$this->service($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
+                $result=$this->service($callname,$ispreload,$scopeIn,$modinit,$subcall,$vendor);                 
                 break;
             case "serviceCommon":
                 $result=$this->serviceCommon($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
                 break;
             case "page":
-                $result=$this->page($callname,$scopeIn,$modinit);                 
+                $result=$this->page($callname,$scopeIn,$modinit,$vendor);                 
                 break;
             case "mail":
                 $result=$this->mail($callname,$scopeIn,$modinit);                 
                 break;
             case "block":
-                $result=$this->block($callname,$scopeIn,$modinit);                 
+                $result=$this->block($callname,$scopeIn,$modinit,$vendor);                 
                 break;
             case "blockCommon":
                 $result=$this->blockCommon($callname,$scopeIn,$modinit);               

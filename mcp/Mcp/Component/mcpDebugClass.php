@@ -31,7 +31,7 @@ class mcpDebugClass
      */
     public function __construct (masterControlProgram &$mcp)
     {
-        $this->mcp =& $mcp;
+        $this->mcp =&$mcp;
         if ($this->getLogger () == null) {
             if ($mcp->getResource (masterControlProgram::CLASS_LOGGER) != null) {
                 $mcp->register (new ${$mcp->getResource (masterControlProgram::CLASS_LOGGER)}());
@@ -249,7 +249,7 @@ class mcpDebugClass
      */
     private function getRes ($string)
     {
-        return $this->getMCP ()->geResource ($string);
+        return $this->getMCP()->getResource($string);
     }
 
     /**

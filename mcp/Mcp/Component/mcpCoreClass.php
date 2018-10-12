@@ -204,7 +204,7 @@ final class mcpCoreClass
         $this->scopeCtl[$this->sub]["module"] = "";
         $this->scopeCtl[$this->sub]["auto"] = $path;
         $this->scopeCtl[$this->sub]["file"] = $path;
-        $this->scopeCtl[$this->sub]["tag"] = "App";
+        $this->scopeCtl[$this->sub]["tag"] = "app";
         $this->scopeCtl[$this->sub]["type"] = "module";
 //// VENDOR SETTINGS
         if ($vendor != null) {
@@ -358,7 +358,7 @@ final class mcpCoreClass
      * @return any Component object
      * @throws Exception if the cfg are not present or don't have this component
      */
-    private function getMcp ()
+    private function getMcp()
     {
         return $this->mcp;
     }

@@ -11,9 +11,13 @@
  */
 function DumpAndExit ($message = "")
 {
-    $GLOBALS["mcp"]->info ("DumpAndExit:" . $message);
+    lnxmcp()->info ("DumpAndExit:" . $message);
     foreach (debug_backtrace () as $row => $debug) {
-        $GLOBALS["mcp"]->debug (implode ("|-|", $debug));
+        if (is_array($debug)){
+            foreach ($debug as $drow => $ddebug) {
+                lnxmcp()->debug ("[".$drow."]>>".print_r($ddebug,1));
+            }
+        }
     }
     exit();
 }
