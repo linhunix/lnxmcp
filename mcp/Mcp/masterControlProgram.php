@@ -749,6 +749,8 @@ final class masterControlProgram
             $vendor=$this->defapp;
         }
         $this->info ("MCP>>" .$vendor . ">>api>>" . $srvprc);
+        $scopeIn["prev-output"]=ob_get_clean();
+        ini_set("display_error",0);//this adding is very necessary bacause a json out can accept a error message o similar
         $res = $this->module ($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall,$vendor, "Api");
         return json_encode ($res);
     }
@@ -765,6 +767,8 @@ final class masterControlProgram
     public function apiCommon ($srvprc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null)
     {
         $this->info ("MCP>>api(C)>>" . $srvprc);
+        $scopeIn["prev-output"]=ob_get_clean();
+        ini_set("display_error",0);//this adding is very necessary bacause a json out can accept a error message o similar
         $res = $this->module ($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Api");
         return json_encode ($res);
     }
@@ -813,6 +817,7 @@ final class masterControlProgram
         if ($vendor==null){
             $vendor=$this->defapp;
         }
+        $scopeIn["prev-output"]=ob_get_clean();
         $this->info ("MCP>>" .$vendor .">>page>>" . $page);
         $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $vendor, "Page");
     }
