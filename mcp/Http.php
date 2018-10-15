@@ -7,7 +7,14 @@ function mcpRunHttp(){
     if (is_array($pathredirect)){
         if (in_array($urlpth,$pathredirect)){
             $redcmd= $pathredirect[$urlpath];
-            lnxmcp()->header($redcmd,true);
+            if (is_array($redcmd)){
+                foreach( $redcmd as $redhead){
+                    lnxmcp()->header($redhead,false);
+                }
+                DumpAndExit("End Headers Redirect ");
+            }else{
+                lnxmcp()->header($redcmd,true);
+            }
         }
     }
     $pathmenu=lnxGetJsonFile("Pathmenu",$cfgpth,"json");
@@ -16,7 +23,7 @@ function mcpRunHttp(){
         $scopein["category"]=$urlarr;
         $menu=str_replace("/",".",$urlpath);
         $submenu="main";
-        foreach($scopein["category"] as $catk=>$catv){
+        foreach($urlarr as $catk=>$catv){
             $submenu.=".".$catv;
             $catmenu="cat.".$catk.".".$catv;
             if (in_array($catmenu,$pathmenu)){
@@ -38,6 +45,7 @@ function mcpRunHttp(){
         if(isset($scopein["menu"])){
             $menu=$scopein["menu"];
         }
+        ksort($scopein);
         lnxmcp()->runMenu($menu,$scopein);
     }
 }

@@ -375,7 +375,7 @@ final class mcpCoreClass
             return false;
         }
         try {
-            $this->getMcp()->debug("Config tag:".$tag." Loaded");
+            $this->mcp->debug("Config tag:".$tag." Loaded");
             $this->mcp->setCfg ($tag, $component);
         } catch (\Exception $e) {
             throw new Exception("MasterControlProgram Don't Found or Set Container Component! " . $e->getMessage ());
@@ -492,6 +492,10 @@ final class mcpCoreClass
             $res = "executeModule:error >>" . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
             $this->setStatus (false, $res);
         }
+        if (in_array ($this->scopeCtl[$this->sub]["type"], array ("Controller","Page", "Block"))) 
+        {
+            $this->setDic ($ $this->scopeCtl[$this->sub]["tag"], ".");
+        } 
         return false;
     }
 
@@ -521,7 +525,7 @@ final class mcpCoreClass
             $this->setStatus (false, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS NOT PRESENT - NEED TO BE LOAD ");
         }
         // prepare env to have load a new components - for full compatibility;
-        if (in_array ($this->scopeCtl[$this->sub]["type"], array ("Api","Page", "Block"))) {
+        if (in_array ($this->scopeCtl[$this->sub]["type"], array ("api","Page", "Block"))) {
             $this->scopeOut[$this->sub] = $this->scopeIn[$this->sub];
             if (isset($this->scopeIn[$this->sub]["return"])) {
                 $this->scopeOut[$this->sub] = $this->scopeIn[$this->sub]["return"];

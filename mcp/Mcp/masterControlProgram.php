@@ -680,10 +680,13 @@ final class masterControlProgram
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
      * @return array $ScopeOut
      */
-    public function queryR ($dbproc, $ispreload = true, $scopeIn = array (), $modinit = null, $subcall = null)
+    public function queryR ($dbproc, $ispreload = true, $scopeIn = array (), $modinit = null, $subcall = null,$vendor=null)
     {
-        $this->info ("MCP>>" . $this->defapp . ">>query[R]>>" . $dbproc);
-        $res = $this->module ($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defapp, "Query");
+        if ($vendor==null){
+            $vendor=$this->defapp;
+        }
+        $this->info ("MCP>>" .$vendor . ">>query[R]>>" . $dbproc);
+        $res = $this->module ($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Query");
         return $res["return"];
     }
     /**
@@ -750,9 +753,10 @@ final class masterControlProgram
         }
         $this->info ("MCP>>" .$vendor . ">>api>>" . $srvprc);
         $scopeIn["prev-output"]=ob_get_clean();
-        ini_set("display_error",0);//this adding is very necessary bacause a json out can accept a error message o similar
         $res = $this->module ($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall,$vendor, "Api");
-        return json_encode ($res);
+        ob_clean();
+        header('Content-type: application/json');
+        echo json_encode ($res);
     }
 
     /**
@@ -768,9 +772,10 @@ final class masterControlProgram
     {
         $this->info ("MCP>>api(C)>>" . $srvprc);
         $scopeIn["prev-output"]=ob_get_clean();
-        ini_set("display_error",0);//this adding is very necessary bacause a json out can accept a error message o similar
         $res = $this->module ($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Api");
-        return json_encode ($res);
+        ob_clean();
+        header('Content-type: application/json');
+        echo json_encode ($res);
     }
 
     /**
@@ -835,7 +840,7 @@ final class masterControlProgram
             if (($page!=null)||($page!="none")||($page!=".")){
                 ob_start();
                 $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $this->defapp, "Page");
-                $scopeIn["message"]=ob_clean();
+                $scopeIn["message"]=ob_get_clean();
             }
             return $this->moduleRun("mail",$scopeIn);
         }
@@ -1145,11 +1150,15 @@ final class masterControlProgram
     {  
         foreach ($actions as $callname=>$scopeCtl){
             $this->info ("Sequence call app." . $callname);
-            $scopeCtl["name"]=$callname;
-              if (isset($scopeCtl["input"])){
-                $scopeIn=$scopeCtl["input"];
-              }
-              $scopeIn=$this->runCommand($scopeCtl,$scopeIn);          
+            if (!isset( $scopeCtl["name"])){
+                $scopeCtl["name"]=$callname;
+            }
+            if (isset($scopeCtl["input"])){
+                foreach($scopeCtl["input"] as $sik=>$siv){
+                    $scopeIn[$sik]=$siv;
+                }
+            }
+            $scopeIn=$this->runCommand($scopeCtl,$scopeIn);          
         }
         return $scopeIn;
     }
