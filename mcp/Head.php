@@ -8,6 +8,11 @@
  * @version   GIT:2018-v2
  *
  */
+////////////////////////////////////////////////////////////////////////////////
+// PAGE MESSAGE CONTROL 
+////////////////////////////////////////////////////////////////////////////////
+error_reporting(E_ERROR);
+ini_set("display_error",0);
 ob_start();
 ////////////////////////////////////////////////////////////////////////////////
 // ENV/CONFIG PATH AND CLASS
@@ -155,11 +160,13 @@ if (class_exists ("\Composer\Autoload\ClassLoader")) {
     $psr = array ();
     if ($lnxmcp_phar["phar"] == true) {
         $classLoader->addPsr4 ("LinHUniX\\Mcp\\", $lnxmcp_phar["purl"] . "/mcp/Mcp");
+        $classLoader->addPsr4 ("LinHUniX\\Gfx\\", $lnxmcp_phar["purl"] . "/mcp/Gfx");
         $classLoader->addPsr4 ("LinHUniX\\Pdo\\", $lnxmcp_phar["purl"] . "/mcp/Pdo");
         $classLoader->addPsr4 ("LinHUniX\\Mail\\", $lnxmcp_phar["purl"] . "/mcp/Mail");
         $scopeInit["mcp.loader"] = "AutoLoadPhar";
     } else {
         $classLoader->addPsr4 ("LinHUniX\\Mcp\\", $app_path . "/mcp/Mcp");
+        $classLoader->addPsr4 ("LinHUniX\\Gfx\\", $app_path . "/mcp/Gfx");
         $classLoader->addPsr4 ("LinHUniX\\Pdo\\", $app_path . "/mcp/Pdo");
         $classLoader->addPsr4 ("LinHUniX\\Mail\\", $app_path . "/mcp/Mail");
         $scopeInit["mcp.loader"] = "AutoLoadSrc";

@@ -1034,8 +1034,8 @@ final class masterControlProgram
             $ispreload=$scopectl["ispreload"];
         }
         $modinit=null;
-        if(isset($scopectl["modinit"])){
-            $modinit=$scopectl["modinit"];
+        if(isset($scopectl["module"])){
+            $modinit=$scopectl["module"];
         }
         $vendor = null;
         if(isset($scopectl["vendor"])){

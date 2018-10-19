@@ -3,6 +3,20 @@
 // ERROR/CONFIG
 ////////////////////////////////////////////////////////////////////////////////
 /**
+ * Exit with closure procedure
+ *
+ * @param  mixed $message
+ *
+ * @return void
+ */
+function LnxMcpExit ($message = "")
+{
+    lnxmcp()->info ("DumpAndExit:" . $message);
+    lnxmcp()->runTag("Exit");
+    exit();
+}
+if (function_exists("DumpAndExit")!=true){
+/**
  * DumpAndExit
  *
  * @param  mixed $message
@@ -12,6 +26,7 @@
 function DumpAndExit ($message = "")
 {
     lnxmcp()->info ("DumpAndExit:" . $message);
+    lnxmcp()->runTag("Exit");
     foreach (debug_backtrace () as $row => $debug) {
         if (is_array($debug)){
             foreach ($debug as $drow => $ddebug) {
@@ -21,7 +36,6 @@ function DumpAndExit ($message = "")
     }
     exit();
 }
-
 /**
  * this version has only the error log call because is work when is present a big issue
  * @param String $message
@@ -29,6 +43,8 @@ function DumpAndExit ($message = "")
  */
 function DumpOnFatal ($message, $exit = false)
 {
+    lnxmcp()->runTag("Fatal");
+    lnxmcp()->runTag("Exit");
     echo $message;
     foreach (debug_backtrace () as $errarr) {
         error_log ("-> " . $errarr["file"] . " : " . $errarr["line"] . " <br>");
@@ -42,7 +58,10 @@ function DumpOnFatal ($message, $exit = false)
         exit(1);
     }
 }
-
+}
+////////////////////////////////////////////////////////////////////////////////
+// AUTOLOAD/CONFIG
+////////////////////////////////////////////////////////////////////////////////
 /**
  * A basic autoload implementation that should be compatible with PHP 5.2.
  *
@@ -109,7 +128,7 @@ function lnxGetJsonFile($file,$path="",$ext=""){
             return false;
         }
     }else{
-        lnxmcp()->warning("lnxGetJsonFile>>file:".$jfile." and not found" );
+        lnxmcp()->info("lnxGetJsonFile>>file:".$jfile." and not found" );
     }
     return null;
 }
