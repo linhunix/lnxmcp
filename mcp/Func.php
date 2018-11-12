@@ -3,19 +3,62 @@
 // ERROR/CONFIG
 ////////////////////////////////////////////////////////////////////////////////
 /**
- * DumpAndExit
+ * Exit with closure procedure
  *
  * @param  mixed $message
  *
  * @return void
  */
-function DumpAndExit ($message = "")
+function LnxMcpExit($message = "")
 {
-    $GLOBALS["mcp"]->info ("DumpAndExit:" . $message);
-    foreach (debug_backtrace () as $row => $debug) {
-        $GLOBALS["mcp"]->debug (implode ("|-|", $debug));
-    }
+    lnxmcp()->info("DumpAndExit:" . $message);
+    lnxmcp()->runTag("Exit");
     exit();
+}
+if (function_exists("DumpAndExit") != true) {
+    /**
+     * DumpAndExit
+     *
+     * @param  mixed $message
+     *
+     * @return void
+     */
+    function DumpAndExit($message = "")
+    {
+        lnxmcp()->info("DumpAndExit:" . $message);
+        lnxmcp()->runTag("Exit");
+        foreach (debug_backtrace() as $row => $debug) {
+            if (is_array($debug)) {
+                foreach ($debug as $drow => $ddebug) {
+                    lnxmcp()->debug("[" . $drow . "]>>" . print_r($ddebug, 1));
+                }
+            }
+        }
+        exit();
+    }
+}
+/**
+ * this version has only the error log call because is work when is present a big issue
+ * @param String $message
+ * @param bool $exit
+ */
+function DumpOnFatal($message, $exit = false)
+{
+    lnxmcp()->runTag("Fatal");
+    lnxmcp()->runTag("Exit");
+    echo $message;
+    foreach (debug_backtrace() as $errarr) {
+        error_log("-> " . $errarr["file"] . " : " . $errarr["line"] . " <br>");
+    }
+    foreach (get_included_files() as $filename) {
+        error_log("Load: $filename");
+    }
+    error_log("FATAL ERROR - lnxmcp is NOT SETTED!!! ");
+    error_log(debug_print_backtrace());
+    if ($exit == true) {
+        exit(1);
+    }
+}
 }
 
 /**
@@ -23,17 +66,17 @@ function DumpAndExit ($message = "")
  * @param String $message
  * @param bool $exit
  */
-function DumpOnFatal ($message, $exit = false)
+function DumpOnFatal($message, $exit = false)
 {
     echo $message;
-    foreach (debug_backtrace () as $errarr) {
-        error_log ("-> " . $errarr["file"] . " : " . $errarr["line"] . " <br>");
+    foreach (debug_backtrace() as $errarr) {
+        error_log("-> " . $errarr["file"] . " : " . $errarr["line"] . " <br>");
     }
-    foreach (get_included_files () as $filename) {
-        error_log ("Load: $filename");
+    foreach (get_included_files() as $filename) {
+        error_log("Load: $filename");
     }
-    error_log ("FATAL ERROR - lnxmcp is NOT SETTED!!! ");
-    error_log (debug_print_backtrace ());
+    error_log("FATAL ERROR - lnxmcp is NOT SETTED!!! ");
+    error_log(debug_print_backtrace());
     if ($exit == true) {
         exit(1);
     }
@@ -44,13 +87,13 @@ function DumpOnFatal ($message, $exit = false)
  *
  * @author pmg
  */
-function legacyAutoload ($className)
+function legacyAutoload($className)
 {
     global $autoLoadFolders;
-    $className = str_replace ('/LinHUniX/', '/', $className);
+    $className = str_replace('/LinHUniX/', '/', $className);
     foreach ($autoLoadFolders as $folder) {
         $classPath = $folder . DIRECTORY_SEPARATOR . $className . '.php';
-        if (file_exists ($classPath)) {
+        if (file_exists($classPath)) {
             require_once $classPath;
             return true;
         }
@@ -63,20 +106,20 @@ function legacyAutoload ($className)
  *
  * @author pmg
  */
-function selfAutoLoad ($srcPath)
+function selfAutoLoad($srcPath)
 {
     global $autoLoadFolders;
-    $srcPath = realpath ($srcPath);
-    $scannedItems = scandir ($srcPath);
+    $srcPath = realpath($srcPath);
+    $scannedItems = scandir($srcPath);
     foreach ($scannedItems as $item) {
         if ($item === '.' || $item === '..') {
             continue;
         }
-        if (is_dir ($folder = $srcPath . DIRECTORY_SEPARATOR . $item)) {
+        if (is_dir($folder = $srcPath . DIRECTORY_SEPARATOR . $item)) {
             $autoLoadFolders[] = $folder;
         }
     }
-    spl_autoload_register ('legacyAutoload', true/*, true*/);
+    spl_autoload_register('legacyAutoload', true/*, true*/ );
 }
 
 
@@ -85,12 +128,12 @@ function selfAutoLoad ($srcPath)
  *
  * @return mastercontrolprogram
  */
-function lnxmcp ()
+function lnxmcp()
 {
     if (isset($GLOBALS["mcp"])) {
         return $GLOBALS["mcp"];
     } else {
-        DumpOnFatal ("FATAL ERROR - lnxmcp is NOT SETTED!!! \n", true);
+        DumpOnFatal("FATAL ERROR - lnxmcp is NOT SETTED!!! \n", true);
     }
 }
 
@@ -104,9 +147,9 @@ function lnxmcp ()
  *
  * @return void
  */
-function linhunixErrorHandlerDev ($errno, $errstr, $errfile, $errline)
+function linhunixErrorHandlerDev($errno, $errstr, $errfile, $errline)
 {
-    if (!(error_reporting () & $errno)) {
+    if (!(error_reporting() & $errno)) {
         return false;
     }
     $errtype = $errno;
@@ -116,26 +159,26 @@ function linhunixErrorHandlerDev ($errno, $errstr, $errfile, $errline)
         case E_ERROR:
             $exit = true;
         case E_USER_ERROR:
-            lnxmcp ()->error ($errstr . "[" . $errfile . "] [" . $errline . "]");
+            lnxmcp()->error($errstr . "[" . $errfile . "] [" . $errline . "]");
             break;
         case E_USER_DEPRECATED:
         case E_WARNING:
         case E_USER_WARNING:
-            lnxmcp ()->warning ($errstr . "[" . $errfile . "] [" . $errline . "]");
+            lnxmcp()->warning($errstr . "[" . $errfile . "] [" . $errline . "]");
             break;
         case E_NOTICE:
         case E_USER_NOTICE:
             $errtype = "INF";
-            lnxmcp ()->info ($errstr . "[" . $errfile . "] [" . $errline . "]");
+            lnxmcp()->info($errstr . "[" . $errfile . "] [" . $errline . "]");
             break;
         default:
             $errtype = "DBG";
-            lnxmcp ()->debug ($errstr . "[" . $errfile . "] [" . $errline . "]");
+            lnxmcp()->debug($errstr . "[" . $errfile . "] [" . $errline . "]");
             break;
     }
     if ($exit) {
-        \header ("HTTP/1.1 302 Moved Temporarily", true, 302);
-        \header ('Location: /500', true, 500);
+        \header("HTTP/1.1 302 Moved Temporarily", true, 302);
+        \header('Location: /500', true, 500);
         exit(1);
         exit(1);
     }
@@ -147,8 +190,8 @@ function linhunixErrorHandlerDev ($errno, $errstr, $errfile, $errline)
  *
  * @return void
  */
-function mcpErrorHandlerInit ()
+function mcpErrorHandlerInit()
 {
-    $old_error_handler = set_error_handler ("linhunixErrorHandlerDev");
+    $old_error_handler = set_error_handler("linhunixErrorHandlerDev");
 }
 
