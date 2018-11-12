@@ -14,6 +14,7 @@ use LinHUniX\Mcp\Provider\settingsProviderModel;
 use LinHUniX\Mcp\Model\mcpServiceProviderModelClass;
 use LinHUniX\Mcp\Model\mcpBaseModelClass;
 use LinHUniX\Mcp\Model\mcpConfigArrayModelClass;
+use \LinHUniX\Mcp\Component\mcpMenuClass;
 
 /*
  * this Master Control Programs Class is to prepare 
@@ -1021,123 +1022,7 @@ final class masterControlProgram
      * @return any $ScopeOut
      */
     public function runCommand(array $scopectl,array $scopeIn=array()){
-        $callname="none";
-        if(isset($scopectl["name"])){
-            $callname=$scopectl["name"];
-        }
-        $path = null;
-        if(isset($scopectl["path"])){
-            $path=$scopectl["path"];
-        }
-        $ispreload = false;
-        if(isset($scopectl["ispreload"])){
-            $ispreload=$scopectl["ispreload"];
-        }
-        $modinit=null;
-        if(isset($scopectl["module"])){
-            $modinit=$scopectl["module"];
-        }
-        $vendor = null;
-        if(isset($scopectl["vendor"])){
-            $vendor=$scopectl["vendor"];
-        }
-        $subcall = null;
-        if(isset($scopectl["subcall"])){
-            $subcall=$scopectl["subcall"];
-        }
-        $type=null;
-        if (isset($scopectl["type"])){
-            $type=$scopectl["type"];
-        }
-        $controllerModule=null;
-        if (isset($scopectl["controllerModule"])){
-            $controllerModule=$scopectl["controllerModule"];
-        }
-        $blockModule=null;
-        if (isset($scopectl["blockModule"])){
-            $blockModule=$scopectl["blockModule"];
-        }
-        $result=null;
-        $this->info ("command try to call ".$type.">> app." . $callname);
-        switch($type){
-            case "exit":
-                DumpAndExit(@$scopectl["message"]);
-                break;
-            case "print":
-                echo $scopeIn;
-                break;
-            case "clear":
-                $scopeIn=array();
-                break;
-            case "header":
-                $header=@$scopectl["header"];
-                lnxmcp()->header($header,false);
-                break;
-            case "headerClose":
-                $header=@$scopectl["header"];
-                lnxmcp()->header($header,true);
-                break;
-            case "run":
-                $result=$this->moduleRun($callname,$scopeIn);
-                break;
-            case "driver":
-                $result=$this->driver($callname,$ispreload,$scopeIn,$modinit,$subcall,$vendor);                 
-                break;
-            case "query":
-                $result=$this->queryR($callname,$ispreload,$scopeIn,$modinit,$subcall,$vendor);                 
-                break;
-            case "queryCommon":
-                $result=$this->queryCommonR($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
-                break;
-            case "controller":
-                $result=$this->controller($callname,$ispreload,$scopeIn,$modinit,$subcall,$vendor);                 
-                break;
-            case "controllerCommon":
-                $result=$this->controllerCommon($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
-                break;
-            case "api":
-                $result=$this->api($callname,$ispreload,$scopeIn,$modinit,$subcall,$vendor);                 
-                break;
-            case "apiCommon":
-                $result=$this->apiCommon($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
-                break;
-            case "service":
-                $result=$this->service($callname,$ispreload,$scopeIn,$modinit,$subcall,$vendor);                 
-                break;
-            case "serviceCommon":
-                $result=$this->serviceCommon($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
-                break;
-            case "page":
-                $result=$this->page($callname,$scopeIn,$modinit,$vendor);                 
-                break;
-            case "mail":
-                $result=$this->mail($callname,$scopeIn,$modinit);                 
-                break;
-            case "block":
-                $result=$this->block($callname,$scopeIn,$modinit,$vendor);                 
-                break;
-            case "blockCommon":
-                $result=$this->blockCommon($callname,$scopeIn,$modinit);               
-                break;
-            case "showPage":
-                $result=$this->showPage($callname,$scopeIn,$controllerModule,$blockModule);               
-                break;
-            case "showCommonPage":
-                $result=$this->showCommonPage($callname,$scopeIn,$controllerModule,$blockModule);               
-                break;
-            case "showBlock":
-                $result=$this->showBlock($callname,$scopeIn,$controllerModule,$blockModule);               
-                break;
-            case "showCommonBlock":
-                $result=$this->showCommonBlock($callname,$scopeIn,$controllerModule,$blockModule);               
-                break;
-            case "showFullCommonBlock":    
-                $result=$this->showFullCommonBlock($callname,$scopeIn,$controllerModule,$blockModule);               
-                break;
-            default:
-                $result=$this->module($callname,$path,$ispreload,$scopeIn,$modinit,$subcall,$vendor,$type);                 
-        }
-        return $result;
+        return mcpMenuClass::runCommand($scopectl,$scopeIn);
     }
     
     /**
@@ -1146,21 +1031,9 @@ final class masterControlProgram
      * @param  mixed $scopeIn
      * @return any $ScopeOut
      */
-    public function runSequence (array $actions,$scopeIn=array())
+    public function runSequence (array $actionseq,$scopeIn=array())
     {  
-        foreach ($actions as $callname=>$scopeCtl){
-            $this->info ("Sequence call app." . $callname);
-            if (!isset( $scopeCtl["name"])){
-                $scopeCtl["name"]=$callname;
-            }
-            if (isset($scopeCtl["input"])){
-                foreach($scopeCtl["input"] as $sik=>$siv){
-                    $scopeIn[$sik]=$siv;
-                }
-            }
-            $scopeIn=$this->runCommand($scopeCtl,$scopeIn);          
-        }
-        return $scopeIn;
+        return mcpMenuClass::runSequence($actionseq,$scopeIn);
     }
     /**
      * Run Module as Menu sequence
@@ -1170,18 +1043,7 @@ final class masterControlProgram
      */
     public function runMenu ($action,$scopeIn=array())
     {
-        $sequence=$this->getResource("menu.".$action);
-        if ($sequence==null){
-            $seqpth=$this->getResource("path.menus");
-            if ($seqpth!=null){
-                $sequence=lnxGetJsonFile($action,$seqpth,"json");
-            }
-        }
-        if (($sequence!=null)&&($sequence!=false)){
-            return $this->runSequence($sequence,$scopeIn);
-        }else{
-            return false;
-        }
+        return mcpMenuClass::runMenu($action,$scopeIn);
     }
     /**
      * Run Module as Tags sequence
@@ -1191,17 +1053,6 @@ final class masterControlProgram
      */
     public function runTag ($action,$scopeIn=array())
     {
-        $sequence=$this->getResource("tag.".$action);
-        if ($sequence==null){
-            $seqpth=$this->getResource("path.tags");
-            if ($seqpth!=null){
-                $sequence=lnxGetJsonFile($action,$seqpth,"json");
-            }
-        }
-        if (($sequence!=null)&&($sequence!=false)){
-            return $this->runSequence($sequence,$scopeIn);
-        }else{
-            return false;
-        }
+        return mcpMenuClass::runTag($action,$scopeIn);
     }
 }
