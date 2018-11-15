@@ -8,11 +8,11 @@ and your functionality is an extension of it :
 - Slim 
 - Laravel
 
-    Web >> MVP/MVC >> Your Code (as an extension of MVP/MVC);
+        Web >> MVP/MVC >> Your Code (as an extension of MVP/MVC);
 
 A MCP is a layer, whe you ad this on your code, then is automatic estended with this features
 
-    Web >> Your Code << MCP >> New Features;
+        Web >> Your Code << MCP >> New Features;
     
 That make the developper and the designer in a very confident solution :
 - The designe don't need to know the php or the lnxmcp code but only the tag 
@@ -28,7 +28,7 @@ the logic is to be a manager of older and new code
 ### support function and class namespace ###
 The logic inside support both nmespace function and class
 
-It's a reflection framework and not a solid framework 
+###It's a reflection framework and not a solid framework ###
   It is implement:
  - simple log service 
  - simple mail service 
