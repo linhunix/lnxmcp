@@ -28,7 +28,8 @@ the logic is to be a manager of older and new code
 ### support function and class namespace ###
 The logic inside support both nmespace function and class
 
-###It's a reflection framework and not a solid framework ###
+### It's a reflection framework and not a solid framework ###
+
   It is implement:
  - simple log service 
  - simple mail service 
