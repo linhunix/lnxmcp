@@ -37,7 +37,7 @@ The logic inside support both nmespace function and class
  - simple data cache 
  - simple shell command service 
  
- for more info [[https://github.com/linhunix/lnxmcp/wiki/|Wiki GitHub Pages]] 
+ for more info [[ https://github.com/linhunix/lnxmcp/wiki/ | Wiki GitHub Pages ]] 
 
  
 **LNX** (LinHUniX) **MCP** (Master Control Program) is a share code with free license.
