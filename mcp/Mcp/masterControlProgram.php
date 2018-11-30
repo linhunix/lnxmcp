@@ -810,6 +810,26 @@ final class masterControlProgram
         return mcpProxyClass::apiRemote($this,$ctrlproc,$scopeIn,$modinit,$subcall,$vendor);
     }
     /**
+     * Run Module as controller as Shell
+     * @param string $ctrlproc name of the driver
+     * @param bool $ispreload  is only a preload (ex page) or need to be execute (ex controller)
+     * @param array $scopeIn   Input Array with the value need to work
+     * @param string $modinit  Module name where is present the code and be load and initalized
+     * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
+     * @return array $ScopeOut
+     */
+    public function controllerShell ($ctrlproc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null,$vendor=null)
+    {
+        $this->info ("MCP>>controller(Shell)>>" . $ctrlproc);
+        $res=mcpProxyClass::apiShell($this,$ctrlproc,$scopeIn,$modinit,$subcall,$vendor);
+        try{
+            return json_decode($res);
+        }catch(\Exception $e){
+            $this->warning($e->getMessage());
+            return $res;
+        }
+    }
+    /**
      * Run Module as ToolApi Components
      * @param string $srvprc  name of the driver
      * @param bool $ispreload is only a preload (ex page) or need to be execute (ex controller)
@@ -860,14 +880,31 @@ final class masterControlProgram
      */
     public function apiRemote ($srvprc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null,$vendor=null)
     {
-        $this->info ("MCP>>api(C)>>" . $srvprc);
+        $this->info ("MCP>>api(Remote)>>" . $srvprc);
         $scopeIn["prev-output"]=ob_get_clean();
         $res=mcpProxyClass::apiRemote($this,$srvprc,$scopeIn,$modinit,$subcall,$vendor);
         ob_clean();
         header('Content-type: application/json');
         echo json_encode ($res);
     }
-
+    /**
+     * Run Module as ToolApi Components on shell system
+     * @param string $srvprc  name of the driver
+     * @param bool $ispreload is only a preload (ex page) or need to be execute (ex controller)
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
+     * @return array $ScopeOut
+     */
+    public function apiShell ($srvprc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null,$vendor=null)
+    {
+        $this->info ("MCP>>api(Shell)>>" . $srvprc);
+        $scopeIn["prev-output"]=ob_get_clean();
+        $res=mcpProxyClass::apiShell($this,$srvprc,$scopeIn,$modinit,$subcall,$vendor);
+        ob_clean();
+        header('Content-type: application/json');
+        echo $res;
+    }
     /**
      * Run Module as service
      * @param string $srvprc  name of the driver
@@ -928,8 +965,23 @@ final class masterControlProgram
             $vendor=$this->defapp;
         }
         $scopeIn["prev-output"]=ob_get_clean();
-        $this->info ("MCP>>" .$vendor .">>page>>" . $page);
+        $this->info ("MCP>>" .$vendor .">>pageRemote>>" . $page);
         print( mcpProxyClass::apiRemote($this,$page,$scopeIn,$modinit,null,$vendor));
+    }
+    /**
+     * Load a page with your ScopeIn
+     * @param string $page    name of the Page
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     */
+    public function pageShell ($page, $scopeIn = array (), $modinit = null,$vendor=null)
+    {
+        if ($vendor==null){
+            $vendor=$this->defapp;
+        }
+        $scopeIn["prev-output"]=ob_get_clean();
+        $this->info ("MCP>>" .$vendor .">>pageShell>>" . $page);
+        print( mcpProxyClass::apiShell($this,$page,$scopeIn,$modinit,null,$vendor));
     }
     /**
      * Load a mail with your ScopeIn

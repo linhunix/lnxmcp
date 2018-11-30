@@ -89,10 +89,43 @@ class mcpProxyClass
             $scopeOut = json_decode(curl_exec($ch), 1); // execute the http request
             curl_close($ch); // close the connection
         } catch (\Exception $e) {
-            $this->getMcp()->warning($e->getMessage());
+            $mcp->warning($e->getMessage());
             return $scopeOut;
         }
         return $scopeOut;
     }
-
+    public static function apiShell(masterControlProgram &$mcp, $srvprc, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null){
+        try{
+            foreach($scopeIn as $ek=>$ev){
+                putenv($ek."=".$ev);
+            }
+            $cmd="";
+            if ($vendor!=null){
+                if ($cmd!=""){
+                    $cmd.=DIRECTORY_SEPARATOR;
+                }
+                $cmd.=$vendor;
+            }
+            if ($modinit!=null){
+                if ($cmd!=""){
+                    $cmd.=DIRECTORY_SEPARATOR;
+                }
+                $cmd.=$modinit;
+            }
+            if ($subcall!=null){
+                if ($cmd!=""){
+                    $cmd.=DIRECTORY_SEPARATOR;
+                }
+                $cmd.=$subcall;
+            }
+            if ($cmd!=""){
+                $cmd.=DIRECTORY_SEPARATOR;
+            }
+            $cmd.=$srvprc;
+            return shell_exec($cmd);    
+        }catch(\Exception $e){
+            $mcp->warning($e->getMessage());
+            return $scopeIn;
+        }
+    }
 }
