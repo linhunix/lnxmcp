@@ -11,7 +11,7 @@
 namespace LinHUniX\Mcp\Component;
 
 use LinHUniX\Mcp\masterControlProgram;
-use LinHUniX\Mcp\Provider\LoggerProviderModel;
+use LinHUniX\Mcp\Provider\loggerProviderModel;
 
 /**
  * Description of mcpDebugClass
@@ -31,12 +31,12 @@ class mcpDebugClass
      */
     public function __construct (masterControlProgram &$mcp)
     {
-        $this->mcp =& $mcp;
+        $this->mcp =&$mcp;
         if ($this->getLogger () == null) {
-            if ($mcp->getResource (masterControlProgram . CLASS_LOGGER) != null) {
-                $mcp->register (new ${$mcp->getResource (masterControlProgram . CLASS_LOGGER)}());
+            if ($mcp->getResource (masterControlProgram::CLASS_LOGGER) != null) {
+                $mcp->register (new ${$mcp->getResource (masterControlProgram::CLASS_LOGGER)}());
             } else {
-                $mcp->register (new LoggerProviderModel());
+                $mcp->register (new loggerProviderModel());
             }
         }
     }
@@ -222,9 +222,8 @@ class mcpDebugClass
         if ($end) {
             $msg = " With End";
         }
-        $this->error ("Header [" . $retcode . "]:" . $string . $msg);
+        $this->warning("Header [" . $retcode . "]:" . $string . $msg);
         \header ($string, $replace, $retcode);
-        debug_print_backtrace ();
         if ($end) {
             exit(0);
         }
@@ -249,7 +248,7 @@ class mcpDebugClass
      */
     private function getRes ($string)
     {
-        return $this->getMCP ()->geResource ($string);
+        return $this->getMCP()->getResource($string);
     }
 
     /**

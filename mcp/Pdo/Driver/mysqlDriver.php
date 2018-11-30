@@ -31,9 +31,12 @@ class mysqlDriver extends mcpBaseModelClass {
         $password = getenv($scopeIn["password"]);
         $this->database = getenv($scopeIn["database"]);
         $this->PDO = new PDO('mysql:host=' . $hostname . ';dbname=' . $this->database, $username, $password, array(PDO::ATTR_PERSISTENT => true));
+        $this->getMcp()->info("hostname:".$hostname);
+        $this->getMcp()->debug("username:".$username);
+        $this->getMcp()->info("database:".$this->database);
         $data = $this->getTable("SHOW TABLES");
+        $i=0;
         if (is_array($data)){
-            $i = 0;
             foreach ($data as $dt) {
                 foreach ($dt as $k => $v) {
                     $this->tables[$i] = $v;

@@ -59,7 +59,6 @@ function DumpOnFatal($message, $exit = false)
         exit(1);
     }
 }
-}
 
 /**
  * this version has only the error log call because is work when is present a big issue
@@ -68,6 +67,8 @@ function DumpOnFatal($message, $exit = false)
  */
 function DumpOnFatal($message, $exit = false)
 {
+    lnxmcp()->runTag("Fatal");
+    lnxmcp()->runTag("Exit");
     echo $message;
     foreach (debug_backtrace() as $errarr) {
         error_log("-> " . $errarr["file"] . " : " . $errarr["line"] . " <br>");
@@ -81,7 +82,10 @@ function DumpOnFatal($message, $exit = false)
         exit(1);
     }
 }
-
+}
+////////////////////////////////////////////////////////////////////////////////
+// AUTOLOAD/CONFIG
+////////////////////////////////////////////////////////////////////////////////
 /**
  * A basic autoload implementation that should be compatible with PHP 5.2.
  *
@@ -122,6 +126,36 @@ function selfAutoLoad($srcPath)
     spl_autoload_register('legacyAutoload', true/*, true*/ );
 }
 
+/**
+ * linhunix json array converter 
+ *
+ * @param  mixed $file
+ * @param  mixed $path if is need 
+ * @param  mixed $ext with out the '.'
+ *
+ * @return any json object converted 
+ */
+function lnxGetJsonFile($file,$path="",$ext=""){
+    $jfile=$path;
+    if ($jfile!=""){
+        $jfile.=DIRECTORY_SEPARATOR.$file;
+    }    
+    if ($ext!=""){
+        $jfile.=".".$ext;
+    }
+    if (file_exists($jfile)){
+        try{
+            lnxmcp()->info("lnxGetJsonFile:".$jfile);
+            return json_decode (file_get_contents ($jfile),true);
+        }catch(\Exception $e){
+            lnxmcp()->warning("lnxGetJsonFile>>file:".$jfile." and err:".$e->get_message());
+            return false;
+        }
+    }else{
+        lnxmcp()->info("lnxGetJsonFile>>file:".$jfile." and not found" );
+    }
+    return null;
+}
 
 /**
  * lnxmcp
@@ -137,6 +171,18 @@ function lnxmcp()
     }
 }
 
+/**
+ * LinHUnix Master Control Program 
+ * Fast Tag caller 
+ *
+ * @param  mixed $tagname
+ * @param  mixed $scopein
+ *
+ * @return void
+ */
+function lnxMcpTag($tagname,array $scopein=array()){
+    lnxmcp()->runTag ($tagname,$scopeIn);
+}
 /**
  * linhunixErrorHandlerDev
  *

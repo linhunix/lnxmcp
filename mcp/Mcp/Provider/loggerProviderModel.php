@@ -15,7 +15,7 @@ use LinHUniX\Mcp\Model\mcpConfigArrayModelClass;
 use LinHUniX\Mcp\Model\mcpDebugModelClass;
 use LinHUniX\Mcp\Model\mcpServiceProviderModelClass;
 
-class LoggerProviderModel implements mcpServiceProviderModelClass
+class loggerProviderModel implements mcpServiceProviderModelClass
 {
     /**
      * Register the settings as a provider with a container

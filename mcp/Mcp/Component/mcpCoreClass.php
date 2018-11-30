@@ -204,7 +204,7 @@ final class mcpCoreClass
         $this->scopeCtl[$this->sub]["module"] = "";
         $this->scopeCtl[$this->sub]["auto"] = $path;
         $this->scopeCtl[$this->sub]["file"] = $path;
-        $this->scopeCtl[$this->sub]["tag"] = "App";
+        $this->scopeCtl[$this->sub]["tag"] = "app";
         $this->scopeCtl[$this->sub]["type"] = "module";
 //// VENDOR SETTINGS
         if ($vendor != null) {
@@ -213,12 +213,12 @@ final class mcpCoreClass
                 $this->scopeCtl[$this->sub]["file"] = "/";
                 $this->scopeCtl[$this->sub]["auto"] = "/";
             } else {
-                $this->scopeCtl[$this->sub]["file"] .= "/" . $vendor . "/";
                 $this->scopeCtl[$this->sub]["auto"] .= "/" . $vendor . "/";
+                $this->scopeCtl[$this->sub]["module"] .= $vendor . "\\";
                 if ($vendor == $this->defapp) {
-                    $this->scopeCtl[$this->sub]["module"] .= "App\\";
-                } else {
-                    $this->scopeCtl[$this->sub]["module"] .= $vendor . "\\";
+                    $this->scopeCtl[$this->sub]["file"] .= "/";
+                }else{
+                    $this->scopeCtl[$this->sub]["file"] .= "/" . $vendor . "/";
                 }
             }
         }
@@ -358,7 +358,7 @@ final class mcpCoreClass
      * @return any Component object
      * @throws Exception if the cfg are not present or don't have this component
      */
-    private function getMcp ()
+    private function getMcp()
     {
         return $this->mcp;
     }
@@ -375,6 +375,7 @@ final class mcpCoreClass
             return false;
         }
         try {
+            $this->mcp->debug("Config tag:".$tag." Loaded");
             $this->mcp->setCfg ($tag, $component);
         } catch (\Exception $e) {
             throw new Exception("MasterControlProgram Don't Found or Set Container Component! " . $e->getMessage ());
@@ -477,7 +478,7 @@ final class mcpCoreClass
                 $this->shareModuleVars ();
             }
         } catch (Exception $e) {
-            $res = "error in creqMod " . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
+            $res = "executeModule:error >" . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
             $this->setStatus (false, $res);
         }
         $this->setWorkingArea ("executeModule:run");
@@ -488,9 +489,13 @@ final class mcpCoreClass
                 return true;
             }
         } catch (Exception $e) {
-            $res = "error in creqMod " . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
+            $res = "executeModule:error >>" . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
             $this->setStatus (false, $res);
         }
+        if (in_array ($this->scopeCtl[$this->sub]["type"], array ("Controller","Page", "Block"))) 
+        {
+            $this->setDic ($ $this->scopeCtl[$this->sub]["tag"], ".");
+        } 
         return false;
     }
 
@@ -520,7 +525,7 @@ final class mcpCoreClass
             $this->setStatus (false, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS NOT PRESENT - NEED TO BE LOAD ");
         }
         // prepare env to have load a new components - for full compatibility;
-        if (in_array ($this->scopeCtl[$this->sub]["type"], array ("Api","Page", "Block"))) {
+        if (in_array ($this->scopeCtl[$this->sub]["type"], array ("api","Page", "Block"))) {
             $this->scopeOut[$this->sub] = $this->scopeIn[$this->sub];
             if (isset($this->scopeIn[$this->sub]["return"])) {
                 $this->scopeOut[$this->sub] = $this->scopeIn[$this->sub]["return"];
