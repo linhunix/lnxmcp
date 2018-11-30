@@ -37,9 +37,9 @@ class mcpProxyClass
                     } else {
                         $url = $mcp->getCfg("app.remote.url");
                     }
-                }else{
-                    $url=$vendor;
-                    $vendor=null;                    
+                } else {
+                    $url = $vendor;
+                    $vendor = null;
                 }
             } else {
                 $url = $scopeIn["url"];
@@ -94,38 +94,77 @@ class mcpProxyClass
         }
         return $scopeOut;
     }
-    public static function apiShell(masterControlProgram &$mcp, $srvprc, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null){
-        try{
-            foreach($scopeIn as $ek=>$ev){
-                putenv($ek."=".$ev);
+    public static function apiShell(masterControlProgram &$mcp, $srvprc, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    {
+        try {
+            foreach ($scopeIn as $ek => $ev) {
+                putenv($ek . "=" . $ev);
             }
-            $cmd="";
-            if ($vendor!=null){
-                if ($cmd!=""){
-                    $cmd.=DIRECTORY_SEPARATOR;
+            $cmd = "";
+            if ($vendor != null) {
+                if ($cmd != "") {
+                    $cmd .= DIRECTORY_SEPARATOR;
                 }
-                $cmd.=$vendor;
+                $cmd .= $vendor;
             }
-            if ($modinit!=null){
-                if ($cmd!=""){
-                    $cmd.=DIRECTORY_SEPARATOR;
+            if ($modinit != null) {
+                if ($cmd != "") {
+                    $cmd .= DIRECTORY_SEPARATOR;
                 }
-                $cmd.=$modinit;
+                $cmd .= $modinit;
             }
-            if ($subcall!=null){
-                if ($cmd!=""){
-                    $cmd.=DIRECTORY_SEPARATOR;
+            if ($subcall != null) {
+                if ($cmd != "") {
+                    $cmd .= DIRECTORY_SEPARATOR;
                 }
-                $cmd.=$subcall;
+                $cmd .= $subcall;
             }
-            if ($cmd!=""){
-                $cmd.=DIRECTORY_SEPARATOR;
+            if ($cmd != "") {
+                $cmd .= DIRECTORY_SEPARATOR;
             }
-            $cmd.=$srvprc;
-            return shell_exec($cmd);    
-        }catch(\Exception $e){
+            $cmd .= $srvprc;
+            return shell_exec($cmd);
+        } catch (\Exception $e) {
             $mcp->warning($e->getMessage());
             return $scopeIn;
         }
     }
+    public static function pageShell(masterControlProgram &$mcp, $srvprc, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    {
+        try {
+            foreach ($scopeIn as $ek => $ev) {
+                putenv($ek . "=" . $ev);
+            }
+            $cmd = "";
+            if ($vendor != null) {
+                if ($cmd != "") {
+                    $cmd .= DIRECTORY_SEPARATOR;
+                }
+                $cmd .= $vendor;
+            }
+            if ($modinit != null) {
+                if ($cmd != "") {
+                    $cmd .= DIRECTORY_SEPARATOR;
+                }
+                $cmd .= $modinit;
+            }
+            if ($subcall != null) {
+                if ($cmd != "") {
+                    $cmd .= DIRECTORY_SEPARATOR;
+                }
+                $cmd .= $subcall;
+            }
+            if ($cmd != "") {
+                $cmd .= DIRECTORY_SEPARATOR;
+            }
+            $cmd .= $srvprc;
+            if (isset($scopeIn["MIME_TYPE"])){
+                header('Content-type: '.$scopeIn["MIME_TYPE"]);
+            }
+            passthru($cmd);
+        } catch (\Exception $e) {
+            $mcp->warning($e->getMessage());
+        }
+    }
+
 }

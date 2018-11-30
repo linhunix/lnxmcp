@@ -981,7 +981,7 @@ final class masterControlProgram
         }
         $scopeIn["prev-output"]=ob_get_clean();
         $this->info ("MCP>>" .$vendor .">>pageShell>>" . $page);
-        print( mcpProxyClass::apiShell($this,$page,$scopeIn,$modinit,null,$vendor));
+        print( mcpProxyClass::pageShell($this,$page,$scopeIn,$modinit,null,$vendor));
     }
     /**
      * Load a mail with your ScopeIn
