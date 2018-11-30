@@ -36,53 +36,31 @@ if (function_exists("DumpAndExit") != true) {
         }
         exit();
     }
-}
-/**
- * this version has only the error log call because is work when is present a big issue
- * @param String $message
- * @param bool $exit
- */
-function DumpOnFatal($message, $exit = false)
-{
-    lnxmcp()->runTag("Fatal");
-    lnxmcp()->runTag("Exit");
-    echo $message;
-    foreach (debug_backtrace() as $errarr) {
-        error_log("-> " . $errarr["file"] . " : " . $errarr["line"] . " <br>");
-    }
-    foreach (get_included_files() as $filename) {
-        error_log("Load: $filename");
-    }
-    error_log("FATAL ERROR - lnxmcp is NOT SETTED!!! ");
-    error_log(debug_print_backtrace());
-    if ($exit == true) {
-        exit(1);
+    /**
+     * this version has only the error log call because is work when is present a big issue
+     * @param String $message
+     * @param bool $exit
+     */
+    function DumpOnFatal($message, $exit = false)
+    {
+        lnxmcp()->runTag("Fatal");
+        lnxmcp()->runTag("Exit");
+        echo $message;
+        foreach (debug_backtrace() as $errarr) {
+            error_log("-> " . $errarr["file"] . " : " . $errarr["line"] . " <br>");
+        }
+        foreach (get_included_files() as $filename) {
+            error_log("Load: $filename");
+        }
+        error_log("FATAL ERROR - lnxmcp is NOT SETTED!!! ");
+        error_log(debug_print_backtrace());
+        if ($exit == true) {
+            exit(1);
+        }
     }
 }
 
-/**
- * this version has only the error log call because is work when is present a big issue
- * @param String $message
- * @param bool $exit
- */
-function DumpOnFatal($message, $exit = false)
-{
-    lnxmcp()->runTag("Fatal");
-    lnxmcp()->runTag("Exit");
-    echo $message;
-    foreach (debug_backtrace() as $errarr) {
-        error_log("-> " . $errarr["file"] . " : " . $errarr["line"] . " <br>");
-    }
-    foreach (get_included_files() as $filename) {
-        error_log("Load: $filename");
-    }
-    error_log("FATAL ERROR - lnxmcp is NOT SETTED!!! ");
-    error_log(debug_print_backtrace());
-    if ($exit == true) {
-        exit(1);
-    }
-}
-}
+
 ////////////////////////////////////////////////////////////////////////////////
 // AUTOLOAD/CONFIG
 ////////////////////////////////////////////////////////////////////////////////
@@ -135,24 +113,25 @@ function selfAutoLoad($srcPath)
  *
  * @return any json object converted 
  */
-function lnxGetJsonFile($file,$path="",$ext=""){
-    $jfile=$path;
-    if ($jfile!=""){
-        $jfile.=DIRECTORY_SEPARATOR.$file;
-    }    
-    if ($ext!=""){
-        $jfile.=".".$ext;
+function lnxGetJsonFile($file, $path = "", $ext = "")
+{
+    $jfile = $path;
+    if ($jfile != "") {
+        $jfile .= DIRECTORY_SEPARATOR . $file;
     }
-    if (file_exists($jfile)){
-        try{
-            lnxmcp()->info("lnxGetJsonFile:".$jfile);
-            return json_decode (file_get_contents ($jfile),true);
-        }catch(\Exception $e){
-            lnxmcp()->warning("lnxGetJsonFile>>file:".$jfile." and err:".$e->get_message());
+    if ($ext != "") {
+        $jfile .= "." . $ext;
+    }
+    if (file_exists($jfile)) {
+        try {
+            lnxmcp()->info("lnxGetJsonFile:" . $jfile);
+            return json_decode(file_get_contents($jfile), true);
+        } catch (\Exception $e) {
+            lnxmcp()->warning("lnxGetJsonFile>>file:" . $jfile . " and err:" . $e->get_message());
             return false;
         }
-    }else{
-        lnxmcp()->info("lnxGetJsonFile>>file:".$jfile." and not found" );
+    } else {
+        lnxmcp()->info("lnxGetJsonFile>>file:" . $jfile . " and not found");
     }
     return null;
 }
@@ -180,8 +159,9 @@ function lnxmcp()
  *
  * @return void
  */
-function lnxMcpTag($tagname,array $scopein=array()){
-    lnxmcp()->runTag ($tagname,$scopeIn);
+function lnxMcpTag($tagname, array $scopein = array())
+{
+    lnxmcp()->runTag($tagname, $scopeIn);
 }
 /**
  * linhunixErrorHandlerDev
