@@ -15,6 +15,7 @@ use LinHUniX\Mcp\Model\mcpServiceProviderModelClass;
 use LinHUniX\Mcp\Model\mcpBaseModelClass;
 use LinHUniX\Mcp\Model\mcpConfigArrayModelClass;
 use \LinHUniX\Mcp\Component\mcpMenuClass;
+use \LinHUniX\Mcp\Component\mcpProxyClass;
 
 /*
  * this Master Control Programs Class is to prepare 
@@ -794,7 +795,20 @@ final class masterControlProgram
         $this->info ("MCP>>controller(C)>>" . $ctrlproc);
         return $this->module ($ctrlproc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Controller");
     }
-
+   /**
+     * Run Module as controller as remote
+     * @param string $ctrlproc name of the driver
+     * @param bool $ispreload  is only a preload (ex page) or need to be execute (ex controller)
+     * @param array $scopeIn   Input Array with the value need to work
+     * @param string $modinit  Module name where is present the code and be load and initalized
+     * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
+     * @return array $ScopeOut
+     */
+    public function controllerRemote ($ctrlproc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null,$vendor=null)
+    {
+        $this->info ("MCP>>controller(Remote)>>" . $ctrlproc);
+        return mcpProxyClass::apiRemote($this,$ctrlproc,$scopeIn,$modinit,$subcall,$vendor);
+    }
     /**
      * Run Module as ToolApi Components
      * @param string $srvprc  name of the driver
@@ -831,6 +845,24 @@ final class masterControlProgram
         $this->info ("MCP>>api(C)>>" . $srvprc);
         $scopeIn["prev-output"]=ob_get_clean();
         $res = $this->module ($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Api");
+        ob_clean();
+        header('Content-type: application/json');
+        echo json_encode ($res);
+    }
+    /**
+     * Run Module as ToolApi Components on remote system
+     * @param string $srvprc  name of the driver
+     * @param bool $ispreload is only a preload (ex page) or need to be execute (ex controller)
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
+     * @return array $ScopeOut
+     */
+    public function apiRemote ($srvprc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null,$vendor=null)
+    {
+        $this->info ("MCP>>api(C)>>" . $srvprc);
+        $scopeIn["prev-output"]=ob_get_clean();
+        $res=mcpProxyClass::apiRemote($this,$srvprc,$scopeIn,$modinit,$subcall,$vendor);
         ob_clean();
         header('Content-type: application/json');
         echo json_encode ($res);
@@ -884,7 +916,21 @@ final class masterControlProgram
         $this->info ("MCP>>" .$vendor .">>page>>" . $page);
         $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $vendor, "Page");
     }
-
+    /**
+     * Load a page with your ScopeIn
+     * @param string $page    name of the Page
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     */
+    public function pageRemote ($page, $scopeIn = array (), $modinit = null,$vendor=null)
+    {
+        if ($vendor==null){
+            $vendor=$this->defapp;
+        }
+        $scopeIn["prev-output"]=ob_get_clean();
+        $this->info ("MCP>>" .$vendor .">>page>>" . $page);
+        print( mcpProxyClass::apiRemote($this,$page,$scopeIn,$modinit,null,$vendor));
+    }
     /**
      * Load a mail with your ScopeIn
      * @param string $page    name of the Page
