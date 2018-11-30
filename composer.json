@@ -1,6 +1,7 @@
 {
     "name": "linhunix/mcp",
     "description": "LinHUniX Master Control Program Package \n This package enable the mvc logic without use a big framework",
+    "homepage":"",
     "keywords": ["template", "composer", "package"],
     "license": "GPL-3.0-or-later",
     "type": "library",
