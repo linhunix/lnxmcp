@@ -55,7 +55,18 @@ final class masterControlProgram
      * Short Name of this application
      * @var string
      */
-    private $defapp;
+    private $common; // is a test class to integrate slim on the code 
+    /**
+     * Short Name of this application
+     * @var string
+     */
+    private $event; // is a test class to integrate slim on the code 
+    /**
+     * Short Name of this application
+     * @var string
+     */
+    
+     private $defapp;
     /**
      * Short Name of the vendors
      * @var string
@@ -87,6 +98,8 @@ final class masterControlProgram
     public function __construct (array $scopeIn)
     {
         $this->pathapp = $scopeIn["app.path"] . "/App/";
+        $this->common=array();
+        $this->event=array();
         $this->defapp = ucwords ($scopeIn["app.def"]);
         if (isset($scopeIn["app.path.module"])){
             $this->pathsrc = $scopeIn["app.path.module"];
@@ -147,7 +160,6 @@ final class masterControlProgram
             $this->legacySetting ();
         }
     }
-
     /**
      * @param null $resname
      * @return null object
@@ -185,6 +197,51 @@ final class masterControlProgram
         }
         return true;
     }
+    /////////////////////////////////////////////////////////////////////////////
+    // COMMON CONTROLLER 
+    /////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @param null $resname
+     * @return null object
+     */
+    public function getCommon($resname = null)
+    {
+        if ($resname == null) {
+            return $this->common;
+        }
+        if (isset($this->common[$resname])) {
+            if ($this->common[$resname] == "true") {
+                return true;
+            }
+            if ($this->common[$resname] == "false") {
+                return false;
+            }
+            return $this->common[$resname];
+        }
+        return null;
+    }
+
+    /**
+     * @param $resname name of value
+     * @param $revalue values
+     * @return bool if operation coplete success true (othervise false)
+     */
+    public function setCommon($resname, $revalue)
+    {
+        if ($revalue == ".") {
+            if (isset($this->common[$resname])) {
+                unset($this->common[$resname]);
+            }
+        } else {
+            $this->common[$resname] = $revalue;
+        }
+        return true;
+    }
+    /////////////////////////////////////////////////////////////////////////////
+    // MENU CONTROLLER 
+    /////////////////////////////////////////////////////////////////////////////
+
     /**
      * setMenu sequence  
      *
@@ -1055,4 +1112,46 @@ final class masterControlProgram
     {
         return mcpMenuClass::runTag($action,$scopeIn);
     }
+    /////////////////////////////////////////////////////////////////////////////
+    // EVENT CONTROLLER 
+    /////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @param null $resname
+     * @return null object
+     */
+    public function RunEvent($resname = null)
+    {
+        if ($resname == null) {
+            return false;
+        }
+        if (isset($this->event[$resname])) {
+            $this->runSequence($this->event[$resname],$this->common);
+        }
+        return null;
+    }
+
+    /**
+     * @param $resname name of value
+     * @param $revalue values
+     * @return bool if operation coplete success true (othervise false)
+     */
+    public function addEvent($resname,$subcriber,array $action=null)
+    {
+        if ($resname==null || $subcriber==null){
+            return false;
+        }
+        if (!isset($this->event[$resname])) {
+            $this->event[$resname]=array();
+        }
+            if ($action == null) {
+            if (isset($this->event[$resname][$subcriber])) {
+                unset($this->event[$resname][$subcriber]);
+            }
+        } else {
+            $this->event[$resname][$subcriber]= $action;
+        }
+        return true;
+    }
+
 }
