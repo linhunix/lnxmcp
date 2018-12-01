@@ -62,14 +62,14 @@ try{
 if (!isset($scopePdo)) {
     $scopePdo = array (
         "ENV" => array (
-            "lnx.dst" => array (
+            "lnx.ctl" => array (
                 "hostname" => "LNX_DB_HOST",
                 "database" => "LNX_DB_2_NAME",
                 "username" => "LNX_DB_UID",
                 "password" => "LNX_DB_PWD",
                 "driver" => "mysql"
             ),
-            "lnx.src" => array (
+            "lnx.data" => array (
                 "hostname" => "LNX_DB_HOST",
                 "database" => "LNX_DB_1_NAME",
                 "username" => "LNX_DB_UID",

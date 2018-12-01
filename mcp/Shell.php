@@ -30,23 +30,8 @@ function mcpRunShell()
                 lnxmcp ()->runTag ($argv[2]);
                 break;
             case "lnxmcp-chk":
-                /**
-                 * Run Module as Check sequence
-                 * @param string $cfgvalue name of the Doctrine
-                 * @param string $modinit  Module name where is present the code and be load and initalized
-                 * @param string $path     path where present the basedirectory of the data
-                 * @param array $scopeIn   Input Array with the value need to work
-                 * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
-                 * @return array $ScopeOut
-                 */
-                $mcpCheckFile = $app_path . "/mcp_modules/Chk/mcpCheck.php";
-                if (file_exists ($mcpCheckFile)) {
-                    echo "load Check Env on $mcpCheckFile..\n";
-                    include_once ($mcpCheckFile);
-                    echo "Run mcpCheck:\n";
-                    LinHUniX\McpModules\Chk\mcpCheck ();
-                    echo "Check Complete!!\n";
-                }
+                lnxmcpChk();
+                break;
             case "lnxmcp-cct":
                 lnxmcp ()->controllerCommon ($argv[2], false, $argv, $argv[3]);
                 break;

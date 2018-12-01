@@ -1,2 +1,2 @@
 #!/usr/bin/env php
-<?php include __DIR__."/app.php"; ?>
+<?php $_SERVER["DOCUMENT_ROOT"]=__DIR__; include __DIR__."/app.php"; ?>
