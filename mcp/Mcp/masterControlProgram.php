@@ -953,42 +953,7 @@ final class masterControlProgram
         $this->info ("MCP>>" .$vendor .">>page>>" . $page);
         $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $vendor, "Page");
     }
-    /**
-     * Load a page with your ScopeIn
-     * @param string $page    name of the Page
-     * @param array $scopeIn  Input Array with the value need to work
-     * @param string $modinit Module name where is present the code and be load and initalized
-     */
-    public function pageRemote ($page, $scopeIn = array (), $modinit = null,$vendor=null)
-    {
-        if ($vendor==null){
-            $vendor=$this->defapp;
-        }
-        $scopeIn["prev-output"]=ob_get_clean();
-        $this->info ("MCP>>" .$vendor .">>pageRemote>>" . $page);
-        print( mcpProxyClass::apiRemote($this,$page,$scopeIn,$modinit,null,$vendor));
-    }
-    /**
-     * Load a page with your ScopeIn
-     * @param string $page    name of the Page
-     * @param array $scopeIn  Input Array with the value need to work
-     * @param string $modinit Module name where is present the code and be load and initalized
-     */
-    public function pageShell ($page, $scopeIn = array (), $modinit = null,$vendor=null)
-    {
-        if ($vendor==null){
-            $vendor=$this->defapp;
-        }
-        $scopeIn["prev-output"]=ob_get_clean();
-        $this->info ("MCP>>" .$vendor .">>pageShell>>" . $page);
-        print( mcpProxyClass::pageShell($this,$page,$scopeIn,$modinit,null,$vendor));
-    }
-    /**
-     * Load a mail with your ScopeIn
-     * @param string $page    name of the Page
-     * @param array $scopeIn  Input Array with the value need to work
-     * @param string $modinit Module name where is present the code and be load and initalized
-     */
+
     public function mail ($page=null, $scopeIn = array (), $modinit = null)
     {
         $this->info ("MCP>>mail>>" . $page);
@@ -1029,6 +994,42 @@ final class masterControlProgram
         $this->info ("MCP>>block(C)>>" . $block);
         $this->template ($block, $this->pathmcp, true, $scopeIn, $modinit, null, $this->defapp, "Block");
     }
+        /**
+     * Load a block with your ScopeIn
+     * @param string $page    name of the Page
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     */
+    public function blockRemote ($page, $scopeIn = array (), $modinit = null,$vendor=null)
+    {
+        if ($vendor==null){
+            $vendor=$this->defapp;
+        }
+        $scopeIn["prev-output"]=ob_get_clean();
+        $this->info ("MCP>>" .$vendor .">>pageRemote>>" . $page);
+        print( mcpProxyClass::apiRemote($this,$page,$scopeIn,$modinit,null,$vendor));
+    }
+    /**
+     * Load a block with your ScopeIn
+     * @param string $page    name of the Page
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     */
+    public function blockShell ($page, $scopeIn = array (), $modinit = null,$vendor=null)
+    {
+        if ($vendor==null){
+            $vendor=$this->defapp;
+        }
+        $scopeIn["prev-output"]=ob_get_clean();
+        $this->info ("MCP>>" .$vendor .">>pageShell>>" . $page);
+        print( mcpProxyClass::pageShell($this,$page,$scopeIn,$modinit,null,$vendor));
+    }
+    /**
+     * Load a mail with your ScopeIn
+     * @param string $page    name of the Page
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     */
     /////////////////////////////////////////////////////////////////////////////
     // MODULE CONTROLLER COMPLEX (MVC)
     /////////////////////////////////////////////////////////////////////////////

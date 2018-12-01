@@ -134,12 +134,6 @@ class mcpMenuClass {
             case "page":
                 $result=lnxmcp()->page($callname,$scopeIn,$modinit,$vendor);                 
                 break;
-            case "pageRemote":
-                $result=lnxmcp()->pageRemote($callname,$scopeIn,$modinit,$vendor);                 
-                break;
-            case "pageShell":
-                $result=lnxmcp()->pageShell($callname,$scopeIn,$modinit,$vendor);                 
-                break;
             case "mail":
                 $result=lnxmcp()->mail($callname,$scopeIn,$modinit);                 
                 break;
@@ -148,6 +142,12 @@ class mcpMenuClass {
                 break;
             case "blockCommon":
                 $result=lnxmcp()->blockCommon($callname,$scopeIn,$modinit);               
+                break;
+            case "blockRemote":
+                $result=lnxmcp()->blockRemote($callname,$scopeIn,$modinit,$vendor);                 
+                break;
+            case "blockShell":
+                $result=lnxmcp()->blockShell($callname,$scopeIn,$modinit,$vendor);                 
                 break;
             case "showPage":
                 $result=lnxmcp()->showPage($callname,$scopeIn,$controllerModule,$blockModule);               
