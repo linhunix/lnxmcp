@@ -938,6 +938,30 @@ final class masterControlProgram
         return $this->module ($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Service");
     }
 
+
+
+    /**
+     * mail
+     *
+     * @param  mixed $page
+     * @param  mixed $scopeIn
+     * @param  mixed $modinit
+     *
+     * @return void
+     */
+    public function mail ($page=null, $scopeIn = array (), $modinit = null)
+    {
+        $this->info ("MCP>>mail>>" . $page);
+        if($$this->getCfg("app.mail")!=null){
+            if (($page!=null)||($page!="none")||($page!=".")){
+                ob_start();
+                $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $this->defapp, "Page");
+                $scopeIn["message"]=ob_get_clean();
+            }
+            return $this->moduleRun("mail",$scopeIn);
+        }
+        return null;
+    }
     /**
      * Load a page with your ScopeIn
      * @param string $page    name of the Page
@@ -953,21 +977,9 @@ final class masterControlProgram
         $this->info ("MCP>>" .$vendor .">>page>>" . $page);
         $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $vendor, "Page");
     }
-
-    public function mail ($page=null, $scopeIn = array (), $modinit = null)
-    {
-        $this->info ("MCP>>mail>>" . $page);
-        if($$this->getCfg("app.mail")!=null){
-            if (($page!=null)||($page!="none")||($page!=".")){
-                ob_start();
-                $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $this->defapp, "Page");
-                $scopeIn["message"]=ob_get_clean();
-            }
-            return $this->moduleRun("mail",$scopeIn);
-        }
-        return null;
-    }
-
+    /////////////////////////////////////////////////////////////////////////////
+    // BLOCK TEMPLATE / VIEW
+    /////////////////////////////////////////////////////////////////////////////
     /**
      * Load a Block with your ScopeIn
      * @param string $block   name of the Block
@@ -994,7 +1006,7 @@ final class masterControlProgram
         $this->info ("MCP>>block(C)>>" . $block);
         $this->template ($block, $this->pathmcp, true, $scopeIn, $modinit, null, $this->defapp, "Block");
     }
-        /**
+    /**
      * Load a block with your ScopeIn
      * @param string $page    name of the Page
      * @param array $scopeIn  Input Array with the value need to work
@@ -1005,8 +1017,7 @@ final class masterControlProgram
         if ($vendor==null){
             $vendor=$this->defapp;
         }
-        $scopeIn["prev-output"]=ob_get_clean();
-        $this->info ("MCP>>" .$vendor .">>pageRemote>>" . $page);
+        $this->info ("MCP>>" .$vendor .">>block(Remote)>>" . $page);
         print( mcpProxyClass::apiRemote($this,$page,$scopeIn,$modinit,null,$vendor));
     }
     /**
@@ -1020,9 +1031,8 @@ final class masterControlProgram
         if ($vendor==null){
             $vendor=$this->defapp;
         }
-        $scopeIn["prev-output"]=ob_get_clean();
-        $this->info ("MCP>>" .$vendor .">>pageShell>>" . $page);
-        print( mcpProxyClass::pageShell($this,$page,$scopeIn,$modinit,null,$vendor));
+        $this->info ("MCP>>" .$vendor .">>block(Shell)>>" . $page);
+        print( mcpProxyClass::blockShell($this,$page,$scopeIn,$modinit,null,$vendor));
     }
     /**
      * Load a mail with your ScopeIn

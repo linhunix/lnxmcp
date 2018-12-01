@@ -129,7 +129,7 @@ class mcpProxyClass
             return $scopeIn;
         }
     }
-    public static function pageShell(masterControlProgram &$mcp, $srvprc, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    public static function blockShell(masterControlProgram &$mcp, $srvprc, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
         try {
             foreach ($scopeIn as $ek => $ev) {
