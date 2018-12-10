@@ -232,7 +232,7 @@ function mcpErrorHandlerInit()
  */
 function lnxmcpChk($checkmenu=null)
 {
-    $mcpCheckFile = lnxmcp()->getCfg("app.path") . "/mcp_modules/Chk/mcpCheck.php";
+    $mcpCheckFile = lnxmcp()->getCfg("mcp.path") . "/../mcp_modules/Chk/mcpCheck.php";
     lnxmcp()->info("Try to load CheckModule:".$mcpCheckFile);
     if (file_exists($mcpCheckFile)) {
         echo "load Check Env on $mcpCheckFile..\n";

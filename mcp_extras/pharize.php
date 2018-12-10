@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+
 /**
  * LinHUniX Web Application Framework
  *
@@ -9,20 +10,33 @@
  * @version GIT:2018-v2
  *
  */
-include __DIR__ . "/App/Head.php";
+$app_path = realpath(__DIR__ . "/../");
+//print(ini_get('phar.readonly'));
+include $app_path . "/mcp/Head.php";
+error_log(E_ALL);
+ini_set("display_error", true);
+ini_set('phar.readonly', false);
 /**
  * Add a directory in phar removing whitespaces from PHP source code
  * 
  * @param Phar $phar
  * @param string $sDir 
  */
-function addDir($phar, $sDir, $baseDir = null) {
+function addDir($phar, $sDir, $baseDir = null)
+{
     $oDir = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($sDir), RecursiveIteratorIterator::SELF_FIRST
+        new RecursiveDirectoryIterator($sDir),
+        RecursiveIteratorIterator::SELF_FIRST
     );
     foreach ($oDir as $sFile) {
-        if (preg_match('/\\.php$/i', $sFile)) {
-            addFile($phar, $sFile, $baseDir);
+        if (basename($sFile) != ".." && basename($sFile) != ".") {
+            if (is_dir($sFile)) {
+                lnxmcp()->info("add dir $sFile");
+                addDir($phar, $sFile, $baseDir);
+            } else {
+                lnxmcp()->info("add file $sFile");
+                addFile($phar, $sFile, $baseDir);
+            }
         }
     }
 }
@@ -32,38 +46,42 @@ function addDir($phar, $sDir, $baseDir = null) {
  * @param Phar $phar
  * @param string $sFile 
  */
-function addFile($phar, $sFile, $baseDir = null) {
+function addFile($phar, $sFile, $baseDir = null)
+{
     if (null !== $baseDir) {
         $phar->addFromString(substr($sFile, strlen($baseDir) + 1), php_strip_whitespace($sFile));
     } else {
         $phar->addFromString($sFile, php_strip_whitespace($sFile));
     }
 }
-$cfg["lnxmcp"]->rem("Phar Ize tool ");
-$srcRoot = $app_path;
-$buildRoot = $srcRoot . "/dist";
+lnxmcp()->rem("Phar Ize tool ");
+$srcRoot = realpath($app_path);
+$buildRoot = $srcRoot . DIRECTORY_SEPARATOR . "dist";
 $filename = 'lnxmcp.phar';
-$pharPath = $buildRoot . "/$filename";
-$cfg["lnxmcp"]->debugVar("Pharize", "srcRoot", $srcRoot);
-$cfg["lnxmcp"]->debugVar("Pharize", "buildRoot", $buildRoot);
-$cfg["lnxmcp"]->debugVar("Pharize", "filename", $filename);
-$cfg["lnxmcp"]->debugVar("Pharize", "pharPath", $pharPath);
+$pharPath = $buildRoot . DIRECTORY_SEPARATOR . $filename;
+lnxmcp()->debugVar("Pharize", "srcRoot", $srcRoot);
+lnxmcp()->debugVar("Pharize", "buildRoot", $buildRoot);
+lnxmcp()->debugVar("Pharize", "filename", $filename);
+lnxmcp()->debugVar("Pharize", "pharPath", $pharPath);
 try {
-    if (!file_exists("$srcRoot/vendor")) {
-        $cfg["lnxmcp"]->waring("Error: to compile the PHAR file you need to execute composer install inside the ZFTool module\n");
-        exit();
-    }
     if (file_exists($pharPath)) {
-        $cfg["lnxmcp"]->info("removing old phar file");
+        lnxmcp()->info("removing old phar file");
         unlink($pharPath);
     }
     if (!is_dir($buildRoot)) {
         mkdir($buildRoot);
+        lnxmcp()->info("making phar dist dir");
     }
-    $phar = new \Phar($pharPath, 0, $filename);
+    lnxmcp()->info("making phar on " . $pharPath);
+    $phar = new Phar($pharPath, FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME, $filename);
+    lnxmcp()->info("init phar ");
     $phar->startBuffering();
-    addDir($phar, "$srcRoot/App", $srcRoot);
-    addDir($phar, "$srcRoot/Tool", $srcRoot);
+    lnxmcp()->info("phar: add mcp ");
+    addDir($phar, "$srcRoot/mcp", $srcRoot);
+    lnxmcp()->info("phar: add mcp_modules ");
+    addDir($phar, "$srcRoot/mcp_modules/Chk", $srcRoot);
+    lnxmcp()->info("phar: add init ");
+    global $filename, $version;
     $stub = <<<EOF
 #!/usr/bin/env php
 <?php
@@ -77,9 +95,8 @@ try {
  *
  */
 Phar::mapPhar('$filename');
-\$ftmcp_path="phar://$filename/";
+\$lnxmcp_path="phar://$filename/";
 \$lnxmcp_vers=array(
- "ver"=>$version,
  "phar"=>true
  );            
 if (!isset(\$app_path)) {
@@ -91,7 +108,7 @@ if (!isset(\$app_path)) {
         \$app_path = realpath(\$app_path) . "/";
     }
 }
-require 'phar://$filename/App/Head.php';
+require 'phar://$filename/mcp/Head.php';
 __HALT_COMPILER();
 EOF;
     $phar->setStub($stub);
@@ -104,5 +121,7 @@ EOF;
         exit(2);
     }
 } catch (\Exception $e) {
-    $cfg["lnxmcp"]->critical("phpize error", $e->getMessage());
+    echo $e->getTraceAsString();
+    lnxmcp()->warning("phpize error!! :" . $e->getMessage());
+    lnxmcp()->critical("if is disable use : php -d phar.readonly=0 mcp_extras/pharize.php ");
 }

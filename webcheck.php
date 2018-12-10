@@ -1,5 +1,6 @@
 <?php
 /*LNXMCP-INIT*/
+putenv("MCP_MODE=TEST");
 if (function_exists("lnxmcp") == false) {
     include $_SERVER["DOCUMENT_ROOT"] . "/app.php";
 };
