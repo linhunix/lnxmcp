@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x;
 export mcp_path="$(dirname $0)/../";
 export app_path="$(realpath $mcp_path )";
 if [ "$app_path" == "" ]; then
