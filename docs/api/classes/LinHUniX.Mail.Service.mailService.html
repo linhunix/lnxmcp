@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/LinHUniX.html">\LinHUniX</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">379</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">4</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">7</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-563093546"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-563093546" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1101217626"></a>
+                                <a href="../namespaces/LinHUniX.html" style="margin-left: 30px; padding-left: 0">LinHUniX</a>
+            </div>
+            <div id="namespace-1101217626" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1499084828"></a>
+                                <a href="../namespaces/LinHUniX.Gfx.html" style="margin-left: 30px; padding-left: 0">Gfx</a>
+            </div>
+            <div id="namespace-1499084828" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-493485542"></a>
+                                <a href="../namespaces/LinHUniX.Gfx.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
+            </div>
+            <div id="namespace-493485542" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Gfx.Service.gfxService.html">gfxService</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-946466986"></a>
+                                <a href="../namespaces/LinHUniX.Mail.html" style="margin-left: 30px; padding-left: 0">Mail</a>
+            </div>
+            <div id="namespace-946466986" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-511973295"></a>
+                                <a href="../namespaces/LinHUniX.Mail.Component.html" style="margin-left: 30px; padding-left: 0">Component</a>
+            </div>
+            <div id="namespace-511973295" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Component.PHPMailer.html">PHPMailer</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Component.phpmailerException.html">phpmailerException</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Component.POP3.html">POP3</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Component.SMTP.html">SMTP</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1098731839"></a>
+                                <a href="../namespaces/LinHUniX.Mail.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
+            </div>
+            <div id="namespace-1098731839" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Service.mailService.html">mailService</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-235181282"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.html" style="margin-left: 30px; padding-left: 0">Mcp</a>
+            </div>
+            <div id="namespace-235181282" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2110197407"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.Component.html" style="margin-left: 30px; padding-left: 0">Component</a>
+            </div>
+            <div id="namespace-2110197407" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpCoreClass.html">mcpCoreClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpDebugClass.html">mcpDebugClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpMenuClass.html">mcpMenuClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpProxyClass.html">mcpProxyClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpToolsClass.html">mcpToolsClass</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1585130488"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.Model.html" style="margin-left: 30px; padding-left: 0">Model</a>
+            </div>
+            <div id="namespace-1585130488" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/LinHUniX.Mcp.Model.mcpServiceProviderModelClass.html">mcpServiceProviderModelClass</a></li>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html">mcpBaseModelClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpConfigArrayModelClass.html">mcpConfigArrayModelClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpDebugModelClass.html">mcpDebugModelClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpRemoteApiModelClass.html">mcpRemoteApiModelClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpRemoteObjectModelClass.html">mcpRemoteObjectModelClass</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-948607774"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.Provider.html" style="margin-left: 30px; padding-left: 0">Provider</a>
+            </div>
+            <div id="namespace-948607774" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Provider.loggerProviderModel.html">loggerProviderModel</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Provider.settingsProviderModel.html">settingsProviderModel</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-239750906"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.Tools.html" style="margin-left: 30px; padding-left: 0">Tools</a>
+            </div>
+            <div id="namespace-239750906" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Tools.pharizeBase.html">pharizeBase</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Tools.pharizeShell.html">pharizeShell</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.masterControlProgram.html">masterControlProgram</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-626034075"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.html" style="margin-left: 30px; padding-left: 0">Pdo</a>
+            </div>
+            <div id="namespace-626034075" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2006381027"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.Driver.html" style="margin-left: 30px; padding-left: 0">Driver</a>
+            </div>
+            <div id="namespace-2006381027" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Driver.mysqlDriver.html">mysqlDriver</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2087498463"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.Model.html" style="margin-left: 30px; padding-left: 0">Model</a>
+            </div>
+            <div id="namespace-2087498463" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Model.mcpQueryModelClass.html">mcpQueryModelClass</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-735502670"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.Query.html" style="margin-left: 30px; padding-left: 0">Query</a>
+            </div>
+            <div id="namespace-735502670" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Query.JsonQuery.html">JsonQuery</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-819134042"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
+            </div>
+            <div id="namespace-819134042" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Service.pdoService.html">pdoService</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/html2text.html">html2text</a></li>
+                                                    <li class="class"><a href="../classes/mcpAutoload.html">mcpAutoload</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/LinHUniX.Mail.Service.html">\LinHUniX\Mail\Service</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\LinHUniX\Mail\Service</small>mailService</h1>
+                    <p><em></em></p>
+                    
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#method_getDependency" class="">getDependency()</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#method_run" class="">run()</a><br />
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#method_stdMailWithDoc" class="">stdMailWithDoc()</a><br />
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#method_stdMail" class="">stdMail()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No public properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#method_getMcp" class="">getMcp()</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#method_setScopeOut" class="">setScopeOut()</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#method_setReturn" class="">setReturn()</a><br />
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#method_moduleCore" class="">moduleCore()</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#method_getArgIn" class="">getArgIn()</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#method_getArgCtl" class="">getArgCtl()</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#method_getArgOut" class="">getArgOut()</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#method_setArgOut" class="">setArgOut()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#property_require" class="">$require</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#property_bootCtl" class="">$bootCtl</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#property_bootData" class="">$bootData</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#property_argCtl" class="">$argCtl</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#property_argIn" class="">$argIn</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#property_argOut" class="">$argOut</a><br />
+                                                                    <a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html#property_mcp" class="">$mcp</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#method_loadTemplate" class="">loadTemplate()</a><br />
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#method_MailHeader2String" class="">MailHeader2String()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#property_Smtp" class="">$Smtp</a><br />
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#property_Mailer" class="">$Mailer</a><br />
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#property_Pop3" class="">$Pop3</a><br />
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#property_From" class="">$From</a><br />
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#property_TplPath" class="">$TplPath</a><br />
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#property_trace" class="">$trace</a><br />
+                                                                    <a href="../classes/LinHUniX.Mail.Service.mailService.html#property_domine" class="">$domine</a><br />
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Mail.Service.mailService.html"><div class="path-wrapper">Mail\Service\mailService.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                                                                                                                                                
+                                        <div class="namespace-wrapper"><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html">\LinHUniX\Mcp\Model\mcpBaseModelClass</a></div>
+                                                                                                    <div class="namespace-wrapper">\LinHUniX\Mail\Service\mailService</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr><td colspan="2"><em>None found</em></td></tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_require" name="property_require" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$require</h3>
+                <pre class="signature">$require : \LinHUniX\Mcp\Model\array;</pre>
+                <p><em>on this class need to set the number of the dependency need to use to work with this
+class ant that information was stored on $scopeCtl and share when execute this specific modules</em></p>
+                
+
+                                <h4>Type</h4>
+                \LinHUniX\Mcp\Model\array;
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            example
+                        </th>
+                        <td>
+                                                            
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_bootCtl" name="property_bootCtl" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$bootCtl</h3>
+                <pre class="signature">$bootCtl : array</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                &mdash; contains the info of the data class control                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_bootData" name="property_bootData" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$bootData</h3>
+                <pre class="signature">$bootData : array</pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                &mdash; contains the boot data informations                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_argCtl" name="property_argCtl" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$argCtl</h3>
+                <pre class="signature">$argCtl : array</pre>
+                <p><em>used this to set Control Argument during run of the moduleCore</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_argIn" name="property_argIn" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$argIn</h3>
+                <pre class="signature">$argIn : array</pre>
+                <p><em>used this to set Input argument during run of the moduleCore</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_argOut" name="property_argOut" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$argOut</h3>
+                <pre class="signature">$argOut : array</pre>
+                <p><em>used this to set output argument during run of the moduleCore
+is present on the scope auto as $scopeOut[&quot;return&quot;];</em></p>
+                
+
+                                <h4>Type</h4>
+                array
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_mcp" name="property_mcp" class="anchor"></a>
+            <article class="property">
+                <h3 class="protected ">$mcp</h3>
+                <pre class="signature">$mcp : \LinHUniX\Mcp\masterControlProgram</pre>
+                <p><em>need for the call back</em></p>
+                
+
+                                <h4>Type</h4>
+                <a href="../classes/LinHUniX.Mcp.masterControlProgram.html">\LinHUniX\Mcp\masterControlProgram</a>
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_Smtp" name="property_Smtp" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$Smtp</h3>
+                <pre class="signature">$Smtp : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_Mailer" name="property_Mailer" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$Mailer</h3>
+                <pre class="signature">$Mailer : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_Pop3" name="property_Pop3" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$Pop3</h3>
+                <pre class="signature">$Pop3 : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_From" name="property_From" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$From</h3>
+                <pre class="signature">$From : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_TplPath" name="property_TplPath" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$TplPath</h3>
+                <pre class="signature">$TplPath : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_trace" name="property_trace" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$trace</h3>
+                <pre class="signature">$trace : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_domine" name="property_domine" class="anchor"></a>
+            <article class="property">
+                <h3 class="private ">$domine</h3>
+                <pre class="signature">$domine : </pre>
+                <p><em></em></p>
+                
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct(\LinHUniX\Mcp\masterControlProgram  <span class="argument">$mcp</span>, array  <span class="argument">$scopeCtl</span>, array  <span class="argument">$scopeIn</span>) </pre>
+                <p><em>Register the settings as a provider with a container</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td><a href="../classes/LinHUniX.Mcp.masterControlProgram.html">\LinHUniX\Mcp\masterControlProgram</a></td>
+                                <td>$mcp </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$scopeCtl </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$scopeIn </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getDependency" name="method_getDependency" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">getDependency()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getDependency() : array</pre>
+                <p><em>Return a list of dependency need to used this class (cfg component)</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_run" name="method_run" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">run()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">run(array  <span class="argument">$scopeCtl</span>, array  <span class="argument">$scopeIn</span>) : array</pre>
+                <p><em>Model Base to caputer execute an elabotrations about this</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>array</td>
+                                <td>$scopeCtl </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$scopeIn </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    array
+                                            &mdash; <p>response of code = like scope out;</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_stdMailWithDoc" name="method_stdMailWithDoc" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">stdMailWithDoc()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">stdMailWithDoc(string  <span class="argument">$to</span>, string  <span class="argument">$subject</span>, string  <span class="argument">$message</span>, array  <span class="argument">$attachDoc = array()</span>, array  <span class="argument">$additional_headers = null</span>, string  <span class="argument">$additional_parameters = null</span>, string  <span class="argument">$from = null</span>) : boolean</pre>
+                <p><em>This class use Zend Mail Frameworks and get informations form $dic and FTConfig class
+as extension of the normal function, is present a tracker log of the sent mail</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$to </td>
+                                <td><p>reciver name</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$subject </td>
+                                <td><p>needed</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$message </td>
+                                <td><p>if is null : Regards \n&quot; and generalMailFull FTConfig</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$attachDoc </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$additional_headers </td>
+                                <td><p>option</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$additional_parameters </td>
+                                <td><p>not used really only for compatibility</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$from </td>
+                                <td><p>sender mail</p></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                                                            <h4>Examples</h4>
+                                                                <h5></h5>
+                        <pre class="pre-scrollable">** File not found : TestFTMail **</pre>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\LinHUniX\Mail\Service\FTConfig</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            assert
+                        </th>
+                        <td>
+                                                                                            <p>(&quot;andrea.morello@freetimers.com&quot;,&quot;TestMail&quot;,&quot;Demo Morselli&quot;) == true</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_stdMail" name="method_stdMail" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">stdMail()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">stdMail(string  <span class="argument">$to</span>, string  <span class="argument">$subject</span>, string  <span class="argument">$message</span>, array  <span class="argument">$additional_headers = null</span>, string  <span class="argument">$additional_parameters = null</span>, string  <span class="argument">$from = null</span>, array  <span class="argument">$attachDoc = array()</span>,   <span class="argument">$html = false</span>) : boolean</pre>
+                <p><em>This class use Zend Mail Frameworks and get informations form $dic and FTConfig class
+as extension of the normal function, is present a tracker log of the sent mail</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$to </td>
+                                <td><p>reciver name</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$subject </td>
+                                <td><p>needed</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$message </td>
+                                <td><p>if is null : Regards \n&quot; and generalMailFull FTConfig</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$additional_headers </td>
+                                <td><p>option</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$additional_parameters </td>
+                                <td><p>not used really only for compatibility</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>string</td>
+                                <td>$from </td>
+                                <td><p>sender mail</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>array</td>
+                                <td>$attachDoc </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$html </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                    				
+                                                            <h4>Examples</h4>
+                                                                <h5></h5>
+                        <pre class="pre-scrollable">** File not found : TestFTMail **</pre>
+                                                </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">\LinHUniX\Mail\Service\FTConfig</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            assert
+                        </th>
+                        <td>
+                                                                                            <p>(&quot;andrea.morello@freetimers.com&quot;,&quot;TestMail&quot;,&quot;Demo Morselli&quot;) == true</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getMcp" name="method_getMcp" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">getMcp()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getMcp() : \LinHUniX\Mcp\Model\lnxmcp</pre>
+                <p><em>this a static metod fo call the mcp class functions</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    \LinHUniX\Mcp\Model\lnxmcp
+                                            &mdash; <p>class</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setScopeOut" name="method_setScopeOut" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">setScopeOut()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setScopeOut(\LinHUniX\Mcp\Model\type  <span class="argument">$name</span>, \LinHUniX\Mcp\Model\type  <span class="argument">$value</span>) </pre>
+                <p><em>Is a confortable method to set data on scope out</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\LinHUniX\Mcp\Model\type</td>
+                                <td>$name </td>
+                                <td><p>of the tags</p></td>
+                            </tr>
+                                                    <tr>
+                                <td>\LinHUniX\Mcp\Model\type</td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setReturn" name="method_setReturn" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">setReturn()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setReturn(\LinHUniX\Mcp\Model\type  <span class="argument">$return</span>) </pre>
+                <p><em>is a confortable method to set the return values</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>\LinHUniX\Mcp\Model\type</td>
+                                <td>$return </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_moduleCore" name="method_moduleCore" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">moduleCore()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">moduleCore() : boolean</pre>
+                <p><em>Ideally this method shuld be used to insert the model code and the other are to be used only as normal</em></p>
+                
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>status of the operations</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                                            <dt>See also</dt>
+                                                                <dd><a href=""><span class="namespace-wrapper">Class</span></a></dd>
+                                                                </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            author
+                        </th>
+                        <td>
+                                                                                            <p>Andrea Morello <a href="mailto:andrea.morello@freetimers.com">andrea.morello@freetimers.com</a></p>
+                                                    </td>
+                    </tr>
+                                    <tr>
+                        <th>
+                            version
+                        </th>
+                        <td>
+                                                                                            <p>GIT:2018-v1</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getArgIn" name="method_getArgIn" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">getArgIn()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getArgIn(string  <span class="argument">$name</span>) : \LinHUniX\Mcp\Model\any</pre>
+                <p><em>only to have a confortable solutions to get data</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$name </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \LinHUniX\Mcp\Model\any
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getArgCtl" name="method_getArgCtl" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">getArgCtl()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getArgCtl(string  <span class="argument">$name</span>) : \LinHUniX\Mcp\Model\any</pre>
+                <p><em>only to have a confortable solutions to get data</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$name </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \LinHUniX\Mcp\Model\any
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_getArgOut" name="method_getArgOut" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">getArgOut()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">getArgOut(string  <span class="argument">$name</span>) : \LinHUniX\Mcp\Model\any</pre>
+                <p><em>only to have a confortable solutions to get data</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$name </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \LinHUniX\Mcp\Model\any
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_setArgOut" name="method_setArgOut" class="anchor"></a>
+            <article class="method">
+                <h3 class="protected ">setArgOut()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">setArgOut(string  <span class="argument">$name</span>,   <span class="argument">$value</span>) : \LinHUniX\Mcp\Model\any</pre>
+                <p><em>only to have a confortable solutions to set data</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$name </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$value </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    \LinHUniX\Mcp\Model\any
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                    <dt>Inherited from</dt>
+                    <dd><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html"><div class="path-wrapper">\LinHUniX\Mcp\Model\mcpBaseModelClass</div></a></dd>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_loadTemplate" name="method_loadTemplate" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">loadTemplate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">loadTemplate(  <span class="argument">$content</span>,   <span class="argument">$template</span>,   <span class="argument">$useNL2BR = false</span>) </pre>
+                <p><em></em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$content </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$template </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$useNL2BR </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_MailHeader2String" name="method_MailHeader2String" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">MailHeader2String()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">MailHeader2String(mixed  <span class="argument">$to</span>, mixed  <span class="argument">$subject</span>, mixed  <span class="argument">$header</span>, mixed  <span class="argument">$caller</span>, mixed  <span class="argument">$status</span>, mixed  <span class="argument">$extra</span>) : string</pre>
+                <p><em>MailHeader2String</em></p>
+                
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$to </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$subject </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$header </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$caller </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$status </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>mixed</td>
+                                <td>$extra </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    string
+                                            &mdash; <p>log</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">mailService.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Mail\Service\mailService.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/LinHUniX.html">\LinHUniX</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on December 10th, 2018 at 10:54.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

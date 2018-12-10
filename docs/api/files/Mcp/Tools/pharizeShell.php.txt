@@ -1,0 +1,117 @@
+<?php
+/**
+ * LinHUniX Web Application Framework
+ *
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
+ * @license   Proprietary See LICENSE.md
+ * @version GIT:2018-v2
+ *
+ */
+namespace LinHUniX\Mcp\Tools;
+
+class pharizeShell {
+    static public function run() {
+        $cfg["lnxmcp"]->rem("Phar Ize tool ");
+        $app_path=$cfg["app.path"];
+        $srcRoot = $app_path;
+        $buildRoot = $srcRoot . "/dist";
+        $filename = 'lnxmcp.tmp.phar';
+        $pharPath = $buildRoot . "/$filename";
+        $version = file_get_contents($srcRoot . "/VERSION");
+        $cfg["lnxmcp"]->debugVar("Pharize", "version", $version);
+        $cfg["lnxmcp"]->debugVar("Pharize", "srcRoot", $srcRoot);
+        $cfg["lnxmcp"]->debugVar("Pharize", "buildRoot", $buildRoot);
+        $cfg["lnxmcp"]->debugVar("Pharize", "filename", $filename);
+        $cfg["lnxmcp"]->debugVar("Pharize", "pharPath", $pharPath);
+        if (!file_exists("$srcRoot/vendor")) {
+            $cfg["lnxmcp"]->waring("Error: to compile the PHAR file you need to execute composer install inside the ZFTool module\n");
+            exit();
+        }
+        if (file_exists($pharPath)) {
+            $cfg["lnxmcp"]->info("removing old phar file");
+            unlink($pharPath);
+        }
+        if (!is_dir($buildRoot)) {
+            mkdir($buildRoot);
+        }
+        $stub = <<<EOF
+#!/usr/bin/env php
+<?php
+/**
+ * LinHUniX Web Application Framework
+ *
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
+ * @license   Proprietary See LICENSE.md
+ * @version GIT:2018-v2
+ *
+ */
+           
+Phar::mapPhar();
+\$lnxmcp_vers=array(
+ "ver"=>"$version",
+ "path"=>__DIR__,
+ "purl"=>"phar://".__FILE__."/",
+ "phar"=>true
+ );            
+require 'phar://'.__FILE__.'/Head.php';
+__HALT_COMPILER();
+EOF;
+        try {
+
+            $cfg["lnxmcp"]->info("Pharize base phar file.... ");
+            $phar = new \Phar($pharPath, 0, $filename);
+            $phar->startBuffering();
+            $cfg["lnxmcp"]->info("Pharize base phar file....(Ft) ");
+            self::addDir($phar, "$srcRoot/Ft", $srcRoot);
+            $cfg["lnxmcp"]->info("Pharize base phar file....(Vendor) ");
+            self::addDir($phar, "$srcRoot/vendor", $srcRoot);
+            $cfg["lnxmcp"]->info("Pharize base phar file....(Tool) ");
+            self::addDir($phar, "$srcRoot/Tool", $srcRoot);
+            $phar->setStub($stub);
+            $phar->stopBuffering();
+            if (file_exists($pharPath)) {
+                echo "Phar created successfully in $pharPath\n";
+                chmod($pharPath, 0755);
+                rename($pharPath, $buildRoot . "/lnxmcp");
+            } else {
+                echo "Error during the compile of the Phar file $pharPath\n";
+                exit(2);
+            }
+        } catch (\Exception $e) {
+            $cfg["lnxmcp"]->critical("phpize error", $e->getMessage());
+        }
+        $cfg["lnxmcp"]->info("Complete!!");
+    }
+    /**
+     * Add a directory in phar removing whitespaces from PHP source code
+     * 
+     * @param Phar $phar
+     * @param string $sDir 
+     */
+    static private function addDir($phar, $sDir, $baseDir = null) {
+        $oDir = new \RecursiveIteratorIterator(
+                new \RecursiveDirectoryIterator($sDir), \RecursiveIteratorIterator::SELF_FIRST
+        );
+        foreach ($oDir as $sFile) {
+            if (preg_match('/\\.php$/i', $sFile)) {
+                self::addFile($phar, $sFile, $baseDir);
+            }
+        }
+    }
+    /**
+     * Add a file in phar removing whitespaces from the file
+     * 
+     * @param Phar $phar
+     * @param string $sFile 
+     */
+    static private function addFile($phar, $sFile, $baseDir = null) {
+        if (null !== $baseDir) {
+            $phar->addFromString(substr($sFile, strlen($baseDir) + 1), php_strip_whitespace($sFile));
+        } else {
+            $phar->addFromString($sFile, php_strip_whitespace($sFile));
+        }
+    }
+}
+

@@ -1,0 +1,2695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>     &raquo; Compilation errors
+</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/LinHUniX.html">\LinHUniX</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">379</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">4</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">7</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+
+            <ul class="side-nav nav nav-list">
+                <li class="nav-header">Navigation</li>
+                                                                            <li><a href="#Func.php"><i class="icon-file"></i> Func.php</a></li>
+                                                                                                    <li><a href="#Gfx\Component\html2text.class.php"><i class="icon-file"></i> Gfx\Component\html2text.class.php</a></li>
+                                                                                                    <li><a href="#Gfx\Service\gfxService.php"><i class="icon-file"></i> Gfx\Service\gfxService.php</a></li>
+                                                                                                                                                            <li><a href="#Http.php"><i class="icon-file"></i> Http.php</a></li>
+                                                                                                    <li><a href="#Load.php"><i class="icon-file"></i> Load.php</a></li>
+                                                                                                    <li><a href="#Mail\Component\PHPMailer.php"><i class="icon-file"></i> Mail\Component\PHPMailer.php</a></li>
+                                                                                                    <li><a href="#Mail\Component\POP3.php"><i class="icon-file"></i> Mail\Component\POP3.php</a></li>
+                                                                                                    <li><a href="#Mail\Component\SMTP.php"><i class="icon-file"></i> Mail\Component\SMTP.php</a></li>
+                                                                                                    <li><a href="#Mail\Service\mailService.php"><i class="icon-file"></i> Mail\Service\mailService.php</a></li>
+                                                                                                    <li><a href="#Mcp\Component\mcpCoreClass.php"><i class="icon-file"></i> Mcp\Component\mcpCoreClass.php</a></li>
+                                                                                                    <li><a href="#Mcp\Component\mcpDebugClass.php"><i class="icon-file"></i> Mcp\Component\mcpDebugClass.php</a></li>
+                                                                                                    <li><a href="#Mcp\Component\mcpMenuClass.php"><i class="icon-file"></i> Mcp\Component\mcpMenuClass.php</a></li>
+                                                                                                    <li><a href="#Mcp\Component\mcpProxyClass.php"><i class="icon-file"></i> Mcp\Component\mcpProxyClass.php</a></li>
+                                                                                                                                                            <li><a href="#Mcp\masterControlProgram.php"><i class="icon-file"></i> Mcp\masterControlProgram.php</a></li>
+                                                                                                    <li><a href="#Mcp\Model\mcpBaseModelClass.php"><i class="icon-file"></i> Mcp\Model\mcpBaseModelClass.php</a></li>
+                                                                                                    <li><a href="#Mcp\Model\mcpConfigArrayModelClass.php"><i class="icon-file"></i> Mcp\Model\mcpConfigArrayModelClass.php</a></li>
+                                                                                                    <li><a href="#Mcp\Model\mcpDebugModelClass.php"><i class="icon-file"></i> Mcp\Model\mcpDebugModelClass.php</a></li>
+                                                                                                    <li><a href="#Mcp\Model\mcpRemoteApiModelClass.php"><i class="icon-file"></i> Mcp\Model\mcpRemoteApiModelClass.php</a></li>
+                                                                                                    <li><a href="#Mcp\Model\mcpRemoteObjectModelClass.php"><i class="icon-file"></i> Mcp\Model\mcpRemoteObjectModelClass.php</a></li>
+                                                                                                    <li><a href="#Mcp\Model\mcpServiceProviderModelClass.php"><i class="icon-file"></i> Mcp\Model\mcpServiceProviderModelClass.php</a></li>
+                                                                                                    <li><a href="#Mcp\Provider\loggerProviderModel.php"><i class="icon-file"></i> Mcp\Provider\loggerProviderModel.php</a></li>
+                                                                                                    <li><a href="#Mcp\Provider\settingsProviderModel.php"><i class="icon-file"></i> Mcp\Provider\settingsProviderModel.php</a></li>
+                                                                                                    <li><a href="#Mcp\Tools\pharizeBase.php"><i class="icon-file"></i> Mcp\Tools\pharizeBase.php</a></li>
+                                                                                                    <li><a href="#Mcp\Tools\pharizeShell.php"><i class="icon-file"></i> Mcp\Tools\pharizeShell.php</a></li>
+                                                                                                    <li><a href="#Pdo\Driver\mysqlDriver.php"><i class="icon-file"></i> Pdo\Driver\mysqlDriver.php</a></li>
+                                                                                                    <li><a href="#Pdo\Model\mcpQueryModelClass.php"><i class="icon-file"></i> Pdo\Model\mcpQueryModelClass.php</a></li>
+                                                                                                    <li><a href="#Pdo\Query\JsonQuery.php"><i class="icon-file"></i> Pdo\Query\JsonQuery.php</a></li>
+                                                                                                    <li><a href="#Pdo\Service\pdoService.php"><i class="icon-file"></i> Pdo\Service\pdoService.php</a></li>
+                                                                                                    <li><a href="#Shell.php"><i class="icon-file"></i> Shell.php</a></li>
+                                                                    </ul>
+        </div>
+
+        <div class="span10 offset2">
+            <ul class="breadcrumb">
+                <li><a href="../"><i class="icon-remove-sign"></i></a><span class="divider">\</span></li>
+                <li>Compilation Errors</li>
+            </ul>
+
+            
+                            <div class="package-contents">
+                                            <a name="Func.php" id="Func.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Func.php
+                            <small style="float: right;padding-right: 10px;">9</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>72</td>
+                                        <td>Argument $className is missing from the Docblock of legacyAutoload</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>91</td>
+                                        <td>Argument $srcPath is missing from the Docblock of selfAutoLoad</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>233</td>
+                                        <td>Name of argument $checkmenu does not match with the DocBlock&#039;s name $cfgvalue in \lnxmcpChk()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>233</td>
+                                        <td>Parameter $cfgvalue could not be found in \lnxmcpChk()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>233</td>
+                                        <td>Parameter $modinit could not be found in \lnxmcpChk()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>233</td>
+                                        <td>Parameter $path could not be found in \lnxmcpChk()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>233</td>
+                                        <td>Parameter $scopeIn could not be found in \lnxmcpChk()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>233</td>
+                                        <td>Parameter $subcall could not be found in \lnxmcpChk()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Gfx\Component\html2text.class.php" id="Gfx\Component\html2text.class.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Gfx\Component\html2text.class.php
+                            <small style="float: right;padding-right: 10px;">9</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>298</td>
+                                        <td>Argument $from_file is missing from the Docblock of html2text</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>298</td>
+                                        <td>Name of argument $from_file does not match with the DocBlock&#039;s name $source in html2text()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>314</td>
+                                        <td>Name of argument $source does not match with the DocBlock&#039;s name $from_file in set_html()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>314</td>
+                                        <td>Argument $from_file is missing from the Docblock of set_html</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>373</td>
+                                        <td>Argument $allowed_tags is missing from the Docblock of set_allowed_tags</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>386</td>
+                                        <td>Argument $url is missing from the Docblock of set_base_url</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>463</td>
+                                        <td>Argument $display is missing from the Docblock of _build_link_list</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>463</td>
+                                        <td>Name of argument $display does not match with the DocBlock&#039;s name $link in _build_link_list()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Gfx\Service\gfxService.php" id="Gfx\Service\gfxService.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Gfx\Service\gfxService.php
+                            <small style="float: right;padding-right: 10px;">6</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>17</td>
+                                        <td>No summary for class \LinHUniX\Gfx\Service\gfxService</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $mcp in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $scopeIn is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Name of argument $scopeIn does not match with the DocBlock&#039;s name $scopeCtl in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>19</td>
+                                        <td>No summary for property $html2txt</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Http.php" id="Http.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Http.php
+                            <small style="float: right;padding-right: 10px;">1</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Load.php" id="Load.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Load.php
+                            <small style="float: right;padding-right: 10px;">10</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>14</td>
+                                        <td>Argument $dir is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>14</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>Argument $resval is missing from the Docblock of setres</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>No summary for method setres()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>Argument $dir is missing from the Docblock of getDirContents</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>No summary for method getDirContents()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>42</td>
+                                        <td>No summary for method load()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>No summary for property $results</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>12</td>
+                                        <td>No summary for property $count</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mail\Component\PHPMailer.php" id="Mail\Component\PHPMailer.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mail\Component\PHPMailer.php
+                            <small style="float: right;padding-right: 10px;">1</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mail\Component\POP3.php" id="Mail\Component\POP3.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mail\Component\POP3.php
+                            <small style="float: right;padding-right: 10px;">1</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mail\Component\SMTP.php" id="Mail\Component\SMTP.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mail\Component\SMTP.php
+                            <small style="float: right;padding-right: 10px;">1</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mail\Service\mailService.php" id="Mail\Service\mailService.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mail\Service\mailService.php
+                            <small style="float: right;padding-right: 10px;">27</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for class \LinHUniX\Mail\Service\mailService</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>Argument $content is missing from the Docblock of loadTemplate</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>Argument $template is missing from the Docblock of loadTemplate</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>Argument $useNL2BR is missing from the Docblock of loadTemplate</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>32</td>
+                                        <td>No summary for method loadTemplate()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>82</td>
+                                        <td>Name of argument $attachDoc does not match with the DocBlock&#039;s name $additional_headers in stdMailWithDoc()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>82</td>
+                                        <td>Name of argument $additional_headers does not match with the DocBlock&#039;s name $additional_parameters in stdMailWithDoc()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>82</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $additional_headers in stdMailWithDoc()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>82</td>
+                                        <td>Name of argument $additional_parameters does not match with the DocBlock&#039;s name $from in stdMailWithDoc()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>82</td>
+                                        <td>Argument $from is missing from the Docblock of stdMailWithDoc</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>99</td>
+                                        <td>Argument $attachDoc is missing from the Docblock of stdMail</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>99</td>
+                                        <td>Name of argument $attachDoc does not match with the DocBlock&#039;s name $from in stdMail()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>99</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $attachDoc in stdMail()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>99</td>
+                                        <td>Argument $html is missing from the Docblock of stdMail</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>99</td>
+                                        <td>Name of argument $html does not match with the DocBlock&#039;s name $from in stdMail()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>135</td>
+                                        <td>Argument $mcp is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>135</td>
+                                        <td>Argument $scopeCtl is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>135</td>
+                                        <td>Argument $scopeIn is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>193</td>
+                                        <td>No summary for method moduleCore()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>No summary for property $Smtp</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>26</td>
+                                        <td>No summary for property $Mailer</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>27</td>
+                                        <td>No summary for property $Pop3</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>28</td>
+                                        <td>No summary for property $From</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>No summary for property $TplPath</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>30</td>
+                                        <td>No summary for property $trace</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>No summary for property $domine</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Component\mcpCoreClass.php" id="Mcp\Component\mcpCoreClass.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Component\mcpCoreClass.php
+                            <small style="float: right;padding-right: 10px;">14</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>67</td>
+                                        <td>Argument $mcp is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>67</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>98</td>
+                                        <td>No summary for method setScopeOut()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>112</td>
+                                        <td>No summary for method setScopeIn()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>126</td>
+                                        <td>No summary for method setScopeCtl()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>139</td>
+                                        <td>No summary for method getScopeIn()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>149</td>
+                                        <td>No summary for method getScopeOut()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>159</td>
+                                        <td>No summary for method getScopeCtl()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>190</td>
+                                        <td>No summary for method statmentModule()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>309</td>
+                                        <td>No summary for method setStatus()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>389</td>
+                                        <td>Name of argument $area does not match with the DocBlock&#039;s name $message in setWorkingArea()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>389</td>
+                                        <td>Parameter $message could not be found in setWorkingArea()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>452</td>
+                                        <td>No summary for method returnOutAndClear()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>465</td>
+                                        <td>No summary for method executeModule()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Component\mcpDebugClass.php" id="Mcp\Component\mcpDebugClass.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Component\mcpDebugClass.php
+                            <small style="float: right;padding-right: 10px;">9</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>185</td>
+                                        <td>Argument $default is missing from the Docblock of move</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>185</td>
+                                        <td>Name of argument $default does not match with the DocBlock&#039;s name $string in move()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>185</td>
+                                        <td>Argument $ext is missing from the Docblock of move</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>185</td>
+                                        <td>Name of argument $ext does not match with the DocBlock&#039;s name $string in move()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>185</td>
+                                        <td>Argument $path is missing from the Docblock of move</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>185</td>
+                                        <td>Name of argument $path does not match with the DocBlock&#039;s name $string in move()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>185</td>
+                                        <td>Argument $andEnd is missing from the Docblock of move</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>185</td>
+                                        <td>Name of argument $andEnd does not match with the DocBlock&#039;s name $string in move()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $mcp</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Component\mcpMenuClass.php" id="Mcp\Component\mcpMenuClass.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Component\mcpMenuClass.php
+                            <small style="float: right;padding-right: 10px;">3</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>178</td>
+                                        <td>Name of argument $actionsSeq does not match with the DocBlock&#039;s name $actions in runSequence()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>178</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $actionsSeq in runSequence()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>178</td>
+                                        <td>Parameter $actions could not be found in runSequence()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Component\mcpProxyClass.php" id="Mcp\Component\mcpProxyClass.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Component\mcpProxyClass.php
+                            <small style="float: right;padding-right: 10px;">21</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $mcp is missing from the Docblock of apiRemote</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $srvprc is missing from the Docblock of apiRemote</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $scopeIn is missing from the Docblock of apiRemote</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $modinit is missing from the Docblock of apiRemote</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $subcall is missing from the Docblock of apiRemote</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $vendor is missing from the Docblock of apiRemote</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>No summary for method apiRemote()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>97</td>
+                                        <td>Argument $mcp is missing from the Docblock of apiShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>97</td>
+                                        <td>Argument $srvprc is missing from the Docblock of apiShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>97</td>
+                                        <td>Argument $scopeIn is missing from the Docblock of apiShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>97</td>
+                                        <td>Argument $modinit is missing from the Docblock of apiShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>97</td>
+                                        <td>Argument $subcall is missing from the Docblock of apiShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>97</td>
+                                        <td>Argument $vendor is missing from the Docblock of apiShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>97</td>
+                                        <td>No summary for method apiShell()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>132</td>
+                                        <td>Argument $mcp is missing from the Docblock of blockShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>132</td>
+                                        <td>Argument $srvprc is missing from the Docblock of blockShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>132</td>
+                                        <td>Argument $scopeIn is missing from the Docblock of blockShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>132</td>
+                                        <td>Argument $modinit is missing from the Docblock of blockShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>132</td>
+                                        <td>Argument $subcall is missing from the Docblock of blockShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>132</td>
+                                        <td>Argument $vendor is missing from the Docblock of blockShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>132</td>
+                                        <td>No summary for method blockShell()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\masterControlProgram.php" id="Mcp\masterControlProgram.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\masterControlProgram.php
+                            <small style="float: right;padding-right: 10px;">56</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>31</td>
+                                        <td>No summary for class \LinHUniX\Mcp\masterControlProgram</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>99</td>
+                                        <td>Name of argument $scopeIn does not match with the DocBlock&#039;s name $cfg in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>99</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $scopeIn in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>99</td>
+                                        <td>Parameter $cfg could not be found in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>155</td>
+                                        <td>Argument $service is missing from the Docblock of register</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>155</td>
+                                        <td>No summary for method register()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>168</td>
+                                        <td>No summary for method getCfg()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>190</td>
+                                        <td>No summary for method setCfg()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>209</td>
+                                        <td>No summary for method getCommon()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>231</td>
+                                        <td>No summary for method setCommon()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>497</td>
+                                        <td>Argument $var is missing from the Docblock of display</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>497</td>
+                                        <td>Name of argument $var does not match with the DocBlock&#039;s name $message in display()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>592</td>
+                                        <td>No summary for method statmentModule()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>625</td>
+                                        <td>No summary for method module()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>646</td>
+                                        <td>No summary for method template()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>706</td>
+                                        <td>Argument $vendor is missing from the Docblock of driver</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>706</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $subcall in driver()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>724</td>
+                                        <td>Argument $vendor is missing from the Docblock of query</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>724</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $subcall in query()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>742</td>
+                                        <td>Argument $vendor is missing from the Docblock of queryR</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>742</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $subcall in queryR()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>775</td>
+                                        <td>Argument $vendor is missing from the Docblock of controller</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>775</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $subcall in controller()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>807</td>
+                                        <td>Argument $vendor is missing from the Docblock of controllerRemote</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>807</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $subcall in controllerRemote()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>821</td>
+                                        <td>Argument $vendor is missing from the Docblock of controllerShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>821</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $subcall in controllerShell()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>841</td>
+                                        <td>Argument $vendor is missing from the Docblock of api</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>841</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $subcall in api()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>881</td>
+                                        <td>Argument $vendor is missing from the Docblock of apiRemote</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>881</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $subcall in apiRemote()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>899</td>
+                                        <td>Argument $vendor is missing from the Docblock of apiShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>899</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $subcall in apiShell()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>917</td>
+                                        <td>Argument $vendor is missing from the Docblock of service</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>917</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $subcall in service()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>971</td>
+                                        <td>Argument $vendor is missing from the Docblock of page</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>971</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $modinit in page()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>989</td>
+                                        <td>Argument $vendor is missing from the Docblock of block</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>989</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $modinit in block()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1015</td>
+                                        <td>Argument $vendor is missing from the Docblock of blockRemote</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1015</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $modinit in blockRemote()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1029</td>
+                                        <td>Argument $vendor is missing from the Docblock of blockShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1029</td>
+                                        <td>Name of argument $vendor does not match with the DocBlock&#039;s name $modinit in blockShell()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1200</td>
+                                        <td>Name of argument $actionseq does not match with the DocBlock&#039;s name $actions in runSequence()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1200</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $actionseq in runSequence()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>1200</td>
+                                        <td>Parameter $actions could not be found in runSequence()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1232</td>
+                                        <td>No summary for method RunEvent()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1248</td>
+                                        <td>Name of argument $subcriber does not match with the DocBlock&#039;s name $revalue in addEvent()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1248</td>
+                                        <td>Argument $action is missing from the Docblock of addEvent</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1248</td>
+                                        <td>Name of argument $action does not match with the DocBlock&#039;s name $revalue in addEvent()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1248</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $action in addEvent()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>notice</td>
+                                        <td>1248</td>
+                                        <td>Parameter $revalue could not be found in addEvent()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>1248</td>
+                                        <td>No summary for method addEvent()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>80</td>
+                                        <td>No summary for property $mcpCore</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>85</td>
+                                        <td>No summary for property $mcpLogging</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>90</td>
+                                        <td>No summary for property $mcpTools</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Model\mcpBaseModelClass.php" id="Mcp\Model\mcpBaseModelClass.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Model\mcpBaseModelClass.php
+                            <small style="float: right;padding-right: 10px;">6</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>20</td>
+                                        <td>No summary for class \LinHUniX\Mcp\Model\mcpBaseModelClass</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>72</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $mcp in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>72</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $scopeIn in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>72</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>186</td>
+                                        <td>Argument $value is missing from the Docblock of setArgOut</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>186</td>
+                                        <td>Name of argument $value does not match with the DocBlock&#039;s name $name in setArgOut()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Model\mcpConfigArrayModelClass.php" id="Mcp\Model\mcpConfigArrayModelClass.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Model\mcpConfigArrayModelClass.php
+                            <small style="float: right;padding-right: 10px;">12</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>No summary for class \LinHUniX\Mcp\Model\mcpConfigArrayModelClass</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>15</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>20</td>
+                                        <td>Argument $offset is missing from the Docblock of offsetSet</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>20</td>
+                                        <td>Argument $value is missing from the Docblock of offsetSet</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>20</td>
+                                        <td>No summary for method offsetSet()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>Argument $offset is missing from the Docblock of offsetExists</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>No summary for method offsetExists()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>34</td>
+                                        <td>Argument $offset is missing from the Docblock of offsetUnset</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>34</td>
+                                        <td>No summary for method offsetUnset()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>39</td>
+                                        <td>Argument $offset is missing from the Docblock of offsetGet</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>39</td>
+                                        <td>No summary for method offsetGet()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>13</td>
+                                        <td>No summary for property $container</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Model\mcpDebugModelClass.php" id="Mcp\Model\mcpDebugModelClass.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Model\mcpDebugModelClass.php
+                            <small style="float: right;padding-right: 10px;">27</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>13</td>
+                                        <td>No summary for class \LinHUniX\Mcp\Model\mcpDebugModelClass</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $mcp is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $level is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $setting is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>33</td>
+                                        <td>No summary for method GetLevel()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>38</td>
+                                        <td>Argument $mylevel is missing from the Docblock of IsValid</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>38</td>
+                                        <td>No summary for method IsValid()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>51</td>
+                                        <td>Argument $name is missing from the Docblock of GetSetting</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>51</td>
+                                        <td>No summary for method GetSetting()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>59</td>
+                                        <td>Argument $message is missing from the Docblock of Debug</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>59</td>
+                                        <td>No summary for method Debug()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>66</td>
+                                        <td>Argument $message is missing from the Docblock of info</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>66</td>
+                                        <td>No summary for method info()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>73</td>
+                                        <td>Argument $message is missing from the Docblock of warning</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>73</td>
+                                        <td>No summary for method warning()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>80</td>
+                                        <td>Argument $message is missing from the Docblock of error</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>80</td>
+                                        <td>No summary for method error()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>87</td>
+                                        <td>Argument $message is missing from the Docblock of fatal</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>87</td>
+                                        <td>No summary for method fatal()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>94</td>
+                                        <td>Argument $level is missing from the Docblock of writelog</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>94</td>
+                                        <td>Argument $message is missing from the Docblock of writelog</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>94</td>
+                                        <td>No summary for method writelog()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>20</td>
+                                        <td>No summary for property $level</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>21</td>
+                                        <td>No summary for property $setting</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>No summary for property $mcp</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $procesid</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Model\mcpRemoteApiModelClass.php" id="Mcp\Model\mcpRemoteApiModelClass.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Model\mcpRemoteApiModelClass.php
+                            <small style="float: right;padding-right: 10px;">2</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>No summary for class \LinHUniX\Mcp\Model\mcpRemoteApiModelClass</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>26</td>
+                                        <td>No summary for method moduleCore()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Model\mcpRemoteObjectModelClass.php" id="Mcp\Model\mcpRemoteObjectModelClass.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Model\mcpRemoteObjectModelClass.php
+                            <small style="float: right;padding-right: 10px;">2</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>No summary for class \LinHUniX\Mcp\Model\mcpRemoteObjectModelClass</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>26</td>
+                                        <td>No summary for method moduleCore()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Model\mcpServiceProviderModelClass.php" id="Mcp\Model\mcpServiceProviderModelClass.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Model\mcpServiceProviderModelClass.php
+                            <small style="float: right;padding-right: 10px;">4</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>11</td>
+                                        <td>No summary for interface \LinHUniX\Mcp\Model\mcpServiceProviderModelClass</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>13</td>
+                                        <td>Argument $mcp is missing from the Docblock of register</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>13</td>
+                                        <td>Argument $cfg is missing from the Docblock of register</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>13</td>
+                                        <td>No summary for method register()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Provider\loggerProviderModel.php" id="Mcp\Provider\loggerProviderModel.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Provider\loggerProviderModel.php
+                            <small style="float: right;padding-right: 10px;">3</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>18</td>
+                                        <td>No summary for class \LinHUniX\Mcp\Provider\loggerProviderModel</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>Argument $mcp is missing from the Docblock of register</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>Argument $cfg is missing from the Docblock of register</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Provider\settingsProviderModel.php" id="Mcp\Provider\settingsProviderModel.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Provider\settingsProviderModel.php
+                            <small style="float: right;padding-right: 10px;">10</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>17</td>
+                                        <td>No summary for class \LinHUniX\Mcp\Provider\settingsProviderModel</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>21</td>
+                                        <td>Argument $cfgfile is missing from the Docblock of loadCfgArray</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>21</td>
+                                        <td>No summary for method loadCfgArray()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>35</td>
+                                        <td>Argument $tag is missing from the Docblock of loadCfgValue</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>35</td>
+                                        <td>Argument $cfgfile is missing from the Docblock of loadCfgValue</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>35</td>
+                                        <td>Argument $defvalue is missing from the Docblock of loadCfgValue</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>35</td>
+                                        <td>No summary for method loadCfgValue()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>54</td>
+                                        <td>Argument $mcp is missing from the Docblock of register</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>54</td>
+                                        <td>Argument $cfg is missing from the Docblock of register</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>19</td>
+                                        <td>No summary for property $mcp</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Tools\pharizeBase.php" id="Mcp\Tools\pharizeBase.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Tools\pharizeBase.php
+                            <small style="float: right;padding-right: 10px;">6</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>12</td>
+                                        <td>No summary for class \LinHUniX\Mcp\Tools\pharizeBase</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>13</td>
+                                        <td>No summary for method run()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>87</td>
+                                        <td>Argument $baseDir is missing from the Docblock of addDir</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>87</td>
+                                        <td>Name of argument $baseDir does not match with the DocBlock&#039;s name $sDir in addDir()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>103</td>
+                                        <td>Argument $baseDir is missing from the Docblock of addFile</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>103</td>
+                                        <td>Name of argument $baseDir does not match with the DocBlock&#039;s name $sFile in addFile()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Mcp\Tools\pharizeShell.php" id="Mcp\Tools\pharizeShell.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Mcp\Tools\pharizeShell.php
+                            <small style="float: right;padding-right: 10px;">6</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>13</td>
+                                        <td>No summary for class \LinHUniX\Mcp\Tools\pharizeShell</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>14</td>
+                                        <td>No summary for method run()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>93</td>
+                                        <td>Argument $baseDir is missing from the Docblock of addDir</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>93</td>
+                                        <td>Name of argument $baseDir does not match with the DocBlock&#039;s name $sDir in addDir()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>109</td>
+                                        <td>Argument $baseDir is missing from the Docblock of addFile</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>109</td>
+                                        <td>Name of argument $baseDir does not match with the DocBlock&#039;s name $sFile in addFile()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Pdo\Driver\mysqlDriver.php" id="Pdo\Driver\mysqlDriver.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Pdo\Driver\mysqlDriver.php
+                            <small style="float: right;padding-right: 10px;">101</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>15</td>
+                                        <td>No summary for class \LinHUniX\Pdo\Driver\mysqlDriver</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $mcp is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $scopeCtl is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>Argument $scopeIn is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>25</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>57</td>
+                                        <td>Argument $v is missing from the Docblock of real_escape_string</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>57</td>
+                                        <td>No summary for method real_escape_string()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>62</td>
+                                        <td>Argument $tablename is missing from the Docblock of table_exist</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>62</td>
+                                        <td>No summary for method table_exist()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>70</td>
+                                        <td>Argument $query is missing from the Docblock of intexec</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>70</td>
+                                        <td>No summary for method intexec()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>80</td>
+                                        <td>Argument $query is missing from the Docblock of execute</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>80</td>
+                                        <td>Argument $var is missing from the Docblock of execute</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>80</td>
+                                        <td>No summary for method execute()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>92</td>
+                                        <td>Argument $sql is missing from the Docblock of querycache</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>92</td>
+                                        <td>Argument $starttime is missing from the Docblock of querycache</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>92</td>
+                                        <td>Argument $finishtime is missing from the Docblock of querycache</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>92</td>
+                                        <td>No summary for method querycache()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>116</td>
+                                        <td>Argument $sql is missing from the Docblock of queryReturnResultSet</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>116</td>
+                                        <td>Argument $logging is missing from the Docblock of queryReturnResultSet</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>116</td>
+                                        <td>No summary for method queryReturnResultSet()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>135</td>
+                                        <td>Argument $sql is missing from the Docblock of simpleQuery</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>135</td>
+                                        <td>Argument $var is missing from the Docblock of simpleQuery</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>135</td>
+                                        <td>Argument $err is missing from the Docblock of simpleQuery</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>135</td>
+                                        <td>No summary for method simpleQuery()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>174</td>
+                                        <td>Argument $sql is missing from the Docblock of simpleCount</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>174</td>
+                                        <td>Argument $var is missing from the Docblock of simpleCount</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>174</td>
+                                        <td>Argument $err is missing from the Docblock of simpleCount</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>174</td>
+                                        <td>No summary for method simpleCount()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>180</td>
+                                        <td>Argument $sql is missing from the Docblock of query</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>180</td>
+                                        <td>Argument $logging is missing from the Docblock of query</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>180</td>
+                                        <td>No summary for method query()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>190</td>
+                                        <td>Argument $sql is missing from the Docblock of getTable</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>190</td>
+                                        <td>Argument $var is missing from the Docblock of getTable</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>190</td>
+                                        <td>Argument $err is missing from the Docblock of getTable</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>190</td>
+                                        <td>No summary for method getTable()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>200</td>
+                                        <td>Argument $sql is missing from the Docblock of data_table</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>200</td>
+                                        <td>Argument $var is missing from the Docblock of data_table</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>200</td>
+                                        <td>Argument $err is missing from the Docblock of data_table</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>200</td>
+                                        <td>No summary for method data_table()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>204</td>
+                                        <td>Argument $sql is missing from the Docblock of dataWalk</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>204</td>
+                                        <td>Argument $callback is missing from the Docblock of dataWalk</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>204</td>
+                                        <td>Argument $var is missing from the Docblock of dataWalk</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>204</td>
+                                        <td>Argument $funarr is missing from the Docblock of dataWalk</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>204</td>
+                                        <td>Argument $err is missing from the Docblock of dataWalk</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>204</td>
+                                        <td>No summary for method dataWalk()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>212</td>
+                                        <td>Argument $sql is missing from the Docblock of firstRow</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>212</td>
+                                        <td>Argument $var is missing from the Docblock of firstRow</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>212</td>
+                                        <td>Argument $err is missing from the Docblock of firstRow</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>212</td>
+                                        <td>No summary for method firstRow()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>221</td>
+                                        <td>Argument $sql is missing from the Docblock of data_row</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>221</td>
+                                        <td>Argument $var is missing from the Docblock of data_row</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>221</td>
+                                        <td>Argument $err is missing from the Docblock of data_row</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>221</td>
+                                        <td>No summary for method data_row()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>226</td>
+                                        <td>Argument $statement is missing from the Docblock of nextRow</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>226</td>
+                                        <td>No summary for method nextRow()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>252</td>
+                                        <td>Argument $statement is missing from the Docblock of next_record</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>252</td>
+                                        <td>No summary for method next_record()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>257</td>
+                                        <td>Argument $position is missing from the Docblock of seek</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>257</td>
+                                        <td>Argument $statement is missing from the Docblock of seek</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>257</td>
+                                        <td>No summary for method seek()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>277</td>
+                                        <td>Argument $statement is missing from the Docblock of freeresult</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>277</td>
+                                        <td>No summary for method freeresult()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>285</td>
+                                        <td>Argument $statement is missing from the Docblock of numRows</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>285</td>
+                                        <td>No summary for method numRows()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>305</td>
+                                        <td>Argument $resultSet is missing from the Docblock of affectedRows</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>305</td>
+                                        <td>No summary for method affectedRows()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>310</td>
+                                        <td>Argument $resultSet is missing from the Docblock of num_rows</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>310</td>
+                                        <td>No summary for method num_rows()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>315</td>
+                                        <td>No summary for method lastData()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>320</td>
+                                        <td>Argument $_table is missing from the Docblock of delRow</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>320</td>
+                                        <td>Argument $_id is missing from the Docblock of delRow</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>320</td>
+                                        <td>No summary for method delRow()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>331</td>
+                                        <td>Argument $_fields is missing from the Docblock of getRow</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>331</td>
+                                        <td>Argument $_table is missing from the Docblock of getRow</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>331</td>
+                                        <td>Argument $_id is missing from the Docblock of getRow</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>331</td>
+                                        <td>No summary for method getRow()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>346</td>
+                                        <td>Argument $_fields is missing from the Docblock of getRows</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>346</td>
+                                        <td>Argument $_table is missing from the Docblock of getRows</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>346</td>
+                                        <td>Argument $_order_by is missing from the Docblock of getRows</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>346</td>
+                                        <td>Argument $_from is missing from the Docblock of getRows</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>346</td>
+                                        <td>Argument $_size is missing from the Docblock of getRows</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>346</td>
+                                        <td>Argument $_where_stmt is missing from the Docblock of getRows</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>346</td>
+                                        <td>No summary for method getRows()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>362</td>
+                                        <td>Argument $_table is missing from the Docblock of getLastId</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>362</td>
+                                        <td>No summary for method getLastId()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>371</td>
+                                        <td>Argument $_fields is missing from the Docblock of setRow</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>371</td>
+                                        <td>Argument $_table is missing from the Docblock of setRow</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>371</td>
+                                        <td>Argument $run is missing from the Docblock of setRow</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>371</td>
+                                        <td>No summary for method setRow()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>386</td>
+                                        <td>Argument $_fields is missing from the Docblock of getSql</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>386</td>
+                                        <td>Argument $_table is missing from the Docblock of getSql</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>386</td>
+                                        <td>No summary for method getSql()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>17</td>
+                                        <td>No summary for property $PDO</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>18</td>
+                                        <td>No summary for property $tables</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>19</td>
+                                        <td>No summary for property $tabcount</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>20</td>
+                                        <td>No summary for property $tmp</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>21</td>
+                                        <td>No summary for property $cache</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>22</td>
+                                        <td>No summary for property $debug</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $database</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Pdo\Model\mcpQueryModelClass.php" id="Pdo\Model\mcpQueryModelClass.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Pdo\Model\mcpQueryModelClass.php
+                            <small style="float: right;padding-right: 10px;">11</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>19</td>
+                                        <td>No summary for class \LinHUniX\Pdo\Model\mcpQueryModelClass</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>62</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $mcp in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>62</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $scopeIn in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>62</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>72</td>
+                                        <td>No summary for method setQuery()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>80</td>
+                                        <td>No summary for method setEnv()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>99</td>
+                                        <td>No summary for method setRequestType()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>107</td>
+                                        <td>No summary for method setVar()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>115</td>
+                                        <td>No summary for method storeToSession()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>123</td>
+                                        <td>No summary for method storeGlobals()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>131</td>
+                                        <td>No summary for method storeZendCache()</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Pdo\Query\JsonQuery.php" id="Pdo\Query\JsonQuery.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Pdo\Query\JsonQuery.php
+                            <small style="float: right;padding-right: 10px;">6</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>46</td>
+                                        <td>No summary for class \LinHUniX\Pdo\Query\JsonQuery</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>48</td>
+                                        <td>Argument $mcp is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>48</td>
+                                        <td>Argument $scopeCtl is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>48</td>
+                                        <td>Argument $scopeIn is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>48</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>47</td>
+                                        <td>No summary for property $querypath</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Pdo\Service\pdoService.php" id="Pdo\Service\pdoService.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Pdo\Service\pdoService.php
+                            <small style="float: right;padding-right: 10px;">14</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>16</td>
+                                        <td>No summary for class \LinHUniX\Pdo\Service\pdoService</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>The type hint of the argument is incorrect for the type definition of the @param tag with argument $mcp in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>Argument $scopeIn is missing from the Docblock of __construct</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>Name of argument $scopeIn does not match with the DocBlock&#039;s name $scopeCtl in __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>29</td>
+                                        <td>No summary for method __construct()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>246</td>
+                                        <td>No summary for method preload()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>258</td>
+                                        <td>No summary for method getDatabase()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>264</td>
+                                        <td>No summary for method GetFromSession()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>296</td>
+                                        <td>No summary for method getFromGlobal()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>324</td>
+                                        <td>No summary for method putToGlobal()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>340</td>
+                                        <td>No summary for method putToSession()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>362</td>
+                                        <td>No summary for method cleanAllCache()</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>23</td>
+                                        <td>No summary for property $preloadData</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>24</td>
+                                        <td>No summary for property $preloadEnv</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                            <div class="package-contents">
+                                            <a name="Shell.php" id="Shell.php"></a>
+                        <h3>
+                            <i class="icon-file"></i>
+                            Shell.php
+                            <small style="float: right;padding-right: 10px;">1</small>
+                        </h3>
+                        <div>
+                            <table class="table markers table-bordered">
+                                <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Line</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                                                    <tr>
+                                        <td>error</td>
+                                        <td>0</td>
+                                        <td>No summary was found for this file</td>
+                                    </tr>
+                                                            </tbody>
+                            </table>
+                        </div>
+                                    </div>
+                    </div>
+    </section>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/LinHUniX.html">\LinHUniX</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on December 10th, 2018 at 10:54.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
