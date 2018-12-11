@@ -79,11 +79,10 @@ try {
     lnxmcp()->info("phar: add mcp ");
     addDir($phar, "$srcRoot/mcp", $srcRoot);
     lnxmcp()->info("phar: add mcp_modules ");
-    addDir($phar, "$srcRoot/mcp_modules/Chk", $srcRoot);
+    addDir($phar, "$srcRoot/mcp_modules", $srcRoot);
     lnxmcp()->info("phar: add init ");
     global $filename, $version;
     $stub = <<<EOF
-#!/usr/bin/env php
 <?php
 /**
  * LinHUniX Web Application Framework
@@ -94,11 +93,13 @@ try {
  * @version GIT:2018-v2
  *
  */
+global \$mcp_path,\$app_path,\$lnxmcp_phar,\$lnxmcp_purl;
 Phar::mapPhar('$filename');
-\$lnxmcp_path="phar://$filename/";
-\$lnxmcp_vers=array(
- "phar"=>true
- );            
+if (!isset(\$lnxmcp_phar)){
+    \$lnxmcp_phar=array();    
+}
+\$lnxmcp_phar["purl"]="phar://$filename/";
+\$lnxmcp_phar["phar"]=true;
 if (!isset(\$app_path)) {
     \$app_path = \$_SERVER['DOCUMENT_ROOT'];
     if (empty(\$app_path)) {

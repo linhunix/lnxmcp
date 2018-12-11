@@ -18,6 +18,7 @@ ob_start();
 ////////////////////////////////////////////////////////////////////////////////
 // ENV/CONFIG PATH AND CLASS
 ////////////////////////////////////////////////////////////////////////////////
+global $mcp_path, $app_path, $lnxmcp_phar, $lnxmcp_purl;
 // define path config
 if (!isset($mcp_path)) {
     $mcp_path = __DIR__ . "/";
@@ -52,7 +53,7 @@ try {
         $scopeInit = json_decode(file_get_contents($app_path . "/cfg/mcp.settings.json"), true);
     }
     if (isset($_ENV["MCP_MODE"])) {
-        $hostcfg = $app_path . "/cfg/mcp.mode." .$_ENV["MCP_MODE"] . ".json";
+        $hostcfg = $app_path . "/cfg/mcp.mode." . $_ENV["MCP_MODE"] . ".json";
         if (file_exists($hostcfg)) {
             $scopeInit = json_decode(file_get_contents($hostcfg), true);
         }
@@ -79,14 +80,14 @@ try {
         }
     }
     if (isset($scopeInit["loadenv"])) {
-        if (is_array($scopeInit["loadenv"])){
-            foreach($scopeInit["loadenv"] as $k=>$v){
-                putenv($k."=".$v);
-                $_ENV[$k]=$v;
-                $_SERVER[$k]=$v;
+        if (is_array($scopeInit["loadenv"])) {
+            foreach ($scopeInit["loadenv"] as $k => $v) {
+                putenv($k . "=" . $v);
+                $_ENV[$k] = $v;
+                $_SERVER[$k] = $v;
             }
-        }else{
-            putenv($scopeInit["loadenv"]);         
+        } else {
+            putenv($scopeInit["loadenv"]);
         }
     }
 } catch (Exception $e) {
@@ -138,6 +139,11 @@ if (!isset($scopeInit)) {
     );
 }
 if (isset($lnxmcp_phar)) {
+    if (isset($lnxmcp_phar["app.debug"])) {
+        if ($lnxmcp_phar["app.debug"] == true) {
+            error_log(var_export($lnxmcp_phar, 1));
+        }
+    }
     foreach ($lnxmcp_phar as $lmpk => $lmpv) {
         $scopeInit[$lmpk] = $lmpv;
     }
@@ -170,20 +176,18 @@ $funpath = $mcp_path . '/Func.php';
 $shlpath = $mcp_path . '/Shell.php';
 $httpath = $mcp_path . '/Http.php';
 $aldpath = $mcp_path . '/Load.php';
-if (isset($lnxmcp_phar) == false) {
-    $lnxmcp_phar = array(
-        "phar" => false
-    );
+if (isset($scopeInit["phar"]) == false) {
+    $scopeInit["phar"] = false;
 }
-if ($lnxmcp_phar["phar"] == true) {
-    if (file_exists($lnxmcp_phar["purl"] . '/vendor/autoload.php')) {
-        require($lnxmcp_phar["purl"] . '/vendor/autoload.php');
+if ($scopeInit["phar"] == true) {
+    if (file_exists($scopeInit["purl"] . '/vendor/autoload.php')) {
+        require($scopeInit["purl"] . '/vendor/autoload.php');
         $alrf = false;
     }
-    $funpath = $lnxmcp_phar["purl"] . '/mcp/LinHUniX/Func.php';
-    $aldpath = $lnxmcp_phar["purl"] . '/mcp/LinHUniX/Load.php';
-    $shlpath = $lnxmcp_phar["purl"] . '/mcp/LinHUniX/Shell.php';
-    $httpath = $lnxmcp_phar["purl"] . '/mcp/LinHUniX/Http.php';
+    $funpath = $scopeInit["purl"] . '/mcp/Func.php';
+    $aldpath = $scopeInit["purl"] . '/mcp/Load.php';
+    $shlpath = $scopeInit["purl"] . '/mcp/Shell.php';
+    $httpath = $scopeInit["purl"] . '/mcp/Http.php';
 }
 if ($alrf) {
     if (file_exists($app_path . '/vendor/autoload.php')) {
@@ -194,11 +198,11 @@ include_once $funpath;
 if (class_exists("\Composer\Autoload\ClassLoader")) {
     $classLoader = new \Composer\Autoload\ClassLoader();
     $psr = array();
-    if ($lnxmcp_phar["phar"] == true) {
-        $classLoader->addPsr4("LinHUniX\\Mcp\\", $lnxmcp_phar["purl"] . "/mcp/Mcp");
-        $classLoader->addPsr4("LinHUniX\\Gfx\\", $lnxmcp_phar["purl"] . "/mcp/Gfx");
-        $classLoader->addPsr4("LinHUniX\\Pdo\\", $lnxmcp_phar["purl"] . "/mcp/Pdo");
-        $classLoader->addPsr4("LinHUniX\\Mail\\", $lnxmcp_phar["purl"] . "/mcp/Mail");
+    if ($scopeInit["phar"] == true) {
+        $classLoader->addPsr4("LinHUniX\\Mcp\\", $scopeInit["purl"] . "/mcp/Mcp");
+        $classLoader->addPsr4("LinHUniX\\Gfx\\", $scopeInit["purl"] . "/mcp/Gfx");
+        $classLoader->addPsr4("LinHUniX\\Pdo\\", $scopeInit["purl"] . "/mcp/Pdo");
+        $classLoader->addPsr4("LinHUniX\\Mail\\", $scopeInit["purl"] . "/mcp/Mail");
         $scopeInit["mcp.loader"] = "AutoLoadPhar";
     } else {
         $classLoader->addPsr4("LinHUniX\\Mcp\\", $app_path . "/mcp/Mcp");
@@ -216,6 +220,12 @@ if (class_exists("\Composer\Autoload\ClassLoader")) {
     } else {
         $scopeInit["mcp.loader"] = "selfAutoLoad";
         selfAutoLoad($app_path . DIRECTORY_SEPARATOR . "mcp");
+    }
+}
+if (isset($scopeInit["app.debug"])) {
+    if ($scopeInit["app.debug"] == true) {
+        error_log("Load Mcp by " . $scopeInit["mcp.loader"] . " [" . $scopeInit["phar"] . "]");
+        error_log($scopeInit["purl"] . "/" . $aldpath);
     }
 }
 if (class_exists("\LinHUniX\Mcp\masterControlProgram")) {
@@ -248,7 +258,6 @@ if (lnxmcp()->getCfg("PreloadOnly") != true) {
         lnxmcp()->runMenu($_REQUEST["Menu"]);
     } else {
         $GLOBALS["mcp_preload"] .= ob_clean();
-        echo $GLOBALS["mcp_preload"];
         if (file_exists($shlpath)) {
             include_once $shlpath;
             mcpRunShell();

@@ -138,7 +138,7 @@ class mcpDebugClass
     public function webRem ($message)
     {
         echo "\n<!-- ===========================================================\n";
-        echo "====  LinHUniX :" . $message;
+        echo "====  LinHUniX :" .print_r($message,1);
         echo "\n<=========================================================== !-->\n";
     }
 
