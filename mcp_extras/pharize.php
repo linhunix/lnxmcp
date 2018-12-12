@@ -1,14 +1,14 @@
 #!/usr/bin/env php
 <?php
-
 /**
  * LinHUniX Web Application Framework
- *
+ * Create phar package
  * @author Andrea Morello <andrea.morello@linhunix.com>
  * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
- * @version GIT:2018-v2
- *
+ * @version GIT:2018-v3
+ * @since 3.1.0 : work now 
+ * @todo make encryption 
  */
 $app_path = realpath(__DIR__ . "/../");
 //print(ini_get('phar.readonly'));
@@ -86,12 +86,12 @@ try {
 <?php
 /**
  * LinHUniX Web Application Framework
- *
  * @author Andrea Morello <andrea.morello@linhunix.com>
  * @copyright LinHUniX L.t.d., 2018, UK
- * @license   Proprietary See LICENSE.md
- * @version GIT:2018-v2
- *
+ * @license   GPL v3 See LICENSE.md
+ * @link https://github.com/linhunix/lnxmcp/wiki
+ * @category LN4 Project.
+ * @version GIT:2018-v3 
  */
 global \$mcp_path,\$app_path,\$lnxmcp_phar,\$lnxmcp_purl;
 Phar::mapPhar('$filename');
