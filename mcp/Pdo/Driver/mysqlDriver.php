@@ -30,7 +30,12 @@ class mysqlDriver extends mcpBaseModelClass {
         $username = getenv($scopeIn["username"]);
         $password = getenv($scopeIn["password"]);
         $this->database = getenv($scopeIn["database"]);
+        try{
         $this->PDO = new PDO('mysql:host=' . $hostname . ';dbname=' . $this->database, $username, $password, array(PDO::ATTR_PERSISTENT => true));
+        }catch(\Exception $e){
+            $mcp->error("DBCONN:ERR".$e->getMessage());
+            return null;
+        }
         $this->getMcp()->info("hostname:".$hostname);
         $this->getMcp()->debug("username:".$username);
         $this->getMcp()->info("database:".$this->database);
