@@ -248,8 +248,8 @@ final class mcpCoreClass
             }
             $this->scopeCtl[$this->sub]["tag"] .= "." . $type . "." . $callname;
             $this->scopeCtl[$this->sub]["module"] .= "\\" . $type . "\\" . $subcall . $type;
-            $this->scopeCtl[$this->sub]["altmodule"] .= "_" . $type . "_" . $subcall . $type;
-            $this->scopeCtl[$this->sub]["defmodule"] .= "_" . $type . "_" . $subcall . $type;
+            $this->scopeCtl[$this->sub]["altmodule"] .= "_" . $type . "_" . $subcall ;
+            $this->scopeCtl[$this->sub]["defmodule"] .= "_" . $type . "_" . $subcall ;
         } else {
             $this->scopeCtl[$this->sub]["file"] .= "/" . $subcall . ".php";
             $this->scopeCtl[$this->sub]["module"] .= "\\" . $subcall;
@@ -508,7 +508,52 @@ final class mcpCoreClass
         } 
         return false;
     }
-
+    /**
+     * isModuleExists function check if the module is extists and has a specific funcitonality
+     *
+     * @return boolean
+     */
+    private function isModuleExists(){
+        try{
+            if (class_exists ($this->scopeCtl[$this->sub]["module"])) {
+                $this->setStatus (true, $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                return true;
+            } elseif (class_exists ("\\" . $this->scopeCtl[$this->sub]["module"])) {
+                $this->scopeCtl[$this->sub]["module"] = "\\" . $this->scopeCtl[$this->sub]["module"];
+                $this->setStatus (true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                return true;
+            } elseif (class_exists ($this->scopeCtl[$this->sub]["altmodule"])) {
+                $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["altmodule"];
+                $this->setStatus (true,$this->scopeCtl[$this->sub]["altmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                return true;
+            } elseif (class_exists ($this->scopeCtl[$this->sub]["defmodule"])) {
+                $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["defmodule"];
+                $this->setStatus (true,$this->scopeCtl[$this->sub]["defmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                return true;
+            } elseif (function_exists ($this->scopeCtl[$this->sub]["module"])) {
+                $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["module"];
+                $this->setStatus (true, $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                return true;
+            } elseif (function_exists ("\\" . $this->scopeCtl[$this->sub]["module"])) {
+                $this->scopeCtl[$this->sub]["module"] = "\\" . $this->scopeCtl[$this->sub]["module"];
+                $this->setStatus (true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                return true;
+            } elseif (function_exists ($this->scopeCtl[$this->sub]["altmodule"])) {
+                $this->scopeCtl[$this->sub]["module"] =  $this->scopeCtl[$this->sub]["altmodule"];
+                $this->setStatus (true,  $this->scopeCtl[$this->sub]["altmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                return true;
+            } elseif (function_exists ( $this->scopeCtl[$this->sub]["defmodule"])) {
+                $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["defmodule"];
+                $this->setStatus (true, $this->scopeCtl[$this->sub]["defmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                return true;
+            } else {
+                $this->setStatus (false, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS NOT PRESENT - NEED TO BE LOAD ");
+                return false;
+            }
+        }catch (\Exception $e){
+            return false;
+        }
+    }
     /**
      * load the file if is need
      *
@@ -516,39 +561,8 @@ final class mcpCoreClass
     private function loadModule ()
     {
         $this->setWorkingArea ("loadModule");
-        if (class_exists ($this->scopeCtl[$this->sub]["module"])) {
-            $this->setStatus (true, $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
-            return;
-        } elseif (class_exists ("\\" . $this->scopeCtl[$this->sub]["module"])) {
-            $this->scopeCtl[$this->sub]["module"] = "\\" . $this->scopeCtl[$this->sub]["module"];
-            $this->setStatus (true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
-            return;
-        } elseif (class_exists ($this->scopeCtl[$this->sub]["altmodule"])) {
-            $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["altmodule"];
-            $this->setStatus (true,$this->scopeCtl[$this->sub]["altmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
-            return;
-        } elseif (class_exists ($this->scopeCtl[$this->sub]["defmodule"])) {
-            $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["defmodule"];
-            $this->setStatus (true,$this->scopeCtl[$this->sub]["defmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
-            return;
-        } elseif (function_exists ($this->scopeCtl[$this->sub]["module"])) {
-            $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["module"];
-            $this->setStatus (true, $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
-            return;
-        } elseif (function_exists ("\\" . $this->scopeCtl[$this->sub]["module"])) {
-            $this->scopeCtl[$this->sub]["module"] = "\\" . $this->scopeCtl[$this->sub]["module"];
-            $this->setStatus (true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
-            return;
-        } elseif (function_exists ($this->scopeCtl[$this->sub]["altmodule"])) {
-            $this->scopeCtl[$this->sub]["module"] =  $this->scopeCtl[$this->sub]["altmodule"];
-            $this->setStatus (true,  $this->scopeCtl[$this->sub]["altmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
-            return;
-        } elseif (function_exists ( $this->scopeCtl[$this->sub]["defmodule"])) {
-            $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["defmodule"];
-            $this->setStatus (true, $this->scopeCtl[$this->sub]["defmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
-            return;
-        } else {
-            $this->setStatus (false, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS NOT PRESENT - NEED TO BE LOAD ");
+        if( $this->isModuleExists()==true){
+            return ;
         }
         // prepare env to have load a new components - for full compatibility;
         if (in_array ($this->scopeCtl[$this->sub]["type"], array ("api","Page", "Block"))) {
@@ -579,6 +593,9 @@ final class mcpCoreClass
         } catch (Exception $e) {
             $res = "error in loadMod " . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
             $this->setStatus (false, $res);
+        }
+        if( $this->isModuleExists()==true){
+            $this->shareModuleVars ();
         }
     }
 
