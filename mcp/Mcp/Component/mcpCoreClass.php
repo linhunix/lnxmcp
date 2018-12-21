@@ -202,6 +202,8 @@ final class mcpCoreClass
         $this->scopeCtl[$this->sub]["name"] = $callname;
         $this->scopeCtl[$this->sub]["sub"] = $this->sub;
         $this->scopeCtl[$this->sub]["module"] = "";
+        $this->scopeCtl[$this->sub]["altmodule"] = "";
+        $this->scopeCtl[$this->sub]["defmodule"] = "mcpapp_";
         $this->scopeCtl[$this->sub]["auto"] = $path;
         $this->scopeCtl[$this->sub]["file"] = $path;
         $this->scopeCtl[$this->sub]["tag"] = "app";
@@ -210,11 +212,13 @@ final class mcpCoreClass
         if ($vendor != null) {
             if ($vendor == "LinHUniX") {
                 $this->scopeCtl[$this->sub]["module"] = "LinHUniX\\";
+                $this->scopeCtl[$this->sub]["altmodule"] = "LinHUniX_";
                 $this->scopeCtl[$this->sub]["file"] = "/";
                 $this->scopeCtl[$this->sub]["auto"] = "/";
             } else {
                 $this->scopeCtl[$this->sub]["auto"] .= "/" . $vendor . "/";
                 $this->scopeCtl[$this->sub]["module"] .= $vendor . "\\";
+                $this->scopeCtl[$this->sub]["altmodule"] .= $vendor . "_";
                 if ($vendor == $this->defapp) {
                     $this->scopeCtl[$this->sub]["file"] .= "/";
                 }else{
@@ -232,6 +236,8 @@ final class mcpCoreClass
         $this->scopeCtl[$this->sub]["file"] .= $modinit;
         $this->scopeCtl[$this->sub]["auto"] .= $modinit . "/autoload.php";
         $this->scopeCtl[$this->sub]["module"] .= $modinit;
+        $this->scopeCtl[$this->sub]["defmodule"] .= $modinit;
+        $this->scopeCtl[$this->sub]["altmodule"] .= $modinit;
 /// TYPE DEFINITIONS 
         if ($type != null) {
             $this->scopeCtl[$this->sub]["file"] .= "/" . $type . "/" . $subcall . $type;
@@ -242,9 +248,13 @@ final class mcpCoreClass
             }
             $this->scopeCtl[$this->sub]["tag"] .= "." . $type . "." . $callname;
             $this->scopeCtl[$this->sub]["module"] .= "\\" . $type . "\\" . $subcall . $type;
+            $this->scopeCtl[$this->sub]["altmodule"] .= "_" . $type . "_" . $subcall . $type;
+            $this->scopeCtl[$this->sub]["defmodule"] .= "_" . $type . "_" . $subcall . $type;
         } else {
             $this->scopeCtl[$this->sub]["file"] .= "/" . $subcall . ".php";
             $this->scopeCtl[$this->sub]["module"] .= "\\" . $subcall;
+            $this->scopeCtl[$this->sub]["altmodule"] .= "_" . $subcall;
+            $this->scopeCtl[$this->sub]["defmodule"] .= "_" . $subcall;
             $this->scopeCtl[$this->sub]["tag"] .= "." . $callname;
         }
         $this->scopeCtl[$this->sub]["preload"] = $ispreload;
@@ -513,6 +523,14 @@ final class mcpCoreClass
             $this->scopeCtl[$this->sub]["module"] = "\\" . $this->scopeCtl[$this->sub]["module"];
             $this->setStatus (true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
             return;
+        } elseif (class_exists ($this->scopeCtl[$this->sub]["altmodule"])) {
+            $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["altmodule"];
+            $this->setStatus (true,$this->scopeCtl[$this->sub]["altmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+            return;
+        } elseif (class_exists ($this->scopeCtl[$this->sub]["defmodule"])) {
+            $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["defmodule"];
+            $this->setStatus (true,$this->scopeCtl[$this->sub]["defmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+            return;
         } elseif (function_exists ($this->scopeCtl[$this->sub]["module"])) {
             $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["module"];
             $this->setStatus (true, $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
@@ -520,6 +538,14 @@ final class mcpCoreClass
         } elseif (function_exists ("\\" . $this->scopeCtl[$this->sub]["module"])) {
             $this->scopeCtl[$this->sub]["module"] = "\\" . $this->scopeCtl[$this->sub]["module"];
             $this->setStatus (true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+            return;
+        } elseif (function_exists ($this->scopeCtl[$this->sub]["altmodule"])) {
+            $this->scopeCtl[$this->sub]["module"] =  $this->scopeCtl[$this->sub]["altmodule"];
+            $this->setStatus (true,  $this->scopeCtl[$this->sub]["altmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+            return;
+        } elseif (function_exists ( $this->scopeCtl[$this->sub]["defmodule"])) {
+            $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["defmodule"];
+            $this->setStatus (true, $this->scopeCtl[$this->sub]["defmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
             return;
         } else {
             $this->setStatus (false, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS NOT PRESENT - NEED TO BE LOAD ");
@@ -558,6 +584,7 @@ final class mcpCoreClass
 
     /**
      * initialize module if is need
+     * call loadmodule to call the file 
      * @return array
      */
     private function initModule ()
