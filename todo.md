@@ -5,5 +5,6 @@
 # language functinality
 # rendering functionality
 # event manager (by fs )
-# calling sqllite env/cache
-# calling json folder cache 
+# (x1) - calling json folder cache
+# (x1) - calling sqllite env/cache
+# (x1) - sql lite cache for mail and other system (promise task)

@@ -207,7 +207,7 @@ final class mcpCoreClass
         $this->scopeCtl[$this->sub]["auto"] = $path;
         $this->scopeCtl[$this->sub]["file"] = $path;
         $this->scopeCtl[$this->sub]["tag"] = "app";
-        $this->scopeCtl[$this->sub]["type"] = "module";
+        $this->scopeCtl[$this->sub]["type"] = $type;
 //// VENDOR SETTINGS
         if ($vendor != null) {
             if ($vendor == "LinHUniX") {
@@ -281,6 +281,10 @@ final class mcpCoreClass
 
     /**
      * Call and execute a module and clear vars after results
+     * 0) befor run this method normally use statement module
+     * 1) step 1 is intmodule that call loadmodule 
+     * 2) if is preload is finish or go to execute module 
+     *
      * @return array Description array (reference of) response of code
      */
     public function moduleCaller ()
@@ -609,9 +613,12 @@ final class mcpCoreClass
         $err = true;
         $this->setWorkingArea ("initModule");
         $this->mcp->debug ($this->scopeCtl[$this->sub]["tag"]);
-        if ($this->hasDic ($this->scopeCtl[$this->sub]["tag"])) {
+        if ($this->hasDic ($this->scopeCtl[$this->sub]["tag"])==true) {
+            $this->setStatus (true, $this->scopeCtl[$this->sub]["tag"]." is already init!!");
             $this->shareModuleVars ();
-            return;
+            return $this->getScopeOut ();
+        }else{
+            $this->setStatus (false, $this->scopeCtl[$this->sub]["tag"]." is not present!!");
         }
         $tag = $this->scopeCtl[$this->sub]["tag"];
         $this->loadModule ();
@@ -654,5 +661,4 @@ final class mcpCoreClass
         }
         return $this->getScopeOut ();
     }
-
 }
