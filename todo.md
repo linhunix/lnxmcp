@@ -8,3 +8,4 @@
 # (x1) - calling json folder cache
 # (x1) - calling sqllite env/cache
 # (x1) - sql lite cache for mail and other system (promise task)
+# Critical error send mail 
