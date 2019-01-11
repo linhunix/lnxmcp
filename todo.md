@@ -3,12 +3,20 @@
 # complete the autonomy test suite 
 # cms / ln4 sub connection 
 # language functinality
-# rendering functionality
 # event manager (by fs )
 # (x1) - calling json folder cache
 # (x1) - calling sqllite env/cache
 # (x1) - sql lite cache for mail and other system (promise task)
 # Critical error send mail 
+# todo google 
+    js 
+                        var rsite=encodeURI(pageurl);
+                        //cm = campain manager is the solution to assign a campain 
+                        var gtrackmail="<img src='https://www.google-analytics.com/collect?v=1&tid=UA-xxxxxxxx-x&t=callback&ds=web&ec=pageview&cid="+data.return+"&dl="+rsite+"' style='display:hidden !important;width:0px; height:0px;' >";
+                        $("#callbackPmessage").html("<p> Thank you for your message.<br> A member of our team will contact you </p>"+gtrackmail);
+# todo tag on test 
+# block with css and js script 
+
 
 ## ISSUE
 *  error on http:
@@ -49,25 +57,3 @@
 [2019-01-03 14:57:40][1]:status:[]\\Gdc\\\\Page\\Page IS NOT PRESENT - NEED TO BE LOAD
 [2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.debug=Ready
 
-# todo google 
-    js 
-                        var rsite=encodeURI(pageurl);
-                        //cm = campain manager is the solution to assign a campain 
-                        var gtrackmail="<img src='https://www.google-analytics.com/collect?v=1&tid=UA-xxxxxxxx-x&t=callback&ds=web&ec=pageview&cid="+data.return+"&dl="+rsite+"' style='display:hidden !important;width:0px; height:0px;' >";
-                        $("#callbackPmessage").html("<p> Thank you for your message.<br> A member of our team will contact you </p>"+gtrackmail);
-# todo tag on test 
-
-	lnxmcp()->Rem($rowRecord);
-	while (stripos($rowRecord['text'],"[lnxmcp-")!==false){
-		$lp1=stripos($rowRecord['text'],"[lnxmcp-");
-		$lp2=stripos($rowRecord['text'],"]",$lp1);
-		$lcmd=substr($rowRecord['text'],($lp1+1),($lp2-$lp1-1));
-		ob_start();
-		lnxmcp()->runTag($lcmd);
-		$lres=ob_get_clean();
-		$rowRecord['text']=str_ireplace("[".$lcmd."]",$lres,$rowRecord['text']);
-		lnxmcp()->Rem($lcmd);
-	}
-
-# queryJ
-# block with css and js script 
