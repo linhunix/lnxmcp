@@ -15,9 +15,13 @@ use LinHUniX\Pdo\Model\mcpQueryModelClass;
 
 /**
      *
-     * @var array parameters of the query to be generate 
-     *  
-     * $this->query is array
+     * 
+     * >>>$scopeInis array 
+     * var ["J"] = name of the json file used to populate the query vars :
+     * var ["M"] = contain the module folder that need to found the query json
+     * var ["V"] = contain the vendor folder that need to found the query json
+     * var ["P"] = contain the path folder that need to found the query json
+     * >>> $this->query
      * var ["T"]:
      *  e  = execute : exec query with boolean results  
      *  ec  = execute : exec query with boolean results  
@@ -41,6 +45,8 @@ use LinHUniX\Pdo\Model\mcpQueryModelClass;
      * @param Container $cfg Dipendecy injection for Pimple\Container
      * @param array $this->argIn temproraney array auto cleanable 
      * @return boolean|array query results 
+     * @see Pdo  module 
+     * @see mcpQueryModelClass 
      * @see [vendor]/mcp/Head.php caller of the config
  */
 class JsonQuery  extends mcpQueryModelClass {
@@ -55,16 +61,46 @@ class JsonQuery  extends mcpQueryModelClass {
                 $this->querypath=$mcp->getResource("path")."/cfg/query/";
             }
         }
-        if (isset($scopeIn["J"])){
-            if (file_exists($this->querypath.$scopeIn["J"])){
-                $this->getMcp()->debug("load:".$this->querypath.$scopeIn["J"]);
-                $this->query=json_decode (file_get_contents ($this->querypath.$scopeIn["J"]),1);
-            }else if (file_exists($this->querypath.$scopeIn["J"].".json")){
-                $this->getMcp()->debug("load:".$this->querypath.$scopeIn["J"].".json");
-                $this->query=json_decode (file_get_contents ($this->querypath.$scopeIn["J"].".json"),1);
-            }else{
-                $this->getMcp()->warning("Error on load:".$this->querypath.$scopeIn["J"]."[.json]");           
+    }
+     /**
+     * execute the query, verify the results and store and return 
+     * @return array response of code = like scope out;
+     */
+    protected function moduleCore()
+    {
+        if (isset($this->argIn["J"])){
+            $jfile=$this->argIn["J"];
+            if (isset($this->argIn["M"])){
+                $jfile=$this->argIn["M"]."/".$jfile;
             }
+            if (isset($this->argIn["V"])){
+                $jfile=$this->argIn["V"]."/".$jfile;
+            }           
+            if (isset($this->argIn["P"])){
+                $jfile=$this->argIn["P"]."/".$jfile;
+            }
+            if (file_exists($jfile)){
+                $this->getMcp()->debug("load:".$jfile);
+                $this->query=json_decode (file_get_contents ($jfile),1);
+            }else if (file_exists($jfile.".json")){
+                $this->getMcp()->debug("load:".$jfile.".json");
+                $this->query=json_decode (file_get_contents ($jfile.".json"),1);
+            }else if (file_exists($this->querypath.$jfile)){
+                $this->getMcp()->debug("load:".$this->querypath.$jfile);
+                $this->query=json_decode (file_get_contents ($this->querypath.$jfile),1);
+            }else if (file_exists($this->querypath.$jfile.".json")){
+                $this->getMcp()->debug("load:".$this->querypath.$jfile.".json");
+                $this->query=json_decode (file_get_contents ($this->querypath.$jfile.".json"),1);
+            }else{
+                $this->getMcp()->warning("Error on load:".$this->querypath.$jfile."[.json]");
+                return ;           
+            }
+        }
+        $this->query["V"] = $this->argIn;
+        $res = $this->getPdo()->run($this->argCtl, $this->query);
+        if (isset($res["return"]))
+        {
+            $this->argOut = $res["return"];
         }
     }
 }

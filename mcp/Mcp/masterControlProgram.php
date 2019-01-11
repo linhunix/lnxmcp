@@ -763,6 +763,33 @@ final class masterControlProgram
         $res = $this->module ($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Query");
         return $res["return"];
     }
+    
+    /**
+     * Run Module as database query by json file  
+     * @param string $dbproc  name of the driver by default json
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized by default Pdo
+     * @param string $path     path where present the basedirectory of the data
+     * @return array $ScopeOut
+     */
+    public function queryJsonR ($dbprc,$scopeIn = array (),$modinit = null, $vendor = null,$path=null)
+    {
+        $this->info ("MCP>>" . $this->defapp . ">>query[J]>>" . $dbproc);
+        if ($modinit!=null){
+            $scopeIn["P"]=$this->pathsrc;
+            $scopeIn["M"]=$modinit;
+        }
+        if ($vendor!=null){
+            $scopeIn["P"]=$this->pathsrc;
+            $scopeIn["V"]=$vendor;
+        }
+        if ($path!=null){
+            $scopeIn["P"]=$path;
+        }
+        $scopeIn["J"]=$dbprc;
+        return $this->queryCommonR("Json",false,$scopeIn,"Pdo");
+    }
+
     /**
      * Run Module as controller
      * @param string $ctrlproc name of the driver
@@ -1220,6 +1247,19 @@ final class masterControlProgram
     public function runTag ($action,$scopeIn=array())
     {
         return mcpMenuClass::runTag($action,$scopeIn);
+    }
+    /**
+     * Run Module as Tags sequence
+     * @param string $action name of the Doctrine
+     * @param array $scopeIn   Input Array with the value need to work
+     * @return any $ScopeOut
+     */
+    public function converTag ($text,$scopeIn=array(),$label=null)
+    {
+        if ($label==null){
+            $label=$this->defapp;
+        }
+        return mcpMenuClass::TagConverter($text,$scopeIn,$label);
     }
     /////////////////////////////////////////////////////////////////////////////
     // EVENT CONTROLLER 
