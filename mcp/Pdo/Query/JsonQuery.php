@@ -71,7 +71,7 @@ class JsonQuery  extends mcpQueryModelClass {
         if (isset($this->argIn["J"])){
             $jfile=$this->argIn["J"];
             if (isset($this->argIn["M"])){
-                $jfile=$this->argIn["M"]."/".$jfile;
+                $jfile=$this->argIn["M"]."/Query/".$jfile;
             }
             if (isset($this->argIn["V"])){
                 $jfile=$this->argIn["V"]."/".$jfile;
