@@ -183,7 +183,10 @@ function linhunixErrorHandlerDev($errno, $errstr, $errfile, $errline)
     $drvlvl = 0;
     switch ($errno) {
         case E_ERROR:
+            lnxmcp()->error($errstr . "[" . $errfile . "] [" . $errline . "]");
+            lnxmcp()->supportmail($errstr);
             $exit = true;
+            break;
         case E_USER_ERROR:
             lnxmcp()->error($errstr . "[" . $errfile . "] [" . $errline . "]");
             break;

@@ -588,7 +588,11 @@ final class mcpCoreClass
                 unset($this->scopeCtl[$this->sub]["auto"]);
                 if (file_exists ($this->scopeCtl[$this->sub]["file"])) {
                     $this->setStatus (true, "load std file " . $this->scopeCtl[$this->sub]["file"]);
-                    include_once $this->scopeCtl[$this->sub]["file"];
+                    if (in_array ($this->scopeCtl[$this->sub]["type"], array ("Controller","Page", "Block"))) {
+                        include $this->scopeCtl[$this->sub]["file"];
+                    }else{
+                        include_once $this->scopeCtl[$this->sub]["file"];
+                    }
                 } else {
                     $this->setStatus (false, $this->scopeCtl[$this->sub]["file"] . " file not exist!");
                     unset($this->scopeCtl[$this->sub]["file"]);

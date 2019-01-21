@@ -89,6 +89,24 @@ class mcpDebugClass
         $this->getLogger ()->error ($message);
     }
 
+    public function  supportmail($message){
+        if ($this->getRes("support.onerrorsend")==true){
+            $mailto=$this->getRes("support.mail");           
+            if ($mailto!=null){                
+                try{
+                    $subject ="Error Reporting - ".$this->getRes("def"). " - ". date('d/m/y g:i a');
+                    if (function_exists("debug_backtrace")){
+                        $message.= "\n\n".print_r(debug_backtrace(),1);
+                    }
+                    $message.= "\n\n".print_r(lnxmcp(),1);
+                    mail($mailto,$subject,$message);
+                }catch(\Exception $e){
+                    error_log("Support Mail Error:".$e->getMessage());
+                }
+            }
+        }        
+    }
+
     /**
      * critical
      *
@@ -99,6 +117,7 @@ class mcpDebugClass
     public function critical ($message)
     {
         $this->getLogger ()->error ($message);
+        $this->supportmail($message);
         $this->header ('Location: /500', true, true, 500);
     }
 
@@ -138,7 +157,7 @@ class mcpDebugClass
     public function webRem ($message)
     {
         echo "\n<!-- ===========================================================\n";
-        echo "====  LinHUniX :" .print_r($message,1);
+        echo "====  ".$this->getRes("def")." :" .print_r($message,1);
         echo "\n<=========================================================== !-->\n";
     }
 
@@ -153,7 +172,7 @@ class mcpDebugClass
     public function webDump ($message, $var = null)
     {
         echo "\n<hr>\n";
-        echo "<h2> LinHUniX :" . $message . "</h2>\n";
+        echo "<h2> ".$this->getRes("def")." :" . $message . "</h2>\n";
         echo "\n<hr>\n";
         if (!empty($var)) {
             echo "<pre>" . print_r ($var, 1) . "</pre>\n";

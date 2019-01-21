@@ -14,6 +14,8 @@ lnxmcp()->imhere();
 //LNXMCP CONFIG 
 ///////////////////////////////////////////////////////////////////////////////////////
 $path = lnxmcp()->getResource("path");
+$allow = lnxmcp()->getResource("ucm.allow");
+$convert = lnxmcp()->getResource("ucm.convert");
 ///////////////////////////////////////////////////////////////////////////////////////
 //LNXMCP IF RESOURCE IS FILE  
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -37,6 +39,7 @@ if (isset($_REQUEST["size"])) {
 ///////////////////////////////////////////////////////////////////////////////////////
 if (file_exists($filename)) {
     $filename = realpath($filename);
+    $dirname = dirname($filename);
     $mime = mime_content_type($filename);
     $size= filesize ($filename);
     lnxmcp()->debug("file:".$filename." - mime:".$mime." - size:".$size);

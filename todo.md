@@ -1,13 +1,13 @@
 # test well the mail and dbase class 
 # admim module 
-# complete the autonomy test suite 
+# complete the autonomy test suite (60% done)
 # cms / ln4 sub connection 
-# language functinality
+# language functinality (50% done )
 # event manager (by fs )
 # (x1) - calling json folder cache
 # (x1) - calling sqllite env/cache
 # (x1) - sql lite cache for mail and other system (promise task)
-# Critical error send mail 
+# Critical error send mail (80% done)
 # todo google 
     js 
                         var rsite=encodeURI(pageurl);
@@ -16,8 +16,6 @@
                         $("#callbackPmessage").html("<p> Thank you for your message.<br> A member of our team will contact you </p>"+gtrackmail);
 # todo tag on test 
 # block with css and js script 
-
-
 ## ISSUE
 *  error on http:
 [2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.menu.InitApp=Ready

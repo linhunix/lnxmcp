@@ -123,6 +123,9 @@ if (!isset($scopeInit)) {
         "app.level" => "0",
         "app.debug" => "false",
         "app.env" => "dev",
+        "app.support.name"=>"LinHuniX Support Team",
+        "app.support.mail"=>"support@linhunix.com",
+        "app.support.onerrorsend"=>true,
         "app.evnlst" => array('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name'),
         "mcp.path.module" => $app_path . "/mcp_module/",
         "app.path.query" => $app_path . "/App/dbj/",
@@ -240,7 +243,7 @@ global $cfg, $mcp;
 ////////////////////////////////////////////////////////////////////////////////
 lnxmcp()->runMenu("InitCommon");
 lnxmcp()->runMenu("InitApp");
-$GLOBALS["mcp_preload"] = ob_clean();
+$GLOBALS["mcp_preload"] = ob_get_clean();
 ob_start();
 ////////////////////////////////////////////////////////////////////////////////
 // Application solution
@@ -257,7 +260,7 @@ if (lnxmcp()->getCfg("PreloadOnly") != true) {
     } else if (isset($_REQUEST["Menu"])) {
         lnxmcp()->runMenu($_REQUEST["Menu"]);
     } else {
-        $GLOBALS["mcp_preload"] .= ob_clean();
+        $GLOBALS["mcp_preload"] .= ob_get_clean();
         if (file_exists($shlpath)) {
             include_once $shlpath;
             mcpRunShell();

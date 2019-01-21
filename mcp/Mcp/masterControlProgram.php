@@ -462,6 +462,15 @@ final class masterControlProgram
     {
         $this->mcpLogging->error ($message);
     }
+    /**
+     * debug class (level critical)
+     * send a debug message to support 
+     * @param string $message
+     */
+    public function supportmail ($message)
+    {
+        $this->mcpLogging->supportmail ($message);
+    }
 
     /**
      * debug class (level critical and die)
@@ -875,7 +884,7 @@ final class masterControlProgram
         $this->info ("MCP>>" .$vendor . ">>api>>" . $srvprc);
         $scopeIn["prev-output"]=ob_get_clean();
         $res = $this->module ($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall,$vendor, "Api");
-        ob_clean();
+        ob_end_clean();
         header('Content-type: application/json');
         echo json_encode ($res);
     }
@@ -894,7 +903,7 @@ final class masterControlProgram
         $this->info ("MCP>>api(C)>>" . $srvprc);
         $scopeIn["prev-output"]=ob_get_clean();
         $res = $this->module ($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Api");
-        ob_clean();
+        ob_end_clean();
         header('Content-type: application/json');
         echo json_encode ($res);
     }
@@ -912,7 +921,7 @@ final class masterControlProgram
         $this->info ("MCP>>api(Remote)>>" . $srvprc);
         $scopeIn["prev-output"]=ob_get_clean();
         $res=mcpProxyClass::apiRemote($this,$srvprc,$scopeIn,$modinit,$subcall,$vendor);
-        ob_clean();
+        ob_end_clean();
         header('Content-type: application/json');
         echo json_encode ($res);
     }
@@ -930,7 +939,7 @@ final class masterControlProgram
         $this->info ("MCP>>api(Shell)>>" . $srvprc);
         $scopeIn["prev-output"]=ob_get_clean();
         $res=mcpProxyClass::apiShell($this,$srvprc,$scopeIn,$modinit,$subcall,$vendor);
-        ob_clean();
+        ob_end_clean();
         header('Content-type: application/json');
         echo $res;
     }
@@ -1246,9 +1255,9 @@ final class masterControlProgram
      * @param array $scopeIn   Input Array with the value need to work
      * @return any $ScopeOut
      */
-    public function runTag ($action,$scopeIn=array())
+    public function runTag ($action,$scopeIn=array(),$buffer=false)
     {
-        return mcpMenuClass::runTag($action,$scopeIn);
+        return mcpMenuClass::runTag($action,$scopeIn,$buffer);
     }
     /**
      * Run Module as Tags sequence

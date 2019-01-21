@@ -1,0 +1,10 @@
+{
+    "mcp_check_type": "cfg",
+    "mcp_check_name": "loggin",
+    "mcp_check_ctl": {},
+    "mcp_check_out": {
+      "Logger": "mcp_check_isset",
+      "app.path": "mcp_check_isset",
+      "app.debug":"mcp_check_isset"
+    }
+  }

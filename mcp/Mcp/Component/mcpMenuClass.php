@@ -225,8 +225,12 @@ class mcpMenuClass {
      * @param array $scopeIn   Input Array with the value need to work
      * @return any $ScopeOut
      */
-    public static function runTag ($action,$scopeIn=array())
+    public static function runTag ($action,$scopeIn=array(),$buffer=false)
     {
+        if ($buffer==true){
+            ob_start();
+        }
+        $ret=array();      
         $sequence=lnxmcp()->getResource("tag.".$action);
         if ($sequence==null){
             $seqpth=lnxmcp()->getResource("path.tags");
@@ -235,10 +239,24 @@ class mcpMenuClass {
             }
         }
         if (($sequence!=null)&&($sequence!=false)){
-            return lnxmcp()->runSequence($sequence,$scopeIn);
+            $ret=lnxmcp()->runSequence($sequence,$scopeIn);
         }else{
-            return false;
+            $ret=false;
         }
+        if ($buffer==true){
+            $out=ob_get_contents();
+            ob_end_clean();
+            if (is_array($ret)){
+                $ret["output"]=$out;
+            }else{
+                $res=array(
+                    "return"=>$ret,
+                    "output"=>$out
+                );
+                $ret=$res;
+            }
+        }
+        return $ret;
     }
          /**
      * Search special Tags sequence on module and run it 
@@ -265,7 +283,8 @@ class mcpMenuClass {
             }
             ob_start();
             self::runTag($lcmd,$lsin);
-            $lres=ob_get_clean();
+            $lres=ob_get_contents();
+            ob_end_clean();
             $text=str_ireplace("[".$lcmdx."]",$lres,$text);
         }
         if ($label!=null){

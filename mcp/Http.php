@@ -6,7 +6,17 @@
  */
 function mcpRunHttp(){
     $urlpth=$_SERVER["REQUEST_URI"];
-    $urlpath=str_replace("//","/",$urlpath);
+    $browser=new \LinHUniX\Mcp\Tools\browserData();
+    foreach ($browser->getResult() as $bdk=>$dbv){
+        if (is_array($bdv)){
+            foreach ($bdv as $sdk=>$sdv){
+                lnxmcp()->setCfg("web.".$bdk.".".$sdk,$sbv);
+            }
+        }else{
+            lnxmcp()->setCfg("web.".$bdk,$dbv);
+        }
+    }
+    $urlpth=str_replace("//","/",$urlpth);
     $urlarr=explode("/",$urlpth);
     $cfgpth=lnxmcp()->getResource("path.config");
     ////// HEADER CALL
