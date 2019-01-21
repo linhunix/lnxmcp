@@ -55,3 +55,32 @@
 [2019-01-03 14:57:40][1]:status:[]\\Gdc\\\\Page\\Page IS NOT PRESENT - NEED TO BE LOAD
 [2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.debug=Ready
 
+## get screen size 
+jquery:
+
+$(function() {
+    $.post('some_script.php', { width: screen.width, height:screen.height }, function(json) {
+        if(json.outcome == 'success') {
+            // do something with the knowledge possibly?
+        } else {
+            alert('Unable to let PHP know what the screen resolution is!');
+        }
+    },'json');
+});
+
+PHP (some_script.php)
+
+<?php
+// For instance, you can do something like this:
+if(isset($_POST['width']) && isset($_POST['height'])) {
+    $_SESSION['screen_width'] = $_POST['width'];
+    $_SESSION['screen_height'] = $_POST['height'];
+    echo json_encode(array('outcome'=>'success'));
+} else {
+    echo json_encode(array('outcome'=>'error','error'=>"Couldn't save dimension info"));
+}
+?>
+## check mobile 
+function isMobile() {
+    return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
+}
