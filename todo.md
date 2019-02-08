@@ -18,13 +18,6 @@
 # block with css and js script 
 ## ISSUE
 *  error on http:
-[2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.menu.InitApp=Ready
-[2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.path.menus=Ready
-[2019-01-03 14:57:40][25]:lnxGetJsonFile>>file:C:\\Users\\freetimers\\PhpstormProjects\\gdc//App/mnu/\\InitApp.json and not found
-[2019-01-03 14:57:40][25]:Undefined variable: urlpath[phar://C:/Users/freetimers/PhpstormProjects/gdc/mcp/lnxmcp.phar/mcp/Http.php] [2]
-[2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.path.config=Ready
-[2019-01-03 14:57:40][25]:lnxGetJsonFile>>file:C:\\Users\\freetimers\\PhpstormProjects\\gdc//cfg/\\PathRewrite.json and not found
-[2019-01-03 14:57:40][25]:lnxGetJsonFile>>file:C:\\Users\\freetimers\\PhpstormProjects\\gdc//cfg/\\Pathmenu.json and not found
 [2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.menu.=Null
 [2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.path.menus=Ready
 [2019-01-03 14:57:40][25]:lnxGetJsonFile>>file:C:\\Users\\freetimers\\PhpstormProjects\\gdc//App/mnu/\\.json and not found

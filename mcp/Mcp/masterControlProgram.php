@@ -1006,14 +1006,17 @@ final class masterControlProgram
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
      */
-    public function page ($page, $scopeIn = array (), $modinit = null,$vendor=null)
+    public function page ($page, $scopeIn = array (), $modinit = null,$vendor=null,$pathtpl=null)
     {
         if ($vendor==null){
             $vendor=$this->defapp;
         }
+        if ($pathtpl==null){
+            $pathtpl=$this->pathtpl;
+        }
         $scopeIn["prev-output"]=ob_get_clean();
         $this->info ("MCP>>" .$vendor .">>page>>" . $page);
-        $this->template ($page, $this->pathtpl, true, $scopeIn, $modinit, null, $vendor, "Page");
+        $this->template ($page, $pathtpl, true, $scopeIn, $modinit, null, $vendor, "Page");
     }
     /////////////////////////////////////////////////////////////////////////////
     // BLOCK TEMPLATE / VIEW
@@ -1024,13 +1027,16 @@ final class masterControlProgram
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
      */
-    public function block ($block, $scopeIn = array (), $modinit = null,$vendor=null)
+    public function block ($block, $scopeIn = array (), $modinit = null,$vendor=null,$pathtpl=null)
     {
         if ($vendor==null){
             $vendor=$this->defapp;
         }
+        if ($pathtpl==null){
+            $pathtpl=$this->pathtpl;
+        }
         $this->info ("MCP>>" .$vendor .">>block>>" . $block);
-        $this->template ($block, $this->pathtpl, true, $scopeIn, $modinit, null, $vendor, "Block");
+        $this->template ($block, $pathtpl, true, $scopeIn, $modinit, null, $vendor, "Block");
     }
 
     /**
@@ -1111,7 +1117,7 @@ final class masterControlProgram
      */
     public function showCommonPage ($block, $scopeIn = array (), $modinit = null, $pageinit = null)
     {
-        $this->info ("MCP>>showPage>>" . $block);
+        $this->info ("MCP>>showCommonPage>>" . $block);
         $this->mcpCore->setClearFlagOff ();
         $this->controllerCommon ($block, false, $scopeIn, $modinit);
         $scopePageIn = $this->getScopeOutResult ();
@@ -1119,7 +1125,7 @@ final class masterControlProgram
         if ($pageinit == null) {
             $pageinit = $modinit;
         }
-        $this->page ($block, $scopePageIn, $pageinit);
+        $this->page ($block, $scopePageIn, $pageinit,$this->defvnd,$this->pathmcp);
     }
 
     /**
@@ -1257,6 +1263,9 @@ final class masterControlProgram
      */
     public function runTag ($action,$scopeIn=array(),$buffer=false)
     {
+        if ($action==null){
+            return null;
+        }
         return mcpMenuClass::runTag($action,$scopeIn,$buffer);
     }
     /**

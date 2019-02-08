@@ -183,16 +183,17 @@ function linhunixErrorHandlerDev($errno, $errstr, $errfile, $errline)
     $drvlvl = 0;
     switch ($errno) {
         case E_ERROR:
-        case E_CORE_ERROR:
             lnxmcp()->error($errstr . "[" . $errfile . "] [" . $errline . "]");
             lnxmcp()->supportmail($errstr);
             $exit = true;
             break;
         case E_PARSE:
+        case E_CORE_ERROR:
         case E_COMPILE_ERROR :
         case E_RECOVERABLE_ERROR:
         case E_USER_ERROR:
             lnxmcp()->error($errstr . "[" . $errfile . "] [" . $errline . "]");
+            lnxmcp()->supportmail($errstr);
             break;
         case E_USER_DEPRECATED:
         case E_WARNING:

@@ -67,7 +67,9 @@ final class mcpCoreClass
     public function __construct (masterControlProgram &$mcp)
     {
         $this->mcp = &$mcp;
-        $this->cfg = &$mcp->getCfg ();
+        {
+            @$this->cfg = &$mcp->getCfg ();
+        }
         $this->defapp = ucwords ($this->cfg["app.def"]);
         $this->mcp->debug ("app.def:" . $this->defapp);
         $this->flagClearVars = true;
@@ -631,7 +633,7 @@ final class mcpCoreClass
             if (class_exists ($this->scopeCtl[$this->sub]["module"])) {
                 $this->setStatus (true, "load class " . $this->scopeCtl[$this->sub]["module"]);
                 $modclass = $this->scopeCtl[$this->sub]["module"];
-                $retobj = new $modclass($this->getMcp (), $this->scopeCtl[$this->sub], $this->scopeIn[$this->sub]);
+                @$retobj = new $modclass($this->getMcp (), $this->scopeCtl[$this->sub], $this->scopeIn[$this->sub]);
             } elseif (function_exists ($this->scopeCtl[$this->sub]["module"])){
                 $this->setStatus (true, "load function " . $this->scopeCtl[$this->sub]["module"]);
                 $modfunction = $this->scopeCtl[$this->sub]["module"];

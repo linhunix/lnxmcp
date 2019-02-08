@@ -57,10 +57,13 @@ class mysqlDriver extends mcpBaseModelClass {
     /*
      * remplace the mysqlLegacyRealEscapeString
      * @see mysqlLegacyRealEscapeString(),PDO->quote()
+     * for an issue on Php 5.6 change to 
      */
 
-    public function real_escape_string($v) {
-        return $this->PDO->quote($v);
+    public function real_escape_string($value) {
+        $search = array("\\",  "\x00", "\n",  "\r",  "'",  '"', "\x1a");
+        $replace = array("\\\\","\\0","\\n", "\\r", "\'", '\"', "\\Z");
+        return str_replace($search, $replace, $value);
     }
 
     //Check if the table exists in the database

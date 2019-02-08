@@ -227,8 +227,12 @@ if (class_exists("\Composer\Autoload\ClassLoader")) {
 }
 if (isset($scopeInit["app.debug"])) {
     if ($scopeInit["app.debug"] == true) {
-        error_log("Load Mcp by " . $scopeInit["mcp.loader"] . " [" . $scopeInit["phar"] . "]");
-        error_log($scopeInit["purl"] . "/" . $aldpath);
+        if (isset($scopeInit["purl"] )){
+            error_log("Load Mcp by " . $scopeInit["mcp.loader"] . " [" . $scopeInit["phar"] . "]");
+            error_log($scopeInit["purl"] . "/" . $aldpath);
+        }else{
+            error_log("Load Mcp by " . $scopeInit["mcp.loader"] . " [" . $scopeInit["mcp.path"] . "]");
+        }
     }
 }
 if (class_exists("\LinHUniX\Mcp\masterControlProgram")) {
