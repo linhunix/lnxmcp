@@ -17,7 +17,12 @@
 # todo tag on test 
 # block with css and js script 
 ## ISSUE
+* error on mcp :
+
+    PHP Notice:  Undefined index: app.path in phar:///lnxmcp.phar/mcp/Mcp/masterControlProgram.php on line 2
+
 *  error on http:
+
 [2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.menu.=Null
 [2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.path.menus=Ready
 [2019-01-03 14:57:40][25]:lnxGetJsonFile>>file:C:\\Users\\freetimers\\PhpstormProjects\\gdc//App/mnu/\\.json and not found
