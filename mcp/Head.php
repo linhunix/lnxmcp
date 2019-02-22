@@ -116,31 +116,37 @@ if (!isset($scopePdo)) {
         )
     );
 }
-if (!isset($scopeInit)) {
-    $scopeInit = array(
-        "app.def" => "LinHUniX",
-        "app.path" => $app_path,
-        "app.level" => "0",
-        "app.debug" => "false",
-        "app.env" => "dev",
-        "app.support.name"=>"LinHuniX Support Team",
-        "app.support.mail"=>"support@linhunix.com",
-        "app.support.onerrorsend"=>true,
-        "app.evnlst" => array('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name'),
-        "mcp.path.module" => $app_path . "/mcp_module/",
-        "app.path.query" => $app_path . "/App/dbj/",
-        "app.path.menus" => $app_path . "/App/mnu/",
-        "app.path.tags" => $app_path . "/App/tag/",
-        "app.path.module" => $app_path . "/App/mod",
-        "app.path.template" => $app_path . "/App/tpl/",
-        "app.path.config" => $app_path . "/cfg/",
-        "app.menu.InitCommon" => array(
-            "pdo" => array("module" => "Pdo", "type" => "serviceCommon", "input" => $scopePdo),
-            "mail" => array("module" => "Mail", "type" => "serviceCommon")
-        ),
-        "app.menu.InitApp" => array(),
-    );
+if (!isset($scopeInit)){
+    $scopeInit=array();
 }
+foreach( array(
+    "app.def" => "LinHUniX",
+    "app.path" => $app_path,
+    "app.level" => "0",
+    "app.debug" => "false",
+    "app.env" => "dev",
+    "app.support.name"=>"LinHuniX Support Team",
+    "app.support.mail"=>"support@linhunix.com",
+    "app.support.onerrorsend"=>true,
+    "app.evnlst" => array('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name'),
+    "mcp.path.module" => $app_path . "/mcp_module/",
+    "app.path.query" => $app_path . "/App/dbj/",
+    "app.path.menus" => $app_path . "/App/mnu/",
+    "app.path.tags" => $app_path . "/App/tag/",
+    "app.path.module" => $app_path . "/App/mod",
+    "app.path.template" => $app_path . "/App/tpl/",
+    "app.path.config" => $app_path . "/cfg/",
+    "app.menu.InitCommon" => array(
+        "pdo" => array("module" => "Pdo", "type" => "serviceCommon", "input" => $scopePdo),
+        "mail" => array("module" => "Mail", "type" => "serviceCommon")
+    ),
+    "app.menu.InitApp" => array(),
+) as $sik=>$siv ){
+    if (!isset($scopeInit[$sik])){
+        $scopeInit[$sik]=$siv;
+    }
+}
+
 if (isset($lnxmcp_phar)) {
     if (isset($lnxmcp_phar["app.debug"])) {
         if ($lnxmcp_phar["app.debug"] == true) {
