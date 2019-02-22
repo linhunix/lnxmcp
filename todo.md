@@ -21,37 +21,6 @@
 
     PHP Notice:  Undefined index: app.path in phar:///lnxmcp.phar/mcp/Mcp/masterControlProgram.php on line 2
 
-*  error on http:
-
-[2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.menu.=Null
-[2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.path.menus=Ready
-[2019-01-03 14:57:40][25]:lnxGetJsonFile>>file:C:\\Users\\freetimers\\PhpstormProjects\\gdc//App/mnu/\\.json and not found
-[2019-01-03 14:57:40][25]:MCP>>showPage>>
-[2019-01-03 14:57:40][25]:MCP>>Gdc>>controller>>
-[2019-01-03 14:57:40][1]:WorkingArea:statmentModule
-[2019-01-03 14:57:40][1]:WorkingArea:moduleCaller
-[2019-01-03 14:57:40][1]:WorkingArea:initModule
-[2019-01-03 14:57:40][1]:app.Controller.
-[2019-01-03 14:57:40][1]:WorkingArea:loadModule
-[2019-01-03 14:57:40][1]:status:[]\\Gdc\\\\Controller\\Controller IS NOT PRESENT - NEED TO BE LOAD
-[2019-01-03 14:57:40][1]:status:[]C:\\Users\\freetimers\\PhpstormProjects\\gdc//App/mod/Gdc//autoload.php file not exist!
-[2019-01-03 14:57:40][1]:status:[]C:\\Users\\freetimers\\PhpstormProjects\\gdc//App/mod//Controller/Controller.php file not exist!
-[2019-01-03 14:57:40][1]:status:[]\\Gdc\\\\Controller\\Controller IS NOT PRESENT - NEED TO BE LOAD
-[2019-01-03 14:57:40][1]:WorkingArea:initModule
-[2019-01-03 14:57:40][1]:status:[]Gdc\\\\Controller\\Controller not a class
-[2019-01-03 14:57:40][1]:status:[1]app.Controller. ScopeOut is set!
-[2019-01-03 14:57:40][1]:status:[1]app.Controller. OK DONE
-[2019-01-03 14:57:40][1]:status:[]moduleCaller has no data
-[2019-01-03 14:57:40][1]:R:5
-[2019-01-03 14:57:40][25]:MCP>>Gdc>>page>>
-[2019-01-03 14:57:40][1]:WorkingArea:statmentModule
-[2019-01-03 14:57:40][1]:WorkingArea:moduleLoader
-[2019-01-03 14:57:40][1]:WorkingArea:loadModule
-[2019-01-03 14:57:40][1]:status:[]\\Gdc\\\\Page\\Page IS NOT PRESENT - NEED TO BE LOAD
-[2019-01-03 14:57:40][1]:status:[]C:\\Users\\freetimers\\PhpstormProjects\\gdc//App/tpl//Gdc//autoload.php file not exist!
-[2019-01-03 14:57:40][1]:status:[]C:\\Users\\freetimers\\PhpstormProjects\\gdc//App/tpl///Page/Page.inc.php file not exist!
-[2019-01-03 14:57:40][1]:status:[]\\Gdc\\\\Page\\Page IS NOT PRESENT - NEED TO BE LOAD
-[2019-01-03 14:57:40][25]:CALL DIRECT RESOURCE app.debug=Ready
 
 ## get screen size 
 jquery:
