@@ -16,6 +16,7 @@ use LinHUniX\Mcp\Model\mcpBaseModelClass;
 use LinHUniX\Mcp\Model\mcpConfigArrayModelClass;
 use \LinHUniX\Mcp\Component\mcpMenuClass;
 use \LinHUniX\Mcp\Component\mcpProxyClass;
+use \LinHUniX\Mcp\Component\mcpTemplateClass;
 
 /*
  * this Master Control Programs Class is to prepare 
@@ -100,6 +101,7 @@ final class masterControlProgram
     {
         $this->pathapp = $scopeIn["app.path"] . "/App/";
         $this->common=array();
+
         $this->event=array();
         $this->defapp = ucwords ($scopeIn["app.def"]);
         if (isset($scopeIn["app.path.module"])){
@@ -144,6 +146,29 @@ final class masterControlProgram
         $this->info ("Start Legacy Env");
         $GLOBALS["cfg"] = &$this->cfg;
         $GLOBALS["mcp"] = &$this;
+    }
+    public function updateCommonByEnv($setForce=false){
+        foreach($_REQUEST as $rk =>$rv){
+            if (!isset($this->common[$rk])||($setForce==true)){
+                $this->common[$rk]=$rv;
+            } else if (empty($_REQUEST[$rk])||($setForce==true)){
+                $this->common[$rk]=$rv;
+            }
+        }
+        foreach($_GET as $gk =>$gv){
+            if (!isset($this->common[$gk])||($setForce==true)){
+                $this->common[$gk]=$gv;
+            }else if (empty($_REQUEST[$gk])||($setForce==true)){
+                $this->common[$gk]=$gv;
+            }
+        }
+        foreach($_POST as $pk =>$pv){
+            if (!isset($this->common[$pk])||($setForce==true)){
+                $this->common[$pk]=$pv;
+            }else if (empty($_REQUEST[$pk])||($setForce==true)){
+                $this->common[$pk]=$pv;
+            }
+        }
     }
 
     /////////////////////////////////////////////////////////////////////////////
@@ -650,15 +675,15 @@ final class masterControlProgram
      * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
      * @param string $vendor   this code is part of specific vendor (ex ft )
      * @param string $type     is a Page, Block, Controller, Driver
-     * @return array $ScopeOut
+     * @param bool $hasreturn if is called the objet return the value as string 
+     * @return string output
      */
-    public function template ($callname, $path = null, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null, $vendor = null, $type = null)
+    public function template ($callname, $path = null, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null, $vendor = null, $type = null,$hasreturn=false)
     {
         if ($path == null) {
             $path = $this->pathtpl;
         }
-        $this->statmentModule ($path, $callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $type);
-        $this->loadModule ();
+        return mcpTemplateClass::template($callname,$path,$ispreload,$scopeIn,$modinit,$subcall,$vendor,$type,$hasreturn);
     }
 
     /**
@@ -1005,8 +1030,9 @@ final class masterControlProgram
      * @param string $page    name of the Page
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
+     * @return string output (if is true return flag)
      */
-    public function page ($page, $scopeIn = array (), $modinit = null,$vendor=null,$pathtpl=null)
+    public function page ($page, $scopeIn = array (), $modinit = null,$vendor=null,$pathtpl=null,$hasreturn=false)
     {
         if ($vendor==null){
             $vendor=$this->defapp;
@@ -1016,7 +1042,10 @@ final class masterControlProgram
         }
         $scopeIn["prev-output"]=ob_get_clean();
         $this->info ("MCP>>" .$vendor .">>page>>" . $page);
-        $this->template ($page, $pathtpl, true, $scopeIn, $modinit, null, $vendor, "Page");
+        $this->RunEvent("page_start_".$page);
+        $ret= $this->template ($page, $pathtpl, true, $scopeIn, $modinit, null, $vendor, "Page",$hasreturn);
+        $this->RunEvent("page_start_".$page);
+        return $ret;
     }
     /////////////////////////////////////////////////////////////////////////////
     // BLOCK TEMPLATE / VIEW
@@ -1026,8 +1055,9 @@ final class masterControlProgram
      * @param string $block   name of the Block
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
+     * @return string output (if is true return flag)
      */
-    public function block ($block, $scopeIn = array (), $modinit = null,$vendor=null,$pathtpl=null)
+    public function block ($block, $scopeIn = array (), $modinit = null,$vendor=null,$pathtpl=null,$hasreturn=false)
     {
         if ($vendor==null){
             $vendor=$this->defapp;
@@ -1036,7 +1066,10 @@ final class masterControlProgram
             $pathtpl=$this->pathtpl;
         }
         $this->info ("MCP>>" .$vendor .">>block>>" . $block);
-        $this->template ($block, $pathtpl, true, $scopeIn, $modinit, null, $vendor, "Block");
+        $this->RunEvent("block_start_".$block);
+        $ret = $this->template ($block, $pathtpl, true, $scopeIn, $modinit, null, $vendor, "Block",$hasreturn);
+        $this->RunEvent("block_start_".$block);
+        return $ret;
     }
 
     /**
@@ -1044,11 +1077,15 @@ final class masterControlProgram
      * @param string $block   name of the Block
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
+     * @return string output (if is true return flag)
      */
-    public function blockCommon ($block, $scopeIn = array (), $modinit = null)
+    public function blockCommon ($block, $scopeIn = array (), $modinit = null,$hasreturn=false)
     {
         $this->info ("MCP>>block(C)>>" . $block);
-        $this->template ($block, $this->pathmcp, true, $scopeIn, $modinit, null, $this->defapp, "Block");
+        $this->RunEvent("blockCommon_start_".$block);
+        $ret=$this->template ($block, $this->pathmcp, true, $scopeIn, $modinit, null, $this->defapp, "Block",$hasreturn);
+        $this->RunEvent("blockCommon_stop_".$block);
+        return $ret;
     }
     /**
      * Load a block with your ScopeIn
@@ -1056,13 +1093,21 @@ final class masterControlProgram
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
      */
-    public function blockRemote ($page, $scopeIn = array (), $modinit = null,$vendor=null)
+    public function blockRemote ($page, $scopeIn = array (), $modinit = null,$vendor=null,$hasreturn=false)
     {
         if ($vendor==null){
             $vendor=$this->defapp;
         }
         $this->info ("MCP>>" .$vendor .">>block(Remote)>>" . $page);
-        print( mcpProxyClass::apiRemote($this,$page,$scopeIn,$modinit,null,$vendor));
+        $this->RunEvent("blockRemote_start_".$page);
+        $ret=mcpProxyClass::apiRemote($this,$page,$scopeIn,$modinit,null,$vendor);
+        $this->RunEvent("blockRemote_stop_".$page);
+        if ($hasreturn==true){
+            return $ret;
+        }else{
+            print($ret);
+        }
+
     }
     /**
      * Load a block with your ScopeIn
@@ -1070,13 +1115,20 @@ final class masterControlProgram
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
      */
-    public function blockShell ($page, $scopeIn = array (), $modinit = null,$vendor=null)
+    public function blockShell ($page, $scopeIn = array (), $modinit = null,$vendor=null,$hasreturn=false)
     {
         if ($vendor==null){
             $vendor=$this->defapp;
         }
         $this->info ("MCP>>" .$vendor .">>block(Shell)>>" . $page);
-        print( mcpProxyClass::blockShell($this,$page,$scopeIn,$modinit,null,$vendor));
+        $this->RunEvent("blockShell_start_".$page);
+        $ret=mcpProxyClass::blockShell($this,$page,$scopeIn,$modinit,null,$vendor);
+        $this->RunEvent("blockShell_stop_".$page);
+        if ($hasreturn==true){
+            return $ret;
+        }else{
+            print($ret);
+        }
     }
     /**
      * Load a mail with your ScopeIn
@@ -1295,7 +1347,7 @@ final class masterControlProgram
             return false;
         }
         if (isset($this->event[$resname])) {
-            $this->runSequence($this->event[$resname],$this->common);
+           $this->common[$resname]=$this->runSequence($this->event[$resname],$this->common);
         }
         return null;
     }
