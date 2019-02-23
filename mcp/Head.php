@@ -45,54 +45,7 @@ if (empty($app_path)) {
     }
 }
 $app_path = realpath($app_path) . "/";
-////////////////////////////////////////////////////////////////////////////////
-// ENV/CONFIG JSON CONFIG AND SETTINGS
-////////////////////////////////////////////////////////////////////////////////
-try {
-    if (file_exists($app_path . "/cfg/mcp.settings.json")) {
-        $scopeInit = json_decode(file_get_contents($app_path . "/cfg/mcp.settings.json"), true);
-    }
-    if (isset($_ENV["MCP_MODE"])) {
-        $hostcfg = $app_path . "/cfg/mcp.mode." . $_ENV["MCP_MODE"] . ".json";
-        if (file_exists($hostcfg)) {
-            $scopeInit = json_decode(file_get_contents($hostcfg), true);
-        }
-    }
-    if (isset($_SERVER["HTTP_HOST"])) {
-        $hostcfg = $app_path . "/cfg/mcp.site." . $_SERVER["HTTP_HOST"] . ".json";
-        if (file_exists($hostcfg)) {
-            $scopeInit = json_decode(file_get_contents($hostcfg), true);
-        }
-    }
-    if (isset($_SERVER["SERVER_NAME"])) {
-        $hostcfg = $app_path . "/cfg/mcp.server." . $_SERVER["SERVER_NAME"] . ".json";
-        if (file_exists($hostcfg)) {
-            $scopeInit = json_decode(file_get_contents($hostcfg), true);
-        }
-    }
-    if (isset($scopeInit["preload"])) {
-        if (file_exists($scopeInit["preload"])) {
-            include $scopeInit["preload"];
-        }
-    } else {
-        if (file_exists($app_path . "/cfg/mcp.preload.php")) {
-            include $app_path . "/cfg/mcp.preload.php";
-        }
-    }
-    if (isset($scopeInit["loadenv"])) {
-        if (is_array($scopeInit["loadenv"])) {
-            foreach ($scopeInit["loadenv"] as $k => $v) {
-                putenv($k . "=" . $v);
-                $_ENV[$k] = $v;
-                $_SERVER[$k] = $v;
-            }
-        } else {
-            putenv($scopeInit["loadenv"]);
-        }
-    }
-} catch (Exception $e) {
-    error_log("LNXMCP HEAD CFG ERROR:" . $e->get_message);
-}
+
 ////////////////////////////////////////////////////////////////////////////////
 // SCOPE - INIT
 ////////////////////////////////////////////////////////////////////////////////
@@ -156,6 +109,71 @@ if (isset($lnxmcp_phar)) {
     foreach ($lnxmcp_phar as $lmpk => $lmpv) {
         $scopeInit[$lmpk] = $lmpv;
     }
+}
+////////////////////////////////////////////////////////////////////////////////
+// ENV/CONFIG JSON CONFIG AND SETTINGS
+////////////////////////////////////////////////////////////////////////////////
+try {
+    if (file_exists($app_path . "/cfg/mcp.settings.json")) {
+        $loadscope = json_decode(file_get_contents($app_path . "/cfg/mcp.settings.json"), true);
+        if (is_array($loadscope)){
+            foreach ($loadscope as $lsk=>$lsv){ $scopeInit[$lsk]=$lsv;}
+        }
+    }
+    if (file_exists($app_path . "/cfg/mcp.default.json")) {
+        $loadscope = json_decode(file_get_contents($app_path . "/cfg/mcp.default.json"), true);
+        if (is_array($loadscope)){
+            foreach ($loadscope as $lsk=>$lsv){ $scopeInit[$lsk]=$lsv;}
+        }
+    }
+    if (isset($_ENV["MCP_MODE"])) {
+        $hostcfg = $app_path . "/cfg/mcp.mode." . $_ENV["MCP_MODE"] . ".json";
+        if (file_exists($hostcfg)) {
+            $loadscope = json_decode(file_get_contents($hostcfg), true);
+            if (is_array($loadscope)){
+                foreach ($loadscope as $lsk=>$lsv){ $scopeInit[$lsk]=$lsv;}
+            }        }
+    }
+    if (isset($_SERVER["HTTP_HOST"])) {
+        $hostcfg = $app_path . "/cfg/mcp.site." . $_SERVER["HTTP_HOST"] . ".json";
+        if (file_exists($hostcfg)) {
+            $loadscope = json_decode(file_get_contents($hostcfg), true);
+            if (is_array($loadscope)){
+                foreach ($loadscope as $lsk=>$lsv){ $scopeInit[$lsk]=$lsv;}
+            }
+        }
+    }
+    if (isset($_SERVER["SERVER_NAME"])) {
+        $hostcfg = $app_path . "/cfg/mcp.server." . $_SERVER["SERVER_NAME"] . ".json";
+        if (file_exists($hostcfg)) {
+            $loadscope = json_decode(file_get_contents($hostcfg), true);
+            if (is_array($loadscope)){
+                foreach ($loadscope as $lsk=>$lsv){ $scopeInit[$lsk]=$lsv;}
+            }
+        }
+    }
+    if (isset($scopeInit["preload"])) {
+        if (file_exists($scopeInit["preload"])) {
+            include $scopeInit["preload"];
+        }
+    } else {
+        if (file_exists($app_path . "/cfg/mcp.preload.php")) {
+            include $app_path . "/cfg/mcp.preload.php";
+        }
+    }
+    if (isset($scopeInit["loadenv"])) {
+        if (is_array($scopeInit["loadenv"])) {
+            foreach ($scopeInit["loadenv"] as $k => $v) {
+                putenv($k . "=" . $v);
+                $_ENV[$k] = $v;
+                $_SERVER[$k] = $v;
+            }
+        } else {
+            putenv($scopeInit["loadenv"]);
+        }
+    }
+} catch (Exception $e) {
+    error_log("LNXMCP HEAD CFG ERROR:" . $e->get_message);
 }
 ////////////////////////////////////////////////////////////////////////////////
 // ENVIRONMENT

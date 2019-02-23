@@ -106,7 +106,7 @@ class mcpCheckModel
     public function assetarg($arg, $type, $desc)
     {
         echo "Check IsSet...[" . $desc . "]\n";
-        echo "verify is $type..";
+        echo "verify is ".print_r($type,1)."...";
         if (isset($arg)) {
             if (is_array($type)) {
                 echo "OK\n";
