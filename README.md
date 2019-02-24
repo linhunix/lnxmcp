@@ -16,7 +16,9 @@ A MCP is a layer, whe you ad this on your code, then is automatic estended with 
     
 That make the developper and the designer in a very confident solution :
 - The designe don't need to know the php or the lnxmcp code but only the tag 
-- the backender developper can use the lnxmcp code as library or as estension 
+- the backender developper can use the lnxmcp code as library or as estension
+ 
+ A similar example of MCP is Jquery 
 
 ### Don't Need Composer but support it ###
 lnxmcp is born to is indipendent with composer, if is present use it 
