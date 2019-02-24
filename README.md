@@ -39,16 +39,18 @@ The logic inside support both nmespace function and class
  - simple data cache 
  - simple shell command service 
  
- for more info [[ https://github.com/linhunix/lnxmcp/wiki/ | Wiki GitHub Pages ]] 
+### Why GPL v3?
 
- 
 **LNX** (LinHUniX) **MCP** (Master Control Program) is a share code with free license.
- 
 Develop and Maintain by **LinHUniX Ltd**  - 2002/2020  - Author is **Andrea Morello (LinHUniX)**
+Is a parts of the LN4 Note projects started on 2002 (ln4.it and ln4.app)
 
-> is a parts of the LN4 Note projects 
+The lnxmcp (php/phar library) and lnxfea (js/angular2 library) are the common sdk to undestood
+the logic of LN4 Java Backend and create around it the functionality need to extend.
 
+Java LN4 Backend and Middle Ware >> Json Api >> lnxfea/lnxmcp fronted  >> Site or application
 
+**For more info [[ https://github.com/linhunix/lnxmcp/wiki/ | Wiki GitHub Pages ]]**
   
    
 tag to init row:
