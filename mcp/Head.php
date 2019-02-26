@@ -74,6 +74,8 @@ if (!isset($scopeInit)){
 }
 foreach( array(
     "app.def" => "LinHUniX",
+    "app.lang"=>"en",
+    "app.type"=>"lib",
     "app.path" => $app_path,
     "app.level" => "0",
     "app.debug" => "false",
@@ -86,9 +88,10 @@ foreach( array(
     "app.path.query" => $app_path . "/App/dbj/",
     "app.path.menus" => $app_path . "/App/mnu/",
     "app.path.tags" => $app_path . "/App/tag/",
-    "app.path.module" => $app_path . "/App/mod",
+    "app.path.module" => $app_path . "/App/mod/",
     "app.path.template" => $app_path . "/App/tpl/",
     "app.path.config" => $app_path . "/cfg/",
+    "app.path.language" => $app_path . "/App/lng/",
     "app.menu.InitCommon" => array(
         "pdo" => array("module" => "Pdo", "type" => "serviceCommon", "input" => $scopePdo),
         "mail" => array("module" => "Mail", "type" => "serviceCommon")

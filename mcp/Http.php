@@ -1,4 +1,17 @@
 <?php
+/**
+ * extend the config based on $pathmenu array
+ * @return array $scopein 
+ */
+function mcpHttpPathMenuExt($pathmenu,$catmng,$scopein){
+    if (in_array($catmng, $pathmenu)) {
+        foreach ($pathmenu[$catmng] as $mnk => $nuv) {
+            $scopein[$mnk] = $mnv;
+        }
+    }
+    return $scopein;
+}
+
 
 /**
  * mcpRunHttp
@@ -7,6 +20,7 @@
  */
 function mcpRunHttp()
 {
+    lnxmcp()->setCfg("app.type","web");
     $urlpth = $_SERVER["REQUEST_URI"];
     if (empty($urlpth) or ($urlpth == "") or ($urlpth == "/")) {
         $urlpth = "home";
@@ -48,11 +62,31 @@ function mcpRunHttp()
     $scopein = $_REQUEST;
     $scopein["category"] = $urlarr;
     $pathmenu = lnxGetJsonFile("Pathmenu", $cfgpth, "json");
-    $menu = "home".str_replace("/", ".", $urlpth);
-    $catlist[$catcnt++] = $menu;
     if (!is_array($pathmenu)) {
         $pathmenu = array();
     }
+    $menu = "home".str_replace("/", ".", $urlpth);
+    $lang= lnxmcp()->getCfg("web.language");
+    if (empty($lang)){
+        $lang=lnxmcp()->getCfg("app.lang");
+    }else{
+        lnxmcp()->setCfg("app.lang",$lang);
+    }
+    $catlist[$catcnt++] = $lang.$menu;
+    $scopein=mcpHttpPathMenuExt($pathmenu,$lang,$scopein);
+    $lang.=".";
+    $scopein=mcpHttpPathMenuExt($pathmenu,$lang.$menu,$scopein);
+    $scopein=mcpHttpPathMenuExt($pathmenu,$menu,$scopein);
+    if (lnxmcp()->getCfg("web.mobile")==true){
+        lnxmcp()->setCfg("app.type","mobile");
+        $mobile="mobile.";
+        $catlist[$catcnt++] = $mobile.$lang.$menu;
+        $catlist[$catcnt++] = $mobile.$menu;
+        $scopein=mcpHttpPathMenuExt($pathmenu,"mobile",$scopein);
+        $scopein=mcpHttpPathMenuExt($pathmenu,$mobile.$lang.$menu,$scopein);
+        $scopein=mcpHttpPathMenuExt($pathmenu,$mobile.$menu,$scopein);
+    }
+    $catlist[$catcnt++] = $menu;
     $submenu = "main";
     $catlist[$catcnt++] = $submenu;
     $catlevel = 0;
@@ -66,23 +100,11 @@ function mcpRunHttp()
             $catmenu = "cat." . $catk . "." . $catv;
             $catlist[$catcnt++] = $catmenu;
             $catlist[$catcnt++] = $submenu;
-            if (in_array($catmenu, $pathmenu)) {
-                foreach ($pathmenu[$catmenu] as $mnk => $nuv) {
-                    $scopein[$mnk] = $mnv;
-                }
-            }
-            if (in_array($submenu, $pathmenu)) {
-                foreach ($pathmenu[$submenu] as $mnk => $nuv) {
-                    $scopein[$mnk] = $mnv;
-                }
-            }
+            $scopein=mcpHttpPathMenuExt($pathmenu,$catmenu,$scopein);
+            $scopein=mcpHttpPathMenuExt($pathmenu,$submenu,$scopein);
         }
     }
-    if (in_array($urlpth, $pathmenu)) {
-        foreach ($pathmenu[$urlpath] as $mnk => $nuv) {
-            $scopein[$mnk] = $mnv;
-        }
-    }
+    $scopein=mcpHttpPathMenuExt($pathmenu,$urlpth,$scopein);
     if (isset($scopein["menu"])) {
         $menu = $scopein["menu"];
     }

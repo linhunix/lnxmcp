@@ -1,0 +1,82 @@
+<?php
+/**
+ * LinHUniX Web Application Framework
+ *
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
+ * @license   Proprietary See LICENSE.md
+ * @version GIT:2019-v3
+ */
+
+namespace LinHUniX\Mcp\Component;
+
+use LinHUniX\Mcp\masterControlProgram;
+
+/**
+ * Description of mcpLanguageClass
+ *
+ * @author andrea
+ */
+class mcpLanguageClass {
+
+    private static $Dictionary;
+    private static $currlang;
+
+    /**
+     * loadLanguage
+     *
+     * @param  mixed $lang
+     *
+     * @return void
+     */
+    private static function loadLanguage($lang){
+        if (isset(mcpLanguageClass::$Dictionary[$lang])){
+            $langdir=lnxmcp()->getCfg("app.path.language");
+            mcpLanguageClass::$Dictionary[$lang]=lnxGetJsonFile($lang,$langdir,"json");
+            if (mcpLanguageClass::$Dictionary[$lang]===null){
+                mcpLanguageClass::$Dictionary[$lang]=array();
+            }
+        }
+    }
+    /**
+     * chkLanguage
+     *
+     * @param  mixed $lang
+     *
+     * @return void
+     */
+    private static function chkLanguage($lang){
+        if (mcpLanguageClass::$Dictionary==null){
+            mcpLanguageClass::$Dictionary=array();
+            mcpLanguageClass::loadLanguage("default");
+        }
+        if (mcpLanguageClass::$currlang!= $lang){
+            mcpLanguageClass::loadLanguage($lang);
+            mcpLanguageClass::$currlang= $lang;
+        }
+    }
+    /**
+     * @param string lang language used;
+     * @param string message message to be translate
+     * @return string message translate
+    */
+    public static function multiTranslate($lang,$message){
+        if (isset(mcpLanguageClass::$Dictionary[$lang][$message])){
+            return mcpLanguageClass::$Dictionary[$lang][$message];
+        }
+        if (isset(mcpLanguageClass::$Dictionary["default"][$message])){
+            return mcpLanguageClass::$Dictionary["default"][$message];
+        }
+        return $message;
+    }
+
+    /**
+     * @param string message message to be translate
+     * @return string message translate
+     */
+    public static function translate($message){
+        $lang=lnxmcp()->getCfg("app.language");
+        mcpLanguageClass::chkLanguage($lang);
+        return mcpLanguageClass::multiTranslate($lang,$message);
+    }
+}

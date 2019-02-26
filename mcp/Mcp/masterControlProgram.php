@@ -17,6 +17,7 @@ use LinHUniX\Mcp\Model\mcpConfigArrayModelClass;
 use \LinHUniX\Mcp\Component\mcpMenuClass;
 use \LinHUniX\Mcp\Component\mcpProxyClass;
 use \LinHUniX\Mcp\Component\mcpTemplateClass;
+use \LinHUniX\Mcp\Component\mcpLanguageClass;
 
 /*
  * this Master Control Programs Class is to prepare 
@@ -54,7 +55,7 @@ final class masterControlProgram
      */
     private $cfg; // is a test class to integrate slim on the code 
     /**
-     * Short Name of this application
+     * Short Name of this applicationmcpLanguageClass
      * @var string
      */
     private $common; // is a test class to integrate slim on the code 
@@ -419,7 +420,30 @@ final class masterControlProgram
     {
         $this->mcpCore->setWorkingArea ($area);
     }
-    
+    /////////////////////////////////////////////////////////////////////////////
+    // TRANSLATE AREA
+    /////////////////////////////////////////////////////////////////////////////
+    /**
+     * translate
+     *
+     * @param  string $message
+     *
+     * @return string translation
+     */
+    public function  translate($message){
+        return mcpLanguageClass::translate($message);
+    }
+    /**
+     * translateMulti
+     *
+     * @param  string $lang
+     * @param  string $message
+     * @return string translation
+     */
+    public function  translateMulti($lang,$message){
+        return mcpLanguageClass::multiTranslate($lang,$message);
+    }
+
     /////////////////////////////////////////////////////////////////////////////
     // DEBUGGING AREA
     /////////////////////////////////////////////////////////////////////////////

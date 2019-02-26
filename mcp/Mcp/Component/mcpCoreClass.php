@@ -201,8 +201,6 @@ final class mcpCoreClass
         $this->setWorkingArea ("statmentModule");
         $this->scopeOut[$this->sub]["name"] = $callname;
         $this->scopeOut[$this->sub]["sub"] = $this->sub;
-        $this->scopeCtl[$this->sub]["name"] = $callname;
-        $this->scopeCtl[$this->sub]["sub"] = $this->sub;
         $this->scopeCtl[$this->sub]["module"] = "";
         $this->scopeCtl[$this->sub]["altmodule"] = "";
         $this->scopeCtl[$this->sub]["defmodule"] = "mcpapp_";
@@ -235,13 +233,16 @@ final class mcpCoreClass
         if ($subcall == null) {
             $subcall = $callname;
         }
+        $this->scopeCtl[$this->sub]["content"]=$subcall. $type;
         $this->scopeCtl[$this->sub]["file"] .= $modinit;
+        $this->scopeCtl[$this->sub]["dir"]=$this->scopeCtl[$this->sub]["file"];
         $this->scopeCtl[$this->sub]["auto"] .= $modinit . "/autoload.php";
         $this->scopeCtl[$this->sub]["module"] .= $modinit;
         $this->scopeCtl[$this->sub]["defmodule"] .= $modinit;
         $this->scopeCtl[$this->sub]["altmodule"] .= $modinit;
 /// TYPE DEFINITIONS 
         if ($type != null) {
+            $this->scopeCtl[$this->sub]["dir"] .= "/" . $type . "/";
             $this->scopeCtl[$this->sub]["file"] .= "/" . $type . "/" . $subcall . $type;
             if (($type == "Page") || ($type == "Block")) {
                 $this->scopeCtl[$this->sub]["file"] .= ".inc.php";
@@ -511,7 +512,7 @@ final class mcpCoreClass
         if (in_array ($this->scopeCtl[$this->sub]["type"], array ("Controller","Page", "Block"))) 
         {
             $this->setDic ($ $this->scopeCtl[$this->sub]["tag"], ".");
-        } 
+        }
         return false;
     }
     /**
@@ -582,22 +583,71 @@ final class mcpCoreClass
         $scopeCtl = $this->scopeCtl[$this->sub];
         $scopeOut = $this->scopeOut[$this->sub];
         try {
-            if (file_exists ($this->scopeCtl[$this->sub]["auto"])) {
-                $this->setStatus (true, "load auto file " . $this->scopeCtl[$this->sub]["auto"]);
-                include_once $this->scopeCtl[$this->sub]["auto"];
-            } else {
-                $this->setStatus (false, $this->scopeCtl[$this->sub]["auto"] . " file not exist!");
+            if (in_array ($this->scopeCtl[$this->sub]["type"], array ("Page", "Block"))) {
                 unset($this->scopeCtl[$this->sub]["auto"]);
                 if (file_exists ($this->scopeCtl[$this->sub]["file"])) {
-                    $this->setStatus (true, "load std file " . $this->scopeCtl[$this->sub]["file"]);
-                    if (in_array ($this->scopeCtl[$this->sub]["type"], array ("Controller","Page", "Block"))) {
-                        include $this->scopeCtl[$this->sub]["file"];
-                    }else{
-                        include_once $this->scopeCtl[$this->sub]["file"];
+                    $fhead=$this->scopeCtl[$this->sub]["dir"]."global.head.php";
+                    $this->setStatus (true, "load std global.head.php file " . $this->scopeCtl[$this->sub]["dir"]);
+                    if (file_exists ($fhead)) {
+                        include_once $fhead;
                     }
+                    $fcss=$this->scopeCtl[$this->sub]["dir"].$this->scopeCtl[$this->sub]["content"].".css";
+                    if (file_exists ($fcss)) {
+                        $this->setStatus (true, "load std css file " . $this->scopeCtl[$this->sub]["file"]);
+                        echo "\n<style type='text/css'>\n";
+                        include_once $fcss;
+                        echo "\n</style>\n";
+                    }
+                    $fmain=$this->scopeCtl[$this->sub]["dir"]."global.main.php";
+                    if (file_exists ($fmain)) {
+                        $this->setStatus (true, "load std global.main.php file " . $this->scopeCtl[$this->sub]["dir"]);
+                        include_once $fmain;
+                    }
+                    $lang=$this->getCfg("app.lang");
+                    $type=$this->getCfg("app.type");
+                    $xmain=$this->scopeCtl[$this->sub]["dir"].$this->scopeCtl[$this->sub]["content"].".".$type.".".$lang.".php";
+                    $lmain=$this->scopeCtl[$this->sub]["dir"].$this->scopeCtl[$this->sub]["content"].".".$lang.".php";
+                    $tmain=$this->scopeCtl[$this->sub]["dir"].$this->scopeCtl[$this->sub]["content"].".".$type.".php";
+                    if (file_exists ($xmain)) {
+                        $this->setStatus (true, "load std special file " . $xmain);
+                        include_once $xmain;
+                    } else if (file_exists (tmain)) {
+                        $this->setStatus (true, "load std special file " . $tmain);
+                        include_once $tmain;
+                    } else if (file_exists ($lmain)) {
+                        $this->setStatus (true, "load std special file " . $lmain);
+                        include_once $lmain;
+                    }else{
+                        $this->setStatus (true, "load std inc file " . $this->scopeCtl[$this->sub]["file"]);
+                        include $this->scopeCtl[$this->sub]["file"];
+                    }
+                    $fjs=$this->scopeCtl[$this->sub]["dir"].$this->scopeCtl[$this->sub]["content"].".js";
+                    if (file_exists ($fjs)) {
+                        $this->setStatus (true, "load std js file " . $this->scopeCtl[$this->sub]["file"]);
+                        echo "\n<script type='text/javascript'>\n";
+                        include_once $fjs;
+                        echo "\n</script>\n";
+                    }
+                    $ffoot=$this->scopeCtl[$this->sub]["dir"]."global.foot.php";
+                    $this->setStatus (true, "load std global.foot.php file " . $this->scopeCtl[$this->sub]["dir"]);
+                    if (file_exists ($ffoot)) {
+                        include_once $ffoot;
+                    }
+                }
+            }else{
+                if (file_exists ($this->scopeCtl[$this->sub]["auto"])) {
+                    $this->setStatus (true, "load auto file " . $this->scopeCtl[$this->sub]["auto"]);
+                    include_once $this->scopeCtl[$this->sub]["auto"];
                 } else {
-                    $this->setStatus (false, $this->scopeCtl[$this->sub]["file"] . " file not exist!");
-                    unset($this->scopeCtl[$this->sub]["file"]);
+                    $this->setStatus (false, $this->scopeCtl[$this->sub]["auto"] . " file not exist!");
+                    unset($this->scopeCtl[$this->sub]["auto"]);
+                    if (file_exists ($this->scopeCtl[$this->sub]["file"])) {
+                        $this->setStatus (true, "load std file " . $this->scopeCtl[$this->sub]["file"]);
+                        include_once $this->scopeCtl[$this->sub]["file"];
+                    } else {
+                        $this->setStatus (false, $this->scopeCtl[$this->sub]["file"] . " file not exist!");
+                        unset($this->scopeCtl[$this->sub]["file"]);
+                    }
                 }
             }
         } catch (Exception $e) {
@@ -611,7 +661,7 @@ final class mcpCoreClass
 
     /**
      * initialize module if is need
-     * call loadmodule to call the file 
+     * call loadmodule to call the file
      * @return array
      */
     private function initModule ()

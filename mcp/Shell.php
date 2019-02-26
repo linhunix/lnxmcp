@@ -8,6 +8,7 @@
 function mcpRunShell()
 {
     global $app_path,$mcp_path,$argc,$argv,$cfg;
+    lnxmcp()->setCfg("app.type","shell");
     if (file_exists ($app_path . "/Header.txt")) {
         echo file_get_contents ($app_path . "/Header.txt");
     }
