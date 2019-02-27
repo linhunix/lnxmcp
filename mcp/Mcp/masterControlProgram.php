@@ -832,7 +832,7 @@ final class masterControlProgram
      */
     public function queryJsonR ($dbprc,$scopeIn = array (),$modinit = null, $vendor = null,$path=null)
     {
-        $this->info ("MCP>>" . $this->defapp . ">>query[J]>>" . $dbproc);
+        $this->info ("MCP>>" . $this->defapp . ">>query[J]>>" . $dbprc);
         if ($vendor!=null){
             // if vendor is select all this are setted
             $scopeIn["P"]=$this->pathsrc;
