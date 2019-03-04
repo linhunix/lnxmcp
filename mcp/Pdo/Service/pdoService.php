@@ -29,8 +29,6 @@ class pdoService extends mcpBaseModelClass
     public function __construct (masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
     {
         parent::__construct($mcp, $scopeCtl, $scopeIn);
-        $this->getMcp()->info("load pdo drive");
-        $this->getMcp()->driver("pdo", true, array(), "Pdo");
         $this->getMcp()->info("load var");
         if (isset($scopeIn["ENV"]))
         {

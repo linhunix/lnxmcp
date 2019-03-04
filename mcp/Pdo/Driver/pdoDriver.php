@@ -27,10 +27,9 @@ class pdoDriver extends mcpBaseModelClass
 
     function __construct(\LinHUniX\Mcp\masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
     {
-        echo " I'M PDO DRIVER!!!!";
         parent::__construct($mcp, $scopeCtl, $scopeIn);
         $i = 0;
-        if (isset($$scopeIn["dburlcon"])) {
+        if (isset($scopeIn["dburlcon"])) {
             $this->debug = false;
             $this->dburlcon = $scopeIn["dburlcon"];
             $this->database = $scopeIn["database"];
@@ -43,7 +42,7 @@ class pdoDriver extends mcpBaseModelClass
             try {
                 $this->PDO = new PDO($this->dburlcon, $username, $password, $options);
             } catch (\Exception $e) {
-                $mcp->error("DBCONN:ERR" . $e->getMessage());
+                $mcp->error("DBCONN:ERR=" . $e->getMessage());
                 return null;
             }
             $data = $this->getTable("SHOW TABLES");
@@ -55,6 +54,8 @@ class pdoDriver extends mcpBaseModelClass
                     }
                 }
             }
+        }else{
+            $this->error("Not Db Connection Found!!");
         }
         $this->tabcount = $i;
         $this->tmp = array();

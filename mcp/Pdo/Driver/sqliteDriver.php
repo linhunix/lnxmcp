@@ -18,7 +18,7 @@ class sqliteDriver extends pdoDriver {
     {
         $path = $scopeIn["path"];
         $database = $scopeIn["database"];
-        $scopeIn["dburlcon"]='sqllite:'.$path.DIRECTORY_SEPARATOR . $database;
+        $scopeIn["dburlcon"]='sqlite:'.$path.DIRECTORY_SEPARATOR . $database;
         parent::__construct($mcp,$scopeCtl, $scopeIn);
     }
 }

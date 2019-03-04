@@ -1,0 +1,8 @@
+{
+    "mcp_check_type": "cfg",
+    "mcp_check_name": "DbAll",
+    "mcp_check_ctl": {},
+    "mcp_check_out": {
+      "app.Driver.lnx.lite": "mcp_check_model"
+    }
+  }
