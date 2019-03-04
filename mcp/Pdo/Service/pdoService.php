@@ -29,6 +29,8 @@ class pdoService extends mcpBaseModelClass
     public function __construct (masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
     {
         parent::__construct($mcp, $scopeCtl, $scopeIn);
+        $this->getMcp()->info("load pdo drive");
+        $this->getMcp()->driver("pdo", true, array(), "Pdo");
         $this->getMcp()->info("load var");
         if (isset($scopeIn["ENV"]))
         {
@@ -247,6 +249,18 @@ class pdoService extends mcpBaseModelClass
     {
         foreach ($this->preloadEnv as $env => $subscope)
         {
+            if (!isset($scopeIn["config"])){
+                $scopeIn["config"]="ENV";
+            }
+            if ($scopeIn["config"]=="ENV"){
+                $hostname = getenv($scopeIn["hostname"]);
+                $username = getenv($scopeIn["username"]);
+                $password = getenv($scopeIn["password"]);
+                $database = getenv($scopeIn["database"]);
+            }
+            //if ($scopeIn["config"]=="SCOPE"){
+                // ON THIS CASE THERE ARE NOTTING TO DO THE DATA IS ALREADY PRESENT ON THE SCOPE 
+            //}
             $this->getMcp()->info("LOAD DATABASE " . $env . ":" . $subscope["driver"]);
             $this->getMcp()->driver($env, true, $subscope, "Pdo", $subscope["driver"]);
         }

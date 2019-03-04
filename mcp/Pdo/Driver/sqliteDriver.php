@@ -1,9 +1,8 @@
 <?php
 namespace LinHUniX\Pdo\Driver;
 
-//use \LinHUniX\Pdo\Driver\pdoDriver;
-
 use \PDO;
+use LinHUniX\Pdo\Driver\pdoDriver;
 
 /*
  * @copyright Content copyright to linhunix.com 2003-2018
@@ -12,21 +11,14 @@ use \PDO;
  * this new class implement the PDO mode to connect on databases;
  * @see [vendor]/mcp/Head.php  
  */
-
-class mysqlDriver extends pdoDriver {
+class sqliteDriver extends pdoDriver {
 
 
     function __construct (\LinHUniX\Mcp\masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
     {
-        $hostname = $scopeIn["hostname"];
-        $hostport = $scopeIn["hostport"];
+        $path = $scopeIn["path"];
         $database = $scopeIn["database"];
-        $port="";
-        if (!empty($hostport)){
-            $port=";port=".$hostport;
-        }
-        $scopeIn["dburlcon"]='mysql:host=' . $hostname .$port. ';dbname=' . $database;
-        $scopeIn["options"]=array(PDO::ATTR_PERSISTENT => true);
+        $scopeIn["dburlcon"]='sqllite:'.$path.DIRECTORY_SEPARATOR . $database;
         parent::__construct($mcp,$scopeCtl, $scopeIn);
     }
 }

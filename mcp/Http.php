@@ -1,7 +1,7 @@
 <?php
 /**
  * extend the config based on $pathmenu array
- * @return array $scopein 
+ * @return array $scopein
  */
 function mcpHttpPathMenuExt($pathmenu,$catmng,$scopein){
     if (in_array($catmng, $pathmenu)) {

@@ -52,7 +52,14 @@ $app_path = realpath($app_path) . "/";
 if (!isset($scopePdo)) {
     $scopePdo = array(
         "ENV" => array(
+            "lnx.lite" => array(
+                "config"=>"SOURCE",
+                "path" => "/work/sqlite",
+                "database" => "lnxmcp.work.db",
+                "driver" => "sqlite"
+            ),
             "lnx.ctl" => array(
+                "config"=>"ENV",
                 "hostname" => "LNX_DB_HOST",
                 "database" => "LNX_DB_2_NAME",
                 "username" => "LNX_DB_UID",
@@ -60,6 +67,7 @@ if (!isset($scopePdo)) {
                 "driver" => "mysql"
             ),
             "lnx.data" => array(
+                "config"=>"ENV",
                 "hostname" => "LNX_DB_HOST",
                 "database" => "LNX_DB_1_NAME",
                 "username" => "LNX_DB_UID",
@@ -90,6 +98,10 @@ foreach( array(
     "app.path.tags" => $app_path . "/App/tag/",
     "app.path.module" => $app_path . "/App/mod/",
     "app.path.template" => $app_path . "/App/tpl/",
+    "app.path.workjob" => $app_path . "/work/job/",
+    "app.path.cache" => $app_path . "/work/cache/",
+    "app.path.exchange" => $app_path . "/work/exchange/",
+    "app.path.sqllite" => $app_path . "/work/sqlite/",
     "app.path.config" => $app_path . "/cfg/",
     "app.path.language" => $app_path . "/App/lng/",
     "app.menu.InitCommon" => array(
@@ -183,6 +195,16 @@ try {
 ////////////////////////////////////////////////////////////////////////////////
 if (in_array("ENVIRONMENT", $_SERVER)) {
     $scopeInit["app.env"] = $_SERVER["ENVIRONMENT"];
+}
+if (!isset($scopeInit["mcp.env"]))   {
+    $scopeInit["mcp.env"]="PROD";
+}
+if (getenv("MCP_MODE")!=""){
+    $scopeInit["mcp.env"] = getenv("MCP_MODE");
+}
+if ($scopeInit["mcp.env"]=="TEST" ){
+    $scopeInit["app.level"]="0";
+    $scopeInit["app.debug"]=true;
 }
 if (!isset($scopeInit["app.timezone"])) {
     $scopeInit["app.timezone"] = "Europe/London";

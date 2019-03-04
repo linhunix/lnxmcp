@@ -34,7 +34,11 @@ class mcpAutoload
             if (is_dir($path) == false) {
                 $this->setres($path);
             } else if ($value != "." && $value != "..") {
-                $this->getDirContents($path);
+                if (file_exists($path . DIRECTORY_SEPARATOR . "mcp.autoload.php")) {
+                    $this->setres($path . DIRECTORY_SEPARATOR . "mcp.autoload.php");
+                } else {
+                    $this->getDirContents($path);
+                }
             }
         }
     }
@@ -48,7 +52,7 @@ class mcpAutoload
                     include_once $file;
                 }
             } else {
-                if (substr($file, -3)=="php") {
+                if (substr($file, -3) == "php") {
                     include_once $file;
                 }
             }

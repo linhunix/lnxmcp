@@ -105,13 +105,13 @@ function selfAutoLoad($srcPath)
 }
 
 /**
- * linhunix json array converter 
+ * linhunix json array converter
  *
  * @param  mixed $file
- * @param  mixed $path if is need 
+ * @param  mixed $path if is need
  * @param  mixed $ext with out the '.'
  *
- * @return any json object converted 
+ * @return any json object converted
  */
 function lnxGetJsonFile($file, $path = "", $ext = "")
 {
