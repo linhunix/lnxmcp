@@ -251,10 +251,10 @@ class pdoService extends mcpBaseModelClass
                 $scopeIn["config"]="ENV";
             }
             if ($scopeIn["config"]=="ENV"){
-                $hostname = getenv($scopeIn["hostname"]);
-                $username = getenv($scopeIn["username"]);
-                $password = getenv($scopeIn["password"]);
-                $database = getenv($scopeIn["database"]);
+                $subscope["hostname"] = getenv($subscope["hostname"]);
+                $subscope["username"] = getenv($subscope["username"]);
+                $subscope["password"] = getenv($subscope["password"]);
+                $subscope["database"] = getenv($subscope["database"]);
             }
             //if ($scopeIn["config"]=="SCOPE"){
                 // ON THIS CASE THERE ARE NOTTING TO DO THE DATA IS ALREADY PRESENT ON THE SCOPE 
