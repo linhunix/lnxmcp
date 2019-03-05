@@ -1,0 +1,9 @@
+{
+  "mcp_check_type": "cfg",
+  "mcp_check_name": "mail",
+  "mcp_check_ctl": {},
+  "mcp_check_out": {
+    "Logger": "mcp_check_isset",
+    "app.Service.mail":"mcp_check_model"
+  }
+}

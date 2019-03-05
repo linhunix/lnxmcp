@@ -29,14 +29,14 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function __construct (masterControlProgram &$mcp)
+    public function __construct(masterControlProgram &$mcp)
     {
-        $this->mcp =&$mcp;
-        if ($this->getLogger () == null) {
-            if ($mcp->getResource (masterControlProgram::CLASS_LOGGER) != null) {
-                $mcp->register (new ${$mcp->getResource (masterControlProgram::CLASS_LOGGER)}());
+        $this->mcp = &$mcp;
+        if ($this->getLogger() == null) {
+            if ($mcp->getResource(masterControlProgram::CLASS_LOGGER) != null) {
+                $mcp->register(new ${$mcp->getResource(masterControlProgram::CLASS_LOGGER)}());
             } else {
-                $mcp->register (new loggerProviderModel());
+                $mcp->register(new loggerProviderModel());
             }
         }
     }
@@ -48,9 +48,9 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function debug ($message)
+    public function debug($message)
     {
-        $this->getLogger ()->debug ($message);
+        $this->getLogger()->debug($message);
     }
 
     /**
@@ -60,9 +60,9 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function info ($message)
+    public function info($message)
     {
-        $this->getLogger ()->info ($message);
+        $this->getLogger()->info($message);
     }
 
     /**
@@ -72,11 +72,11 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function warning ($message)
+    public function warning($message)
     {
-        $this->getLogger ()->warning ($message);
+        $this->getLogger()->warning($message);
     }
-
+    
     /**
      * error
      *
@@ -84,28 +84,12 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function error ($message)
+    public function error($message)
     {
-        $this->getLogger ()->error ($message);
+        $this->getLogger()->error($message);
     }
 
-    public function  supportmail($message){
-        if ($this->getRes("support.onerrorsend")==true){
-            $mailto=$this->getRes("support.mail");           
-            if ($mailto!=null){                
-                try{
-                    $subject ="Error Reporting - ".$this->getRes("def"). " - ". date('d/m/y g:i a');
-                    if (function_exists("debug_backtrace")){
-                        $message.= "\n\n".print_r(debug_backtrace(),1);
-                    }
-                    $message.= "\n\n".print_r(lnxmcp(),1);
-                    mail($mailto,$subject,$message);
-                }catch(\Exception $e){
-                    error_log("Support Mail Error:".$e->getMessage());
-                }
-            }
-        }        
-    }
+
 
     /**
      * critical
@@ -114,11 +98,11 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function critical ($message)
+    public function critical($message)
     {
-        $this->getLogger ()->error ($message);
+        $this->getLogger()->error($message);
         $this->supportmail($message);
-        $this->header ('Location: /500', true, true, 500);
+        $this->header('Location: /500', true, true, 500);
     }
 
     /**
@@ -126,24 +110,24 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function imhere ()
+    public function imhere()
     {
-        if (function_exists ("debug_backtrace")) {
-            $arr = debug_backtrace ();
+        if (function_exists("debug_backtrace")) {
+            $arr = debug_backtrace();
         } else {
-            array (1 => array ("file" => "none", "line" => 0));
+            array(1 => array("file" => "none", "line" => 0));
         }
-        if ($this->getRes ("debug") == true) {
-            $this->debug ("[I am here]:" . $arr[1]['file'] . ":" . $arr[1]['line']);
-            $imhere = "/tmp/" . $this->getRes ("def") . "imhere";
+        if ($this->getRes("debug") == true) {
+            $this->debug("[I am here]:" . $arr[1]['file'] . ":" . $arr[1]['line']);
+            $imhere = "/tmp/" . $this->getRes("def") . "imhere";
             if (!isset($GLOBALS["imhere"])) {
-                $GLOBALS["imhere"] = array ();
-                if (file_exists ($imhere)) {
-                    eval(file_get_contents ($imhere));
+                $GLOBALS["imhere"] = array();
+                if (file_exists($imhere)) {
+                    eval(file_get_contents($imhere));
                 }
             }
             $GLOBALS["imhere"][$arr[1]['file']]++;
-            file_put_contents ($imhere, "\$GLOBALS['imhere']=" . var_export ($GLOBALS["imhere"], 1) . ";");
+            file_put_contents($imhere, "\$GLOBALS['imhere']=" . var_export($GLOBALS["imhere"], 1) . ";");
         }
     }
 
@@ -154,10 +138,10 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function webRem ($message)
+    public function webRem($message)
     {
         echo "\n<!-- ===========================================================\n";
-        echo "====  ".$this->getRes("def")." :" .print_r($message,1);
+        echo "====  " . $this->getRes("def") . " :" . print_r($message, 1);
         echo "\n<=========================================================== !-->\n";
     }
 
@@ -169,13 +153,13 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function webDump ($message, $var = null)
+    public function webDump($message, $var = null)
     {
         echo "\n<hr>\n";
-        echo "<h2> ".$this->getRes("def")." :" . $message . "</h2>\n";
+        echo "<h2> " . $this->getRes("def") . " :" . $message . "</h2>\n";
         echo "\n<hr>\n";
         if (!empty($var)) {
-            echo "<pre>" . print_r ($var, 1) . "</pre>\n";
+            echo "<pre>" . print_r($var, 1) . "</pre>\n";
             echo "\n<hr>\n";
         }
     }
@@ -187,11 +171,11 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function notFound ($message)
+    public function notFound($message)
     {
-        $this->error ($message);
-        $this->header ("HTTP/1.1 301 Moved Permanently");
-        $this->header ('Location:/404', true); //, true, 404);
+        $this->error($message);
+        $this->header("HTTP/1.1 301 Moved Permanently");
+        $this->header('Location:/404', true); //, true, 404);
     }
 
     /**
@@ -201,26 +185,26 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function move ($string,$default=null,$ext="",$path=null,$andEnd=true)
+    public function move($string, $default = null, $ext = "", $path = null, $andEnd = true)
     {
         if (empty($string)) {
-            $this->critical ("Moving to Null Error");
+            $this->critical("Moving to Null Error");
         }
-        $this->info ("moving to " . $string);
-        if ($path==null){
-            $path=$this->getRes ("path");
+        $this->info("moving to " . $string);
+        if ($path == null) {
+            $path = $this->getRes("path");
         }
-        if ($default==null){
-            $default=$string;
+        if ($default == null) {
+            $default = $string;
         }
-        if (file_exists  ($path. $string.$ext)) {
-            include $path.$string.$ext;
-        } else if(file_exists  ($path. $default.$ext)) {
-            include $path.$default.$ext;
+        if (file_exists($path . $string . $ext)) {
+            include $path . $string . $ext;
+        } else if (file_exists($path . $default . $ext)) {
+            include $path . $default . $ext;
         } else {
-            $this->critical ("Moving to " . $path . $string . " Error file not found");
+            $this->critical("Moving to " . $path . $string . " Error file not found");
         }
-        if ($andEnd==true){
+        if ($andEnd == true) {
             exit(0);
         }
     }
@@ -235,14 +219,14 @@ class mcpDebugClass
      *
      * @return void
      */
-    public function header ($string, $end = false, $replace = true, $retcode = null)
+    public function header($string, $end = false, $replace = true, $retcode = null)
     {
         $msg = " Not End";
         if ($end) {
             $msg = " With End";
         }
         $this->warning("Header [" . $retcode . "]:" . $string . $msg);
-        \header ($string, $replace, $retcode);
+        \header($string, $replace, $retcode);
         if ($end) {
             exit(0);
         }
@@ -253,7 +237,7 @@ class mcpDebugClass
      *
      * @return void
      */
-    private function getMCP ()
+    private function getMCP()
     {
         return $this->mcp;
     }
@@ -265,7 +249,7 @@ class mcpDebugClass
      *
      * @return void
      */
-    private function getRes ($string)
+    private function getRes($string)
     {
         return $this->getMCP()->getResource($string);
     }
@@ -275,8 +259,8 @@ class mcpDebugClass
      *
      * @return void
      */
-    private function getLogger ()
+    private function getLogger()
     {
-        return $this->getMCP ()->getCfg ("Logger");
+        return $this->getMCP()->getCfg("Logger");
     }
 }

@@ -18,6 +18,7 @@ use \LinHUniX\Mcp\Component\mcpMenuClass;
 use \LinHUniX\Mcp\Component\mcpProxyClass;
 use \LinHUniX\Mcp\Component\mcpTemplateClass;
 use \LinHUniX\Mcp\Component\mcpLanguageClass;
+use \LinHUniX\Mcp\Component\mcpMailClass;
 
 /*
  * this Master Control Programs Class is to prepare 
@@ -523,7 +524,7 @@ final class masterControlProgram
      */
     public function supportmail($message)
     {
-        $this->mcpLogging->supportmail($message);
+        mcpMailClass::supportmail($message);
     }
 
     /**
@@ -1092,18 +1093,10 @@ final class masterControlProgram
     public function mail($page = null, $scopeIn = array(), $modinit = null)
     {
         $this->info("MCP>>mail>>" . $page);
-        if (! is_array($scopeIn)){
-            $scopeIn=array("In"=>$scopeIn);
+        if (!is_array($scopeIn)){
+            return null;
         }
-        if ($$this->getCfg("app.mail") != null) {
-            if (($page != null) || ($page != "none") || ($page != ".")) {
-                ob_start();
-                $this->template($page, $this->pathtpl, true, $scopeIn, $modinit, null, $this->defapp, "Page");
-                $scopeIn["message"] = ob_get_clean();
-            }
-            return $this->moduleRun("mail", $scopeIn);
-        }
-        return null;
+        return mcpMailClass::mailService($page,$scopeIn,$modinit);
     }
     /**
      * Load a page with your ScopeIn
