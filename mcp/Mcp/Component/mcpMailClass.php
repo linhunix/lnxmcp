@@ -66,7 +66,7 @@ class mcpMailClass
                 if (($page != null) || ($page != "none") || ($page != ".")) {
                     $scopeIn["message"] = lnxmcp()->page($page, $scopeIn, $modinit, null, null, true);
                 }
-                $lnxmcp()->Service("mail", false, $scopeIn);
+                lnxmcp()->Service("mail", false, $scopeIn);
             } else {
                 $to = $scopeIn["to"];
                 $from = $scopeIn["from"];
