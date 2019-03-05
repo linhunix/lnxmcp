@@ -753,6 +753,9 @@ final class masterControlProgram
      */
     public function moduleRun($libname, $scopeIn = array())
     {
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         return $this->module($libname, $this->pathsrc, false, $scopeIn);
     }
 
@@ -770,6 +773,9 @@ final class masterControlProgram
     {
         if ($vendor == null) {
             $vendor = $this->defvnd;
+        }
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
         }
         $this->info("MCP>>" . $vendor . ">>driver>>" . $libname);
         return $this->module($libname, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Driver");
@@ -789,6 +795,9 @@ final class masterControlProgram
         if ($vendor == null) {
             $vendor = $this->defapp;
         }
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $this->info("MCP>>" . $vendor . ">>query>>" . $dbproc);
         return $this->module($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Query");
     }
@@ -807,6 +816,9 @@ final class masterControlProgram
         if ($vendor == null) {
             $vendor = $this->defapp;
         }
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $this->info("MCP>>" . $vendor . ">>query[R]>>" . $dbproc);
         $res = $this->module($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Query");
         return $res["return"];
@@ -823,6 +835,9 @@ final class masterControlProgram
     public function queryCommonR($dbproc = "Json", $ispreload = true, $scopeIn = array(), $modinit = "Pdo", $subcall = null)
     {
         $this->info("MCP>>" . $this->defapp . ">>query[R]>>" . $dbproc);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $res = $this->module($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Query");
         return $res["return"];
     }
@@ -838,6 +853,9 @@ final class masterControlProgram
     public function queryJsonR($dbprc, $scopeIn = array(), $modinit = null, $vendor = null, $path = null)
     {
         $this->info("MCP>>" . $this->defapp . ">>query[J]>>" . $dbprc);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         if ($vendor != null) {
             // if vendor is select all this are setted
             $scopeIn["P"] = $this->pathsrc;
@@ -869,6 +887,9 @@ final class masterControlProgram
         if ($vendor == null) {
             $vendor = $this->defapp;
         }
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $this->info("MCP>>" . $vendor . ">>controller>>" . $ctrlproc);
         return $this->module($ctrlproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Controller");
     }
@@ -885,6 +906,9 @@ final class masterControlProgram
     public function controllerCommon($ctrlproc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
     {
         $this->info("MCP>>controller(C)>>" . $ctrlproc);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         return $this->module($ctrlproc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Controller");
     }
     /**
@@ -899,6 +923,9 @@ final class masterControlProgram
     public function controllerRemote($ctrlproc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
         $this->info("MCP>>controller(Remote)>>" . $ctrlproc);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         return mcpProxyClass::apiRemote($this, $ctrlproc, $scopeIn, $modinit, $subcall, $vendor);
     }
     /**
@@ -913,6 +940,9 @@ final class masterControlProgram
     public function controllerShell($ctrlproc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
         $this->info("MCP>>controller(Shell)>>" . $ctrlproc);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $res = mcpProxyClass::apiShell($this, $ctrlproc, $scopeIn, $modinit, $subcall, $vendor);
         try {
             return json_decode($res);
@@ -936,6 +966,9 @@ final class masterControlProgram
             $vendor = $this->defapp;
         }
         $this->info("MCP>>" . $vendor . ">>api>>" . $srvprc);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $scopeIn["prev-output"] = ob_get_clean();
         $res = $this->module($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Api");
         ob_end_clean();
@@ -955,6 +988,9 @@ final class masterControlProgram
     public function apiCommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
     {
         $this->info("MCP>>api(C)>>" . $srvprc);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $scopeIn["prev-output"] = ob_get_clean();
         $res = $this->module($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Api");
         ob_end_clean();
@@ -973,6 +1009,9 @@ final class masterControlProgram
     public function apiRemote($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
         $this->info("MCP>>api(Remote)>>" . $srvprc);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $scopeIn["prev-output"] = ob_get_clean();
         $res = mcpProxyClass::apiRemote($this, $srvprc, $scopeIn, $modinit, $subcall, $vendor);
         ob_end_clean();
@@ -991,6 +1030,9 @@ final class masterControlProgram
     public function apiShell($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
         $this->info("MCP>>api(Shell)>>" . $srvprc);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $scopeIn["prev-output"] = ob_get_clean();
         $res = mcpProxyClass::apiShell($this, $srvprc, $scopeIn, $modinit, $subcall, $vendor);
         ob_end_clean();
@@ -1011,6 +1053,9 @@ final class masterControlProgram
         if ($vendor == null) {
             $vendor = $this->defapp;
         }
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $this->info("MCP>>" . $vendor . ">>service>>" . $srvprc);
         return $this->module($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Service");
     }
@@ -1027,6 +1072,9 @@ final class masterControlProgram
     public function serviceCommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
     {
         $this->info("MCP>>service(C)>>" . $srvprc);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         return $this->module($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Service");
     }
 
@@ -1044,6 +1092,9 @@ final class masterControlProgram
     public function mail($page = null, $scopeIn = array(), $modinit = null)
     {
         $this->info("MCP>>mail>>" . $page);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         if ($$this->getCfg("app.mail") != null) {
             if (($page != null) || ($page != "none") || ($page != ".")) {
                 ob_start();
@@ -1068,6 +1119,9 @@ final class masterControlProgram
         }
         if ($pathtpl == null) {
             $pathtpl = $this->pathtpl;
+        }
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
         }
         $scopeIn["prev-output"] = ob_get_clean();
         $this->info("MCP>>" . $vendor . ">>page>>" . $page);
@@ -1094,6 +1148,9 @@ final class masterControlProgram
         if ($pathtpl == null) {
             $pathtpl = $this->pathtpl;
         }
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $this->info("MCP>>" . $vendor . ">>block>>" . $block);
         $this->RunEvent("block_start_" . $block);
         $ret = $this->template($block, $pathtpl, true, $scopeIn, $modinit, null, $vendor, "Block", $hasreturn);
@@ -1111,6 +1168,9 @@ final class masterControlProgram
     public function blockCommon($block, $scopeIn = array(), $modinit = null, $hasreturn = false)
     {
         $this->info("MCP>>block(C)>>" . $block);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $this->RunEvent("blockCommon_start_" . $block);
         $ret = $this->template($block, $this->pathmcp, true, $scopeIn, $modinit, null, $this->defapp, "Block", $hasreturn);
         $this->RunEvent("blockCommon_stop_" . $block);
@@ -1124,10 +1184,13 @@ final class masterControlProgram
      */
     public function blockRemote($page, $scopeIn = array(), $modinit = null, $vendor = null, $hasreturn = false)
     {
+        $this->info("MCP>>" . $vendor . ">>block(Remote)>>" . $page);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         if ($vendor == null) {
             $vendor = $this->defapp;
         }
-        $this->info("MCP>>" . $vendor . ">>block(Remote)>>" . $page);
         $this->RunEvent("blockRemote_start_" . $page);
         $ret = mcpProxyClass::apiRemote($this, $page, $scopeIn, $modinit, null, $vendor);
         $this->RunEvent("blockRemote_stop_" . $page);
@@ -1145,10 +1208,13 @@ final class masterControlProgram
      */
     public function blockShell($page, $scopeIn = array(), $modinit = null, $vendor = null, $hasreturn = false)
     {
+        $this->info("MCP>>" . $vendor . ">>block(Shell)>>" . $page);
         if ($vendor == null) {
             $vendor = $this->defapp;
         }
-        $this->info("MCP>>" . $vendor . ">>block(Shell)>>" . $page);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $this->RunEvent("blockShell_start_" . $page);
         $ret = mcpProxyClass::blockShell($this, $page, $scopeIn, $modinit, null, $vendor);
         $this->RunEvent("blockShell_stop_" . $page);
@@ -1178,6 +1244,9 @@ final class masterControlProgram
     public function showPage($block, $scopeIn = array(), $modinit = null, $pageinit = null)
     {
         $this->info("MCP>>showPage>>" . $block);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $this->mcpCore->setClearFlagOff();
         $this->controller($block, false, $scopeIn, $modinit);
         $scopePageIn = $this->getScopeOutResult();
@@ -1198,6 +1267,9 @@ final class masterControlProgram
     public function showCommonPage($block, $scopeIn = array(), $modinit = null, $pageinit = null)
     {
         $this->info("MCP>>showCommonPage>>" . $block);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $this->mcpCore->setClearFlagOff();
         $this->controllerCommon($block, false, $scopeIn, $modinit);
         $scopePageIn = $this->getScopeOutResult();
@@ -1218,6 +1290,9 @@ final class masterControlProgram
     public function showBlock($block, $scopeIn = array(), $controllerModule = null, $blockModule = null)
     {
         $this->info("MCP>>showBlock>>" . $block);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $this->mcpCore->setClearFlagOff();
         $CtrlOut = $this->controller($block, false, $scopeIn, $controllerModule);
         $scopeCtl = $this->getScopeCtl();
@@ -1249,6 +1324,9 @@ final class masterControlProgram
     public function showCommonBlock($block, $scopeIn = array(), $controllerModule = null, $blockModule = null)
     {
         $this->info("MCP>>showBlock>>" . $block);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $this->mcpCore->setClearFlagOff();
         $CtrlOut = $this->controllerCommon($block, false, $scopeIn, $controllerModule);
         $scopeCtl = $this->getScopeCtl();
@@ -1280,6 +1358,9 @@ final class masterControlProgram
     public function showFullCommonBlock($block, $scopeIn = array(), $controllerModule = null, $blockModule = null)
     {
         $this->info("MCP>>showBlock>>" . $block);
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         $this->mcpCore->setClearFlagOff();
         $CtrlOut = $this->controllerCommon($block, false, $scopeIn, $controllerModule);
         $scopeCtl = $this->getScopeCtl();
@@ -1313,7 +1394,9 @@ final class masterControlProgram
      */
     public function runCommand(array $scopectl, $scopeIn = array())
     {
-
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         return mcpMenuClass::runCommand($scopectl, $scopeIn);
     }
     /**
@@ -1324,6 +1407,9 @@ final class masterControlProgram
      */
     public function runSequence(array $actionseq, $scopeIn = array())
     {
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         return mcpMenuClass::runSequence($actionseq, $scopeIn);
     }
     /**
@@ -1334,6 +1420,9 @@ final class masterControlProgram
      */
     public function runMenu($action, $scopeIn = array())
     {
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         return mcpMenuClass::runMenu($action, $scopeIn);
     }
     /**
@@ -1344,6 +1433,9 @@ final class masterControlProgram
      */
     public function runTag($action, $scopeIn = array(), $buffer = false)
     {
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         if ($action == null) {
             return null;
         }
@@ -1357,6 +1449,9 @@ final class masterControlProgram
      */
     public function converTag($text, $scopeIn = array(), $label = null)
     {
+        if (! is_array($scopeIn)){
+            $scopeIn=array("In"=>$scopeIn);
+        }
         if ($label == null) {
             $label = $this->defapp;
         }
