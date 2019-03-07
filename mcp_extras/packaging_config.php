@@ -1,10 +1,10 @@
 $configure = array(
-    'packagename' => 'samsondoors-co-uk-site',
+    'packagename' => 'lnxmcp',
     'arch' => 'all',
     'version' => '`cat VERSION`',
     'maintainer' => 'Andrea Morello <andrea.morello@linhunix.com>',
-    'description' => 'samsondoors.co.uk',
-    'url' => 'http://git.linhunix.com:7990/projects/DOVE/repos/samsondoors.co.uk/browse',
+    'description' => 'LinNote X All - Master Control Program',
+    'url' => 'https://github.com/linhunix/lnxmcp',
     'packagetype' => 'rpm',
     'depends' => array(),
 
@@ -29,13 +29,13 @@ $configure = array(
 * Example:
 *
 * $filemapping = array(
-*   'var/www/@PACKAGENAME@' => array(
+*   '/opt/@PACKAGENAME@' => array(
 *      'app/',
 *   )
 * )
 */
 $filemapping = array(
-    '/home/samsondoors/public_html' => array(
+    '/opt/lnxmcp' => array(
         '*',
         '- pkgtemplates',
         '- composer.lock',

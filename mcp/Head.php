@@ -90,7 +90,7 @@ foreach( array(
     "app.env" => "dev",
     "app.support.name"=>"LinHuniX Support Team",
     "app.support.mail"=>"support@linhunix.com",
-    "app.support.onerrorsend"=>true,
+    "app.support.onerrorsend"=>false,
     "app.evnlst" => array('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name'),
     "mcp.path.module" => $app_path . "/mcp_module/",
     "app.path.query" => $app_path . "/App/dbj/",

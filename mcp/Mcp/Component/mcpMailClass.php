@@ -84,9 +84,9 @@ class mcpMailClass
     public static function  supportmail($message)
     {
         if (lnxmcp()->getResource("support.onerrorsend") == true) {
-            if ($mailto != null) {
+            $mailto = lnxmcp()->getResource("support.mail");
+            if ($mailto != null && $mailto!=false) {
                 try {
-                    $mailto = lnxmcp()->getResource("support.mail");
                     lnxmcp()->info("Prepare Mail Support to ".$mailto);
                     $from = "noreply.".lnxmcp()->getResource("def")."@localhost";
                     $subject = "Error Reporting - " . lnxmcp()->getResource("def") . " - " . date('d/m/y g:i a');
