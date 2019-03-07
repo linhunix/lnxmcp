@@ -101,6 +101,9 @@ class mcpMenuClass {
             case "queryCommon":
                 $result=lnxmcp()->queryCommonR($callname,$ispreload,$scopeIn,$modinit,$subcall);                 
                 break;
+            case "queryJson":
+                $result=lnxmcp()->queryJsonR($callname,$scopeIn,$modinit,$vendor,$path);                 
+                break;
             case "controller":
                 $result=lnxmcp()->controller($callname,$ispreload,$scopeIn,$modinit,$subcall,$vendor);                 
                 break;
@@ -222,8 +225,12 @@ class mcpMenuClass {
      * @param array $scopeIn   Input Array with the value need to work
      * @return any $ScopeOut
      */
-    public function runTag ($action,$scopeIn=array())
+    public static function runTag ($action,$scopeIn=array(),$buffer=false)
     {
+        if ($buffer==true){
+            ob_start();
+        }
+        $ret=array();      
         $sequence=lnxmcp()->getResource("tag.".$action);
         if ($sequence==null){
             $seqpth=lnxmcp()->getResource("path.tags");
@@ -232,9 +239,76 @@ class mcpMenuClass {
             }
         }
         if (($sequence!=null)&&($sequence!=false)){
-            return lnxmcp()->runSequence($sequence,$scopeIn);
+            $ret=lnxmcp()->runSequence($sequence,$scopeIn);
         }else{
-            return false;
+            $ret=false;
         }
+        if ($buffer==true){
+            $out=ob_get_contents();
+            ob_end_clean();
+            if (is_array($ret)){
+                $ret["output"]=$out;
+            }else{
+                $res=array(
+                    "return"=>$ret,
+                    "output"=>$out
+                );
+                $ret=$res;
+            }
+        }
+        return $ret;
+    }
+         /**
+     * Search special Tags sequence on module and run it 
+     * @param string $test test to be searched
+     * @param array $scopeIn   Input Array with the value need to work
+     * @return any $ScopeOut
+     */
+    public static function TagConverter ($text,$scopeIn=array(),$label=null)
+    {
+        while (stripos($text,"[lnxmcp-")!==false){
+            $lp1=stripos($text,"[lnxmcp-");
+            $lp2=stripos($text,"]",$lp1);
+            $lcmdx=substr($text,($lp1+1),($lp2-$lp1-1));
+            $largs=explode(" ",$lcmdx);
+            $lcmd=$largs[0];
+            $lsin=$scopeIn;
+            foreach($largs as $ck=>$cv){
+                if (strpos($cv,"=")!==false){
+                    $cvx=explode("=",$cv);
+                    $lsin[$cvx[0]]=$cvx[1];
+                }else{
+                    $lsin[$ck]=$cv;
+                }
+            }
+            ob_start();
+            self::runTag($lcmd,$lsin);
+            $lres=ob_get_contents();
+            ob_end_clean();
+            $text=str_ireplace("[".$lcmdx."]",$lres,$text);
+        }
+        if ($label!=null){
+            while (stripos($text,"[".$label."-")!==false){
+                $lp1=stripos($text,"[".$label."-");
+                $lp2=stripos($text,"]",$lp1);
+                $lcmdx=substr($text,($lp1+1),($lp2-$lp1-1));
+                $largs=explode(" ",$lcmdx);
+                $lcmd=$largs[0];
+                $lsin=$scopeIn;
+                foreach($largs as $ck=>$cv){
+                    if (strpos($cv,"=")!==false){
+                        $cvx=explode("=",$cv);
+                        $lsin[$cvx[0]]=$cvx[1];
+                    }else{
+                        $lsin[$ck]=$cv;
+                    }
+                }
+                ob_start();
+                self::runTag($lcmd,$lsin);
+                $lres=ob_get_clean();
+                $text=str_ireplace("[".$lcmdx."]",$lres,$text);
+            }
+        }
+        return $text;
     }
 }

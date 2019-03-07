@@ -45,29 +45,126 @@ if (empty($app_path)) {
     }
 }
 $app_path = realpath($app_path) . "/";
+
+////////////////////////////////////////////////////////////////////////////////
+// SCOPE - INIT
+////////////////////////////////////////////////////////////////////////////////
+if (!isset($scopePdo)) {
+    $scopePdo = array(
+        "ENV" => array(
+            "lnx.lite" => array(
+                "config"=>"SOURCE",
+                "path" => $app_path."/work/sqlite",
+                "database" => "lnxmcp.work.db",
+                "driver" => "sqlite"
+            ),
+            "lnx.ctl" => array(
+                "config"=>"ENV",
+                "hostname" => "LNX_DB_HOST",
+                "database" => "LNX_DB_2_NAME",
+                "username" => "LNX_DB_UID",
+                "password" => "LNX_DB_PWD",
+                "driver" => "mysql"
+            ),
+            "lnx.data" => array(
+                "config"=>"ENV",
+                "hostname" => "LNX_DB_HOST",
+                "database" => "LNX_DB_1_NAME",
+                "username" => "LNX_DB_UID",
+                "password" => "LNX_DB_PWD",
+                "driver" => "mysql"
+            ),
+        )
+    );
+}
+if (!isset($scopeInit)){
+    $scopeInit=array();
+}
+foreach( array(
+    "app.def" => "LinHUniX",
+    "app.lang"=>"en",
+    "app.type"=>"lib",
+    "app.path" => $app_path,
+    "app.level" => "0",
+    "app.debug" => "false",
+    "app.env" => "dev",
+    "app.support.name"=>"LinHuniX Support Team",
+    "app.support.mail"=>"support@linhunix.com",
+    "app.support.onerrorsend"=>false,
+    "app.evnlst" => array('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name'),
+    "mcp.path.module" => $app_path . "/mcp_module/",
+    "app.path.query" => $app_path . "/App/dbj/",
+    "app.path.menus" => $app_path . "/App/mnu/",
+    "app.path.tags" => $app_path . "/App/tag/",
+    "app.path.module" => $app_path . "/App/mod/",
+    "app.path.template" => $app_path . "/App/tpl/",
+    "app.path.workjob" => $app_path . "/work/job/",
+    "app.path.cache" => $app_path . "/work/cache/",
+    "app.path.exchange" => $app_path . "/work/exchange/",
+    "app.path.sqllite" => $app_path . "/work/sqlite/",
+    "app.path.config" => $app_path . "/cfg/",
+    "app.path.language" => $app_path . "/App/lng/",
+    "app.menu.InitCommon" => array(
+        "pdo" => array("module" => "Pdo", "type" => "serviceCommon", "input" => $scopePdo),
+        "mail" => array("module" => "Mail", "type" => "serviceCommon")
+    ),
+    "app.menu.InitApp" => array(),
+) as $sik=>$siv ){
+    if (!isset($scopeInit[$sik])){
+        $scopeInit[$sik]=$siv;
+    }
+}
+
+if (isset($lnxmcp_phar)) {
+    if (isset($lnxmcp_phar["app.debug"])) {
+        if ($lnxmcp_phar["app.debug"] == true) {
+            error_log(var_export($lnxmcp_phar, 1));
+        }
+    }
+    foreach ($lnxmcp_phar as $lmpk => $lmpv) {
+        $scopeInit[$lmpk] = $lmpv;
+    }
+}
 ////////////////////////////////////////////////////////////////////////////////
 // ENV/CONFIG JSON CONFIG AND SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 try {
     if (file_exists($app_path . "/cfg/mcp.settings.json")) {
-        $scopeInit = json_decode(file_get_contents($app_path . "/cfg/mcp.settings.json"), true);
+        $loadscope = json_decode(file_get_contents($app_path . "/cfg/mcp.settings.json"), true);
+        if (is_array($loadscope)){
+            foreach ($loadscope as $lsk=>$lsv){ $scopeInit[$lsk]=$lsv;}
+        }
+    }
+    if (file_exists($app_path . "/cfg/mcp.default.json")) {
+        $loadscope = json_decode(file_get_contents($app_path . "/cfg/mcp.default.json"), true);
+        if (is_array($loadscope)){
+            foreach ($loadscope as $lsk=>$lsv){ $scopeInit[$lsk]=$lsv;}
+        }
     }
     if (isset($_ENV["MCP_MODE"])) {
         $hostcfg = $app_path . "/cfg/mcp.mode." . $_ENV["MCP_MODE"] . ".json";
         if (file_exists($hostcfg)) {
-            $scopeInit = json_decode(file_get_contents($hostcfg), true);
-        }
+            $loadscope = json_decode(file_get_contents($hostcfg), true);
+            if (is_array($loadscope)){
+                foreach ($loadscope as $lsk=>$lsv){ $scopeInit[$lsk]=$lsv;}
+            }        }
     }
     if (isset($_SERVER["HTTP_HOST"])) {
         $hostcfg = $app_path . "/cfg/mcp.site." . $_SERVER["HTTP_HOST"] . ".json";
         if (file_exists($hostcfg)) {
-            $scopeInit = json_decode(file_get_contents($hostcfg), true);
+            $loadscope = json_decode(file_get_contents($hostcfg), true);
+            if (is_array($loadscope)){
+                foreach ($loadscope as $lsk=>$lsv){ $scopeInit[$lsk]=$lsv;}
+            }
         }
     }
     if (isset($_SERVER["SERVER_NAME"])) {
         $hostcfg = $app_path . "/cfg/mcp.server." . $_SERVER["SERVER_NAME"] . ".json";
         if (file_exists($hostcfg)) {
-            $scopeInit = json_decode(file_get_contents($hostcfg), true);
+            $loadscope = json_decode(file_get_contents($hostcfg), true);
+            if (is_array($loadscope)){
+                foreach ($loadscope as $lsk=>$lsv){ $scopeInit[$lsk]=$lsv;}
+            }
         }
     }
     if (isset($scopeInit["preload"])) {
@@ -94,65 +191,20 @@ try {
     error_log("LNXMCP HEAD CFG ERROR:" . $e->get_message);
 }
 ////////////////////////////////////////////////////////////////////////////////
-// SCOPE - INIT
-////////////////////////////////////////////////////////////////////////////////
-if (!isset($scopePdo)) {
-    $scopePdo = array(
-        "ENV" => array(
-            "lnx.ctl" => array(
-                "hostname" => "LNX_DB_HOST",
-                "database" => "LNX_DB_2_NAME",
-                "username" => "LNX_DB_UID",
-                "password" => "LNX_DB_PWD",
-                "driver" => "mysql"
-            ),
-            "lnx.data" => array(
-                "hostname" => "LNX_DB_HOST",
-                "database" => "LNX_DB_1_NAME",
-                "username" => "LNX_DB_UID",
-                "password" => "LNX_DB_PWD",
-                "driver" => "mysql"
-            ),
-        )
-    );
-}
-if (!isset($scopeInit)) {
-    $scopeInit = array(
-        "app.def" => "LinHUniX",
-        "app.path" => $app_path,
-        "app.level" => "0",
-        "app.debug" => "false",
-        "app.env" => "dev",
-        "app.evnlst" => array('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name'),
-        "mcp.path.module" => $app_path . "/mcp_module/",
-        "app.path.query" => $app_path . "/App/dbj/",
-        "app.path.menus" => $app_path . "/App/mnu/",
-        "app.path.tags" => $app_path . "/App/tag/",
-        "app.path.module" => $app_path . "/App/mod",
-        "app.path.template" => $app_path . "/App/tpl/",
-        "app.path.config" => $app_path . "/cfg/",
-        "app.menu.InitCommon" => array(
-            "pdo" => array("module" => "Pdo", "type" => "serviceCommon", "input" => $scopePdo),
-            "mail" => array("module" => "Mail", "type" => "serviceCommon")
-        ),
-        "app.menu.InitApp" => array(),
-    );
-}
-if (isset($lnxmcp_phar)) {
-    if (isset($lnxmcp_phar["app.debug"])) {
-        if ($lnxmcp_phar["app.debug"] == true) {
-            error_log(var_export($lnxmcp_phar, 1));
-        }
-    }
-    foreach ($lnxmcp_phar as $lmpk => $lmpv) {
-        $scopeInit[$lmpk] = $lmpv;
-    }
-}
-////////////////////////////////////////////////////////////////////////////////
 // ENVIRONMENT
 ////////////////////////////////////////////////////////////////////////////////
 if (in_array("ENVIRONMENT", $_SERVER)) {
     $scopeInit["app.env"] = $_SERVER["ENVIRONMENT"];
+}
+if (!isset($scopeInit["mcp.env"]))   {
+    $scopeInit["mcp.env"]="PROD";
+}
+if (getenv("MCP_MODE")!=""){
+    $scopeInit["mcp.env"] = getenv("MCP_MODE");
+}
+if ($scopeInit["mcp.env"]=="TEST" ){
+    $scopeInit["app.level"]="0";
+    $scopeInit["app.debug"]=true;
 }
 if (!isset($scopeInit["app.timezone"])) {
     $scopeInit["app.timezone"] = "Europe/London";
@@ -224,8 +276,12 @@ if (class_exists("\Composer\Autoload\ClassLoader")) {
 }
 if (isset($scopeInit["app.debug"])) {
     if ($scopeInit["app.debug"] == true) {
-        error_log("Load Mcp by " . $scopeInit["mcp.loader"] . " [" . $scopeInit["phar"] . "]");
-        error_log($scopeInit["purl"] . "/" . $aldpath);
+        if (isset($scopeInit["purl"] )){
+            error_log("Load Mcp by " . $scopeInit["mcp.loader"] . " [" . $scopeInit["phar"] . "]");
+            error_log($scopeInit["purl"] . "/" . $aldpath);
+        }else{
+            error_log("Load Mcp by " . $scopeInit["mcp.loader"] . " [" . $scopeInit["mcp.path"] . "]");
+        }
     }
 }
 if (class_exists("\LinHUniX\Mcp\masterControlProgram")) {
@@ -240,7 +296,7 @@ global $cfg, $mcp;
 ////////////////////////////////////////////////////////////////////////////////
 lnxmcp()->runMenu("InitCommon");
 lnxmcp()->runMenu("InitApp");
-$GLOBALS["mcp_preload"] = ob_clean();
+$GLOBALS["mcp_preload"] = ob_get_clean();
 ob_start();
 ////////////////////////////////////////////////////////////////////////////////
 // Application solution
@@ -257,7 +313,7 @@ if (lnxmcp()->getCfg("PreloadOnly") != true) {
     } else if (isset($_REQUEST["Menu"])) {
         lnxmcp()->runMenu($_REQUEST["Menu"]);
     } else {
-        $GLOBALS["mcp_preload"] .= ob_clean();
+        $GLOBALS["mcp_preload"] .= ob_get_clean();
         if (file_exists($shlpath)) {
             include_once $shlpath;
             mcpRunShell();

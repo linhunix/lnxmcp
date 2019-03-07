@@ -29,7 +29,8 @@ class mailService extends mcpBaseModelClass
     private $TplPath;
     private $trace;
     private $domine;
-    private function loadTemplate($content, $template, $useNL2BR = false) {
+    private function loadTemplate($content, $template, $useNL2BR = false)
+    {
         $tplf = "";
         $tplb = "";
         $tplr = "";
@@ -44,13 +45,13 @@ class mailService extends mcpBaseModelClass
             $fileContents = nl2br(stripslashes(file_get_contents($tplf)));
             if ($useNL2BR) {
                 return strip_tags(
-                        str_replace('[content here]', $content, $fileContents)
+                    str_replace('[content here]', $content, $fileContents)
                 );
             }
             return str_replace('[content here]', nl2br($content), $fileContents);
         }
     }
-    
+
     /**
      * MailHeader2String
      *
@@ -62,7 +63,8 @@ class mailService extends mcpBaseModelClass
      * @param  mixed $extra
      * @return string log
      */
-    private function MailHeader2String($to, $subject, $header, $caller, $status, $extra) {
+    private function MailHeader2String($to, $subject, $header, $caller, $status, $extra)
+    {
         return "{  Sts:\"" . $status . "\",To:\"" . $to . "\",Subject:\"" . $subject . "\",header:\"" . print_r($header, 1) . "|" . $caller . "|" . $extra . "\"}";
     }
     /**
@@ -79,7 +81,8 @@ class mailService extends mcpBaseModelClass
      * @example TestFTMail
      * @assert ("andrea.morello@freetimers.com","TestMail","Demo Morselli") == true
      */
-    public function stdMailWithDoc($to, $subject, $message, array $attachDoc = array(), $additional_headers = null, $additional_parameters = null, $from = null) {
+    public function stdMailWithDoc($to, $subject, $message,  $attachDoc = array(), $additional_headers = null, $additional_parameters = null, $from = null)
+    {
         return $this->stdMail($to, $subject, $message, $additional_headers, $additional_parameters, $from, $attachDoc);
     }
     /**
@@ -96,35 +99,39 @@ class mailService extends mcpBaseModelClass
      * @example TestFTMail
      * @assert ("andrea.morello@freetimers.com","TestMail","Demo Morselli") == true
      */
-    public function stdMail($to, $subject, $message, $additional_headers = null, $additional_parameters = null, $from = null, array $attachDoc = array(),$html=false) {
-        try{
+    public function stdMail($to, $subject, $message, $additional_headers = null, $additional_parameters = null, $from = null, $attachDoc = array(), $html = false)
+    {
+        try {
             $mymail = clone $this->Mailer;
-            if ($additional_headers!=null){
-                $mymail->header=$additional_headers;
+            if ($additional_headers != null) {
+                $mymail->header = $additional_headers;
             }
             $mymail->addAddress($to);
-            $mymail->Subject=$subject;
-            foreach ($attachDoc as $attname=>$filetoadd){
-                $html=true;
-                if(file_exists($filetoadd)==false){
-                    $filetoadd=$this->mcp->getResource("path")+$filetoadd;
-                    if(file_exists($filetoadd)==false){
+            $mymail->Subject = $subject;
+            if (!is_array($attachDoc)) {
+                $attachDoc = array($attachDoc);
+            }
+            foreach ($attachDoc as $attname => $filetoadd) {
+                $html = true;
+                if (file_exists($filetoadd) == false) {
+                    $filetoadd = $this->mcp->getResource("path") + $filetoadd;
+                    if (file_exists($filetoadd) == false) {
                         continue;
                     }
                 }
-                if (is_numeric($attname)){
-                    $attname=basename($filetoadd);
+                if (is_numeric($attname)) {
+                    $attname = basename($filetoadd);
                 }
-                $mymail->addAttachment($filetoadd,$attname);
+                $mymail->addAttachment($filetoadd, $attname);
             }
-            if ($html==true){
+            if ($html == true) {
                 $mymail->isHTML(true);
             }
-            $mymail->body=$message;
+            $mymail->body = $message;
             $mymail->send();
             return true;
-        }catch(\Exception $e){
-            $this->mcp->error($e->get_message());            
+        } catch (\Exception $e) {
+            $this->mcp->error("StdMail:" . $e->get_message());
         }
         return false;
     }
@@ -132,54 +139,85 @@ class mailService extends mcpBaseModelClass
      * Register the settings as a provider with a container
      *
      */
-    public function __construct (masterControlProgram &$mcp, array $scopeCtl, array $scopeIn){
+    public function __construct(masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
+    {
         parent::__construct($mcp, $scopeCtl, $scopeIn);
-        $this->Smtp=new SMTP();
-        $this->Pop3=new POP3();
-        $this->Mailer=new PHPMailer();
-        $this->Trace=false;
-        /// trace config 
-        $level = $mcp->getCfg ("app.level");
-        if ($level == mcpDebugModelClass::DEBUG) {
-            $this->trace=true;
-        }
-        $this->domine = $mcp->getResource("mail.domine");
-        $this->From = $mcp->getResource("mail.from");
-        $smtphost = $mcp->getResource("mail.smtp.host");
-        $smtpport = $mcp->getResource("mail.smtp.port");
-        $smtpuser = $mcp->getResource("mail.smtp.user");
-        $smtppass = $mcp->getResource("mail.smtp.pass");
-        $smtpasec = $mcp->getResource("mail.smtp.type");
-        $pop3host = $mcp->getResource("mail.pop3.host");
-        $pop3user = $mcp->getResource("mail.pop3.user");
-        $pop3pass = $mcp->getResource("mail.pop3.pass");
-        $pop3asec = $mcp->getResource("mail.pop3.type");
-        if ($smtphost==null){
-            $smtphost="localhost";
-        }
-        if ($smtpport==null){
-            $smtpport="25";
-        }
-        if ($this->From==null){
-            if($this->domine!=null){
-                $this->From="noreply@".$this->domine;
+        /// trace config
+        try {
+            $this->Smtp = new SMTP();
+            $this->Pop3 = new POP3();
+            $this->Mailer = new PHPMailer();
+            $this->Trace = false;
+            $level = $mcp->getCfg("app.level");
+            if ($level == mcpDebugModelClass::DEBUG) {
+                $this->trace = true;
             }
-        }
-        ////// init config
-        if ($this->trace==true){
-            $this->Mailer->SMTPDebug=2;
-        }
-        switch($smtpasec){
-            case "tls":
-            $this->Mailer->SMTPSecure="tls";
-            case "user":
-            $this->Mailer->SMTPAuth = true; 
-            $this->Mailer->Username = $smtpuser;
-            $this->Mailer->Password = $smptpass;
-            case "smtp":
-            $this->Mailer->isSMTP();
-            $this->Mailer->Host = $smtphost;
-            $this->Mailer->Port = $smtpport; 
+            if (!isset($scopeIn["config"])) {
+                $scopeIn["config"] == "SOURCE";
+            }
+            if ($scopeIn["config"] == "Env") {
+                $this->domine = getenv($scopeIn["mail.domine"]);
+                $this->From = getenv($scopeIn["mail.from"]);
+                $smtphost = getenv($scopeIn["mail.smtp.host"]);
+                $smtpport = getenv($scopeIn["mail.smtp.port"]);
+                $smtpuser = getenv($scopeIn["mail.smtp.user"]);
+                $smtppass = getenv($scopeIn["mail.smtp.pass"]);
+                $smtpasec = getenv($scopeIn["mail.smtp.type"]);
+                $pop3host = getenv($scopeIn["mail.pop3.host"]);
+                $pop3user = getenv($scopeIn["mail.pop3.user"]);
+                $pop3pass = getenv($scopeIn["mail.pop3.pass"]);
+                $pop3asec = getenv($scopeIn["mail.pop3.type"]);
+            }
+            if ($scopeIn["config"] == "SOURCE") {
+                $this->domine = $mcp->getResource("mail.domine");
+                $this->From = $mcp->getResource("mail.from");
+                $smtphost = $mcp->getResource("mail.smtp.host");
+                $smtpport = $mcp->getResource("mail.smtp.port");
+                $smtpuser = $mcp->getResource("mail.smtp.user");
+                $smtppass = $mcp->getResource("mail.smtp.pass");
+                $smtpasec = $mcp->getResource("mail.smtp.type");
+                $pop3host = $mcp->getResource("mail.pop3.host");
+                $pop3user = $mcp->getResource("mail.pop3.user");
+                $pop3pass = $mcp->getResource("mail.pop3.pass");
+                $pop3asec = $mcp->getResource("mail.pop3.type");
+            }
+            if ($smtphost == null) {
+                $smtphost = "localhost";
+            }
+            if ($smtpport == null) {
+                $smtpport = "25";
+            }
+            if ($this->domine !== null) {
+                $this->domine = $smtphost;
+            }
+            if ($this->From == null) {
+                $this->From = "noreply@" . $this->domine;
+            }
+            ////// init config
+            if ($this->trace == true) {
+                $this->Mailer->SMTPDebug = 2;
+            }
+            if ($smtpasec == null) {
+                if ($smtpuser == null) {
+                    $smtpasec = "sendmail";
+                } else {
+                    $smtpasec = "user";
+                }
+            }
+            switch ($smtpasec) {
+                case "tls":
+                    $this->Mailer->SMTPSecure = "tls";
+                case "user":
+                    $this->Mailer->SMTPAuth = true;
+                    $this->Mailer->Username = $smtpuser;
+                    $this->Mailer->Password = $smptpass;
+                case "smtp":
+                    $this->Mailer->isSMTP();
+                    $this->Mailer->Host = $smtphost;
+                    $this->Mailer->Port = $smtpport;
+            }
+        } catch (\Exception $e) {
+            $this->getMcp()->warning("MailService-Init:" . $e->getMessage());
         }
     }
     /**
@@ -190,16 +228,19 @@ class mailService extends mcpBaseModelClass
      * @return boolean status of the operations 
      * @see mcpBaseModelClass Class 
      */
-    protected function moduleCore() {
+    protected function moduleCore()
+    {
         $to = @$this->argIn["to"];
         $from = @$this->argIn["from"];
         $subject = @$this->argIn["subject"];
         $message = @$this->argIn["message"];
+        $files = @$this->argIn["files"];
         $headers = @$this->argIn["headers"];
         $parameters = @$this->argIn["parameters"];
         if (isset($this->argIn["template"])) {
             $message = $this->loadTemplate($message, $this->argIn["template"]);
         }
-        $this->argOut = $this->stdMail($to, $subject, $message, $headers, $parameters, $from);
+        $this->argOut = $this->stdMailWithDoc($to, $subject, $message, $files, $headers, $parameters, $from);
     }
 }
+

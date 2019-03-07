@@ -6,6 +6,7 @@ namespace LinHUniX\McpModules\Chk;
 ///  INIT
 ///////////////////////////////////////////////////////////////////////////////////////
 use LinHUniX\Mcp\masterControlProgram;
+use LinHUniX\Mcp\Model\mcpBaseModelClass;
 
 echo "Im In LinHUniX\McpModule\Chk.. \n";
 echo "..Loading  mcpCheckModel Constant\n";
@@ -18,6 +19,9 @@ const mcpCheckModel_CheckArgIn = "mcp_check_in";
 const mcpCheckModel_CheckArgOut = "mcp_check_out";
 const mcpCheckModel_Out_type_array = "mcp_check_array";
 const mcpCheckModel_Out_type_isset = "mcp_check_isset";
+const mcpCheckModel_Out_type_class = "mcp_check_class";
+const mcpCheckModel_Out_type_func = "mcp_check_func";
+const mcpCheckModel_Out_type_model = "mcp_check_model";
 const mcpCheckModel_Out_type_false = "mcp_check_false";
 const mcpCheckModel_Out_type_true = "mcp_check_true";
 const mcpCheckModel_Out_type_number = "mcp_check_num";
@@ -106,7 +110,7 @@ class mcpCheckModel
     public function assetarg($arg, $type, $desc)
     {
         echo "Check IsSet...[" . $desc . "]\n";
-        echo "verify is $type..";
+        echo "verify is ".print_r($type,1)."...";
         if (isset($arg)) {
             if (is_array($type)) {
                 echo "OK\n";
@@ -128,6 +132,21 @@ class mcpCheckModel
                     case mcpCheckModel_Out_type_array:
                         if (!is_array($arg)) {
                             DumpCheckAndExit("Not Array");
+                        }
+                        break;
+                    case mcpCheckModel_Out_type_func:
+                        if (!is_callable($arg)) {
+                            DumpCheckAndExit("Not Function");
+                        }
+                        break;
+                    case mcpCheckModel_Out_type_class:
+                        if (!is_object($arg)) {
+                            DumpCheckAndExit("Not Object");
+                        }
+                        break;
+                        case mcpCheckModel_Out_type_model:
+                        if (!($arg instanceof mcpBaseModelClass)) {
+                            DumpCheckAndExit("Not Model");
                         }
                         break;
                     case mcpCheckModel_Out_type_number:

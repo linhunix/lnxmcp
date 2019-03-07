@@ -105,13 +105,13 @@ function selfAutoLoad($srcPath)
 }
 
 /**
- * linhunix json array converter 
+ * linhunix json array converter
  *
  * @param  mixed $file
- * @param  mixed $path if is need 
+ * @param  mixed $path if is need
  * @param  mixed $ext with out the '.'
  *
- * @return any json object converted 
+ * @return any json object converted
  */
 function lnxGetJsonFile($file, $path = "", $ext = "")
 {
@@ -183,9 +183,17 @@ function linhunixErrorHandlerDev($errno, $errstr, $errfile, $errline)
     $drvlvl = 0;
     switch ($errno) {
         case E_ERROR:
+            lnxmcp()->error($errstr . "[" . $errfile . "] [" . $errline . "]");
+            lnxmcp()->supportmail($errstr);
             $exit = true;
+            break;
+        case E_PARSE:
+        case E_CORE_ERROR:
+        case E_COMPILE_ERROR :
+        case E_RECOVERABLE_ERROR:
         case E_USER_ERROR:
             lnxmcp()->error($errstr . "[" . $errfile . "] [" . $errline . "]");
+            lnxmcp()->supportmail($errstr);
             break;
         case E_USER_DEPRECATED:
         case E_WARNING:
