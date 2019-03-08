@@ -33,17 +33,25 @@ The logic inside support both nmespace function and class
 ### It's a reflection framework and not a solid framework ###
 
   It is implement:
- - simple log service 
- - simple mail service 
- - simple db pdo serice 
- - simple data cache 
- - simple shell command service 
+ - Data cache 
+ - Log service 
+ - Mail service 
+ - Debug Serices 
+ - Remote Api Proxy 
+ - Array's enrichment
+ - Model View Controller 
+ - Shell command service 
+ - Multi Language Integration
+ - Internal Check and Test Suite
+ - Namespace and library load manager
+ - Category and Http Routing Management
+ - multi db pdo serice (Sql lite and MySql) 
  
 ### Why GPL v3?
 
 **LNX** (LinHUniX) **MCP** (Master Control Program) is a share code with free license.
-Develop and Maintain by **LinHUniX Ltd**  - 2002/2020  - Author is **Andrea Morello (LinHUniX)**
-Is a parts of the LN4 Note projects started on 2002 (ln4.it and ln4.app)
+Develop and Maintain by **LinHUniX Ltd**  - 2008/2020  - Author is **Andrea Morello (LinHUniX)**
+Is a parts of the LN4 Note projects started on 2008 (ln4.it and ln4.app)
 
 The lnxmcp (php/phar library) and lnxfea (js/angular2 library) are the common sdk to undestood
 the logic of LN4 Java Backend and create around it the functionality need to extend.
