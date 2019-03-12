@@ -19,11 +19,12 @@ function mcpHttpPathMenuExt($pathmenu,$catmng,$scopein){
  * @return void
  */
 function mcpPathRedirect($urlpth){
+    lnxmcp()->debug("Check a Redirect Action for ". $urlpth);
     $cfgpth = lnxmcp()->getResource("path.config");
     $pathredirect = lnxGetJsonFile("PathRewrite", $cfgpth, "json");
     if (is_array($pathredirect)) {
         if (isset($pathredirect[$urlpth])) {
-            lnxmcp()-info("Found a Redirect Action for ". $urlpth);
+            lnxmcp()->info("Found a Redirect Action for ". $urlpth);
             $redcmd = $pathredirect[$urlpth];
             if (is_array($redcmd)) {
                 foreach ($redcmd as $redhead) {
