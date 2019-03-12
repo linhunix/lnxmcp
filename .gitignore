@@ -5,3 +5,4 @@ composer.lock
 .Tool
 work
 sql
+/nbproject/private/

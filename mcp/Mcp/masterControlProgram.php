@@ -149,30 +149,7 @@ final class masterControlProgram
         $GLOBALS["cfg"] = &$this->cfg;
         $GLOBALS["mcp"] = &$this;
     }
-    public function updateCommonByEnv($setForce = false)
-    {
-        foreach ($_REQUEST as $rk => $rv) {
-            if (!isset($this->common[$rk]) || ($setForce == true)) {
-                $this->common[$rk] = $rv;
-            } else if (empty($_REQUEST[$rk]) || ($setForce == true)) {
-                $this->common[$rk] = $rv;
-            }
-        }
-        foreach ($_GET as $gk => $gv) {
-            if (!isset($this->common[$gk]) || ($setForce == true)) {
-                $this->common[$gk] = $gv;
-            } else if (empty($_REQUEST[$gk]) || ($setForce == true)) {
-                $this->common[$gk] = $gv;
-            }
-        }
-        foreach ($_POST as $pk => $pv) {
-            if (!isset($this->common[$pk]) || ($setForce == true)) {
-                $this->common[$pk] = $pv;
-            } else if (empty($_REQUEST[$pk]) || ($setForce == true)) {
-                $this->common[$pk] = $pv;
-            }
-        }
-    }
+
 
     /////////////////////////////////////////////////////////////////////////////
     // CFG CONTROLLER 
@@ -266,6 +243,50 @@ final class masterControlProgram
             $this->common[$resname] = $revalue;
         }
         return true;
+    }
+
+    /**
+     * updateCommonByEnv
+     * load env variable on the common set 
+     *
+     * @param  mixed $setForce
+     *
+     * @return void
+     */
+    public function updateCommonByEnv($setForce = false)
+    {
+        foreach ($_REQUEST as $rk => $rv) {
+            if (!isset($this->common[$rk]) || ($setForce == true)) {
+                $this->common[$rk] = $rv;
+            } else if (empty($_REQUEST[$rk]) || ($setForce == true)) {
+                $this->common[$rk] = $rv;
+            }
+        }
+        foreach ($_GET as $gk => $gv) {
+            if (!isset($this->common[$gk]) || ($setForce == true)) {
+                $this->common[$gk] = $gv;
+            } else if (empty($_REQUEST[$gk]) || ($setForce == true)) {
+                $this->common[$gk] = $gv;
+            }
+        }
+        foreach ($_POST as $pk => $pv) {
+            if (!isset($this->common[$pk]) || ($setForce == true)) {
+                $this->common[$pk] = $pv;
+            } else if (empty($_REQUEST[$pk]) || ($setForce == true)) {
+                $this->common[$pk] = $pv;
+            }
+        }
+    }
+
+    /**
+     * RemCommon
+     * Display on web comment 
+     * the common array
+     *
+     * @return void
+     */
+    public function RemCommon(){
+        $this->mcpLogging->webRem($this->common);
     }
     /////////////////////////////////////////////////////////////////////////////
     // MENU CONTROLLER 
@@ -913,7 +934,7 @@ final class masterControlProgram
         return $this->module($ctrlproc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Controller");
     }
     /**
-     * Run Module as controller as remote
+     * Run Module as controller as retestmailmote
      * @param string $ctrlproc name of the driver
      * @param bool $ispreload  is only a preload (ex page) or need to be execute (ex controller)
      * @param array $scopeIn   Input Array with the value need to work
@@ -1024,7 +1045,7 @@ final class masterControlProgram
      * @param string $srvprc  name of the driver
      * @param bool $ispreload is only a preload (ex page) or need to be execute (ex controller)
      * @param array $scopeIn  Input Array with the value need to work
-     * @param string $modinit Module name where is present the code and be load and initalized
+     * @param string $modinit Module testmailname where is present the code and be load and initalized
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
      * @return array $ScopeOut
      */
@@ -1090,7 +1111,7 @@ final class masterControlProgram
      *
      * @return void
      */
-    public function mail($page = null, $scopeIn = array(), $modinit = null)
+    public function mail($page = nulltestmail, $scopeIn = array(), $modinit = null)
     {
         $this->info("MCP>>mail>>" . $page);
         if (!is_array($scopeIn)){
@@ -1232,7 +1253,7 @@ final class masterControlProgram
      * @param string $block    name of the Block and the controller
      * @param array $scopeIn   Input Array with the value need to work
      * @param string $modinit  Module name where is present the code and be load and initalized
-     * @param string $pageinit Module name if is different for the page
+     * @param string $pageinit Moduletestmail name if is different for the page
      */
     public function showPage($block, $scopeIn = array(), $modinit = null, $pageinit = null)
     {

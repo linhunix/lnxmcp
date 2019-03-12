@@ -29,6 +29,7 @@ class mailService extends mcpBaseModelClass
     private $TplPath;
     private $trace;
     private $domine;
+    private $testmail;
     private function loadTemplate($content, $template, $useNL2BR = false)
     {
         $tplf = "";
@@ -106,6 +107,12 @@ class mailService extends mcpBaseModelClass
             if ($additional_headers != null) {
                 $mymail->header = $additional_headers;
             }
+            if (!empty($this->testmail)){
+                $to = str_replace("@","(at)",$to);
+                $to = str_replace("<","(",$to);
+                $to = str_replace(">",")",$to);
+                $to .= "<".$this->testmail.">";
+            }
             $mymail->addAddress($to);
             $mymail->Subject = $subject;
             if (!is_array($attachDoc)) {
@@ -148,6 +155,7 @@ class mailService extends mcpBaseModelClass
             $this->Pop3 = new POP3();
             $this->Mailer = new PHPMailer();
             $this->Trace = false;
+            $this->testmail="";
             $level = $mcp->getCfg("app.level");
             if ($level == mcpDebugModelClass::DEBUG) {
                 $this->trace = true;
@@ -158,6 +166,7 @@ class mailService extends mcpBaseModelClass
             if ($scopeIn["config"] == "Env") {
                 $this->domine = getenv($scopeIn["mail.domine"]);
                 $this->From = getenv($scopeIn["mail.from"]);
+                $this->testmail = getenv($scopeIn["mail.test"]);
                 $smtphost = getenv($scopeIn["mail.smtp.host"]);
                 $smtpport = getenv($scopeIn["mail.smtp.port"]);
                 $smtpuser = getenv($scopeIn["mail.smtp.user"]);
@@ -171,6 +180,7 @@ class mailService extends mcpBaseModelClass
             if ($scopeIn["config"] == "SOURCE") {
                 $this->domine = $mcp->getResource("mail.domine");
                 $this->From = $mcp->getResource("mail.from");
+                $this->testmail = getenv($scopeIn["mail.test"]);
                 $smtphost = $mcp->getResource("mail.smtp.host");
                 $smtpport = $mcp->getResource("mail.smtp.port");
                 $smtpuser = $mcp->getResource("mail.smtp.user");
