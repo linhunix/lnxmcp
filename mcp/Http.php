@@ -11,7 +11,31 @@ function mcpHttpPathMenuExt($pathmenu,$catmng,$scopein){
     }
     return $scopein;
 }
-
+/**
+ * mcpPathRedirect
+ * check if present on path list  and if present redirect 
+ * @param  mixed $urlpth
+ *
+ * @return void
+ */
+function mcpPathRedirect($urlpth){
+    $cfgpth = lnxmcp()->getResource("path.config");
+    $pathredirect = lnxGetJsonFile("PathRewrite", $cfgpth, "json");
+    if (is_array($pathredirect)) {
+        if (isset($pathredirect[$urlpth])) {
+            lnxmcp()-info("Found a Redirect Action for ". $urlpth);
+            $redcmd = $pathredirect[$urlpth];
+            if (is_array($redcmd)) {
+                foreach ($redcmd as $redhead) {
+                    lnxmcp()->header($redhead, false);
+                }
+                LnxMcpExit("End Headers Redirect ");
+            } else {
+                lnxmcp()->header($redcmd, true);
+            }
+        }
+    }
+}
 
 /**
  * mcpRunHttp
@@ -37,26 +61,11 @@ function mcpRunHttp()
     }
     $urlpth = str_replace("//", "/", $urlpth);
     $urlarr = explode("/", $urlpth);
-    $cfgpth = lnxmcp()->getResource("path.config");
-    ////// HEADER CALL
-    $pathredirect = lnxGetJsonFile("PathRewrite", $cfgpth, "json");
     lnxmcp()->setCommon("PathUrl", $urlpth);
     lnxmcp()->setCommon("CatUrl", $urlarr);
-    lnxmcp()->setCommon("PathHeader", $pathredirect);
-    if (is_array($pathredirect)) {
-        if (isset($pathredirect[$urlpth])) {
-            lnxmcp()-info("Found a Redirect Action for ". $urlpth);
-            $redcmd = $pathredirect[$urlpth];
-            if (is_array($redcmd)) {
-                foreach ($redcmd as $redhead) {
-                    lnxmcp()->header($redhead, false);
-                }
-                LnxMcpExit("End Headers Redirect ");
-            } else {
-                lnxmcp()->header($redcmd, true);
-            }
-        }
-    }
+    $cfgpth = lnxmcp()->getResource("path.config");
+    ////// HEADER CALL
+    mcpPathRedirect($urlpth);
     ///// MENU CALL
     $catlist = $urlarr;
     $catcnt = sizeof($catlist);
