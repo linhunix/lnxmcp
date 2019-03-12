@@ -44,7 +44,8 @@ function mcpRunHttp()
     lnxmcp()->setCommon("CatUrl", $urlarr);
     lnxmcp()->setCommon("PathHeader", $pathredirect);
     if (is_array($pathredirect)) {
-        if (in_array($urlpth, $pathredirect)) {
+        if (isset($pathredirect[$urlpth])) {
+            lnxmcp()-info("Found a Redirect Action for ". $urlpth);
             $redcmd = $pathredirect[$urlpth];
             if (is_array($redcmd)) {
                 foreach ($redcmd as $redhead) {
