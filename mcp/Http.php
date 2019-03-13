@@ -38,21 +38,23 @@ function mcpPathRedirect($urlpth)
             }
         } else {
             $urlpart="";
-            foreach (explode("/", $urlpth) as $urlseg) {
-                $urlpart.="/".$urlseg;
-                lnxmcp()->debug("Check a Redirect Action for partial ". $urlpart);
-                if (isset($pathredirect[$urlpart])) {
-                    lnxmcp()->info("Found a Redirect Action for partial ". $urlpart);
-                    $redcmd = $pathredirect[$urlpart];
-                    if (is_array($redcmd)) {
-                        foreach ($redcmd as $redhead) {
-                            lnxmcp()->header($redhead, false);
+            foreach (explode("/", strtolower($urlpth)) as $urlseg) {
+                if ($urlseg != "") {
+                    $urlpart.="/".$urlseg;
+                    lnxmcp()->debug("Check a Redirect Action for partial ". $urlpart);
+                    if (isset($pathredirect[$urlpart])) {
+                        lnxmcp()->info("Found a Redirect Action for partial ". $urlpart);
+                        $redcmd = $pathredirect[$urlpart];
+                        if (is_array($redcmd)) {
+                            foreach ($redcmd as $redhead) {
+                                lnxmcp()->header($redhead, false);
+                            }
+                            LnxMcpExit("End Headers Redirect ");
+                        } else {
+                            lnxmcp()->header($redcmd, true);
                         }
-                        LnxMcpExit("End Headers Redirect ");
-                    } else {
-                        lnxmcp()->header($redcmd, true);
                     }
-                }        
+                }
             }
         }
     }
