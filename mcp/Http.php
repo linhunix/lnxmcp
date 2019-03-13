@@ -69,6 +69,10 @@ function mcpRunHttp()
 {
     lnxmcp()->setCfg("app.type", "web");
     $urlpth = $_SERVER["REQUEST_URI"];
+    if (stripos($urlpth, "?")!=false) {
+        $tmpurl=explode("?", $urlpth);
+        $urlpth=$tmpurl[0];
+    }
     if (empty($urlpth) or ($urlpth == "") or ($urlpth == "/")) {
         $urlpth = "home";
     }
