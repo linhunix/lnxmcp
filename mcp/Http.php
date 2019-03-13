@@ -3,7 +3,8 @@
  * extend the config based on $pathmenu array
  * @return array $scopein
  */
-function mcpHttpPathMenuExt($pathmenu,$catmng,$scopein){
+function mcpHttpPathMenuExt($pathmenu, $catmng, $scopein)
+{
     if (in_array($catmng, $pathmenu)) {
         foreach ($pathmenu[$catmng] as $mnk => $nuv) {
             $scopein[$mnk] = $mnv;
@@ -13,12 +14,13 @@ function mcpHttpPathMenuExt($pathmenu,$catmng,$scopein){
 }
 /**
  * mcpPathRedirect
- * check if present on path list  and if present redirect 
+ * check if present on path list  and if present redirect
  * @param  mixed $urlpth
  *
  * @return void
  */
-function mcpPathRedirect($urlpth){
+function mcpPathRedirect($urlpth)
+{
     lnxmcp()->debug("Check a Redirect Action for ". $urlpth);
     $cfgpth = lnxmcp()->getResource("path.config");
     $pathredirect = lnxGetJsonFile("PathRewrite", $cfgpth, "json");
@@ -34,6 +36,23 @@ function mcpPathRedirect($urlpth){
             } else {
                 lnxmcp()->header($redcmd, true);
             }
+        } else {
+            $urlpart="";
+            foreach (explode("/", $urlpth) as $urlseg) {
+                $urlpart.="/".$urlseg;
+                if (isset($pathredirect[$urlpart])) {
+                    lnxmcp()->info("Found a Redirect Action for partial ". $urlpart);
+                    $redcmd = $pathredirect[$urlpart];
+                    if (is_array($redcmd)) {
+                        foreach ($redcmd as $redhead) {
+                            lnxmcp()->header($redhead, false);
+                        }
+                        LnxMcpExit("End Headers Redirect ");
+                    } else {
+                        lnxmcp()->header($redcmd, true);
+                    }
+                }        
+            }
         }
     }
 }
@@ -45,7 +64,7 @@ function mcpPathRedirect($urlpth){
  */
 function mcpRunHttp()
 {
-    lnxmcp()->setCfg("app.type","web");
+    lnxmcp()->setCfg("app.type", "web");
     $urlpth = $_SERVER["REQUEST_URI"];
     if (empty($urlpth) or ($urlpth == "") or ($urlpth == "/")) {
         $urlpth = "home";
@@ -78,24 +97,24 @@ function mcpRunHttp()
     }
     $menu = "home".str_replace("/", ".", $urlpth);
     $lang= lnxmcp()->getCfg("web.language");
-    if (empty($lang)){
+    if (empty($lang)) {
         $lang=lnxmcp()->getCfg("app.lang");
-    }else{
-        lnxmcp()->setCfg("app.lang",$lang);
+    } else {
+        lnxmcp()->setCfg("app.lang", $lang);
     }
     $catlist[$catcnt++] = $lang.$menu;
-    $scopein=mcpHttpPathMenuExt($pathmenu,$lang,$scopein);
+    $scopein=mcpHttpPathMenuExt($pathmenu, $lang, $scopein);
     $lang.=".";
-    $scopein=mcpHttpPathMenuExt($pathmenu,$lang.$menu,$scopein);
-    $scopein=mcpHttpPathMenuExt($pathmenu,$menu,$scopein);
-    if (lnxmcp()->getCfg("web.mobile")==true){
-        lnxmcp()->setCfg("app.type","mobile");
+    $scopein=mcpHttpPathMenuExt($pathmenu, $lang.$menu, $scopein);
+    $scopein=mcpHttpPathMenuExt($pathmenu, $menu, $scopein);
+    if (lnxmcp()->getCfg("web.mobile")==true) {
+        lnxmcp()->setCfg("app.type", "mobile");
         $mobile="mobile.";
         $catlist[$catcnt++] = $mobile.$lang.$menu;
         $catlist[$catcnt++] = $mobile.$menu;
-        $scopein=mcpHttpPathMenuExt($pathmenu,"mobile",$scopein);
-        $scopein=mcpHttpPathMenuExt($pathmenu,$mobile.$lang.$menu,$scopein);
-        $scopein=mcpHttpPathMenuExt($pathmenu,$mobile.$menu,$scopein);
+        $scopein=mcpHttpPathMenuExt($pathmenu, "mobile", $scopein);
+        $scopein=mcpHttpPathMenuExt($pathmenu, $mobile.$lang.$menu, $scopein);
+        $scopein=mcpHttpPathMenuExt($pathmenu, $mobile.$menu, $scopein);
     }
     $catlist[$catcnt++] = $menu;
     $submenu = "main";
@@ -111,19 +130,19 @@ function mcpRunHttp()
             $catmenu = "cat." . $catk . "." . $catv;
             $catlist[$catcnt++] = $catmenu;
             $catlist[$catcnt++] = $submenu;
-            $scopein=mcpHttpPathMenuExt($pathmenu,$catmenu,$scopein);
-            $scopein=mcpHttpPathMenuExt($pathmenu,$submenu,$scopein);
+            $scopein=mcpHttpPathMenuExt($pathmenu, $catmenu, $scopein);
+            $scopein=mcpHttpPathMenuExt($pathmenu, $submenu, $scopein);
         }
     }
-    $scopein=mcpHttpPathMenuExt($pathmenu,$urlpth,$scopein);
+    $scopein=mcpHttpPathMenuExt($pathmenu, $urlpth, $scopein);
     if (isset($scopein["menu"])) {
         $menu = $scopein["menu"];
     }
     ksort($scopein);
     lnxmcp()->setCommon("category", $catlist);
     //// SPECIAL PAGE AREA
-    if (substr($urlpth,0,8)=='/lnxmcp/'){
-        if(isset($urlarr[2])){
+    if (substr($urlpth, 0, 8)=='/lnxmcp/') {
+        if (isset($urlarr[2])) {
             lnxmcp()->showCommonPage($urlarr[2]);
         }
     }
