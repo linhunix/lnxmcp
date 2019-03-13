@@ -40,6 +40,7 @@ function mcpPathRedirect($urlpth)
             $urlpart="";
             foreach (explode("/", $urlpth) as $urlseg) {
                 $urlpart.="/".$urlseg;
+                lnxmcp()->debug("Check a Redirect Action for partial ". $urlpart);
                 if (isset($pathredirect[$urlpart])) {
                     lnxmcp()->info("Found a Redirect Action for partial ". $urlpart);
                     $redcmd = $pathredirect[$urlpart];
