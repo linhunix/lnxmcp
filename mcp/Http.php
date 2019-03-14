@@ -69,6 +69,10 @@ function mcpRunHttp()
 {
     lnxmcp()->setCfg("app.type", "web");
     $urlpth = $_SERVER["REQUEST_URI"];
+    $urlpth = str_replace("//", "/", $urlpth);
+    ////// HEADER CALL
+    mcpPathRedirect($urlpth);
+    ////// REMOVE THE ARGUMENT BLOCK
     if (stripos($urlpth, "?")!=false) {
         $tmpurl=explode("?", $urlpth);
         $urlpth=$tmpurl[0];
@@ -76,6 +80,7 @@ function mcpRunHttp()
     if (empty($urlpth) or ($urlpth == "") or ($urlpth == "/")) {
         $urlpth = "home";
     }
+    ////// GET BROWSER TYPE INFO 
     $browser = new \LinHUniX\Mcp\Tools\browserData();
     foreach ($browser->getResult() as $bdk => $dbv) {
         if (is_array($dbv)) {
@@ -86,14 +91,11 @@ function mcpRunHttp()
             lnxmcp()->setCfg("web." . $bdk, $dbv);
         }
     }
-    $urlpth = str_replace("//", "/", $urlpth);
+    ///// MENU CALL
     $urlarr = explode("/", $urlpth);
     lnxmcp()->setCommon("PathUrl", $urlpth);
     lnxmcp()->setCommon("CatUrl", $urlarr);
     $cfgpth = lnxmcp()->getResource("path.config");
-    ////// HEADER CALL
-    mcpPathRedirect($urlpth);
-    ///// MENU CALL
     $catlist = $urlarr;
     $catcnt = sizeof($catlist);
     $scopein = $_REQUEST;
