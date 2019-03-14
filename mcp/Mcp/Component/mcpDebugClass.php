@@ -135,14 +135,34 @@ class mcpDebugClass
      * webRem
      *
      * @param  mixed $message
+     * @param  mixed $var
      *
      * @return void
      */
-    public function webRem($message)
+    public function webRem($message,$var = null)
     {
-        echo "\n<!-- ===========================================================\n";
-        echo "====  " . $this->getRes("def") . " :" . print_r($message, 1);
-        echo "\n<=========================================================== !-->\n";
+        echo "\n<!-- ======================================================= ===";
+        echo "\n====  " . $this->getRes("def") . " :" . print_r($message, 1);
+        if (!empty($var)) {
+            echo "\n==== ======================================================= ===";
+            echo "\n====  " . print_r($var, 1);
+        }
+        echo "\n==== ======================================================= !-->";
+        echo "\n";
+    }
+    /**
+     * webDebugRem show rem if are in debug enable 
+     *
+     * @param  mixed $message
+     * @param  mixed $var
+     *
+     * @return void
+     */
+    public function webDebugRem($message,$var = null)
+    {
+        if ($this->getLogger()->IsDebug()) {
+            $this->webRem($message,$var);
+        }
     }
 
     /**
@@ -199,7 +219,7 @@ class mcpDebugClass
         }
         if (file_exists($path . $string . $ext)) {
             include $path . $string . $ext;
-        } else if (file_exists($path . $default . $ext)) {
+        } elseif (file_exists($path . $default . $ext)) {
             include $path . $default . $ext;
         } else {
             $this->critical("Moving to " . $path . $string . " Error file not found");

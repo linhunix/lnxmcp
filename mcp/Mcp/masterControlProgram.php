@@ -21,14 +21,14 @@ use \LinHUniX\Mcp\Component\mcpLanguageClass;
 use \LinHUniX\Mcp\Component\mcpMailClass;
 
 /*
- * this Master Control Programs Class is to prepare 
- * to use a slim or simphony controller 
- * as a difference that the Ashley LinHUniX MVC class is to easy implemts 
- * because use only a easy class mcpBaseModelClass and two methods run and check 
+ * this Master Control Programs Class is to prepare
+ * to use a slim or simphony controller
+ * as a difference that the Ashley LinHUniX MVC class is to easy implemts
+ * because use only a easy class mcpBaseModelClass and two methods run and check
  * and support the $GLOBAL vars like "cfg"
- * this class are exportable on the future as abstact controller 
- * 
- * @see [vendor]/mcp/Head.php  
+ * this class are exportable on the future as abstact controller
+ *
+ * @see [vendor]/mcp/Head.php
  */
 
 final class masterControlProgram
@@ -54,17 +54,17 @@ final class masterControlProgram
      *
      * @var Slim Content as a test of integrations
      */
-    private $cfg; // is a test class to integrate slim on the code 
+    private $cfg; // is a test class to integrate slim on the code
     /**
      * Short Name of this applicationmcpLanguageClass
      * @var string
      */
-    private $common; // is a test class to integrate slim on the code 
+    private $common; // is a test class to integrate slim on the code
     /**
      * Short Name of this application
      * @var string
      */
-    private $event; // is a test class to integrate slim on the code 
+    private $event; // is a test class to integrate slim on the code
     /**
      * Short Name of this application
      * @var string
@@ -130,7 +130,7 @@ final class masterControlProgram
         }
         $this->cfg["app.timezone"] = "Europe/London";
         // LOGGING PROVIDER
-        // intrigante devo ragionare su come gestire l'evento 
+        // intrigante devo ragionare su come gestire l'evento
         $this->register(new settingsProviderModel());
         $this->mcpLogging = new Component\mcpDebugClass($this);
         $this->mcpCore = new Component\mcpCoreClass($this);
@@ -152,7 +152,7 @@ final class masterControlProgram
 
 
     /////////////////////////////////////////////////////////////////////////////
-    // CFG CONTROLLER 
+    // CFG CONTROLLER
     /////////////////////////////////////////////////////////////////////////////
     /**
      * @return string
@@ -204,7 +204,7 @@ final class masterControlProgram
         return true;
     }
     /////////////////////////////////////////////////////////////////////////////
-    // COMMON CONTROLLER 
+    // COMMON CONTROLLER
     /////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -247,7 +247,7 @@ final class masterControlProgram
 
     /**
      * updateCommonByEnv
-     * load env variable on the common set 
+     * load env variable on the common set
      *
      * @param  mixed $setForce
      *
@@ -258,21 +258,21 @@ final class masterControlProgram
         foreach ($_REQUEST as $rk => $rv) {
             if (!isset($this->common[$rk]) || ($setForce == true)) {
                 $this->common[$rk] = $rv;
-            } else if (empty($_REQUEST[$rk]) || ($setForce == true)) {
+            } elseif (empty($_REQUEST[$rk]) || ($setForce == true)) {
                 $this->common[$rk] = $rv;
             }
         }
         foreach ($_GET as $gk => $gv) {
             if (!isset($this->common[$gk]) || ($setForce == true)) {
                 $this->common[$gk] = $gv;
-            } else if (empty($_REQUEST[$gk]) || ($setForce == true)) {
+            } elseif (empty($_REQUEST[$gk]) || ($setForce == true)) {
                 $this->common[$gk] = $gv;
             }
         }
         foreach ($_POST as $pk => $pv) {
             if (!isset($this->common[$pk]) || ($setForce == true)) {
                 $this->common[$pk] = $pv;
-            } else if (empty($_REQUEST[$pk]) || ($setForce == true)) {
+            } elseif (empty($_REQUEST[$pk]) || ($setForce == true)) {
                 $this->common[$pk] = $pv;
             }
         }
@@ -280,20 +280,21 @@ final class masterControlProgram
 
     /**
      * RemCommon
-     * Display on web comment 
+     * Display on web comment
      * the common array
      *
      * @return void
      */
-    public function RemCommon(){
-        $this->mcpLogging->webRem($this->common);
+    public function RemCommon()
+    {
+        $this->mcpLogging->webRem("Common", $this->common);
     }
     /////////////////////////////////////////////////////////////////////////////
-    // MENU CONTROLLER 
+    // MENU CONTROLLER
     /////////////////////////////////////////////////////////////////////////////
 
     /**
-     * setMenu sequence  
+     * setMenu sequence
      *
      * @param  mixed $name
      * @param  mixed $sequence
@@ -305,7 +306,7 @@ final class masterControlProgram
         return $this->setCfg("app.menu." . $name, $sequence);
     }
     /**
-     * setTag sequence  
+     * setTag sequence
      *
      * @param  mixed $name
      * @param  mixed $sequence
@@ -331,7 +332,7 @@ final class masterControlProgram
         return null;
     }
     /////////////////////////////////////////////////////////////////////////////
-    // SCOPE MANAGER 
+    // SCOPE MANAGER
     /////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -455,7 +456,7 @@ final class masterControlProgram
      *
      * @return string translation
      */
-    public function  translate($message)
+    public function translate($message)
     {
         return mcpLanguageClass::translate($message);
     }
@@ -466,7 +467,7 @@ final class masterControlProgram
      * @param  string $message
      * @return string translation
      */
-    public function  translateMulti($lang, $message)
+    public function translateMulti($lang, $message)
     {
         return mcpLanguageClass::multiTranslate($lang, $message);
     }
@@ -540,7 +541,7 @@ final class masterControlProgram
     }
     /**
      * debug class (level critical)
-     * send a debug message to support 
+     * send a debug message to support
      * @param string $message
      */
     public function supportmail($message)
@@ -569,17 +570,27 @@ final class masterControlProgram
     /**
      * Make a Web Rem  with this message
      * @param string $message
+     * @param string $var
      */
-    public function Rem($message)
+    public function Rem($message, $var= null)
     {
-        $this->mcpLogging->webRem($message);
+        $this->mcpLogging->webRem($message, $var);
     }
 
+    /**
+     * Make a Web Rem  with this message
+     * @param string $message
+     * @param string $var
+     */
+    public function DebugRem($message, $var= null)
+    {
+        $this->mcpLogging->webDebugRem($message, $var);
+    }
     /**
      * Make a Web dumo with html tag of with this message and var
      * @param string $message
      */
-    public function display($message, $var)
+    public function display($message, $var =null)
     {
         $this->mcpLogging->webDump($message, $var);
     }
@@ -588,12 +599,12 @@ final class masterControlProgram
     /////////////////////////////////////////////////////////////////////////////
 
     /**
-     * move to php file and close if need 
+     * move to php file and close if need
      * @param dest dest phpfile
      * @param default if not exist use this phpfile
      * @param ext  ".php" or more if need to add to $dest and $default
-     * @param path  if is different to the system path 
-     * @param andEnd (def true) if neet to exit at end of call 
+     * @param path  if is different to the system path
+     * @param andEnd (def true) if neet to exit at end of call
      */
     public function move($dest, $default = null, $ext = "", $path = null, $andEnd = true)
     {
@@ -660,7 +671,7 @@ final class masterControlProgram
         }
     }
     /////////////////////////////////////////////////////////////////////////////
-    // MODULE CONTROLLER 
+    // MODULE CONTROLLER
     /////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -726,7 +737,7 @@ final class masterControlProgram
      * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
      * @param string $vendor   this code is part of specific vendor (ex ft )
      * @param string $type     is a Page, Block, Controller, Driver
-     * @param bool $hasreturn if is called the objet return the value as string 
+     * @param bool $hasreturn if is called the objet return the value as string
      * @return string output
      */
     public function template($callname, $path = null, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $type = null, $hasreturn = false)
@@ -764,7 +775,7 @@ final class masterControlProgram
         exit($res);
     }
     /////////////////////////////////////////////////////////////////////////////
-    // MODULE CALL  
+    // MODULE CALL
     /////////////////////////////////////////////////////////////////////////////
 
     /**
@@ -775,7 +786,7 @@ final class masterControlProgram
      */
     public function moduleRun($libname, $scopeIn = array())
     {
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         return $this->module($libname, $this->pathsrc, false, $scopeIn);
@@ -796,7 +807,7 @@ final class masterControlProgram
         if ($vendor == null) {
             $vendor = $this->defvnd;
         }
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->info("MCP>>" . $vendor . ">>driver>>" . $libname);
@@ -817,7 +828,7 @@ final class masterControlProgram
         if ($vendor == null) {
             $vendor = $this->defapp;
         }
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->info("MCP>>" . $vendor . ">>query>>" . $dbproc);
@@ -838,7 +849,7 @@ final class masterControlProgram
         if ($vendor == null) {
             $vendor = $this->defapp;
         }
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->info("MCP>>" . $vendor . ">>query[R]>>" . $dbproc);
@@ -846,7 +857,7 @@ final class masterControlProgram
         return $res["return"];
     }
     /**
-     * Run Module as database query common intenal 
+     * Run Module as database query common intenal
      * @param string $dbproc  name of the driver by default json
      * @param bool $ispreload is only a preload (ex page) or need to be execute (ex controller)
      * @param array $scopeIn  Input Array with the value need to work
@@ -857,7 +868,7 @@ final class masterControlProgram
     public function queryCommonR($dbproc = "Json", $ispreload = true, $scopeIn = array(), $modinit = "Pdo", $subcall = null)
     {
         $this->info("MCP>>" . $this->defapp . ">>query[R]>>" . $dbproc);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $res = $this->module($dbproc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Query");
@@ -865,7 +876,7 @@ final class masterControlProgram
     }
 
     /**
-     * Run Module as database query by json file  
+     * Run Module as database query by json file
      * @param string $dbproc  name of the driver by default json
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized by default Pdo
@@ -875,7 +886,7 @@ final class masterControlProgram
     public function queryJsonR($dbprc, $scopeIn = array(), $modinit = null, $vendor = null, $path = null)
     {
         $this->info("MCP>>" . $this->defapp . ">>query[J]>>" . $dbprc);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         if ($vendor != null) {
@@ -909,7 +920,7 @@ final class masterControlProgram
         if ($vendor == null) {
             $vendor = $this->defapp;
         }
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->info("MCP>>" . $vendor . ">>controller>>" . $ctrlproc);
@@ -928,7 +939,7 @@ final class masterControlProgram
     public function controllerCommon($ctrlproc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
     {
         $this->info("MCP>>controller(C)>>" . $ctrlproc);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         return $this->module($ctrlproc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Controller");
@@ -945,7 +956,7 @@ final class masterControlProgram
     public function controllerRemote($ctrlproc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
         $this->info("MCP>>controller(Remote)>>" . $ctrlproc);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         return mcpProxyClass::apiRemote($this, $ctrlproc, $scopeIn, $modinit, $subcall, $vendor);
@@ -962,7 +973,7 @@ final class masterControlProgram
     public function controllerShell($ctrlproc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
         $this->info("MCP>>controller(Shell)>>" . $ctrlproc);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $res = mcpProxyClass::apiShell($this, $ctrlproc, $scopeIn, $modinit, $subcall, $vendor);
@@ -988,7 +999,7 @@ final class masterControlProgram
             $vendor = $this->defapp;
         }
         $this->info("MCP>>" . $vendor . ">>api>>" . $srvprc);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $scopeIn["prev-output"] = ob_get_clean();
@@ -1010,7 +1021,7 @@ final class masterControlProgram
     public function apiCommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
     {
         $this->info("MCP>>api(C)>>" . $srvprc);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $scopeIn["prev-output"] = ob_get_clean();
@@ -1031,7 +1042,7 @@ final class masterControlProgram
     public function apiRemote($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
         $this->info("MCP>>api(Remote)>>" . $srvprc);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $scopeIn["prev-output"] = ob_get_clean();
@@ -1052,7 +1063,7 @@ final class masterControlProgram
     public function apiShell($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
         $this->info("MCP>>api(Shell)>>" . $srvprc);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $scopeIn["prev-output"] = ob_get_clean();
@@ -1075,7 +1086,7 @@ final class masterControlProgram
         if ($vendor == null) {
             $vendor = $this->defapp;
         }
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->info("MCP>>" . $vendor . ">>service>>" . $srvprc);
@@ -1094,7 +1105,7 @@ final class masterControlProgram
     public function serviceCommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
     {
         $this->info("MCP>>service(C)>>" . $srvprc);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         return $this->module($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Service");
@@ -1114,10 +1125,10 @@ final class masterControlProgram
     public function mail($page = nulltestmail, $scopeIn = array(), $modinit = null)
     {
         $this->info("MCP>>mail>>" . $page);
-        if (!is_array($scopeIn)){
+        if (!is_array($scopeIn)) {
             return null;
         }
-        return mcpMailClass::mailService($page,$scopeIn,$modinit);
+        return mcpMailClass::mailService($page, $scopeIn, $modinit);
     }
     /**
      * Load a page with your ScopeIn
@@ -1134,7 +1145,7 @@ final class masterControlProgram
         if ($pathtpl == null) {
             $pathtpl = $this->pathtpl;
         }
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $scopeIn["prev-output"] = ob_get_clean();
@@ -1162,7 +1173,7 @@ final class masterControlProgram
         if ($pathtpl == null) {
             $pathtpl = $this->pathtpl;
         }
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->info("MCP>>" . $vendor . ">>block>>" . $block);
@@ -1182,7 +1193,7 @@ final class masterControlProgram
     public function blockCommon($block, $scopeIn = array(), $modinit = null, $hasreturn = false)
     {
         $this->info("MCP>>block(C)>>" . $block);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->RunEvent("blockCommon_start_" . $block);
@@ -1199,7 +1210,7 @@ final class masterControlProgram
     public function blockRemote($page, $scopeIn = array(), $modinit = null, $vendor = null, $hasreturn = false)
     {
         $this->info("MCP>>" . $vendor . ">>block(Remote)>>" . $page);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         if ($vendor == null) {
@@ -1226,7 +1237,7 @@ final class masterControlProgram
         if ($vendor == null) {
             $vendor = $this->defapp;
         }
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->RunEvent("blockShell_start_" . $page);
@@ -1258,7 +1269,7 @@ final class masterControlProgram
     public function showPage($block, $scopeIn = array(), $modinit = null, $pageinit = null)
     {
         $this->info("MCP>>showPage>>" . $block);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->mcpCore->setClearFlagOff();
@@ -1281,7 +1292,7 @@ final class masterControlProgram
     public function showCommonPage($block, $scopeIn = array(), $modinit = null, $pageinit = null)
     {
         $this->info("MCP>>showCommonPage>>" . $block);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->mcpCore->setClearFlagOff();
@@ -1304,7 +1315,7 @@ final class masterControlProgram
     public function showBlock($block, $scopeIn = array(), $controllerModule = null, $blockModule = null)
     {
         $this->info("MCP>>showBlock>>" . $block);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->mcpCore->setClearFlagOff();
@@ -1338,7 +1349,7 @@ final class masterControlProgram
     public function showCommonBlock($block, $scopeIn = array(), $controllerModule = null, $blockModule = null)
     {
         $this->info("MCP>>showBlock>>" . $block);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->mcpCore->setClearFlagOff();
@@ -1372,7 +1383,7 @@ final class masterControlProgram
     public function showFullCommonBlock($block, $scopeIn = array(), $controllerModule = null, $blockModule = null)
     {
         $this->info("MCP>>showBlock>>" . $block);
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         $this->mcpCore->setClearFlagOff();
@@ -1408,7 +1419,7 @@ final class masterControlProgram
      */
     public function runCommand(array $scopectl, $scopeIn = array())
     {
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         return mcpMenuClass::runCommand($scopectl, $scopeIn);
@@ -1421,7 +1432,7 @@ final class masterControlProgram
      */
     public function runSequence(array $actionseq, $scopeIn = array())
     {
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         return mcpMenuClass::runSequence($actionseq, $scopeIn);
@@ -1434,7 +1445,7 @@ final class masterControlProgram
      */
     public function runMenu($action, $scopeIn = array())
     {
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         return mcpMenuClass::runMenu($action, $scopeIn);
@@ -1447,7 +1458,7 @@ final class masterControlProgram
      */
     public function runTag($action, $scopeIn = array(), $buffer = false)
     {
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         if ($action == null) {
@@ -1463,7 +1474,7 @@ final class masterControlProgram
      */
     public function converTag($text, $scopeIn = array(), $label = null)
     {
-        if (! is_array($scopeIn)){
+        if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
         if ($label == null) {
@@ -1472,7 +1483,7 @@ final class masterControlProgram
         return mcpMenuClass::TagConverter($text, $scopeIn, $label);
     }
     /////////////////////////////////////////////////////////////////////////////
-    // EVENT CONTROLLER 
+    // EVENT CONTROLLER
     /////////////////////////////////////////////////////////////////////////////
 
     /**
