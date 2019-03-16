@@ -20,7 +20,8 @@
         "psr-4": {
             "LinHUniX\\Mcp\\": "mcp/Mcp/",
             "LinHUniX\\Mail\\": "mcp/Mail/",
-            "LinHUniX\\Pdo\\": "mcp/Pdo/"
+            "LinHUniX\\Pdo\\": "mcp/Pdo/",
+            "LinHUniX\\Mcp\\": "mcp/Gfx/"
         }
     }
 }

@@ -22,79 +22,90 @@ class mcpDebugModelClass
     private $mcp;
     private $procesid;
 
-    public function __construct (masterControlProgram &$mcp, $level, array $setting = array ())
+    public function __construct(masterControlProgram &$mcp, $level, array $setting = array())
     {
         $this->mcp = $mcp;
-        $this->level = intval ($level);
+        $this->level = intval($level);
         $this->setting = $setting;
         $this->procesid= date("U");
     }
 
-    public function GetLevel ()
+    public function GetLevel()
     {
         return $this->level;
     }
 
-    public function IsValid ($mylevel)
+    public function IsValid($mylevel)
     {
         try {
-            $mylvl = intval ($mylevel);
+            $mylvl = intval($mylevel);
             if ($this->level <= $mylvl) {
                 return true;
             }
         } catch (Exception $e) {
-            $this->warning ("wrong level");
+            $this->warning("wrong level");
         }
         return false;
     }
 
-    public function GetSetting ($name)
+    /**
+     * isDebug define is active the debug 
+     *
+     * @return void
+     */
+    public function IsDebug()
     {
-        if (in_array ($name, $this->setting)) {
+        return $this->IsValid(self::DEBUG);
+    }
+
+    public function GetSetting($name)
+    {
+        if (in_array($name, $this->setting)) {
             return $this->setting[$name];
         }
         return null;
     }
 
-    public function Debug ($message)
+    public function Debug($message)
     {
-        if ($this->IsValid (self::DEBUG)) {
-            $this->writelog (self::DEBUG, $message);
+        if ($this->IsValid(self::DEBUG)) {
+            $this->writelog(self::DEBUG, $message);
         }
     }
 
-    public function info ($message)
+    public function info($message)
     {
-        if ($this->IsValid (self::INFO)) {
-            $this->writelog (self::INFO, $message);
+        if ($this->IsValid(self::INFO)) {
+            $this->writelog(self::INFO, $message);
         }
     }
 
-    public function warning ($message)
+    public function warning($message)
     {
-        if ($this->IsValid (self::WARN)) {
-            $this->writelog (self::WARN, $message);
+        if ($this->IsValid(self::WARN)) {
+            $this->writelog(self::WARN, $message);
         }
     }
 
-    public function error ($message)
+    public function error($message)
     {
-        if ($this->IsValid (self::ERROR)) {
-            $this->writelog (self::ERROR, $message);
+        if ($this->IsValid(self::ERROR)) {
+            $this->writelog(self::ERROR, $message);
         }
     }
 
-    public function fatal ($message)
+    public function fatal($message)
     {
-        if ($this->IsValid (self::FATAL)) {
-            $this->writelog (self::FATAL, $message);
+        if ($this->IsValid(self::FATAL)) {
+            $this->writelog(self::FATAL, $message);
         }
     }
 
-    public function writelog ($level, $message)
+    public function writelog($level, $message)
     {
-        $app = $this->mcp->getCfg ("app.def");
-        $time = date ("Y-m-d H:i:s");
-        error_log ("[" . $app . "][".$this->procesid."][" . $time . "][" . $level . "]:" . $message);
+        $app = $this->mcp->getCfg("app.def");
+        $time = date("Y-m-d H:i:s");
+        error_log("[" . $app . "][".$this->procesid."][" . $time . "][" . $level . "]:" . $message);
     }
 }
+

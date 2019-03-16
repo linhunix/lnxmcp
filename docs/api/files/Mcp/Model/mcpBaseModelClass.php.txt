@@ -28,6 +28,11 @@ class mcpBaseModelClass {
     protected $require;
 
     /**
+     * @var bool run only on start
+     */
+    protected $singleTon;
+
+    /**
      *
      * @var array contains the info of the data class control
      */
@@ -75,6 +80,7 @@ class mcpBaseModelClass {
         $this->bootCtl = $scopeCtl;
         $this->bootData = $scopeIn;
         $this->require = array();
+        $this->singleTon=false;
         if (isset($scopeIn["public"])) {
             if (is_array($scopeIn["public"])) {
                 foreach ($scopeIn["public"] as $tag => $value) {
@@ -104,6 +110,10 @@ class mcpBaseModelClass {
         $this->argCtl = $scopeCtl;
         $this->argIn = $scopeIn;
         $this->argOut = array();
+        if ($singleTon==false){
+            $this->singleTon=true;
+            $this->moduleSingleTon();
+        }
         $this->moduleCore();
         $this->getMcp()->rstScopeOut();
         $this->setReturn($this->argOut);
@@ -141,6 +151,14 @@ class mcpBaseModelClass {
     protected function moduleCore() {
         /// is empty waith to be implemented 
     }
+
+    /**
+     *  Ideally this method shuld be used to insert the model code and the other are to be used only as normal
+     */
+    protected function moduleSingleTon() {
+        /// is empty waith to be implemented 
+    }
+
 
     /**
      * only to have a confortable solutions to get data

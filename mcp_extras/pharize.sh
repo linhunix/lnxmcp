@@ -7,4 +7,4 @@ if [ "$app_path" == "" ]; then
 fi;
 
 cd $app_path;
-php -d phar.readonly=0 $app_path/mcp_extras/pharize.php 2>&1 ;
+php -d phar.readonly=0 $app_path/mcp_extras/phpphar/pharize.php 2>&1 ;

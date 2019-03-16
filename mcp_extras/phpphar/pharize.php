@@ -10,7 +10,7 @@
  * @since 3.1.0 : work now 
  * @todo make encryption 
  */
-$app_path = realpath(__DIR__ . "/../");
+$app_path = realpath(__DIR__ . "/../../");
 //print(ini_get('phar.readonly'));
 include $app_path . "/mcp/Head.php";
 error_log(E_ALL);

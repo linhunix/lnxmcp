@@ -7,7 +7,7 @@
         "app.debug"=>true,
         "mcp.env"=>"TEST"
     );
-    include __DIR__."/src.php";
+    include __DIR__."/../../src.php";
     if (isset($argv[1])){
         lnxmcpChk($argv[1]);
     }else{
