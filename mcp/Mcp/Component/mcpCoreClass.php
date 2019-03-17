@@ -64,22 +64,22 @@ final class mcpCoreClass
      */
     private $flagClearVars;
 
-    public function __construct (masterControlProgram &$mcp)
+    public function __construct(masterControlProgram &$mcp)
     {
         $this->mcp = &$mcp;
         {
-            @$this->cfg = &$mcp->getCfg ();
+            @$this->cfg = &$mcp->getCfg();
         }
-        $this->defapp = ucwords ($this->cfg["app.def"]);
-        $this->mcp->debug ("app.def:" . $this->defapp);
+        $this->defapp = ucwords($this->cfg["app.def"]);
+        $this->mcp->debug("app.def:" . $this->defapp);
         $this->flagClearVars = true;
-        $this->clearModuleVars ();
+        $this->clearModuleVars();
     }
 
     /**
      * disable the cleaning of the scope vars
      */
-    public function setClearFlagOff ()
+    public function setClearFlagOff()
     {
         $this->flagClearVars = false;
     }
@@ -87,7 +87,7 @@ final class mcpCoreClass
     /**
      * Enable the cleaning of the scope vars
      */
-    public function setClearFlagOn ()
+    public function setClearFlagOn()
     {
         $this->flagClearVars = false;
     }
@@ -97,13 +97,13 @@ final class mcpCoreClass
      * @param String $name of the label  you need to save
      * @param Any $value   of the values that you need stored
      */
-    public function setScopeOut ($name, $value)
+    public function setScopeOut($name, $value)
     {
         if (!isset($this->scopeOut[$this->sub])) {
-            $this->scopeOut[$this->sub] = array ();
+            $this->scopeOut[$this->sub] = array();
         }
         $this->scopeOut[$this->sub][$name] = $value;
-        $this->shareModuleVars ();
+        $this->shareModuleVars();
     }
 
     /**
@@ -111,13 +111,13 @@ final class mcpCoreClass
      * @param String $name of the label  you need to save
      * @param Any $value   of the values that you need stored
      */
-    public function setScopeIn ($name, $value)
+    public function setScopeIn($name, $value)
     {
         if (!isset($this->scopeIn[$this->sub])) {
-            $this->scopeIn[$this->sub] = array ();
+            $this->scopeIn[$this->sub] = array();
         }
         $this->scopeIn[$this->sub][$name] = $value;
-        $this->shareModuleVars ();
+        $this->shareModuleVars();
     }
 
     /**
@@ -125,22 +125,22 @@ final class mcpCoreClass
      * @param String $name of the label  you need to save
      * @param Any $value   of the values that you need stored
      */
-    public function setScopeCtl ($name, $value)
+    public function setScopeCtl($name, $value)
     {
         if (!isset($this->scopeCtl[$this->sub])) {
-            $this->scopeCtl[$this->sub] = array ();
+            $this->scopeCtl[$this->sub] = array();
         }
         $this->scopeCtl[$this->sub][$name] = $value;
-        $this->shareModuleVars ();
+        $this->shareModuleVars();
     }
 
     /**
      *
      * @return array ScopeIn (and set on global session )
      */
-    public function getScopeIn ()
+    public function getScopeIn()
     {
-        $this->shareModuleVars ();
+        $this->shareModuleVars();
         return $GLOBALS["scopeIn"];
     }
 
@@ -148,9 +148,9 @@ final class mcpCoreClass
      *
      * @return array ScopeOut (and set on global session )
      */
-    public function getScopeOut ()
+    public function getScopeOut()
     {
-        $this->shareModuleVars ();
+        $this->shareModuleVars();
         return $GLOBALS["scopeOut"];
     }
 
@@ -158,24 +158,24 @@ final class mcpCoreClass
      *
      * @return array ScopeCtl (and set on global session )
      */
-    public function getScopeCtl ()
+    public function getScopeCtl()
     {
-        $this->shareModuleVars ();
+        $this->shareModuleVars();
         return $GLOBALS["scopeCtl"];
     }
 
     /**
      * clear scope out var shared from oth service
      */
-    public function rstScopeOut ()
+    public function rstScopeOut()
     {
         $name = @$this->scopeOut[$this->sub]["name"];
         $chks = @$this->scopeOut[$this->sub]["status"];
         $logs = @$this->scopeOut[$this->sub]["history"];
-        $this->clearScopeOut ();
-        $this->setScopeOut ("name", $name);
-        $this->setScopeOut ("status", $chks);
-        $this->setScopeOut ("history", $logs);
+        $this->clearScopeOut();
+        $this->setScopeOut("name", $name);
+        $this->setScopeOut("status", $chks);
+        $this->setScopeOut("history", $logs);
     }
 
     /**
@@ -189,16 +189,16 @@ final class mcpCoreClass
      * @param type $vendor
      * @param type $type
      */
-    public function statmentModule ($path, $callname, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null, $vendor = null, $type = null)
+    public function statmentModule($path, $callname, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $type = null)
     {
-//// BASE SETTINGS
+        //// BASE SETTINGS
         if ($this->flagClearVars) {
             $this->sub++;
-            $this->scopeIn[$this->sub] = array ();
-            $this->scopeCtl[$this->sub] = array ();
-            $this->scopeOut[$this->sub] = array ();
+            $this->scopeIn[$this->sub] = array();
+            $this->scopeCtl[$this->sub] = array();
+            $this->scopeOut[$this->sub] = array();
         }
-        $this->setWorkingArea ("statmentModule");
+        $this->setWorkingArea("statmentModule");
         $this->scopeOut[$this->sub]["name"] = $callname;
         $this->scopeOut[$this->sub]["sub"] = $this->sub;
         $this->scopeCtl[$this->sub]["module"] = "";
@@ -208,7 +208,7 @@ final class mcpCoreClass
         $this->scopeCtl[$this->sub]["file"] = $path;
         $this->scopeCtl[$this->sub]["tag"] = "app";
         $this->scopeCtl[$this->sub]["type"] = $type;
-//// VENDOR SETTINGS
+        //// VENDOR SETTINGS
         if ($vendor != null) {
             if ($vendor == "LinHUniX") {
                 $this->scopeCtl[$this->sub]["module"] = "LinHUniX\\";
@@ -221,38 +221,42 @@ final class mcpCoreClass
                 $this->scopeCtl[$this->sub]["altmodule"] .= $vendor . "_";
                 if ($vendor == $this->defapp) {
                     $this->scopeCtl[$this->sub]["file"] .= "/";
-                }else{
+                } else {
                     $this->scopeCtl[$this->sub]["file"] .= "/" . $vendor . "/";
                 }
             }
         }
-//// MODULE SETTINGS
+        //// MODULE SETTINGS
         if ($modinit == null) {
             $modinit = $callname;
         }
         if ($subcall == null) {
             $subcall = $callname;
         }
-        $this->scopeCtl[$this->sub]["content"]=$subcall. $type;
+        $this->scopeCtl[$this->sub]["content"] = $subcall . $type;
         $this->scopeCtl[$this->sub]["file"] .= $modinit;
-        $this->scopeCtl[$this->sub]["dir"]=$this->scopeCtl[$this->sub]["file"];
+        $this->scopeCtl[$this->sub]["dir"] = $this->scopeCtl[$this->sub]["file"];
         $this->scopeCtl[$this->sub]["auto"] .= $modinit . "/autoload.php";
         $this->scopeCtl[$this->sub]["module"] .= $modinit;
         $this->scopeCtl[$this->sub]["defmodule"] .= $modinit;
         $this->scopeCtl[$this->sub]["altmodule"] .= $modinit;
-/// TYPE DEFINITIONS 
+        /// TYPE DEFINITIONS 
         if ($type != null) {
+            $this->scopeCtl[$this->sub]["altdir"]=$this->scopeCtl[$this->sub]["dir"]. "/";
             $this->scopeCtl[$this->sub]["dir"] .= "/" . $type . "/";
+            $this->scopeCtl[$this->sub]["altfile"]=$this->scopeCtl[$this->sub]["altdir"]. "/". $subcall . $type;
             $this->scopeCtl[$this->sub]["file"] .= "/" . $type . "/" . $subcall . $type;
             if (($type == "Page") || ($type == "Block")) {
                 $this->scopeCtl[$this->sub]["file"] .= ".inc.php";
+                $this->scopeCtl[$this->sub]["altfile"] .= ".inc.php";
             } else {
                 $this->scopeCtl[$this->sub]["file"] .= ".php";
+                $this->scopeCtl[$this->sub]["altfile"] .= ".inc.php";
             }
             $this->scopeCtl[$this->sub]["tag"] .= "." . $type . "." . $callname;
             $this->scopeCtl[$this->sub]["module"] .= "\\" . $type . "\\" . $subcall . $type;
-            $this->scopeCtl[$this->sub]["altmodule"] .= "_" . $type . "_" . $subcall ;
-            $this->scopeCtl[$this->sub]["defmodule"] .= "_" . $type . "_" . $subcall ;
+            $this->scopeCtl[$this->sub]["altmodule"] .= "_" . $type . "_" . $subcall;
+            $this->scopeCtl[$this->sub]["defmodule"] .= "_" . $type . "_" . $subcall;
         } else {
             $this->scopeCtl[$this->sub]["file"] .= "/" . $subcall . ".php";
             $this->scopeCtl[$this->sub]["module"] .= "\\" . $subcall;
@@ -269,17 +273,17 @@ final class mcpCoreClass
             $this->scopeCtl[$this->sub]["run"] = "run";
         }
         $this->scopeIn[$this->sub] = $scopeIn;
-        $this->shareModuleVars ();
+        $this->shareModuleVars();
     }
 
     /**
      *  load a specific module and clear the var
      */
-    public function moduleLoader ()
+    public function moduleLoader()
     {
-        $this->setWorkingArea ("moduleLoader");
-        $this->loadModule ();
-        $this->clearModuleVars ();
+        $this->setWorkingArea("moduleLoader");
+        $this->loadModule();
+        $this->clearModuleVars();
     }
 
     /**
@@ -290,32 +294,32 @@ final class mcpCoreClass
      *
      * @return array Description array (reference of) response of code
      */
-    public function moduleCaller ()
+    public function moduleCaller()
     {
-        $this->setWorkingArea ("moduleCaller");
+        $this->setWorkingArea("moduleCaller");
         $sts = true;
-        $this->initModule ();
+        $this->initModule();
         if (isset($this->scopeCtl[$this->sub]["preload"])) {
             if ($this->scopeCtl[$this->sub]["preload"] == true) {
-                return $this->returnOutAndClear ();
+                return $this->returnOutAndClear();
             }
         }
-        if ($this->hasDic ($this->scopeCtl[$this->sub]["tag"])) {
-            if ($this->executeModule ()) {
-                $this->setStatus (true, "moduleCaller has return and cfg");
-                $this->getMcp ()->debug ("R:" . count ($this->scopeOut[$this->sub]));
-                return $this->returnOutAndClear ();
+        if ($this->hasDic($this->scopeCtl[$this->sub]["tag"])) {
+            if ($this->executeModule()) {
+                $this->setStatus(true, "moduleCaller has return and cfg");
+                $this->getMcp()->debug("R:" . count($this->scopeOut[$this->sub]));
+                return $this->returnOutAndClear();
             }
         }
         if (!isset($this->scopeOut[$this->sub]["return"])) {
-            $this->setStatus (false, "moduleCaller has no data");
+            $this->setStatus(false, "moduleCaller has no data");
         } else {
             if (!isset($this->scopeOut[$this->sub]["status"])) {
-                $this->setStatus (true, "moduleCaller has return but no cfg");
+                $this->setStatus(true, "moduleCaller has return but no cfg");
             }
         }
-        $this->getMcp ()->debug ("R:" . count ($this->scopeOut[$this->sub]));
-        return $this->returnOutAndClear ();
+        $this->getMcp()->debug("R:" . count($this->scopeOut[$this->sub]));
+        return $this->returnOutAndClear();
     }
 
     /**
@@ -323,15 +327,15 @@ final class mcpCoreClass
      * @param type $status
      * @param type $message
      */
-    public function setStatus ($status, $message)
+    public function setStatus($status, $message)
     {
-        $this->setScopeOut ("status", $status);
-        $this->getMcp ()->debug ("status:[" . $status . "]" . $message);
+        $this->setScopeOut("status", $status);
+        $this->getMcp()->debug("status:[" . $status . "]" . $message);
         if (!isset($this->scopeOut[$this->sub]["history"]["ipl"])) {
-            $this->scopeOut[$this->sub]["history"] = array ("ipl" => 0);
+            $this->scopeOut[$this->sub]["history"] = array("ipl" => 0);
         }
         $ipl = $this->scopeOut[$this->sub]["history"]["ipl"]++;
-        $this->scopeOut[$this->sub]["history"][$ipl] = array (
+        $this->scopeOut[$this->sub]["history"][$ipl] = array(
             "message" => $message,
             "status" => $status,
             "area" => @$this->scopeOut[$this->sub]["WorkingArea"]
@@ -343,12 +347,12 @@ final class mcpCoreClass
      * @param String $component nomae of the component on the container
      * @return bool if this Component is present
      */
-    private function hasDic ($component)
+    private function hasDic($component)
     {
         if (empty($component)) {
             return false;
         }
-        if ($this->getCfg ($component) != null) {
+        if ($this->getCfg($component) != null) {
             return true;
         }
         return false;
@@ -360,12 +364,12 @@ final class mcpCoreClass
      * @return any Component object
      * @throws Exception if the cfg are not present or don't have this component
      */
-    private function getCfg ($component = null)
+    private function getCfg($component = null)
     {
         try {
-            return $this->mcp->getCfg ($component);
+            return $this->mcp->getCfg($component);
         } catch (\Exception $e) {
-            throw new Exception("MasterControlProgram Don't Found Container Component! " . $e->getMessage ());
+            throw new Exception("MasterControlProgram Don't Found Container Component! " . $e->getMessage());
         }
     }
 
@@ -386,16 +390,16 @@ final class mcpCoreClass
      * @param Any $component the component object
      * @throws Exception if the cfg are not present or don't have this component
      */
-    private function setDic ($tag, $component)
+    private function setDic($tag, $component)
     {
         if (empty($component)) {
             return false;
         }
         try {
-            $this->mcp->debug("Config tag:".$tag." Loaded");
-            $this->mcp->setCfg ($tag, $component);
+            $this->mcp->debug("Config tag:" . $tag . " Loaded");
+            $this->mcp->setCfg($tag, $component);
         } catch (\Exception $e) {
-            throw new Exception("MasterControlProgram Don't Found or Set Container Component! " . $e->getMessage ());
+            throw new Exception("MasterControlProgram Don't Found or Set Container Component! " . $e->getMessage());
         }
     }
 
@@ -403,16 +407,16 @@ final class mcpCoreClass
      * status of the Ipl area level
      * @param string $message
      */
-    public function setWorkingArea ($area)
+    public function setWorkingArea($area)
     {
-        $this->mcp->debug ("WorkingArea:" . $area);
-        $this->setScopeOut ("WorkingArea", $area);
+        $this->mcp->debug("WorkingArea:" . $area);
+        $this->setScopeOut("WorkingArea", $area);
     }
 
     /**
      * compatibility with older code and set on session this informations l
      */
-    private function shareModuleVars ()
+    private function shareModuleVars()
     {
         $GLOBALS["scopeIn"] = &$this->scopeIn[$this->sub];
         $GLOBALS["scopeCtl"] = &$this->scopeCtl[$this->sub];
@@ -422,39 +426,39 @@ final class mcpCoreClass
     /**
      * Auto clear ScopeIn variables  with compatbility
      */
-    private function clearScopeIn ()
+    private function clearScopeIn()
     {
-        $this->scopeIn[$this->sub] = array ();
+        $this->scopeIn[$this->sub] = array();
         unset($GLOBALS["scopeIn"][$this->sub]);
     }
 
     /**
      * Auto clear ScopeOut variables  with compatbility
      */
-    private function clearScopeOut ()
+    private function clearScopeOut()
     {
-        $this->scopeOut[$this->sub] = array ();
+        $this->scopeOut[$this->sub] = array();
         unset($GLOBALS["scopeOut"][$this->sub]);
     }
 
     /**
      * Auto clear ScopeCtl variables  with compatbility
      */
-    private function clearScopeCtl ()
+    private function clearScopeCtl()
     {
-        $this->scopeCtl[$this->sub] = array ();
+        $this->scopeCtl[$this->sub] = array();
         unset($GLOBALS["scopeCtl"][$this->sub]);
     }
 
     /**
      * Auto clear Variables
      */
-    private function clearModuleVars ()
+    private function clearModuleVars()
     {
         if ($this->flagClearVars) {
-            $this->clearScopeCtl ();
-            $this->clearScopeIn ();
-            $this->clearScopeOut ();
+            $this->clearScopeCtl();
+            $this->clearScopeIn();
+            $this->clearScopeOut();
             $this->sub--;
             if (isset($this->cfg["app.Loader.tmp"])) {
                 unset($this->cfg["app.Loader.tmp"]);
@@ -466,10 +470,10 @@ final class mcpCoreClass
      *
      * @return type
      */
-    private function returnOutAndClear ()
+    private function returnOutAndClear()
     {
         $res = $this->scopeOut[$this->sub];
-        $this->clearModuleVars ();
+        $this->clearModuleVars();
         return $res;
     }
 
@@ -479,40 +483,39 @@ final class mcpCoreClass
      * @param array $scopeIn
      * @return boolean
      */
-    private function executeModule ()
+    private function executeModule()
     {
-        $this->setWorkingArea ("executeModule:checkDependency");
+        $this->setWorkingArea("executeModule:checkDependency");
         try {
-            if (method_exists ($this->getCfg ($this->scopeCtl[$this->sub]["tag"]), "getDependency")) {
-                $reqDependency = $this->getCfg ($this->scopeCtl[$this->sub]["tag"])->getDependency ();
-                if (is_array ($reqDependency)) {
+            if (method_exists($this->getCfg($this->scopeCtl[$this->sub]["tag"]), "getDependency")) {
+                $reqDependency = $this->getCfg($this->scopeCtl[$this->sub]["tag"])->getDependency();
+                if (is_array($reqDependency)) {
                     foreach ($reqDependency as $component) {
                         if (!empty($component)) {
-                            $this->setScopeCtl ($component, $this->getCfg ($component));
+                            $this->setScopeCtl($component, $this->getCfg($component));
                         }
                     }
                 }
-                $this->shareModuleVars ();
+                $this->shareModuleVars();
             }
         } catch (Exception $e) {
-            $res = "executeModule:error >" . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
-            $this->setStatus (false, $res);
+            $res = "executeModule:error >" . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage();
+            $this->setStatus(false, $res);
         }
-        $this->setWorkingArea ("executeModule:run");
+        $this->setWorkingArea("executeModule:run");
         try {
-            if (method_exists ($this->getCfg ($this->scopeCtl[$this->sub]["tag"]), $this->scopeCtl[$this->sub]["run"])) {
-                $this->scopeOut[$this->sub] = $this->getCfg ($this->scopeCtl[$this->sub]["tag"])->{$this->scopeCtl[$this->sub]["run"]}($this->scopeCtl[$this->sub], $this->scopeIn[$this->sub]);
-                $this->shareModuleVars ();
+            if (method_exists($this->getCfg($this->scopeCtl[$this->sub]["tag"]), $this->scopeCtl[$this->sub]["run"])) {
+                $this->scopeOut[$this->sub] = $this->getCfg($this->scopeCtl[$this->sub]["tag"])->{$this->scopeCtl[$this->sub]["run"]}($this->scopeCtl[$this->sub], $this->scopeIn[$this->sub]);
+                $this->shareModuleVars();
                 return true;
             }
         } catch (Exception $e) {
-            $res = "executeModule:error >>" . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
-            $this->setStatus (false, $res);
+            $res = "executeModule:error >>" . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage();
+            $this->setStatus(false, $res);
         }
-        if (in_array ($this->scopeCtl[$this->sub]["type"], array ("Controller","Page", "Block"))) 
-        {
-            $this->setDic ($ $this->scopeCtl[$this->sub]["tag"], ".");
-        }
+        if (in_array($this->scopeCtl[$this->sub]["type"], array("Controller", "Page", "Block"))) {
+                $this->setDic($$this->scopeCtl[$this->sub]["tag"], ".");
+            }
         return false;
     }
     /**
@@ -520,142 +523,170 @@ final class mcpCoreClass
      *
      * @return boolean
      */
-    private function isModuleExists(){
-        try{
-            if (class_exists ($this->scopeCtl[$this->sub]["module"])) {
-                $this->setStatus (true, $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+    private function isModuleExists()
+    {
+        try {
+            if (class_exists($this->scopeCtl[$this->sub]["module"])) {
+                $this->setStatus(true, $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
                 return true;
-            } elseif (class_exists ("\\" . $this->scopeCtl[$this->sub]["module"])) {
+            } elseif (class_exists("\\" . $this->scopeCtl[$this->sub]["module"])) {
                 $this->scopeCtl[$this->sub]["module"] = "\\" . $this->scopeCtl[$this->sub]["module"];
-                $this->setStatus (true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                $this->setStatus(true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
                 return true;
-            } elseif (class_exists ($this->scopeCtl[$this->sub]["altmodule"])) {
+            } elseif (class_exists($this->scopeCtl[$this->sub]["altmodule"])) {
                 $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["altmodule"];
-                $this->setStatus (true,$this->scopeCtl[$this->sub]["altmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                $this->setStatus(true, $this->scopeCtl[$this->sub]["altmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
                 return true;
-            } elseif (class_exists ($this->scopeCtl[$this->sub]["defmodule"])) {
+            } elseif (class_exists($this->scopeCtl[$this->sub]["defmodule"])) {
                 $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["defmodule"];
-                $this->setStatus (true,$this->scopeCtl[$this->sub]["defmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                $this->setStatus(true, $this->scopeCtl[$this->sub]["defmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
                 return true;
-            } elseif (function_exists ($this->scopeCtl[$this->sub]["module"])) {
+            } elseif (function_exists($this->scopeCtl[$this->sub]["module"])) {
                 $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["module"];
-                $this->setStatus (true, $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                $this->setStatus(true, $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
                 return true;
-            } elseif (function_exists ("\\" . $this->scopeCtl[$this->sub]["module"])) {
+            } elseif (function_exists("\\" . $this->scopeCtl[$this->sub]["module"])) {
                 $this->scopeCtl[$this->sub]["module"] = "\\" . $this->scopeCtl[$this->sub]["module"];
-                $this->setStatus (true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                $this->setStatus(true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
                 return true;
-            } elseif (function_exists ($this->scopeCtl[$this->sub]["altmodule"])) {
+            } elseif (function_exists($this->scopeCtl[$this->sub]["altmodule"])) {
                 $this->scopeCtl[$this->sub]["module"] =  $this->scopeCtl[$this->sub]["altmodule"];
-                $this->setStatus (true,  $this->scopeCtl[$this->sub]["altmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                $this->setStatus(true,  $this->scopeCtl[$this->sub]["altmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
                 return true;
-            } elseif (function_exists ( $this->scopeCtl[$this->sub]["defmodule"])) {
+            } elseif (function_exists($this->scopeCtl[$this->sub]["defmodule"])) {
                 $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["defmodule"];
-                $this->setStatus (true, $this->scopeCtl[$this->sub]["defmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                $this->setStatus(true, $this->scopeCtl[$this->sub]["defmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
                 return true;
             } else {
-                $this->setStatus (false, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS NOT PRESENT - NEED TO BE LOAD ");
+                $this->setStatus(false, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS NOT PRESENT - NEED TO BE LOAD ");
                 return false;
             }
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
     }
+
+    /**
+     * LoadTemplateModule
+     *
+     * @return void
+     */
+    private function LoadTemplateModule()
+    {
+        $ssub = $this->sub;
+        $lang = $this->getCfg("app.lang");
+        $type = $this->getCfg("app.type");
+        $sdir = $this->scopeCtl[$ssub]["dir"];
+        $tplt =$this->scopeCtl[$ssub]["type"];
+        $this->setStatus(true, "try to load " . $type . " in " . $sdir);
+        $fhead = $sdir. "/global.".$tplt.".head.inc.php";
+        $fmain = $sdir. "/global.".$tplt.".main.inc.php";
+        $fcss  = $sdir. $this->scopeCtl[$ssub]["content"] . ".css";
+        $xmain = $sdir. $this->scopeCtl[$ssub]["content"] . "." . $type . "." . $lang . ".php";
+        $lmain = $sdir . $this->scopeCtl[$ssub]["content"] . "." . $lang . ".php";
+        $tmain = $sdir. $this->scopeCtl[$ssub]["content"] . "." . $type . ".php";
+        $smain = $this->scopeCtl[$ssub]["file"];
+        $fjs   = $sdir . $this->scopeCtl[$ssub]["content"] . ".js";
+        $ffoot = $sdir. "/global.".$tplt.".foot.inc.php";
+        $this->setStatus(true, "load std global.head.php file " . $sdir);
+        if (file_exists($fhead)) {
+            include $fhead;
+        }
+        if (file_exists($fcss)) {
+            $this->setStatus(true, "load std css file " . $smain);
+            echo "\n<style type='text/css'>\n";
+            include_once $fcss;
+            echo "\n</style>\n";
+        }
+        if (file_exists($fmain)) {
+            $this->setStatus(true, "load std global.main.php file " . $smain);
+            include $fmain;
+        }
+        if (file_exists($xmain)) {
+            $this->setStatus(true, "load std special file " . $xmain);
+            include $xmain;
+        } else if (file_exists($tmain)) {
+            $this->setStatus(true, "load std special file " . $tmain);
+            include $tmain;
+        } else if (file_exists($lmain)) {
+            $this->setStatus(true, "load std special file " . $lmain);
+            include $lmain;
+        } else if (file_exists($smain)) {
+            $this->setStatus(true, "load std inc file " . $smain);
+            include $smain;
+        } else {
+            $this->setStatus(false, "unable load std inc file " . $smain);
+        }
+        if (file_exists($fjs)) {
+            $this->setStatus(true, "load std js file " . $smain);
+            echo "\n<script type='text/javascript'>\n";
+            include_once $fjs;
+            echo "\n</script>\n";
+        }
+        $this->setStatus(true, "load std global.foot.php file " . $smain);
+        if (file_exists($ffoot)) {
+            include $ffoot;
+        }
+    }
+
     /**
      * load the file if is need
      *
+     * 
      */
-    private function loadModule ()
+    private function loadModule()
     {
-        $this->setWorkingArea ("loadModule");
-        if( $this->isModuleExists()==true){
-            return ;
+        $this->setWorkingArea("loadModule");
+        $this->mcp->debug("loadModule:".print_r($this->scopeCtl,1));
+        if ($this->isModuleExists() == true) {
+            return;
         }
         // prepare env to have load a new components - for full compatibility;
-        if (in_array ($this->scopeCtl[$this->sub]["type"], array ("api","Page", "Block"))) {
+        if (in_array($this->scopeCtl[$this->sub]["type"], array("api", "page", "block", "Page", "Block"))) {
             $this->scopeOut[$this->sub] = $this->scopeIn[$this->sub];
             if (isset($this->scopeIn[$this->sub]["return"])) {
                 $this->scopeOut[$this->sub] = $this->scopeIn[$this->sub]["return"];
             }
         }
-        $this->shareModuleVars ();
+        $this->shareModuleVars();
         $scopeIn = $this->scopeIn[$this->sub];
         $scopeCtl = $this->scopeCtl[$this->sub];
         $scopeOut = $this->scopeOut[$this->sub];
         try {
-            if (in_array ($this->scopeCtl[$this->sub]["type"], array ("Page", "Block"))) {
+            if (in_array($this->scopeCtl[$this->sub]["type"], array("Page", "Block", "page", "block"))) {
                 unset($this->scopeCtl[$this->sub]["auto"]);
-                if (file_exists ($this->scopeCtl[$this->sub]["file"])) {
-                    $fhead=$this->scopeCtl[$this->sub]["dir"]."global.head.php";
-                    $this->setStatus (true, "load std global.head.php file " . $this->scopeCtl[$this->sub]["dir"]);
-                    if (file_exists ($fhead)) {
-                        include_once $fhead;
-                    }
-                    $fcss=$this->scopeCtl[$this->sub]["dir"].$this->scopeCtl[$this->sub]["content"].".css";
-                    if (file_exists ($fcss)) {
-                        $this->setStatus (true, "load std css file " . $this->scopeCtl[$this->sub]["file"]);
-                        echo "\n<style type='text/css'>\n";
-                        include_once $fcss;
-                        echo "\n</style>\n";
-                    }
-                    $fmain=$this->scopeCtl[$this->sub]["dir"]."global.main.php";
-                    if (file_exists ($fmain)) {
-                        $this->setStatus (true, "load std global.main.php file " . $this->scopeCtl[$this->sub]["dir"]);
-                        include_once $fmain;
-                    }
-                    $lang=$this->getCfg("app.lang");
-                    $type=$this->getCfg("app.type");
-                    $xmain=$this->scopeCtl[$this->sub]["dir"].$this->scopeCtl[$this->sub]["content"].".".$type.".".$lang.".php";
-                    $lmain=$this->scopeCtl[$this->sub]["dir"].$this->scopeCtl[$this->sub]["content"].".".$lang.".php";
-                    $tmain=$this->scopeCtl[$this->sub]["dir"].$this->scopeCtl[$this->sub]["content"].".".$type.".php";
-                    if (file_exists ($xmain)) {
-                        $this->setStatus (true, "load std special file " . $xmain);
-                        include_once $xmain;
-                    } else if (file_exists (tmain)) {
-                        $this->setStatus (true, "load std special file " . $tmain);
-                        include_once $tmain;
-                    } else if (file_exists ($lmain)) {
-                        $this->setStatus (true, "load std special file " . $lmain);
-                        include_once $lmain;
-                    }else{
-                        $this->setStatus (true, "load std inc file " . $this->scopeCtl[$this->sub]["file"]);
-                        include $this->scopeCtl[$this->sub]["file"];
-                    }
-                    $fjs=$this->scopeCtl[$this->sub]["dir"].$this->scopeCtl[$this->sub]["content"].".js";
-                    if (file_exists ($fjs)) {
-                        $this->setStatus (true, "load std js file " . $this->scopeCtl[$this->sub]["file"]);
-                        echo "\n<script type='text/javascript'>\n";
-                        include_once $fjs;
-                        echo "\n</script>\n";
-                    }
-                    $ffoot=$this->scopeCtl[$this->sub]["dir"]."global.foot.php";
-                    $this->setStatus (true, "load std global.foot.php file " . $this->scopeCtl[$this->sub]["dir"]);
-                    if (file_exists ($ffoot)) {
-                        include_once $ffoot;
-                    }
+                if (is_dir($this->scopeCtl[$this->sub]["dir"])) {
+                    $this->LoadTemplateModule();
+                 }else if (is_dir($this->scopeCtl[$this->sub]["altdir"])) {
+                    $this->scopeCtl[$this->sub]["dir"]=$this->scopeCtl[$this->sub]["altdir"];
+                    $this->scopeCtl[$this->sub]["file"]=$this->scopeCtl[$this->sub]["altfile"];
+                    $this->LoadTemplateModule();
                 }
-            }else{
-                if (file_exists ($this->scopeCtl[$this->sub]["auto"])) {
-                    $this->setStatus (true, "load auto file " . $this->scopeCtl[$this->sub]["auto"]);
+            } else {
+                if (file_exists($this->scopeCtl[$this->sub]["auto"])) {
+                    $this->setStatus(true, "load auto file " . $this->scopeCtl[$this->sub]["auto"]);
                     include_once $this->scopeCtl[$this->sub]["auto"];
                 } else {
-                    $this->setStatus (false, $this->scopeCtl[$this->sub]["auto"] . " file not exist!");
+                    $this->setStatus(false, $this->scopeCtl[$this->sub]["auto"] . " file not exist!");
                     unset($this->scopeCtl[$this->sub]["auto"]);
-                    if (file_exists ($this->scopeCtl[$this->sub]["file"])) {
-                        $this->setStatus (true, "load std file " . $this->scopeCtl[$this->sub]["file"]);
+                    if (file_exists($this->scopeCtl[$this->sub]["file"])) {
+                        $this->setStatus(true, "load std file " . $this->scopeCtl[$this->sub]["file"]);
                         include_once $this->scopeCtl[$this->sub]["file"];
+                    } else if (file_exists($this->scopeCtl[$this->sub]["altfile"])) {
+                        $this->setStatus(true, "load std file " . $this->scopeCtl[$this->sub]["altfile"]);
+                        include_once $this->scopeCtl[$this->sub]["altfile"];
                     } else {
-                        $this->setStatus (false, $this->scopeCtl[$this->sub]["file"] . " file not exist!");
+                        $this->setStatus(false, $this->scopeCtl[$this->sub]["file"] . " file not exist!");
                         unset($this->scopeCtl[$this->sub]["file"]);
                     }
                 }
             }
         } catch (Exception $e) {
-            $res = "error in loadMod " . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage ();
-            $this->setStatus (false, $res);
+            $res = "error in loadMod " . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage();
+            $this->setStatus(false, $res);
         }
-        if( $this->isModuleExists()==true){
-            $this->shareModuleVars ();
+        if ($this->isModuleExists() == true) {
+            $this->shareModuleVars();
         }
     }
 
@@ -664,57 +695,57 @@ final class mcpCoreClass
      * call loadmodule to call the file
      * @return array
      */
-    private function initModule ()
+    private function initModule()
     {
         $err = true;
-        $this->setWorkingArea ("initModule");
-        $this->mcp->debug ($this->scopeCtl[$this->sub]["tag"]);
-        if ($this->hasDic ($this->scopeCtl[$this->sub]["tag"])==true) {
-            $this->setStatus (true, $this->scopeCtl[$this->sub]["tag"]." is already init!!");
-            $this->shareModuleVars ();
-            return $this->getScopeOut ();
-        }else{
-            $this->setStatus (false, $this->scopeCtl[$this->sub]["tag"]." is not present!!");
+        $this->setWorkingArea("initModule");
+        $this->mcp->debug($this->scopeCtl[$this->sub]["tag"]);
+        if ($this->hasDic($this->scopeCtl[$this->sub]["tag"]) == true) {
+            $this->setStatus(true, $this->scopeCtl[$this->sub]["tag"] . " is already init!!");
+            $this->shareModuleVars();
+            return $this->getScopeOut();
+        } else {
+            $this->setStatus(false, $this->scopeCtl[$this->sub]["tag"] . " is not present!!");
         }
         $tag = $this->scopeCtl[$this->sub]["tag"];
-        $this->loadModule ();
-        $this->setWorkingArea ("initModule");
+        $this->loadModule();
+        $this->setWorkingArea("initModule");
         try {
-            if (class_exists ($this->scopeCtl[$this->sub]["module"])) {
-                $this->setStatus (true, "load class " . $this->scopeCtl[$this->sub]["module"]);
+            if (class_exists($this->scopeCtl[$this->sub]["module"])) {
+                $this->setStatus(true, "load class " . $this->scopeCtl[$this->sub]["module"]);
                 $modclass = $this->scopeCtl[$this->sub]["module"];
-                @$retobj = new $modclass($this->getMcp (), $this->scopeCtl[$this->sub], $this->scopeIn[$this->sub]);
-            } elseif (function_exists ($this->scopeCtl[$this->sub]["module"])){
-                $this->setStatus (true, "load function " . $this->scopeCtl[$this->sub]["module"]);
+                @$retobj = new $modclass($this->getMcp(), $this->scopeCtl[$this->sub], $this->scopeIn[$this->sub]);
+            } elseif (function_exists($this->scopeCtl[$this->sub]["module"])) {
+                $this->setStatus(true, "load function " . $this->scopeCtl[$this->sub]["module"]);
                 $modfunction = $this->scopeCtl[$this->sub]["module"];
-                $retobj = $modfunction($this->getMcp (), $this->scopeCtl[$this->sub], $this->scopeIn[$this->sub]);
+                $retobj = $modfunction($this->getMcp(), $this->scopeCtl[$this->sub], $this->scopeIn[$this->sub]);
             } else {
-                $this->setStatus (false, $this->scopeCtl[$this->sub]["module"] . " not a class ");
+                $this->setStatus(false, $this->scopeCtl[$this->sub]["module"] . " not a class ");
             }
             if (isset($this->scopeCtl[$this->sub]["tag"])) {
                 $tag = $this->scopeCtl[$this->sub]["tag"];
             }
             if (isset($retobj)) {
-                if (is_callable ($retobj) || is_object ($retobj)) {
-                    if (($tag!=null)&&($tag!="none")&&($tag!=".")){
-                        $this->setDic ($tag, $retobj);
+                if (is_callable($retobj) || is_object($retobj)) {
+                    if (($tag != null) && ($tag != "none") && ($tag != ".")) {
+                        $this->setDic($tag, $retobj);
                     }
                 }
-                $this->setScopeOut ("return", $retobj);
+                $this->setScopeOut("return", $retobj);
             }
         } catch (Exception $e) {
-            $res = "error in loadMod " . $tag . ":" . $e->getMessage ();
-            $this->setStatus (false, $res);
+            $res = "error in loadMod " . $tag . ":" . $e->getMessage();
+            $this->setStatus(false, $res);
         }
         if (!empty($this->scopeOut[$this->sub])) {
-            $this->setStatus (true, $tag . " ScopeOut is set!");
+            $this->setStatus(true, $tag . " ScopeOut is set!");
             $err = false;
         }
         if ($err == false) {
-            $this->setStatus (true, $this->scopeCtl[$this->sub]["tag"] . " OK DONE");
+            $this->setStatus(true, $this->scopeCtl[$this->sub]["tag"] . " OK DONE");
         } else {
-            $this->setStatus (false, $this->scopeCtl[$this->sub]["tag"] . " ERROR NOT SET");
+            $this->setStatus(false, $this->scopeCtl[$this->sub]["tag"] . " ERROR NOT SET");
         }
-        return $this->getScopeOut ();
+        return $this->getScopeOut();
     }
 }

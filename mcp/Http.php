@@ -42,9 +42,23 @@ function mcpPathRedirect($urlpth)
                 if ($urlseg != "") {
                     $urlpart.="/".$urlseg;
                     lnxmcp()->debug("Check a Redirect Action for partial ". $urlpart);
-                    if (isset($pathredirect[$urlpart])) {
+                    $urlcheck=$urlpart."/*";
+                    if (isset($pathredirect[$urlcheck])) {
                         lnxmcp()->info("Found a Redirect Action for partial ". $urlpart);
-                        $redcmd = $pathredirect[$urlpart];
+                        $redcmd = $pathredirect[$urlcheck];
+                        if (is_array($redcmd)) {
+                            foreach ($redcmd as $redhead) {
+                                lnxmcp()->header($redhead, false);
+                            }
+                            LnxMcpExit("End Headers Redirect ");
+                        } else {
+                            lnxmcp()->header($redcmd, true);
+                        }
+                    }
+                    $urlcheck="*/".$urlseg."/*";
+                    if (isset($pathredirect[$urlcheck])) {
+                        lnxmcp()->info("Found a Redirect Action for partial ". $urlpart);
+                        $redcmd = $pathredirect[$urlcheck];
                         if (is_array($redcmd)) {
                             foreach ($redcmd as $redhead) {
                                 lnxmcp()->header($redhead, false);

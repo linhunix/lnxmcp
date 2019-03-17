@@ -110,7 +110,7 @@ class mcpBaseModelClass {
         $this->argCtl = $scopeCtl;
         $this->argIn = $scopeIn;
         $this->argOut = array();
-        if ($singleTon==false){
+        if ($this->singleTon==false){
             $this->singleTon=true;
             $this->moduleSingleTon();
         }

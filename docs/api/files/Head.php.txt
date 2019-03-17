@@ -193,11 +193,14 @@ try {
 ////////////////////////////////////////////////////////////////////////////////
 // ENVIRONMENT
 ////////////////////////////////////////////////////////////////////////////////
-if (in_array("ENVIRONMENT", $_SERVER)) {
+if (isset($_SERVER["ENVIRONMENT"])) {
     $scopeInit["app.env"] = $_SERVER["ENVIRONMENT"];
 }
 if (!isset($scopeInit["mcp.env"]))   {
     $scopeInit["mcp.env"]="PROD";
+}
+if (!isset($scopeInit["app.env"]))   {
+    $scopeInit["app.env"]="PROD";
 }
 if (getenv("MCP_MODE")!=""){
     $scopeInit["mcp.env"] = getenv("MCP_MODE");

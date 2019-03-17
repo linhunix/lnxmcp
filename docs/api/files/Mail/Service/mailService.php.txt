@@ -80,7 +80,7 @@ class mailService extends mcpBaseModelClass
      * @return boolean
      * @see FTConfig
      * @example TestFTMail
-     * @assert ("andrea.morello@freetimers.com","TestMail","Demo Morselli") == true
+     * @assert ("andrea.morello@linhunix.com","TestMail","Demo Morselli") == true
      */
     public function stdMailWithDoc($to, $subject, $message,  $attachDoc = array(), $additional_headers = null, $additional_parameters = null, $from = null)
     {
@@ -98,7 +98,7 @@ class mailService extends mcpBaseModelClass
      * @return boolean
      * @see FTConfig
      * @example TestFTMail
-     * @assert ("andrea.morello@freetimers.com","TestMail","Demo Morselli") == true
+     * @assert ("andrea.morello@linhunix.com","TestMail","Demo Morselli") == true
      */
     public function stdMail($to, $subject, $message, $additional_headers = null, $additional_parameters = null, $from = null, $attachDoc = array(), $html = false)
     {
@@ -231,7 +231,7 @@ class mailService extends mcpBaseModelClass
         }
     }
     /**
-     * @author Andrea Morello <andrea.morello@freetimers.com>
+     * @author Andrea Morello <andrea.morello@linhunix.com>
      * @version GIT:2018-v1
      * @param Container $dic dependency injection with Pimple\Container 
      * @param array $scope temporaney array from system auto cleanable
