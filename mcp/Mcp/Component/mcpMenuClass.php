@@ -200,7 +200,7 @@ class mcpMenuClass
                     $scopeIn[$sik] = $siv;
                 }
             }
-            $scopeIn = lnxmcp()->runCommand($scopeCtl, $scopeIn);
+            $scopeIn[$callname] = lnxmcp()->runCommand($scopeCtl, $scopeIn);
         }
         return $scopeIn;
     }
