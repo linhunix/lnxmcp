@@ -106,6 +106,7 @@ foreach( array(
     "app.path.language" => $app_path . "/App/lng/",
     "app.menu.InitCommon" => array(
         "pdo" => array("module" => "Pdo", "type" => "serviceCommon", "input" => $scopePdo),
+        "gfx" => array("module" => "Gfx", "type" => "serviceCommon"),
         "mail" => array("module" => "Mail", "type" => "serviceCommon")
     ),
     "app.menu.InitApp" => array(),

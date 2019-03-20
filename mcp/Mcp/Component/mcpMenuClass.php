@@ -72,6 +72,18 @@ class mcpMenuClass
         if (isset($scopectl["blockModule"])) {
             $blockModule = $scopectl["blockModule"];
         }
+        if (isset($scopectl["ScopeInDefault"])) {
+            foreach ($scopectl["ScopeInDefault"] as $ink=>$inv){
+                if(! isset($scopeIn[$ink])) {
+                    $scopeIn[$ink]=$inv;
+                }
+            }
+        }
+        if (isset($scopectl["ScopeInRewrite"])) {
+            foreach($scopectl["ScopeInRewrite"] as $ink=>$inv) {
+                $scopeIn[$ink]=$inv;
+            }
+        }
         $result = null;
         lnxmcp()->info("command try to call " . $type . ">> app." . $callname);
         switch ($type) {
