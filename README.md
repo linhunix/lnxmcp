@@ -39,8 +39,10 @@ The logic inside support both nmespace function and class
  - Debug Serices 
  - Remote Api Proxy 
  - Array's enrichment
- - Model View Controller 
  - Shell command service 
+ - Model View Controller 
+ - Multi Site Configuration
+ - Function Sequence Manager
  - Multi Language Integration
  - Internal Check and Test Suite
  - Namespace and library load manager
