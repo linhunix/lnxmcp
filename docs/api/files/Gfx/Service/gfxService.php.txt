@@ -27,11 +27,23 @@ class gfxService extends mcpBaseModelClass
         parent::__construct($mcp, $scopeCtl, $scopeIn);
         $gfxdefm=$this->getMcp()->getResource("gfx.default.menu");
         if (! empty ($gfxdefm)){
-            $this->loadMenusCommon("Gfx/".$gfxdefm."/mnu/default");
+            if (is_array($gfxdefm)){
+                foreach ($gfxdefm as $menutpl){
+                    $this->loadMenusCommon("Gfx/".$menutpl."/mnu/default");
+                }
+            }else{
+                $this->loadMenusCommon("Gfx/".$gfxdefm."/mnu/default");
+            }
         }
         $gfxdeft=$this->getMcp()->getResource("gfx.default.tag");
         if (! empty ($gfxdeft)){
-            $this->loadMenusCommon("Gfx/".$gfxdeft."/tag/default");
+            if (is_array($gfxdeft)){
+                foreach ($gfxdeft as $tagtpl){
+                    $this->loadMenusCommon("Gfx/".$tagtpl."/tag/default");
+                }
+            }else{
+                $this->loadMenusCommon("Gfx/".$gfxdeft."/tag/default");
+            }
         }
     }
 
