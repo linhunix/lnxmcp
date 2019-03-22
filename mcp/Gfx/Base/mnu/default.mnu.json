@@ -1,6 +1,6 @@
 {
     "home.ueclogo":{
-        "logo":{
+        "cat":{
             "type":"serviceCommon",
             "name":"gfx",
             "module":"Gfx",
@@ -16,7 +16,7 @@
         }
     },
     "home.lnxmcp.copyright":{
-        "logo":{
+        "cat":{
             "type":"serviceCommon",
             "name":"gfx",
             "module":"Gfx",
@@ -32,7 +32,7 @@
         }
     },
     "home.lnxmcp.info":{
-        "logo":{
+        "cat":{
             "type":"serviceCommon",
             "name":"gfx",
             "module":"Gfx",

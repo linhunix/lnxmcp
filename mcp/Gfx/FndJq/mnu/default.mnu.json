@@ -1,0 +1,114 @@
+{
+    "home.lnxmcp.themecss-foundation": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/FndJq/css/foundation.min.css",
+                "mimetype": "text/css",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themecss-app": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/FndJq/css/app.css",
+                "mimetype": "text/css",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-jquery": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/FndJq/js/jquery.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },    
+    "home.lnxmcp.themejs-foundation": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/FndJq/js/foundation.min.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-what-imput": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/FndJq/js/foundation.min.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-app": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/FndJq/js/app.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.text-admin": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/FndJq/tpl/admin",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    }
+}
