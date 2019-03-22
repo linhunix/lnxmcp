@@ -328,11 +328,13 @@ class pdoDriver extends mcpBaseModelClass
             return count($statement);
         }
         try {
-            return $statement->fetchColumn();
+            if ( method_exists($statment,"fetchColumn")) {
+                return $statement->fetchColumn();
+            }
         } catch (Exception $e) {
             $this->getMcp()->warning($this->database . $e->getMessage());
-            return 0;
         }
+        return 0;
     }
 
     //Get Affected Database Rows

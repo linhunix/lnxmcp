@@ -40,4 +40,8 @@ class mcpConfigArrayModelClass  implements \ArrayAccess
     {
         return isset($this->container[$offset]) ? $this->container[$offset] : null;
     }
+
+    public function toArray(){
+        return $this->container;
+    }
 }

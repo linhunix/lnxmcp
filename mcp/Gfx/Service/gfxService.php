@@ -25,7 +25,29 @@ class gfxService extends mcpBaseModelClass
     public function __construct(masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
     {
         parent::__construct($mcp, $scopeCtl, $scopeIn);
+        $gfxdefm=$this->getMcp()->getResource("gfx.default.menu");
+        if (! empty ($gfxdefm)){
+            $this->loadMenusCommon("Gfx/".$gfxdefm."/mnu/default");
+        }
+        $gfxdeft=$this->getMcp()->getResource("gfx.default.tag");
+        if (! empty ($gfxdeft)){
+            $this->loadMenusCommon("Gfx/".$gfxdeft."/tag/default");
+        }
     }
+
+    private function getInternalPath(){
+        try{
+            if ($this->getMcp()->getCfg("phar")==true){
+                return $this->getMcp()->getCfg("purl")."mcp/";
+            } else {
+                return $this->getMcp()->getCfg("mcp.path");
+            }
+        }catch (Exception $e){
+            return "";
+        }
+    }
+
+
     /**
      * getHtml2Txt
      *
@@ -44,7 +66,7 @@ class gfxService extends mcpBaseModelClass
         return self::$html2txt->get_text();
     }
     /**
-     * getStaticCommon
+     * callStaticCommon
      *
      * @param  String $InternalSource content 
      * @param  String $MimeType
@@ -52,26 +74,94 @@ class gfxService extends mcpBaseModelClass
      * @param  array $arg 
     * @return void 
      */
-    public function getStaticCommon($InternalSource, $MimeType,$ConverTag=false,$arg=array())
+    public function callStaticCommon($InternalSource, $MimeType,$ConverTag=false,$arg=array())
     {
         try{
-        if ($this->getMcp()->getCfg("phar")==true){
-            $purl=$this->getMcp()->getCfg("purl");
-        } else {
-            $purl=$this->getMcp()->getCfg("mcp.path");
-        }
-        $res=file_get_contents($purl.DIRECTORY_SEPARATOR.$InternalSource);
-        \header('Content-type: '.$MimeType);
-        if ($ConverTag==true){
-            echo $this->getMcp()->covertTag($res,$arg);
-        } else {
-            echo $res;
-        }
+            $purl=$this->getInternalPath();
+            $res=file_get_contents($purl.DIRECTORY_SEPARATOR.$InternalSource);
+            \header('Content-type: '.$MimeType);
+            if ($ConverTag==true){
+                echo $this->getMcp()->covertTag($res,$arg);
+            } else {
+                echo $res;
+            }
         }catch (\Exception $e){
-            $this->getMcp()->error("Gfx->getStaticCommon:".$e->getMessage());
+            $this->getMcp()->error("Gfx->callStaticCommon:".$e->getMessage());
             $this->getMcp()->NotFound($InternalSource);
         }
     }
+    /**
+     * callDynamicCommon
+     *
+     * @param  String $InternalSource content 
+     * @param  String $MimeType
+     * @param  Bool $ConverTag
+     * @param  array $arg 
+    * @return void 
+     */
+
+    public function callDynamicCommon($InternalSource, $MimeType,$ConverTag=false,$arg=array())
+    {
+        try{
+            $purl=$this->getInternalPath();
+            ob_start();
+            include $purl.$InternalSource.".tpl";
+            $res=ob_get_clean();
+            \header('Content-type: '.$MimeType);
+            if ($ConverTag==true){
+                echo $this->getMcp()->covertTag($res,$arg);
+            } else {
+                echo $res;
+            }
+        }catch (\Exception $e){
+            $this->getMcp()->error("Gfx->callDynamicCommon:".$e->getMessage());
+            $this->getMcp()->NotFound($InternalSource);
+        }
+    }
+
+    /**
+     * loadMenusCommon
+     *
+     * @param  String $InternalSource content 
+     * @return void 
+     */
+    public function loadMenusCommon($InternalSource){
+        try{
+            $purl=$this->getInternalPath();
+            $res=json_decode(file_get_contents($purl.$InternalSource.".mnu.json"),true);
+            if (is_array($res)){
+                foreach($res as $menu =>$sequence){
+                    $this->getMcp()->Debug("loadTagsCommon load menu:".$menu);
+                    $this->getMcp()->setCfg("app.menu.".$menu,$sequence);
+                }
+            }
+        }catch (\Exception $e){
+            $this->getMcp()->error("Gfx->loadMenusCommon:".$e->getMessage());
+            $this->getMcp()->NotFound($InternalSource);
+        }
+    }
+    /**
+     * loadTagsCommon
+     *
+     * @param  String $InternalSource content 
+     * @return void 
+     */
+    public function loadTagsCommon($InternalSource){
+        try{
+            $purl=$this->getInternalPath();
+            $res=json_decode(file_get_contents($purl.$InternalSource.".tag.json"),true);
+            if (is_array($res)){
+                foreach($res as $tag =>$sequence){
+                    $this->getMcp()->Debug("loadTagsCommon load tag:".$tag);
+                    $this->getMcp()->setCfg("app.tags.".$tag,$sequence);
+                }
+            }
+        }catch (\Exception $e){
+            $this->getMcp()->error("Gfx->loadMenusCommon:".$e->getMessage());
+            $this->getMcp()->NotFound($InternalSource);
+        }
+    }
+
     /**
      * $scopeIN array is 
      * var "[T]"
@@ -107,9 +197,25 @@ class gfxService extends mcpBaseModelClass
                     return;
                 }
                 $source = $this->argIn["source"];
-                $mime = $this->argIn["minetype"];
-                $tag= $this->argIn["tag"];
-                $this->argOut = $this->getStaticCommon($source,$mime,$tag,$this->argIn);
+                $mime = @$this->argIn["minetype"];
+                $tag= @$this->argIn["tag"];
+                $this->argOut = $this->callStaticCommon($source,$mime,$tag,$this->argIn);
+                break;
+             case "DYN":
+                if (!isset($this->argIn["source"])) {
+                    return;
+                }
+                $source = $this->argIn["source"];
+                $mime = @$this->argIn["minetype"];
+                $tag= @$this->argIn["tag"];
+                $this->argOut = $this->callDynamicCommon($source,$mime,$tag,$this->argIn);
+                break;
+            case "MNU":
+                if (!isset($this->argIn["source"])) {
+                    return;
+                }
+                $source = $this->argIn["source"];
+                $this->argOut = $this->loadMenusCommon($source,$mime,$tag,$this->argIn);
                 break;
         }
     }

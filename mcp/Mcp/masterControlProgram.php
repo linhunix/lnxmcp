@@ -173,7 +173,7 @@ final class masterControlProgram
     public function getCfg($resname = null)
     {
         if ($resname == null) {
-            return $this->cfg;
+            return $this->cfg->toArray();
         }
         if (isset($this->cfg[$resname])) {
             if ($this->cfg[$resname] == "true") {
