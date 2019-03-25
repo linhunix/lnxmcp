@@ -543,19 +543,19 @@ final class mcpCoreClass
                 return true;
             } elseif (function_exists($this->scopeCtl[$this->sub]["module"])) {
                 $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["module"];
-                $this->setStatus(true, $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                $this->setStatus(true, $this->scopeCtl[$this->sub]["module"] . " IS A FUNCTION - NOT NEED ALREADY LOAD ");
                 return true;
             } elseif (function_exists("\\" . $this->scopeCtl[$this->sub]["module"])) {
                 $this->scopeCtl[$this->sub]["module"] = "\\" . $this->scopeCtl[$this->sub]["module"];
-                $this->setStatus(true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                $this->setStatus(true, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS A FUNCTION - NOT NEED ALREADY LOAD ");
                 return true;
             } elseif (function_exists($this->scopeCtl[$this->sub]["altmodule"])) {
                 $this->scopeCtl[$this->sub]["module"] =  $this->scopeCtl[$this->sub]["altmodule"];
-                $this->setStatus(true,  $this->scopeCtl[$this->sub]["altmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                $this->setStatus(true,  $this->scopeCtl[$this->sub]["altmodule"] . " IS A FUNCTION - NOT NEED ALREADY LOAD ");
                 return true;
             } elseif (function_exists($this->scopeCtl[$this->sub]["defmodule"])) {
                 $this->scopeCtl[$this->sub]["module"] = $this->scopeCtl[$this->sub]["defmodule"];
-                $this->setStatus(true, $this->scopeCtl[$this->sub]["defmodule"] . " IS A CLASS - NOT NEED ALREADY LOAD ");
+                $this->setStatus(true, $this->scopeCtl[$this->sub]["defmodule"] . " IS A FUNCTION - NOT NEED ALREADY LOAD ");
                 return true;
             } else {
                 $this->setStatus(false, "\\" . $this->scopeCtl[$this->sub]["module"] . " IS NOT PRESENT - NEED TO BE LOAD ");
