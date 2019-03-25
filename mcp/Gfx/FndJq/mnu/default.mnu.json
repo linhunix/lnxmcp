@@ -46,7 +46,7 @@
         "bye": {
             "type": "exit"
         }
-    },    
+    },
     "home.lnxmcp.themejs-foundation": {
         "cat": {
             "type": "serviceCommon",
@@ -95,7 +95,7 @@
             "type": "exit"
         }
     },
-    "home.lnxmcp.text-admin": {
+    "home.lnxmcp.admin": {
         "cat": {
             "type": "serviceCommon",
             "name": "gfx",

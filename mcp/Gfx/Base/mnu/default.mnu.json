@@ -1,12 +1,44 @@
 {
-    "home.ueclogo":{
+    "home.lnxmcp.logo":{
         "cat":{
             "type":"serviceCommon",
             "name":"gfx",
             "module":"Gfx",
             "isPreload":false,
             "ScopeInRewrite":{
-                "source":"Gfx/Base/img/ueclogo.gif",
+                "source":"Gfx/Base/img/ln4logo.gif",
+                "mimetype":"image/gif",
+                "T":"INT"
+            }
+        },
+        "bye":{
+            "type":"exit"
+        }
+    },
+    "home.lnxmcp.editor-js":{
+        "cat":{
+            "type":"serviceCommon",
+            "name":"gfx",
+            "module":"Gfx",
+            "isPreload":false,
+            "ScopeInRewrite":{
+                "source":"Gfx/Base/js/nicEdit.js",
+                "mimetype":"text/javascript",
+                "T":"INT"
+            }
+        },
+        "bye":{
+            "type":"exit"
+        }
+    },
+    "home.lnxmcp.editor-icons":{
+        "cat":{
+            "type":"serviceCommon",
+            "name":"gfx",
+            "module":"Gfx",
+            "isPreload":false,
+            "ScopeInRewrite":{
+                "source":"Gfx/Base/img/nicEditorIcons.gif",
                 "mimetype":"image/gif",
                 "T":"INT"
             }

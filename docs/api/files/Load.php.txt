@@ -26,6 +26,7 @@ class mcpAutoload
         $this->results[$this->count] = $resval;
         $this->count++;
     }
+    
     private function getDirContents($dir)
     {
         $files = scandir($dir);

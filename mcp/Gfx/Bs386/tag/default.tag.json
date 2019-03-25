@@ -1,0 +1,28 @@
+{
+    "lnxmcp-themecss": {
+        "theme": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/tpl/theme.css",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        }
+    },
+    "lnxmcp-themejs": {
+        "theme": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/tpl/theme.js",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        }
+    }
+}

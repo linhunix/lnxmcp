@@ -1,0 +1,80 @@
+{
+    "lnxmcp-logo": {
+        "theme": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Base/tpl/logo",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        }
+    },
+    "lnxmcp-tpl-debug": {
+        "theme": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Base/tpl/debug",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        }
+    },
+    "lnxmcp-tpl-to-javascript": {
+        "theme": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Base/tpl/tojs",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        }
+    },
+    "lnxmcp-tpl-editorall": {
+        "theme": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Base/tpl/editalltextarea",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        }
+    },
+    "lnxmcp-std-head": {
+        "theme": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Base/tpl/stdhead",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        }
+    },
+    "lnxmcp-std-foot": {
+        "theme": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Base/tpl/stdfoot",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        }
+    }
+}

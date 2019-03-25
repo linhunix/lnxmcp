@@ -8,7 +8,7 @@
             "ScopeInRewrite": {
                 "source": "Gfx/FndJq/tpl/theme.css",
                 "mimetype": "text/html",
-                "T": "DYM"
+                "T": "DYN"
             }
         }
     },
@@ -21,7 +21,7 @@
             "ScopeInRewrite": {
                 "source": "Gfx/FndJq/tpl/theme.js",
                 "mimetype": "text/html",
-                "T": "DYM"
+                "T": "DYN"
             }
         }
     }

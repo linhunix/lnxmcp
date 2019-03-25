@@ -1,0 +1,322 @@
+{
+    "home.lnxmcp.themecss-bootstrap": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/css/bootstrap.css",
+                "mimetype": "text/css",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themecss-responsive": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/css/bootstrap-responsive.css",
+                "mimetype": "text/css",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-jquery": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/jquery.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bootstrap": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap.min.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-holder": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/holder.min.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-transition": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap-transition.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-alert": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap-alert.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-modal": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap-modal.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-dropdown": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap-dropdown.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-scrollspy": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap-scrollspy.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-tab": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap-tab.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-tooltip": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap-tooltip.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-popover": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap-popover.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-button": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap-button.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-collapse": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap-collapse.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-carousel": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap-carousel.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-typeahead": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/bootstrap-typeahead.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-bs-popper": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/popper.min.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.text-admin": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/tpl/admin",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.admin": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/tpl/admin",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    }
+}

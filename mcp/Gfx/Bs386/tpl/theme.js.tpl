@@ -1,0 +1,16 @@
+    <script src="/lnxmcp/themejs-jquery"></script>
+    <script src="/lnxmcp/themejs-bootstrap"></script>
+    <script src="/lnxmcp/themejs-bs-transition"></script>
+    <script src="/lnxmcp/themejs-bs-alert"></script>
+    <script src="/lnxmcp/themejs-bs-modal"></script>
+    <script src="/lnxmcp/themejs-bs-dropdown"></script>
+    <script src="/lnxmcp/themejs-bs-scrollspy"></script>
+    <script src="/lnxmcp/themejs-bs-tab"></script>
+    <script src="/lnxmcp/themejs-bs-tooltip"></script>
+    <script src="/lnxmcp/themejs-bs-popover"></script>
+    <script src="/lnxmcp/themejs-bs-button"></script>
+    <script src="/lnxmcp/themejs-bs-collapse"></script>
+    <script src="/lnxmcp/themejs-bs-carousel"></script>
+    <script src="/lnxmcp/themejs-bs-typeahead"></script>
+    <script src="/lnxmcp/themejs-bs-popper" ></script>
+    <script src="/lnxmcp/themejs-bs-holder" ></script>
