@@ -159,7 +159,7 @@ function lnxmcp()
  *
  * @return void
  */
-function lnxMcpTag($tagname, array $scopein = array())
+function lnxMcpTag($tagname, array $scopeIn = array())
 {
     lnxmcp()->runTag($tagname, $scopeIn);
 }
