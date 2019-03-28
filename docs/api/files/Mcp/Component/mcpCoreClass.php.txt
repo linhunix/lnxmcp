@@ -571,7 +571,7 @@ final class mcpCoreClass
      *
      * @return void
      */
-    private function LoadTemplateModule()
+    private function LoadTemplateModule($scopeCtl,$scopeIn,$scopeOut)
     {
         $ssub = $this->sub;
         $lang = $this->getCfg("app.lang");
@@ -656,11 +656,11 @@ final class mcpCoreClass
             if (in_array($this->scopeCtl[$this->sub]["type"], array("Page", "Block", "page", "block"))) {
                 unset($this->scopeCtl[$this->sub]["auto"]);
                 if (is_dir($this->scopeCtl[$this->sub]["dir"])) {
-                    $this->LoadTemplateModule();
+                    $this->LoadTemplateModule($scopeCtl,$scopeIn,$scopeOut);
                  }else if (is_dir($this->scopeCtl[$this->sub]["altdir"])) {
                     $this->scopeCtl[$this->sub]["dir"]=$this->scopeCtl[$this->sub]["altdir"];
                     $this->scopeCtl[$this->sub]["file"]=$this->scopeCtl[$this->sub]["altfile"];
-                    $this->LoadTemplateModule();
+                    $this->LoadTemplateModule($scopeCtl,$scopeIn,$scopeOut);
                 }
             } else {
                 if (file_exists($this->scopeCtl[$this->sub]["auto"])) {
@@ -681,7 +681,7 @@ final class mcpCoreClass
                     }
                 }
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $res = "error in loadMod " . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage();
             $this->setStatus(false, $res);
         }
@@ -735,6 +735,7 @@ final class mcpCoreClass
             }
         } catch (Exception $e) {
             $res = "error in loadMod " . $tag . ":" . $e->getMessage();
+            $this->getMcp()->warning($res);
             $this->setStatus(false, $res);
         }
         if (!empty($this->scopeOut[$this->sub])) {

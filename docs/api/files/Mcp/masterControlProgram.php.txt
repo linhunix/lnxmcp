@@ -1421,6 +1421,7 @@ final class masterControlProgram
     {
         if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
+            $this->warning("runCommand/scopeIn is not an array!!!");
         }
         return mcpMenuClass::runCommand($scopectl, $scopeIn);
     }
@@ -1434,6 +1435,7 @@ final class masterControlProgram
     {
         if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
+            $this->warning("runSequence/scopeIn is not an array!!!");
         }
         return mcpMenuClass::runSequence($actionseq, $scopeIn);
     }
@@ -1447,6 +1449,7 @@ final class masterControlProgram
     {
         if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
+            $this->warning("runMenu/scopeIn is not an array!!!");
         }
         return mcpMenuClass::runMenu($action, $scopeIn);
     }
@@ -1460,6 +1463,7 @@ final class masterControlProgram
     {
         if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
+            $this->warning("runTag/scopeIn is not an array!!!");
         }
         if ($action == null) {
             return null;
@@ -1476,6 +1480,7 @@ final class masterControlProgram
     {
         if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
+            $this->warning("converTag/scopeIn is not an array!!!");
         }
         if ($label == null) {
             $label = $this->defapp;

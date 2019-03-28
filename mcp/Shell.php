@@ -20,6 +20,7 @@ function mcpRunShell()
     $help["lnxmcp-cct"] = "Run a common controller\n  req arg: <common controller name> <module name>";
     $help["lnxmcp-ctl"] = "Run a user controller\n  req arg: < controller name> <module name>";
     $help["lnxmcp-cbl"] = "Run a common block\n  req arg: < block name> <module name>";
+    $help["lnxmcp-dbm"] = "Run a common dbm\n  req arg: < query name> <module name>";
     $help["lnxmcp-phr"] = "Generate a phar file of the progam\n req arg <type |shell>";
     if (isset($argv[1])) {
         lnxmcp ()->debugVar ("head-shell", "argv", $argv);
@@ -38,6 +39,9 @@ function mcpRunShell()
                 break;
             case "lnxmcp-ctl":
                 lnxmcp ()->controller ($argv[2], false, $argv, $argv[3]);
+                break;
+            case "lnxmcp-dbm":
+                lnxmcp ()->queryJsonR ($argv[2], false, $argv, $argv[3]);
                 break;
             case "lnxmcp-cbl":
                 lnxmcp ()->showFullCommonBlock ($argv[2], $argv, $argv[3]);
