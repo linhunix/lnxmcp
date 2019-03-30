@@ -1,6 +1,6 @@
 <?php
 
-namespace LinHUniX\McpModules\Chk;
+namespace LinHUniX\McpModules\Chk\Shell;
 
 ///////////////////////////////////////////////////////////////////////////////////////
 ///  INIT
@@ -305,3 +305,4 @@ function mcpCheck($chkmenu = null)
 }
 
 echo "Check Env Loaded!!\n";
+

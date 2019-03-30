@@ -42,7 +42,7 @@ class pdoDriver extends mcpBaseModelClass
             try {
                 $this->PDO = new PDO($this->dburlcon, $username, $password, $options);
             } catch (\Exception $e) {
-                $mcp->error("DBCONN:ERR=" . $e->getMessage());
+                $mcp->warning("DBCONN: ERR=" . $e->getMessage());
                 return null;
             }
             $data = $this->getTable("SHOW TABLES");
@@ -55,7 +55,8 @@ class pdoDriver extends mcpBaseModelClass
                 }
             }
         }else{
-            $this->error("Not Db Connection Found!!");
+            $this->warning("Not Db Connection Found!!");
+            return null;
         }
         $this->tabcount = $i;
         $this->tmp = array();
@@ -89,7 +90,7 @@ class pdoDriver extends mcpBaseModelClass
         try {
             $query = str_replace("'", '"', $query);
             return $this->PDO->exec($query);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->getMcp()->warning($this->database . $e->getMessage());
             return false;
         }
@@ -481,6 +482,10 @@ class pdoDriver extends mcpBaseModelClass
      */
     public function moduleCore()
     {
+        if ($this->PDO==null){
+            $this->getMcp()->warning("Database Connection Error (not initalizzed!!)");
+            return false;
+        }
         if ((empty($this->argIn["Q"]))) {
             return false;
         }

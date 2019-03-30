@@ -53,8 +53,8 @@ if (!isset($scopePdo)) {
     $scopePdo = array(
         "ENV" => array(
             "lnx.lite" => array(
-                "config"=>"SOURCE",
-                "path" => $app_path."/work/sqlite",
+                "config"=>"SCOPE",
+                "path" => $app_path."/work/sqlite/",
                 "database" => "lnxmcp.work.db",
                 "driver" => "sqlite"
             ),

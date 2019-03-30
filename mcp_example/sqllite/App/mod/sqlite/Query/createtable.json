@@ -1,0 +1,5 @@
+{
+    "E":"lnx.lite",
+    "T":"e",
+    "Q":"CREATE TABLE setting (id Int PRIMARY KEY , mame Varchar, value Varchar );"
+}

@@ -1,3 +1,10 @@
 {
-    "jira-plugin.workingProject": ""
+    "jira-plugin.workingProject": "",
+    "sqltools.connections": [
+        {
+            "database": "/home/linhunix/repo/lnxmcp/mcp_example/sqllite/work/sqlite/lnxmcp.work.db",
+            "dialect": "SQLite",
+            "name": "example"
+        }
+    ]
 }

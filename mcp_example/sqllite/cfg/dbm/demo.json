@@ -1,0 +1,20 @@
+{
+    "name":"demo",
+    "rollback":true,
+    "dsc":"demo example to create data on sqllite and remove",
+    "migrate-sequence":{
+        "migrate":{
+            "name":"createtable",
+            "module":"sqlite",
+            "type":"queryJson"
+        }
+    },
+    "rollback-sequence":{
+        "rollback":{
+            "name":"droptable",
+            "module":"sqlite",
+            "type":"queryJson"
+        }
+    }
+
+}

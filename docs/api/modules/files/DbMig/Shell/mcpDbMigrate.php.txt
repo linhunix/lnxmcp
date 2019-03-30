@@ -1,0 +1,316 @@
+<?php
+
+namespace LinHUniX\McpModules\DbMig\Shell;
+
+///////////////////////////////////////////////////////////////////////////////////////
+///  INIT
+///////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////////////////
+///  CLASS  mcpDbMigrate
+///////////////////////////////////////////////////////////////////////////////////////
+
+echo "..Loading  mcpDbMigrate Class\n";
+
+class mcpDbMigrate
+{
+    private $MigrateCfg;
+    private $MigratePath;
+    private $MigrateCheck;
+
+    function __construct($command=null,$element=null)
+    {
+        $this->initdbm();
+        if ($this->MigrateCheck == false) {
+            echo "Migrate Error !!" . "\n";
+            exit(-1);
+        }
+        if ($command!=null){
+            $this->command($command,$element);
+        }
+    }
+    private function writecfg()
+    {
+        try {
+            file_put_contents($this->MigratePath . "/index.json", json_encode($this->MigrateCfg));
+        } catch (\Exception $e) {
+            echo "error on write cfg " . $e->getMessage() . "\n";
+            $this->MigrateCheck = false;
+        }
+    }
+    private function tracehistory($action,$elmmig)
+    {
+        $elmmig["action"]=$action;
+        try {
+            $history=lnxGetJsonFile("history", $this->MigratePath, "json");
+            if (! is_array($history)){
+                $history=array();
+            }
+            $history[date("U")]=$elmmig;
+            file_put_contents($this->MigratePath . "/history.json", json_encode($history));
+        } catch (\Exception $e) {
+            echo "error on write history " . $e->getMessage() . "\n";
+            $this->MigrateCheck = false;
+        }
+    }
+    private function initdbm()
+    {
+        echo "mcpDbMigrate is Initalized!!\n";
+        $this->MigrateCheck = true;
+        /// FIND PATH;
+        $this->MigratePath = lnxmcp()->getCfg("app.path");
+        if (is_dir($this->MigratePath . "/cfg/dbm/")) {
+            $this->MigratePath .= "/cfg/dbm/";
+        } else if (is_dir($this->MigratePath . "/App/dbm/")) {
+            $this->MigratePath .= "/App/dbm/";
+        } else if (is_dir($this->MigratePath . "/work/dbm/")) {
+            $this->MigratePath .= "/work/dbm/";
+        } else {
+            $this->MigrateCheck = false;
+            lnxmcp()->debug($this->MigratePath );
+            echo "No Migrate Folder on cfg/dbm or (App/dbm , work/dbm)\n";
+            return;
+        }
+        if (is_writable($this->MigratePath) == false) {
+            $this->MigrateCheck = false;
+            echo "No Writable Migrate Folder " . $this->MigratePath . "\n";
+            return;
+        }
+        $this->MigrateCfg = lnxGetJsonFile("index", $this->MigratePath, "json");
+        if (!is_array($this->MigrateCfg)) {
+            echo "Initialize the index on Migrate Folder " . $this->MigratePath . "\n";
+            $this->MigrateCfg = array(
+                "LastCheck" => date("U"),
+                "LastCheckStr" => date("Y-m-d h:i:sa"),
+                "Migrated" => array(
+                    "init" => array(
+                        "name" => "init",
+                        "date" => date("U"),
+                        "dates" => date("Y-m-d h:i:sa"),
+                        "file" => $this->MigratePath . "/index.json",
+                        "status" => true,
+                        "rollback" => false,
+                        "migrate-sequence" => array(),
+                        "rollback-sequence" => array(),
+                        "dsc" => "initalizzed config",
+                        "msg" => ""
+                    )
+                ),
+                "LastMigrate" => "init",
+                "LastStatus" => true
+            );
+            $this->writecfg();
+            $this->tracehistory("init",$this->MigrateCfg);
+        }
+    }
+    private function migrate($elmmig)
+    {
+        $res = array();
+        $sequence = $elmmig["migrate-sequence"];
+        if (is_array($sequence)) {
+            $res = lnxmcp()->runSequence($sequence);
+            $elmmig["status"] = true;
+        } else {
+            $elmmig["status"] = false;
+            $elmmig["msg"] = "migrate return null";
+        }
+        $elmmig["date"] = date('U');
+        $elmmig["dates"] = date("Y-m-d h:i:sa");
+        $this->tracehistory("migrate",$elmmig);
+        return $elmmig;
+    }
+    private function rollback($elmmig)
+    {
+        $res = array();
+        $sequence = $elmmig["rollback-sequence"];
+        if (is_array($sequence)) {
+            $res = lnxmcp()->runSequence($sequence);
+            $elmmig["status"] = true;
+        } else {
+            $elmmig["status"] = false;
+            $elmmig["msg"] = "migrate return null";
+        }
+        $elmmig["date"] = date('U');
+        $elmmig["dates"] = date("Y-m-d h:i:sa");
+        $this->tracehistory("rollback",$elmmig);
+        return $elmmig;
+    }
+    private function add($elmmig)
+    {
+        $name = $elmmig["name"];
+        $this->MigrateCfg["Migrated"][$name] = $elmmig;
+        $this->MigrateCfg["LastCheck"]=$elmmig["date"];
+        $this->MigrateCfg["LastCheckStr"]=$elmmig["dates"];
+        $this->MigrateCfg["LastMigrate"]=$elmmig["name"];
+        $this->MigrateCfg["LastStatus"]=$elmmig["status"];
+        $this->writecfg();
+        return $this->elementstatus($name);
+    }
+    private function delete($elmmig)
+    {
+        $name = $elmmig["name"];
+        unset($this->MigrateCfg["Migrated"][$name]);
+        $this->writecfg();
+        return $this->elementstatus($name);
+    }
+
+    private function elementstatus($element)
+    {
+        $elmmig = array();
+        $elmsts = false;
+        $elmrdy = true;
+        $elmdtm = "Not Migrated";
+        if (isset($this->MigrateCfg["Migrated"][$element])) {
+            echo  $element . " is Migrated\n";
+            $elmmig = $this->MigrateCfg["Migrated"][$element];
+            $elmsts = $elmmig["status"];
+            $elmdtm = $elmmig["dates"];
+        } else {
+            echo  $element . " is not Migrated\n";
+            $elmmig = lnxGetJsonFile($element, $this->MigratePath, "json");
+            if ($elmmig == null) {
+                echo  $element . " is NOT present on " . $this->MigratePath, "\n";
+                $elmmig["name"] = $element;
+                $elmmig["msg"] = $element . " is NOT present on " . $this->MigratePath;
+                $elmrdy = false;
+            } else {
+                echo  $element . " is present on " . $this->MigratePath, "\n";
+            }
+        }
+        $elmmig["name"] = $element;
+        $elmmig["elmsts"] = $elmsts;
+        $elmmig["elmrdy"] = $elmrdy;
+        $elmmig["elmdtm"] = $elmdtm;
+        return $elmmig;
+    }
+    private function showelementstatus($elmmig)
+    {
+        $elmsts = $elmmig["elmsts"];
+        $elmdtm = $elmmig["elmdtm"];
+        echo "------------------------------------------------------\n";
+        echo " Name:" . $elmmig["name"] . "\n";
+        echo " Desc:" . @$elmmig["dsc"] . "\n";
+        echo "------------------------------------------------------\n";
+        echo " Date....:" . $elmdtm . "\n";
+        echo " Ready...:" . var_export($elmmig["elmrdy"], 1)  . "\n";
+        echo " Rollback:" . var_export($elmmig["rollback"], 1) . "\n";
+        echo " Status..:" . var_export($elmsts, 1) . "\n";
+        echo " Message.:" . @$elmmig["msg"] . "\n";
+        echo "------------------------------------------------------\n";
+    }
+    public function command($command, $element = null)
+    {
+        echo "------------------------------------------------------\n";
+        echo "try command {$command} \n";
+        echo "------------------------------------------------------\n";
+        switch ($command) {
+            case "help":
+                echo "------------------------------------------------------\n";
+                echo "help Commadn\n";
+                echo "------------------------------------------------------\n";
+                echo "status <element|none> : show status \n";
+                echo "migrate <element> : migrate element \n";
+                echo "rollback <element> : rollback element \n";
+                echo "remove <element> : force remove element \n";
+                echo "------------------------------------------------------\n";
+                break;
+            case "status";
+                echo "------------------------------------------------------\n";
+                echo "Check Status\n";
+                echo "------------------------------------------------------\n";
+                if ($element != null) {
+                    $elmmig = $this->elementstatus($element);
+                    $this->showelementstatus($elmmig);
+                }
+                echo "------------------------------------------------------\n";
+                echo "Last Mig.Date  :" . $this->MigrateCfg["LastCheckStr"] . "\n";
+                echo "Last Mig.Script:" . $this->MigrateCfg["LastMigrate"] . "\n";
+                echo "Last Mig.Status:" . var_export($this->MigrateCfg["LastStatus"], 1) . "\n";
+                echo "------------------------------------------------------\n";
+                echo "Total Migrated Script (" . count($this->MigrateCfg["Migrated"]) . ") \n";
+                echo "------------------------------------------------------\n";
+                break;
+            case "rollback":
+                echo "------------------------------------------------------\n";
+                echo " Check Rollback Command\n";
+                echo "------------------------------------------------------\n";
+                if ($element != null) {
+                    $elmmig = $this->elementstatus($element);
+                    $elmsts = $elmmig["elmsts"];
+                    $elmrdy = $elmmig["elmrdy"];
+                    $elmrlb = $elmmig["rollback"];
+                    $this->showelementstatus($elmmig);
+                    if (($elmrdy == true) and ($elmsts == true) and ($elmrlb == true)) {
+                        echo "------------------------------------------------------\n";
+                        echo " run Rollback Command\n";
+                        echo "------------------------------------------------------\n";
+                        $elmmig = $this->rollback($elmmig);
+                        $elmmig = $this->delete($elmmig);
+                    } else {
+                        echo "can't run rollback!!\n";
+                    }
+                    $this->showelementstatus($elmmig);
+                }else {
+                    echo "need element definitions!!!\n";
+                }
+                break;
+            case "remove":
+                echo "------------------------------------------------------\n";
+                echo " Check Remove Command\n";
+                echo "------------------------------------------------------\n";
+                if ($element != null) {
+                    $elmmig = $this->elementstatus($element);
+                    $elmsts = $elmmig["elmsts"];
+                    $elmrdy = $elmmig["elmrdy"];
+                    $elmrlb = $elmmig["rollback"];
+                    $this->showelementstatus($elmmig);
+                    if (($elmrdy == true) and ($elmsts == true) and ($elmrlb == true)) {
+                        echo "------------------------------------------------------\n";
+                        echo " run Remove Command with Rollback\n";
+                        echo "------------------------------------------------------\n";
+                        $elmmig = $this->rollback($elmmig);
+                        $elmmig = $this->delete($elmmig);
+                    } else if (($elmrdy == true) and ($elmsts == true) and ($elmrlb == false)) {
+                        echo "------------------------------------------------------\n";
+                        echo " run Remove Command without Rollback\n";
+                        echo "------------------------------------------------------\n";
+                        $this->tracehistory("remove",$elmmig);
+                        $elmmig = $this->delete($elmmig);
+                    } else {
+                        echo "can't run remove!!\n";
+                    }
+                    $this->showelementstatus($elmmig);
+                }else {
+                    echo "need element definitions!!!\n";
+                }
+                break;
+            case "migrate":
+                echo "------------------------------------------------------\n";
+                echo " Check Migrate Command\n";
+                echo "------------------------------------------------------\n";
+                if ($element != null) {
+                    $elmmig = $this->elementstatus($element);
+                    $elmsts = $elmmig["elmsts"];
+                    $elmrdy = $elmmig["elmrdy"];
+                    $elmrlb = $elmmig["rollback"];
+                    $this->showelementstatus($elmmig);
+                    if (($elmrdy == true) and ($elmsts == false)) {
+                        echo "------------------------------------------------------\n";
+                        echo " run Migrate Command\n";
+                        echo "------------------------------------------------------\n";
+                        $elmmig = $this->migrate($elmmig);
+                        $elmmig = $this->add($elmmig);
+                    } else {
+                        echo "can't run Migrate!!\n";
+                    }
+                    $this->showelementstatus($elmmig);
+                }else {
+                    echo "need element definitions!!!\n";
+                }
+                break;
+        }
+        echo "------------------------------------------------------\n";
+    }
+}
+
+

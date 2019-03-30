@@ -247,10 +247,10 @@ class pdoService extends mcpBaseModelClass
     {
         foreach ($this->preloadEnv as $env => $subscope)
         {
-            if (!isset($scopeIn["config"])){
-                $scopeIn["config"]="ENV";
+            if (!isset($subscope["config"])){
+                $subscope["config"]="ENV";
             }
-            if ($scopeIn["config"]=="ENV"){
+            if ($subscope["config"]=="ENV"){
                 $subscope["hostname"] = getenv($subscope["hostname"]);
                 $subscope["username"] = getenv($subscope["username"]);
                 $subscope["password"] = getenv($subscope["password"]);
