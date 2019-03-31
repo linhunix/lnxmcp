@@ -42,20 +42,20 @@
 <text text-anchor="middle" x="463" y="-1741.2" font-family="Times,serif" font-size="11.00" fill="gray">Pdo</text>
 </g>
 <g id="clust9" class="cluster"><title>cluster_\LinHUniX\Pdo\Service</title>
-<path fill="none" stroke="gray" d="M562,-1654C562,-1654 638,-1654 638,-1654 644,-1654 650,-1660 650,-1666 650,-1666 650,-1714 650,-1714 650,-1720 644,-1726 638,-1726 638,-1726 562,-1726 562,-1726 556,-1726 550,-1720 550,-1714 550,-1714 550,-1666 550,-1666 550,-1660 556,-1654 562,-1654"/>
-<text text-anchor="middle" x="600" y="-1713.2" font-family="Times,serif" font-size="11.00" fill="gray">Service</text>
+<path fill="none" stroke="gray" d="M562,-1440C562,-1440 638,-1440 638,-1440 644,-1440 650,-1446 650,-1452 650,-1452 650,-1500 650,-1500 650,-1506 644,-1512 638,-1512 638,-1512 562,-1512 562,-1512 556,-1512 550,-1506 550,-1500 550,-1500 550,-1452 550,-1452 550,-1446 556,-1440 562,-1440"/>
+<text text-anchor="middle" x="600" y="-1499.2" font-family="Times,serif" font-size="11.00" fill="gray">Service</text>
 </g>
 <g id="clust10" class="cluster"><title>cluster_\LinHUniX\Pdo\Driver</title>
-<path fill="none" stroke="gray" d="M311.5,-1520C311.5,-1520 645,-1520 645,-1520 651,-1520 657,-1526 657,-1532 657,-1532 657,-1634 657,-1634 657,-1640 651,-1646 645,-1646 645,-1646 311.5,-1646 311.5,-1646 305.5,-1646 299.5,-1640 299.5,-1634 299.5,-1634 299.5,-1532 299.5,-1532 299.5,-1526 305.5,-1520 311.5,-1520"/>
-<text text-anchor="middle" x="478.25" y="-1633.2" font-family="Times,serif" font-size="11.00" fill="gray">Driver</text>
+<path fill="none" stroke="gray" d="M311.5,-1600C311.5,-1600 645,-1600 645,-1600 651,-1600 657,-1606 657,-1612 657,-1612 657,-1714 657,-1714 657,-1720 651,-1726 645,-1726 645,-1726 311.5,-1726 311.5,-1726 305.5,-1726 299.5,-1720 299.5,-1714 299.5,-1714 299.5,-1612 299.5,-1612 299.5,-1606 305.5,-1600 311.5,-1600"/>
+<text text-anchor="middle" x="478.25" y="-1713.2" font-family="Times,serif" font-size="11.00" fill="gray">Driver</text>
 </g>
 <g id="clust11" class="cluster"><title>cluster_\LinHUniX\Pdo\Model</title>
-<path fill="none" stroke="gray" d="M281,-1440C281,-1440 411,-1440 411,-1440 417,-1440 423,-1446 423,-1452 423,-1452 423,-1500 423,-1500 423,-1506 417,-1512 411,-1512 411,-1512 281,-1512 281,-1512 275,-1512 269,-1506 269,-1500 269,-1500 269,-1452 269,-1452 269,-1446 275,-1440 281,-1440"/>
-<text text-anchor="middle" x="346" y="-1499.2" font-family="Times,serif" font-size="11.00" fill="gray">Model</text>
+<path fill="none" stroke="gray" d="M281,-1480C281,-1480 411,-1480 411,-1480 417,-1480 423,-1486 423,-1492 423,-1492 423,-1540 423,-1540 423,-1546 417,-1552 411,-1552 411,-1552 281,-1552 281,-1552 275,-1552 269,-1546 269,-1540 269,-1540 269,-1492 269,-1492 269,-1486 275,-1480 281,-1480"/>
+<text text-anchor="middle" x="346" y="-1539.2" font-family="Times,serif" font-size="11.00" fill="gray">Model</text>
 </g>
 <g id="clust12" class="cluster"><title>cluster_\LinHUniX\Pdo\Query</title>
-<path fill="none" stroke="gray" d="M565.5,-1440C565.5,-1440 634.5,-1440 634.5,-1440 640.5,-1440 646.5,-1446 646.5,-1452 646.5,-1452 646.5,-1500 646.5,-1500 646.5,-1506 640.5,-1512 634.5,-1512 634.5,-1512 565.5,-1512 565.5,-1512 559.5,-1512 553.5,-1506 553.5,-1500 553.5,-1500 553.5,-1452 553.5,-1452 553.5,-1446 559.5,-1440 565.5,-1440"/>
-<text text-anchor="middle" x="600" y="-1499.2" font-family="Times,serif" font-size="11.00" fill="gray">Query</text>
+<path fill="none" stroke="gray" d="M565.5,-1520C565.5,-1520 634.5,-1520 634.5,-1520 640.5,-1520 646.5,-1526 646.5,-1532 646.5,-1532 646.5,-1580 646.5,-1580 646.5,-1586 640.5,-1592 634.5,-1592 634.5,-1592 565.5,-1592 565.5,-1592 559.5,-1592 553.5,-1586 553.5,-1580 553.5,-1580 553.5,-1532 553.5,-1532 553.5,-1526 559.5,-1520 565.5,-1520"/>
+<text text-anchor="middle" x="600" y="-1579.2" font-family="Times,serif" font-size="11.00" fill="gray">Query</text>
 </g>
 <g id="clust13" class="cluster"><title>cluster_\LinHUniX\Gfx</title>
 <path fill="none" stroke="gray" d="M300,-1762C300,-1762 392,-1762 392,-1762 398,-1762 404,-1768 404,-1774 404,-1774 404,-1858 404,-1858 404,-1864 398,-1870 392,-1870 392,-1870 300,-1870 300,-1870 294,-1870 288,-1864 288,-1858 288,-1858 288,-1774 288,-1774 288,-1768 294,-1762 300,-1762"/>
@@ -77,6 +77,14 @@
 <path fill="none" stroke="gray" d="M304.5,-462C304.5,-462 387.5,-462 387.5,-462 393.5,-462 399.5,-468 399.5,-474 399.5,-474 399.5,-522 399.5,-522 399.5,-528 393.5,-534 387.5,-534 387.5,-534 304.5,-534 304.5,-534 298.5,-534 292.5,-528 292.5,-522 292.5,-522 292.5,-474 292.5,-474 292.5,-468 298.5,-462 304.5,-462"/>
 <text text-anchor="middle" x="346" y="-521.2" font-family="Times,serif" font-size="11.00" fill="gray">Service</text>
 </g>
+<g id="clust18" class="cluster"><title>cluster_\LinHUniX\ln4</title>
+<path fill="none" stroke="gray" d="M544,-454C544,-454 656,-454 656,-454 662,-454 668,-460 668,-466 668,-466 668,-550 668,-550 668,-556 662,-562 656,-562 656,-562 544,-562 544,-562 538,-562 532,-556 532,-550 532,-550 532,-466 532,-466 532,-460 538,-454 544,-454"/>
+<text text-anchor="middle" x="600" y="-549.2" font-family="Times,serif" font-size="11.00" fill="gray">ln4</text>
+</g>
+<g id="clust19" class="cluster"><title>cluster_\LinHUniX\ln4\Controller</title>
+<path fill="none" stroke="gray" d="M552,-462C552,-462 648,-462 648,-462 654,-462 660,-468 660,-474 660,-474 660,-522 660,-522 660,-528 654,-534 648,-534 648,-534 552,-534 552,-534 546,-534 540,-528 540,-522 540,-522 540,-474 540,-474 540,-468 546,-462 552,-462"/>
+<text text-anchor="middle" x="600" y="-521.2" font-family="Times,serif" font-size="11.00" fill="gray">Controller</text>
+</g>
 <!-- \\LinHUniX\\Mcp\\Provider\\loggerProviderModel -->
 <g id="node1" class="node"><title>\\LinHUniX\\Mcp\\Provider\\loggerProviderModel</title>
 <polygon fill="none" stroke="black" points="672.5,-1368 527.5,-1368 527.5,-1332 672.5,-1332 672.5,-1368"/>
@@ -84,13 +92,13 @@
 </g>
 <!-- \\LinHUniX\\Mcp\\Model\\mcpServiceProviderModelClass -->
 <g id="node8" class="node"><title>\\LinHUniX\\Mcp\\Model\\mcpServiceProviderModelClass</title>
-<polygon fill="none" stroke="black" points="449,-1152 243,-1152 243,-1116 449,-1116 449,-1152"/>
-<text text-anchor="middle" x="346" y="-1131.2" font-family="Courier,monospace" font-size="11.00">mcpServiceProviderModelClass</text>
+<polygon fill="none" stroke="black" points="449,-1368 243,-1368 243,-1332 449,-1332 449,-1368"/>
+<text text-anchor="middle" x="346" y="-1347.2" font-family="Courier,monospace" font-size="11.00">mcpServiceProviderModelClass</text>
 </g>
 <!-- \\LinHUniX\\Mcp\\Provider\\loggerProviderModel&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpServiceProviderModelClass -->
 <g id="edge1" class="edge"><title>\\LinHUniX\\Mcp\\Provider\\loggerProviderModel&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpServiceProviderModelClass</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M527.4,-1333.62C522.158,-1330.65 517.265,-1327.14 513,-1323 458.367,-1269.91 513.291,-1212.33 457,-1161 455.842,-1159.94 454.65,-1158.93 453.426,-1157.95"/>
-<polygon fill="none" stroke="black" points="455.138,-1154.88 444.932,-1152.03 451.137,-1160.62 455.138,-1154.88"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M527.461,-1350C506.293,-1350 482.585,-1350 459.49,-1350"/>
+<polygon fill="none" stroke="black" points="459.288,-1346.5 449.288,-1350 459.288,-1353.5 459.288,-1346.5"/>
 </g>
 <!-- \\LinHUniX\\Mcp\\Provider\\settingsProviderModel -->
 <g id="node2" class="node"><title>\\LinHUniX\\Mcp\\Provider\\settingsProviderModel</title>
@@ -99,13 +107,13 @@
 </g>
 <!-- \\LinHUniX\\Mcp\\Provider\\settingsProviderModel&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpServiceProviderModelClass -->
 <g id="edge12" class="edge"><title>\\LinHUniX\\Mcp\\Provider\\settingsProviderModel&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpServiceProviderModelClass</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M531.052,-1277.89C524.566,-1274.56 518.405,-1270.63 513,-1266 472.83,-1231.6 498.757,-1193.46 457,-1161 455.37,-1159.73 453.688,-1158.52 451.963,-1157.37"/>
-<polygon fill="none" stroke="black" points="453.383,-1154.15 442.996,-1152.06 449.816,-1160.17 453.383,-1154.15"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M520.991,-1312.72C495.741,-1318.13 467.467,-1324.19 441.172,-1329.82"/>
+<polygon fill="none" stroke="black" points="440.246,-1326.44 431.202,-1331.96 441.713,-1333.28 440.246,-1326.44"/>
 </g>
 <!-- \\LinHUniX\\Mcp\\Model\\mcpRemoteObjectModelClass -->
 <g id="node3" class="node"><title>\\LinHUniX\\Mcp\\Model\\mcpRemoteObjectModelClass</title>
-<polygon fill="none" stroke="black" points="438.5,-1368 253.5,-1368 253.5,-1332 438.5,-1332 438.5,-1368"/>
-<text text-anchor="middle" x="346" y="-1347.2" font-family="Courier,monospace" font-size="11.00">mcpRemoteObjectModelClass</text>
+<polygon fill="none" stroke="black" points="438.5,-1314 253.5,-1314 253.5,-1278 438.5,-1278 438.5,-1314"/>
+<text text-anchor="middle" x="346" y="-1293.2" font-family="Courier,monospace" font-size="11.00">mcpRemoteObjectModelClass</text>
 </g>
 <!-- \\LinHUniX\\Mcp\\Model\\mcpBaseModelClass -->
 <g id="node4" class="node"><title>\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass</title>
@@ -114,33 +122,33 @@
 </g>
 <!-- \\LinHUniX\\Mcp\\Model\\mcpRemoteObjectModelClass&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass -->
 <g id="edge2" class="edge"><title>\\LinHUniX\\Mcp\\Model\\mcpRemoteObjectModelClass&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass</title>
-<path fill="none" stroke="black" d="M253.472,-1350C229.663,-1350 204.294,-1350 181.452,-1350"/>
-<polygon fill="none" stroke="black" points="181.15,-1346.5 171.15,-1350 181.15,-1353.5 181.15,-1346.5"/>
+<path fill="none" stroke="black" d="M265.251,-1314.06C238.114,-1320.2 207.9,-1327.04 181.175,-1333.09"/>
+<polygon fill="none" stroke="black" points="180.097,-1329.75 171.116,-1335.37 181.643,-1336.58 180.097,-1329.75"/>
 </g>
 <!-- \\LinHUniX\\Mcp\\Model\\mcpConfigArrayModelClass -->
 <g id="node5" class="node"><title>\\LinHUniX\\Mcp\\Model\\mcpConfigArrayModelClass</title>
-<polygon fill="none" stroke="black" points="435.5,-1260 256.5,-1260 256.5,-1224 435.5,-1224 435.5,-1260"/>
-<text text-anchor="middle" x="346" y="-1239.2" font-family="Courier,monospace" font-size="11.00">mcpConfigArrayModelClass</text>
+<polygon fill="none" stroke="black" points="435.5,-1152 256.5,-1152 256.5,-1116 435.5,-1116 435.5,-1152"/>
+<text text-anchor="middle" x="346" y="-1131.2" font-family="Courier,monospace" font-size="11.00">mcpConfigArrayModelClass</text>
 </g>
 <!-- \\ArrayAccess -->
-<g id="node35" class="node"><title>\\ArrayAccess</title>
+<g id="node36" class="node"><title>\\ArrayAccess</title>
 <ellipse fill="none" stroke="black" cx="105.5" cy="-72" rx="61.99" ry="18"/>
 <text text-anchor="middle" x="105.5" y="-68.3" font-family="Times,serif" font-size="14.00" fill="gray">\ArrayAccess</text>
 </g>
 <!-- \\LinHUniX\\Mcp\\Model\\mcpConfigArrayModelClass&#45;&gt;\\ArrayAccess -->
 <g id="edge4" class="edge"><title>\\LinHUniX\\Mcp\\Model\\mcpConfigArrayModelClass&#45;&gt;\\ArrayAccess</title>
-<path fill="none" stroke="black" stroke-dasharray="1,5" d="M256.214,-1226.32C251.323,-1223.16 246.845,-1219.42 243,-1215 167.318,-1127.91 117.103,-267.851 107.993,-100.233"/>
-<polygon fill="none" stroke="black" points="111.486,-100.006 107.453,-90.2093 104.497,-100.383 111.486,-100.006"/>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M340.86,-1115.57C312.53,-989.416 147.347,-253.884 112.824,-100.159"/>
+<polygon fill="none" stroke="black" points="116.174,-99.1022 110.568,-90.1122 109.344,-100.636 116.174,-99.1022"/>
 </g>
 <!-- \\LinHUniX\\Mcp\\Model\\mcpRemoteApiModelClass -->
 <g id="node6" class="node"><title>\\LinHUniX\\Mcp\\Model\\mcpRemoteApiModelClass</title>
-<polygon fill="none" stroke="black" points="428.5,-1314 263.5,-1314 263.5,-1278 428.5,-1278 428.5,-1314"/>
-<text text-anchor="middle" x="346" y="-1293.2" font-family="Courier,monospace" font-size="11.00">mcpRemoteApiModelClass</text>
+<polygon fill="none" stroke="black" points="428.5,-1260 263.5,-1260 263.5,-1224 428.5,-1224 428.5,-1260"/>
+<text text-anchor="middle" x="346" y="-1239.2" font-family="Courier,monospace" font-size="11.00">mcpRemoteApiModelClass</text>
 </g>
 <!-- \\LinHUniX\\Mcp\\Model\\mcpRemoteApiModelClass&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass -->
 <g id="edge11" class="edge"><title>\\LinHUniX\\Mcp\\Model\\mcpRemoteApiModelClass&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass</title>
-<path fill="none" stroke="black" d="M265.251,-1314.06C238.114,-1320.2 207.9,-1327.04 181.175,-1333.09"/>
-<polygon fill="none" stroke="black" points="180.097,-1329.75 171.116,-1335.37 181.643,-1336.58 180.097,-1329.75"/>
+<path fill="none" stroke="black" d="M267.655,-1260.03C259.222,-1262.72 250.855,-1265.71 243,-1269 206.243,-1284.42 167.445,-1308.27 140.647,-1326.11"/>
+<polygon fill="none" stroke="black" points="138.378,-1323.42 132.039,-1331.9 142.289,-1329.22 138.378,-1323.42"/>
 </g>
 <!-- \\LinHUniX\\Mcp\\Model\\mcpDebugModelClass -->
 <g id="node7" class="node"><title>\\LinHUniX\\Mcp\\Model\\mcpDebugModelClass</title>
@@ -209,63 +217,63 @@
 </g>
 <!-- \\LinHUniX\\Pdo\\Service\\pdoService -->
 <g id="node21" class="node"><title>\\LinHUniX\\Pdo\\Service\\pdoService</title>
-<polygon fill="none" stroke="black" points="642,-1698 558,-1698 558,-1662 642,-1662 642,-1698"/>
-<text text-anchor="middle" x="600" y="-1677.2" font-family="Courier,monospace" font-size="11.00">pdoService</text>
+<polygon fill="none" stroke="black" points="642,-1484 558,-1484 558,-1448 642,-1448 642,-1484"/>
+<text text-anchor="middle" x="600" y="-1463.2" font-family="Courier,monospace" font-size="11.00">pdoService</text>
 </g>
 <!-- \\LinHUniX\\Pdo\\Service\\pdoService&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass -->
 <g id="edge3" class="edge"><title>\\LinHUniX\\Pdo\\Service\\pdoService&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass</title>
-<path fill="none" stroke="black" d="M557.734,-1688.89C486.412,-1701.78 338.566,-1717.35 243,-1650 149.901,-1584.38 119.055,-1439.44 109.938,-1378.19"/>
-<polygon fill="none" stroke="black" points="113.378,-1377.52 108.522,-1368.1 106.446,-1378.49 113.378,-1377.52"/>
+<path fill="none" stroke="black" d="M557.857,-1456.31C474.879,-1436.77 286.43,-1392.38 181.162,-1367.59"/>
+<polygon fill="none" stroke="black" points="181.777,-1364.13 171.241,-1365.25 180.172,-1370.95 181.777,-1364.13"/>
 </g>
 <!-- \\LinHUniX\\Pdo\\Driver\\pdoDriver -->
 <g id="node22" class="node"><title>\\LinHUniX\\Pdo\\Driver\\pdoDriver</title>
-<polygon fill="none" stroke="black" points="384.5,-1564 307.5,-1564 307.5,-1528 384.5,-1528 384.5,-1564"/>
-<text text-anchor="middle" x="346" y="-1543.2" font-family="Courier,monospace" font-size="11.00">pdoDriver</text>
+<polygon fill="none" stroke="black" points="384.5,-1644 307.5,-1644 307.5,-1608 384.5,-1608 384.5,-1644"/>
+<text text-anchor="middle" x="346" y="-1623.2" font-family="Courier,monospace" font-size="11.00">pdoDriver</text>
 </g>
 <!-- \\LinHUniX\\Pdo\\Driver\\pdoDriver&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass -->
 <g id="edge6" class="edge"><title>\\LinHUniX\\Pdo\\Driver\\pdoDriver&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass</title>
-<path fill="none" stroke="black" d="M307.325,-1540.47C287.014,-1536.18 262.245,-1528.73 243,-1516 187.773,-1479.47 143.52,-1413.82 121.565,-1376.97"/>
-<polygon fill="none" stroke="black" points="124.54,-1375.13 116.471,-1368.26 118.498,-1378.66 124.54,-1375.13"/>
+<path fill="none" stroke="black" d="M311.808,-1607.72C290.588,-1595 263.335,-1576.67 243,-1556 188.008,-1500.11 141.964,-1419.03 120.12,-1377.21"/>
+<polygon fill="none" stroke="black" points="123.159,-1375.46 115.464,-1368.18 116.938,-1378.67 123.159,-1375.46"/>
 </g>
 <!-- \\LinHUniX\\Pdo\\Driver\\sqliteDriver -->
 <g id="node23" class="node"><title>\\LinHUniX\\Pdo\\Driver\\sqliteDriver</title>
-<polygon fill="none" stroke="black" points="649,-1618 551,-1618 551,-1582 649,-1582 649,-1618"/>
-<text text-anchor="middle" x="600" y="-1597.2" font-family="Courier,monospace" font-size="11.00">sqliteDriver</text>
+<polygon fill="none" stroke="black" points="649,-1698 551,-1698 551,-1662 649,-1662 649,-1698"/>
+<text text-anchor="middle" x="600" y="-1677.2" font-family="Courier,monospace" font-size="11.00">sqliteDriver</text>
 </g>
 <!-- \\LinHUniX\\Pdo\\Driver\\sqliteDriver&#45;&gt;\\LinHUniX\\Pdo\\Driver\\pdoDriver -->
 <g id="edge8" class="edge"><title>\\LinHUniX\\Pdo\\Driver\\sqliteDriver&#45;&gt;\\LinHUniX\\Pdo\\Driver\\pdoDriver</title>
-<path fill="none" stroke="black" d="M550.71,-1589.65C505.896,-1580.05 439.564,-1565.84 394.881,-1556.26"/>
-<polygon fill="none" stroke="black" points="395.365,-1552.78 384.854,-1554.11 393.898,-1559.63 395.365,-1552.78"/>
+<path fill="none" stroke="black" d="M550.71,-1669.65C505.896,-1660.05 439.564,-1645.84 394.881,-1636.26"/>
+<polygon fill="none" stroke="black" points="395.365,-1632.78 384.854,-1634.11 393.898,-1639.63 395.365,-1632.78"/>
 </g>
 <!-- \\LinHUniX\\Pdo\\Driver\\mysqlDriver -->
 <g id="node24" class="node"><title>\\LinHUniX\\Pdo\\Driver\\mysqlDriver</title>
-<polygon fill="none" stroke="black" points="645.5,-1564 554.5,-1564 554.5,-1528 645.5,-1528 645.5,-1564"/>
-<text text-anchor="middle" x="600" y="-1543.2" font-family="Courier,monospace" font-size="11.00">mysqlDriver</text>
+<polygon fill="none" stroke="black" points="645.5,-1644 554.5,-1644 554.5,-1608 645.5,-1608 645.5,-1644"/>
+<text text-anchor="middle" x="600" y="-1623.2" font-family="Courier,monospace" font-size="11.00">mysqlDriver</text>
 </g>
 <!-- \\LinHUniX\\Pdo\\Driver\\mysqlDriver&#45;&gt;\\LinHUniX\\Pdo\\Driver\\pdoDriver -->
 <g id="edge9" class="edge"><title>\\LinHUniX\\Pdo\\Driver\\mysqlDriver&#45;&gt;\\LinHUniX\\Pdo\\Driver\\pdoDriver</title>
-<path fill="none" stroke="black" d="M554.238,-1546C509.494,-1546 440.923,-1546 395.053,-1546"/>
-<polygon fill="none" stroke="black" points="394.769,-1542.5 384.769,-1546 394.769,-1549.5 394.769,-1542.5"/>
+<path fill="none" stroke="black" d="M554.238,-1626C509.494,-1626 440.923,-1626 395.053,-1626"/>
+<polygon fill="none" stroke="black" points="394.769,-1622.5 384.769,-1626 394.769,-1629.5 394.769,-1622.5"/>
 </g>
 <!-- \\LinHUniX\\Pdo\\Model\\mcpQueryModelClass -->
 <g id="node25" class="node"><title>\\LinHUniX\\Pdo\\Model\\mcpQueryModelClass</title>
-<polygon fill="none" stroke="black" points="415,-1484 277,-1484 277,-1448 415,-1448 415,-1484"/>
-<text text-anchor="middle" x="346" y="-1463.2" font-family="Courier,monospace" font-size="11.00">mcpQueryModelClass</text>
+<polygon fill="none" stroke="black" points="415,-1524 277,-1524 277,-1488 415,-1488 415,-1524"/>
+<text text-anchor="middle" x="346" y="-1503.2" font-family="Courier,monospace" font-size="11.00">mcpQueryModelClass</text>
 </g>
 <!-- \\LinHUniX\\Pdo\\Model\\mcpQueryModelClass&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass -->
 <g id="edge7" class="edge"><title>\\LinHUniX\\Pdo\\Model\\mcpQueryModelClass&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass</title>
-<path fill="none" stroke="black" d="M307.734,-1447.88C265.939,-1427.55 198.101,-1394.55 152.9,-1372.57"/>
-<polygon fill="none" stroke="black" points="154.42,-1369.42 143.897,-1368.19 151.359,-1375.71 154.42,-1369.42"/>
+<path fill="none" stroke="black" d="M317.174,-1487.8C273.911,-1459.5 190.524,-1404.96 142.656,-1373.65"/>
+<polygon fill="none" stroke="black" points="144.433,-1370.63 134.149,-1368.08 140.601,-1376.49 144.433,-1370.63"/>
 </g>
 <!-- \\LinHUniX\\Pdo\\Query\\JsonQuery -->
 <g id="node26" class="node"><title>\\LinHUniX\\Pdo\\Query\\JsonQuery</title>
-<polygon fill="none" stroke="black" points="638.5,-1484 561.5,-1484 561.5,-1448 638.5,-1448 638.5,-1484"/>
-<text text-anchor="middle" x="600" y="-1463.2" font-family="Courier,monospace" font-size="11.00">JsonQuery</text>
+<polygon fill="none" stroke="black" points="638.5,-1564 561.5,-1564 561.5,-1528 638.5,-1528 638.5,-1564"/>
+<text text-anchor="middle" x="600" y="-1543.2" font-family="Courier,monospace" font-size="11.00">JsonQuery</text>
 </g>
 <!-- \\LinHUniX\\Pdo\\Query\\JsonQuery&#45;&gt;\\LinHUniX\\Pdo\\Model\\mcpQueryModelClass -->
 <g id="edge10" class="edge"><title>\\LinHUniX\\Pdo\\Query\\JsonQuery&#45;&gt;\\LinHUniX\\Pdo\\Model\\mcpQueryModelClass</title>
-<path fill="none" stroke="black" d="M561.273,-1466C525.467,-1466 470.549,-1466 425.277,-1466"/>
-<polygon fill="none" stroke="black" points="425.183,-1462.5 415.183,-1466 425.182,-1469.5 425.183,-1462.5"/>
+<path fill="none" stroke="black" d="M561.273,-1540.01C525.467,-1534.33 470.549,-1525.61 425.277,-1518.42"/>
+<polygon fill="none" stroke="black" points="425.608,-1514.93 415.183,-1516.82 424.51,-1521.85 425.608,-1514.93"/>
 </g>
 <!-- \\LinHUniX\\Gfx\\Service\\gfxService -->
 <g id="node27" class="node"><title>\\LinHUniX\\Gfx\\Service\\gfxService</title>
@@ -274,8 +282,8 @@
 </g>
 <!-- \\LinHUniX\\Gfx\\Service\\gfxService&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass -->
 <g id="edge5" class="edge"><title>\\LinHUniX\\Gfx\\Service\\gfxService&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass</title>
-<path fill="none" stroke="black" d="M327.285,-1777.96C305.347,-1754.89 267.842,-1713.01 243,-1672 181.398,-1570.31 134.173,-1435.79 115.372,-1378.16"/>
-<polygon fill="none" stroke="black" points="118.598,-1376.76 112.195,-1368.32 111.937,-1378.91 118.598,-1376.76"/>
+<path fill="none" stroke="black" d="M304.828,-1777.93C283.892,-1766.74 259.321,-1750.57 243,-1730 154.888,-1618.94 120.803,-1446.19 110.373,-1378.54"/>
+<polygon fill="none" stroke="black" points="113.776,-1377.63 108.846,-1368.25 106.852,-1378.65 113.776,-1377.63"/>
 </g>
 <!-- \\LinHUniX\\Mail\\Component\\SMTP -->
 <g id="node28" class="node"><title>\\LinHUniX\\Mail\\Component\\SMTP</title>
@@ -293,7 +301,7 @@
 <text text-anchor="middle" x="346" y="-297.2" font-family="Courier,monospace" font-size="11.00">phpmailerException</text>
 </g>
 <!-- \\Exception -->
-<g id="node36" class="node"><title>\\Exception</title>
+<g id="node37" class="node"><title>\\Exception</title>
 <ellipse fill="none" stroke="black" cx="105.5" cy="-18" rx="50.8918" ry="18"/>
 <text text-anchor="middle" x="105.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="gray">\Exception</text>
 </g>
@@ -317,13 +325,23 @@
 <path fill="none" stroke="black" d="M340.019,-506.004C309.831,-615.11 151.444,-1187.56 114.301,-1321.81"/>
 <polygon fill="none" stroke="black" points="110.848,-1321.16 111.555,-1331.73 117.595,-1323.03 110.848,-1321.16"/>
 </g>
+<!-- \\LinHUniX\\ln4\\Controller\\ln4Controller -->
+<g id="node33" class="node"><title>\\LinHUniX\\ln4\\Controller\\ln4Controller</title>
+<polygon fill="none" stroke="black" points="652,-506 548,-506 548,-470 652,-470 652,-506"/>
+<text text-anchor="middle" x="600" y="-485.2" font-family="Courier,monospace" font-size="11.00">ln4Controller</text>
+</g>
+<!-- \\LinHUniX\\ln4\\Controller\\ln4Controller&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpRemoteApiModelClass -->
+<g id="edge15" class="edge"><title>\\LinHUniX\\ln4\\Controller\\ln4Controller&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpRemoteApiModelClass</title>
+<path fill="none" stroke="black" d="M569.325,-506.254C549.726,-520.058 525.441,-540.896 513,-566 448.721,-695.704 551.148,-1105.04 457,-1215 451.694,-1221.2 445.22,-1226.09 438.094,-1229.95"/>
+<polygon fill="none" stroke="black" points="436.347,-1226.9 428.76,-1234.3 439.303,-1233.25 436.347,-1226.9"/>
+</g>
 <!-- \\html2text -->
-<g id="node33" class="node"><title>\\html2text</title>
+<g id="node34" class="node"><title>\\html2text</title>
 <polygon fill="none" stroke="black" points="638.5,-196 561.5,-196 561.5,-160 638.5,-160 638.5,-196"/>
 <text text-anchor="middle" x="600" y="-175.2" font-family="Courier,monospace" font-size="11.00">html2text</text>
 </g>
 <!-- \\mcpAutoload -->
-<g id="node34" class="node"><title>\\mcpAutoload</title>
+<g id="node35" class="node"><title>\\mcpAutoload</title>
 <polygon fill="none" stroke="black" points="645.5,-142 554.5,-142 554.5,-106 645.5,-106 645.5,-142"/>
 <text text-anchor="middle" x="600" y="-121.2" font-family="Courier,monospace" font-size="11.00">mcpAutoload</text>
 </g>

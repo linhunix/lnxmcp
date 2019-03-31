@@ -259,12 +259,14 @@ if (class_exists("\Composer\Autoload\ClassLoader")) {
         $classLoader->addPsr4("LinHUniX\\Gfx\\", $scopeInit["purl"] . "/mcp/Gfx");
         $classLoader->addPsr4("LinHUniX\\Pdo\\", $scopeInit["purl"] . "/mcp/Pdo");
         $classLoader->addPsr4("LinHUniX\\Mail\\", $scopeInit["purl"] . "/mcp/Mail");
+        $classLoader->addPsr4("LinHUniX\\ln4\\", $scopeInit["purl"] . "/mcp/ln4");
         $scopeInit["mcp.loader"] = "AutoLoadPhar";
     } else {
         $classLoader->addPsr4("LinHUniX\\Mcp\\", $app_path . "/mcp/Mcp");
         $classLoader->addPsr4("LinHUniX\\Gfx\\", $app_path . "/mcp/Gfx");
         $classLoader->addPsr4("LinHUniX\\Pdo\\", $app_path . "/mcp/Pdo");
         $classLoader->addPsr4("LinHUniX\\Mail\\", $app_path . "/mcp/Mail");
+        $classLoader->addPsr4("LinHUniX\\ln4\\", $app_path . "/mcp/ln4");
         $scopeInit["mcp.loader"] = "AutoLoadSrc";
     }
     $classLoader->register();
