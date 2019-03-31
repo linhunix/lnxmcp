@@ -69,6 +69,6 @@ class mcpRemoteApiModelClass extends mcpBaseModelClass
             if (!isset($this->argIn["url"])){
                 return false;
             }
-            return $this->remote($this->$argIn["url"]);
+            return $this->remote($this->argIn["url"]);
     }
 }
