@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+        <script type="text/javascript">
+        function loadExternalCodeSnippets() {
+            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+                var src = pre.getAttribute('data-src');
+                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                var language = 'php';
+
+                var code = document.createElement('code');
+                code.className = 'language-' + language;
+
+                pre.textContent = '';
+
+                code.textContent = 'Loading…';
+
+                pre.appendChild(code);
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('GET', src, true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+
+                        if (xhr.status < 400 && xhr.responseText) {
+                            code.textContent = xhr.responseText;
+
+                            Prism.highlightElement(code);
+                        }
+                        else if (xhr.status >= 400) {
+                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                        }
+                        else {
+                            code.textContent = '✖ Error: File does not exist or is empty';
+                        }
+                    }
+                };
+
+                xhr.send(null);
+            });
+        }
+
+        $(document).ready(function(){
+            loadExternalCodeSnippets();
+        });
+        $('#source-view').on('shown', function () {
+            loadExternalCodeSnippets();
+        })
+    </script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/LinHUniX.html">\LinHUniX</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">518</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">4</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">7</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1118376908"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-1118376908" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1797574610"></a>
+                                <a href="../namespaces/LinHUniX.html" style="margin-left: 30px; padding-left: 0">LinHUniX</a>
+            </div>
+            <div id="namespace-1797574610" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-856871765"></a>
+                                <a href="../namespaces/LinHUniX.Gfx.html" style="margin-left: 30px; padding-left: 0">Gfx</a>
+            </div>
+            <div id="namespace-856871765" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1822978198"></a>
+                                <a href="../namespaces/LinHUniX.Gfx.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
+            </div>
+            <div id="namespace-1822978198" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Gfx.Service.gfxService.html">gfxService</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1218902193"></a>
+                                <a href="../namespaces/LinHUniX.ln4.html" style="margin-left: 30px; padding-left: 0">ln4</a>
+            </div>
+            <div id="namespace-1218902193" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1802988986"></a>
+                                <a href="../namespaces/LinHUniX.ln4.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
+            </div>
+            <div id="namespace-1802988986" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.ln4.Controller.ln4Controller.html">ln4Controller</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-986199410"></a>
+                                <a href="../namespaces/LinHUniX.Mail.html" style="margin-left: 30px; padding-left: 0">Mail</a>
+            </div>
+            <div id="namespace-986199410" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-247727513"></a>
+                                <a href="../namespaces/LinHUniX.Mail.Component.html" style="margin-left: 30px; padding-left: 0">Component</a>
+            </div>
+            <div id="namespace-247727513" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Component.PHPMailer.html">PHPMailer</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Component.phpmailerException.html">phpmailerException</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Component.POP3.html">POP3</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Component.SMTP.html">SMTP</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-396166620"></a>
+                                <a href="../namespaces/LinHUniX.Mail.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
+            </div>
+            <div id="namespace-396166620" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Service.mailService.html">mailService</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-970617258"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.html" style="margin-left: 30px; padding-left: 0">Mcp</a>
+            </div>
+            <div id="namespace-970617258" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1108979800"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.Component.html" style="margin-left: 30px; padding-left: 0">Component</a>
+            </div>
+            <div id="namespace-1108979800" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpCoreClass.html">mcpCoreClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpDebugClass.html">mcpDebugClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpLanguageClass.html">mcpLanguageClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpMailClass.html">mcpMailClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpMenuClass.html">mcpMenuClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpProxyClass.html">mcpProxyClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpTemplateClass.html">mcpTemplateClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpToolsClass.html">mcpToolsClass</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-831038600"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.Model.html" style="margin-left: 30px; padding-left: 0">Model</a>
+            </div>
+            <div id="namespace-831038600" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/LinHUniX.Mcp.Model.mcpServiceProviderModelClass.html">mcpServiceProviderModelClass</a></li>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html">mcpBaseModelClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpConfigArrayModelClass.html">mcpConfigArrayModelClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpDebugModelClass.html">mcpDebugModelClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpRemoteApiModelClass.html">mcpRemoteApiModelClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpRemoteObjectModelClass.html">mcpRemoteObjectModelClass</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1591917157"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.Provider.html" style="margin-left: 30px; padding-left: 0">Provider</a>
+            </div>
+            <div id="namespace-1591917157" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Provider.loggerProviderModel.html">loggerProviderModel</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Provider.settingsProviderModel.html">settingsProviderModel</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1623557285"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.Tools.html" style="margin-left: 30px; padding-left: 0">Tools</a>
+            </div>
+            <div id="namespace-1623557285" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Tools.browserData.html">browserData</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Tools.pharizeBase.html">pharizeBase</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Tools.pharizeShell.html">pharizeShell</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.masterControlProgram.html">masterControlProgram</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1193277267"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.html" style="margin-left: 30px; padding-left: 0">Pdo</a>
+            </div>
+            <div id="namespace-1193277267" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-276976994"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.Driver.html" style="margin-left: 30px; padding-left: 0">Driver</a>
+            </div>
+            <div id="namespace-276976994" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Driver.mysqlDriver.html">mysqlDriver</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Driver.pdoDriver.html">pdoDriver</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Driver.sqliteDriver.html">sqliteDriver</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1321163967"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.Model.html" style="margin-left: 30px; padding-left: 0">Model</a>
+            </div>
+            <div id="namespace-1321163967" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Model.mcpQueryModelClass.html">mcpQueryModelClass</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1362927810"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.Query.html" style="margin-left: 30px; padding-left: 0">Query</a>
+            </div>
+            <div id="namespace-1362927810" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Query.JsonQuery.html">JsonQuery</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1817271975"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
+            </div>
+            <div id="namespace-1817271975" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Service.pdoService.html">pdoService</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/html2text.html">html2text</a></li>
+                                                    <li class="class"><a href="../classes/mcpAutoload.html">mcpAutoload</a></li>
+                                                    <li class="class"><a href="../classes/zebra_image.html">zebra_image</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content file">
+                    <nav>
+                                                                    </nav>
+
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+                    <h1><small>Gfx/Component</small>zebra_image.class.php</h1>
+                    <p><em></em></p>
+                    
+
+                    
+                    
+                                        <h2>Classes</h2>
+                    <table class="table table-hover">
+                                            <tr>
+                            <td><a href="../classes/zebra_image.html">zebra_image</a></td>
+                            <td><em>A compact (one-file only) and lightweight PHP library for image manipulation providing methods for performing several
+ types of image manipulation operations and applying filters to images.</em></td>
+                        </tr>
+                                        </table>
+                                    </div>
+
+                <aside class="span4 detailsbar">
+                    <dl>
+                                                    <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">\Default</div></dd>
+                        
+                        
+                    </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                                            </table>
+
+                </aside>
+            </div>
+
+                        <div class="row-fluid">
+                <section class="span8 content file">
+                    <h2>Constants</h2>
+                </section>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ZEBRA_IMAGE_BOXED" name="constant_ZEBRA_IMAGE_BOXED" class="anchor"></a>
+            <article id="constant_ZEBRA_IMAGE_BOXED" class="constant">
+                <h3 class="">ZEBRA_IMAGE_BOXED</h3>
+                <pre class="signature">ZEBRA_IMAGE_BOXED</pre>
+                <p><em>Methods used with the {@link resize()} method.</em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">Gfx/Component/zebra_image.class.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ZEBRA_IMAGE_NOT_BOXED" name="constant_ZEBRA_IMAGE_NOT_BOXED" class="anchor"></a>
+            <article id="constant_ZEBRA_IMAGE_NOT_BOXED" class="constant">
+                <h3 class="">ZEBRA_IMAGE_NOT_BOXED</h3>
+                <pre class="signature">ZEBRA_IMAGE_NOT_BOXED</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">Gfx/Component/zebra_image.class.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ZEBRA_IMAGE_CROP_TOPLEFT" name="constant_ZEBRA_IMAGE_CROP_TOPLEFT" class="anchor"></a>
+            <article id="constant_ZEBRA_IMAGE_CROP_TOPLEFT" class="constant">
+                <h3 class="">ZEBRA_IMAGE_CROP_TOPLEFT</h3>
+                <pre class="signature">ZEBRA_IMAGE_CROP_TOPLEFT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">Gfx/Component/zebra_image.class.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ZEBRA_IMAGE_CROP_TOPCENTER" name="constant_ZEBRA_IMAGE_CROP_TOPCENTER" class="anchor"></a>
+            <article id="constant_ZEBRA_IMAGE_CROP_TOPCENTER" class="constant">
+                <h3 class="">ZEBRA_IMAGE_CROP_TOPCENTER</h3>
+                <pre class="signature">ZEBRA_IMAGE_CROP_TOPCENTER</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">Gfx/Component/zebra_image.class.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ZEBRA_IMAGE_CROP_TOPRIGHT" name="constant_ZEBRA_IMAGE_CROP_TOPRIGHT" class="anchor"></a>
+            <article id="constant_ZEBRA_IMAGE_CROP_TOPRIGHT" class="constant">
+                <h3 class="">ZEBRA_IMAGE_CROP_TOPRIGHT</h3>
+                <pre class="signature">ZEBRA_IMAGE_CROP_TOPRIGHT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">Gfx/Component/zebra_image.class.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ZEBRA_IMAGE_CROP_MIDDLELEFT" name="constant_ZEBRA_IMAGE_CROP_MIDDLELEFT" class="anchor"></a>
+            <article id="constant_ZEBRA_IMAGE_CROP_MIDDLELEFT" class="constant">
+                <h3 class="">ZEBRA_IMAGE_CROP_MIDDLELEFT</h3>
+                <pre class="signature">ZEBRA_IMAGE_CROP_MIDDLELEFT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">Gfx/Component/zebra_image.class.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ZEBRA_IMAGE_CROP_CENTER" name="constant_ZEBRA_IMAGE_CROP_CENTER" class="anchor"></a>
+            <article id="constant_ZEBRA_IMAGE_CROP_CENTER" class="constant">
+                <h3 class="">ZEBRA_IMAGE_CROP_CENTER</h3>
+                <pre class="signature">ZEBRA_IMAGE_CROP_CENTER</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">Gfx/Component/zebra_image.class.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ZEBRA_IMAGE_CROP_MIDDLERIGHT" name="constant_ZEBRA_IMAGE_CROP_MIDDLERIGHT" class="anchor"></a>
+            <article id="constant_ZEBRA_IMAGE_CROP_MIDDLERIGHT" class="constant">
+                <h3 class="">ZEBRA_IMAGE_CROP_MIDDLERIGHT</h3>
+                <pre class="signature">ZEBRA_IMAGE_CROP_MIDDLERIGHT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">Gfx/Component/zebra_image.class.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ZEBRA_IMAGE_CROP_BOTTOMLEFT" name="constant_ZEBRA_IMAGE_CROP_BOTTOMLEFT" class="anchor"></a>
+            <article id="constant_ZEBRA_IMAGE_CROP_BOTTOMLEFT" class="constant">
+                <h3 class="">ZEBRA_IMAGE_CROP_BOTTOMLEFT</h3>
+                <pre class="signature">ZEBRA_IMAGE_CROP_BOTTOMLEFT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">Gfx/Component/zebra_image.class.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ZEBRA_IMAGE_CROP_BOTTOMCENTER" name="constant_ZEBRA_IMAGE_CROP_BOTTOMCENTER" class="anchor"></a>
+            <article id="constant_ZEBRA_IMAGE_CROP_BOTTOMCENTER" class="constant">
+                <h3 class="">ZEBRA_IMAGE_CROP_BOTTOMCENTER</h3>
+                <pre class="signature">ZEBRA_IMAGE_CROP_BOTTOMCENTER</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">Gfx/Component/zebra_image.class.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                        <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="constant_ZEBRA_IMAGE_CROP_BOTTOMRIGHT" name="constant_ZEBRA_IMAGE_CROP_BOTTOMRIGHT" class="anchor"></a>
+            <article id="constant_ZEBRA_IMAGE_CROP_BOTTOMRIGHT" class="constant">
+                <h3 class="">ZEBRA_IMAGE_CROP_BOTTOMRIGHT</h3>
+                <pre class="signature">ZEBRA_IMAGE_CROP_BOTTOMRIGHT</pre>
+                <p><em></em></p>
+                
+            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                <dt>File</dt>
+                <dd><a href=""><div class="path-wrapper">Gfx/Component/zebra_image.class.php</div></a></dd>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            package
+                        </th>
+                        <td>
+                                                            <p>Default</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                            
+            
+        </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label"></h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Gfx/Component/zebra_image.class.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/LinHUniX.html">\LinHUniX</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on April 1st, 2019 at 07:32.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>

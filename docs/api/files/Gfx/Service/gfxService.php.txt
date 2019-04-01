@@ -17,6 +17,7 @@ use LinHUniX\Mcp\masterControlProgram;
 class gfxService extends mcpBaseModelClass
 {
     private static $html2txt = null;
+    private static $zebraimage = null;
 
     /**
      * @param array (reference of) $scopeCtl => calling Controlling definitions
@@ -53,7 +54,6 @@ class gfxService extends mcpBaseModelClass
         }
     }
 
-
     /**
      * getHtml2Txt
      *
@@ -70,6 +70,107 @@ class gfxService extends mcpBaseModelClass
         self::$html2txt->set_html($source, $from_file);
         self::$html2txt->set_base_url();
         return self::$html2txt->get_text();
+    }
+    private function getZebraImageError($error_code)
+    {
+        $source_path=self::$zebraimage->source_path;
+        $target_path=self::$zebraimage->target_path;
+        $res="";
+        // if there was an error, let's see what the error is about
+        switch ($error_code) {
+            case 1:
+                $res= 'Source file "' . $source_path . '" could not be found!';
+                break;
+            case 2:
+                $res= 'Source file "' . $source_path . '" is not readable!';
+                break;
+            case 3:
+                $res= 'Could not write target file "' . $source_path . '"!';
+                break;
+            case 4:
+                $res= $source_path . '" is an unsupported source file format!';
+                break;
+            case 5:
+                $res= $target_path . '" is an unsupported target file format!';
+                break;
+            case 6:
+                $res= 'GD library version does not support target file format!';
+                break;
+            case 7:
+                $res= 'GD library is not installed!';
+                break;
+            case 8:
+                $res= '"chmod" command is disabled via configuration!';
+                break;
+        }
+        return $res;
+    }
+    /**
+     * getZebraImage
+     * 
+     * 
+     * @param  String $source_file image input file
+     * @param  String $dest_file image output file
+     * @param  String $action request image action :
+     *  - "resize" resize image 
+     *  -- args:width,height
+     *  - "flip_horizontal" invert horizontal image 
+     *  - "flip_vertical" invert vertical image 
+     *  - "flip_both" invert vertical and horizontal image 
+     *  - "crop" cut image 
+     *  -- args:start_x,start_y,end_x,end_y
+     *  - "rotate" rotate image 
+     *  -- args:angle   
+     * @return String text converted
+     */
+    public function getZebraImage($action,$source_file, $dest_file, $arg=array())
+    {
+        $rmsg="DONE";
+        if (self::$zebraimage == null) {
+            include_once __DIR__ . "./../Component/zebra_image.class.php";
+            self::$zebraimage = new \zebra_image();
+        }
+        self::$zebraimage->source_path=$source_file;
+        self::$zebraimage->target_path=$dest_file;
+        switch ($action) {
+            case "resize":
+            if (! self::$zebraimage->resize($arg["width"], $arg["height"], ZEBRA_IMAGE_BOXED, -1)){
+                 $rmsg=$this->getZebraImageError($image->error);
+                 return false;
+            }
+            return true;
+            case "flip_horizontal":
+            if (! self::$zebraimage->flip_horizontal()) {
+                 $rmsg=$this->getZebraImageError(self::$zebraimage->error);
+                 return false;
+            }
+            return true;
+            case "flip_vertical":
+            if (! self::$zebraimage->flip_vertical()) {
+                 $rmsg=$this->getZebraImageError($image->error);
+                 return false;
+            }
+            return true;
+            case "flip_both":
+            if (! self::$zebraimage->flip_both()) {
+                 $rmsg=$this->getZebraImageError($image->error);
+                 return false;
+            }
+            return true;
+            case "crop":
+            if (! self::$zebraimage->crop($arg["start_x"], $arg["start_y"],$arg["end_x"], $arg["end_y"])) {
+                 $rmsg=$this->getZebraImageError($image->error);
+                 return false;
+            }
+            return true;
+            case "rotate":
+            if (! self::$zebraimage->rotate($arg["angle"])) {
+                 $rmsg=$this->getZebraImageError(self::$zebraimage->error);
+                 return false;
+            }
+            return true;
+        }
+
     }
     /**
      * callStaticCommon
@@ -181,6 +282,19 @@ class gfxService extends mcpBaseModelClass
      *      var ["minetype"] = Mime Type of Internal Source File
      *      var ["tag"] = Use Tag Converter
      *      return txt converson
+     * -- DYN =Internal dynamic Source
+     *      var ["source"] = Internal Source File
+     *      var ["minetype"] = Mime Type of Internal Source File
+     *      var ["tag"] = Use Tag Converter
+     *      return txt converson
+     * -- MNU =Load common menu and tag gfx
+     *      var ["source"] = Internal Source folder
+     *      return void
+     * -- MNU =Load common menu and tag gfx
+     *      var ["effect"] = image effect request 
+     *      var ["source"] = source file 
+     *      var ["dest"] = dest file 
+     *      return void
      * @author Andrea Morello <andrea.morello@linhunix.com>
      * @version GIT:2018-v1
      * @param array $this->argIn temproraney array auto cleanable
@@ -223,7 +337,22 @@ class gfxService extends mcpBaseModelClass
                     return;
                 }
                 $source = $this->argIn["source"];
-                $this->argOut = $this->loadMenusCommon($source, $mime, $tag, $this->argIn);
+                $this->argOut = $this->loadMenusCommon($source);
+                break;
+            case "IMG":
+                if (!isset($this->argIn["effect"])) {
+                    return;
+                }
+                if (!isset($this->argIn["source"])) {
+                    return;
+                }
+                if (!isset($this->argIn["dest"])) {
+                    return;
+                }
+                $effect = $this->argIn["effect"];
+                $source = $this->argIn["source"];
+                $dest = $this->argIn["dest"];
+                $this->argOut = $this->getZebraImage($effect,$source,$dest,$this->argIn);
                 break;
         }
     }

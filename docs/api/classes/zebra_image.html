@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>API Documentation</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+    <link href="../css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/prism.css" rel="stylesheet" media="all"/>
+    <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+    <!--[if lt IE 9]>
+    <script src="../js/html5.js"></script>
+    <![endif]-->
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <script src="../js/ui/1.10.4/jquery-ui.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/jquery.smooth-scroll.js"></script>
+    <script src="../js/prism.min.js"></script>
+    <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
+    <script type="text/javascript">
+    function loadExternalCodeSnippets() {
+        Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+            var src = pre.getAttribute('data-src');
+            var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+            var language = 'php';
+
+            var code = document.createElement('code');
+            code.className = 'language-' + language;
+
+            pre.textContent = '';
+
+            code.textContent = 'Loading…';
+
+            pre.appendChild(code);
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('GET', src, true);
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4) {
+
+                    if (xhr.status < 400 && xhr.responseText) {
+                        code.textContent = xhr.responseText;
+
+                        Prism.highlightElement(code);
+                    }
+                    else if (xhr.status >= 400) {
+                        code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                    }
+                    else {
+                        code.textContent = '✖ Error: File does not exist or is empty';
+                    }
+                }
+            };
+
+            xhr.send(null);
+        });
+    }
+
+    $(document).ready(function(){
+        loadExternalCodeSnippets();
+    });
+    $('#source-view').on('shown', function () {
+        loadExternalCodeSnippets();
+    })
+</script>
+
+    <link rel="shortcut icon" href="../images/favicon.ico"/>
+    <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
+    <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
+    <link rel="apple-touch-icon" sizes="114x114" href="../images/apple-touch-icon-114x114.png"/>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <i class="icon-ellipsis-vertical"></i>
+            </a>
+            <a class="brand" href="../index.html">API Documentation</a>
+
+            <div class="nav-collapse">
+                <ul class="nav pull-right">
+                                        <li class="dropdown">
+                        <a href="../index.html" class="dropdown-toggle" data-toggle="dropdown">
+                            API Documentation <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                                                        <li><a href="../namespaces/LinHUniX.html">\LinHUniX</a></li>
+                                                    </ul>
+                    </li>
+                                        <li class="dropdown" id="charts-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Charts <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../graphs/class.html">
+                                    <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown" id="reports-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Reports <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href="../reports/errors.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Errors <span class="label label-info pull-right">518</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/markers.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <i class="icon-list-alt"></i>&#160;Markers <span class="label label-info pull-right">4</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../reports/deprecated.html">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <i class="icon-list-alt"></i>&#160;Deprecated <span class="label label-info pull-right">7</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!--<div class="go_to_top">-->
+    <!--<a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>-->
+    <!--</div>-->
+</div>
+
+<div id="___" class="container-fluid">
+        <section class="row-fluid">
+        <div class="span2 sidebar">
+                                <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-337979468"></a>
+                                <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
+            </div>
+            <div id="namespace-337979468" class="accordion-body collapse in">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-707171407"></a>
+                                <a href="../namespaces/LinHUniX.html" style="margin-left: 30px; padding-left: 0">LinHUniX</a>
+            </div>
+            <div id="namespace-707171407" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-694093056"></a>
+                                <a href="../namespaces/LinHUniX.Gfx.html" style="margin-left: 30px; padding-left: 0">Gfx</a>
+            </div>
+            <div id="namespace-694093056" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2077131886"></a>
+                                <a href="../namespaces/LinHUniX.Gfx.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
+            </div>
+            <div id="namespace-2077131886" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Gfx.Service.gfxService.html">gfxService</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-246475352"></a>
+                                <a href="../namespaces/LinHUniX.ln4.html" style="margin-left: 30px; padding-left: 0">ln4</a>
+            </div>
+            <div id="namespace-246475352" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1233996152"></a>
+                                <a href="../namespaces/LinHUniX.ln4.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
+            </div>
+            <div id="namespace-1233996152" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.ln4.Controller.ln4Controller.html">ln4Controller</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1314836167"></a>
+                                <a href="../namespaces/LinHUniX.Mail.html" style="margin-left: 30px; padding-left: 0">Mail</a>
+            </div>
+            <div id="namespace-1314836167" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1363164699"></a>
+                                <a href="../namespaces/LinHUniX.Mail.Component.html" style="margin-left: 30px; padding-left: 0">Component</a>
+            </div>
+            <div id="namespace-1363164699" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Component.PHPMailer.html">PHPMailer</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Component.phpmailerException.html">phpmailerException</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Component.POP3.html">POP3</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Component.SMTP.html">SMTP</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-585582037"></a>
+                                <a href="../namespaces/LinHUniX.Mail.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
+            </div>
+            <div id="namespace-585582037" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mail.Service.mailService.html">mailService</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-200833811"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.html" style="margin-left: 30px; padding-left: 0">Mcp</a>
+            </div>
+            <div id="namespace-200833811" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1112337982"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.Component.html" style="margin-left: 30px; padding-left: 0">Component</a>
+            </div>
+            <div id="namespace-1112337982" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpCoreClass.html">mcpCoreClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpDebugClass.html">mcpDebugClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpLanguageClass.html">mcpLanguageClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpMailClass.html">mcpMailClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpMenuClass.html">mcpMenuClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpProxyClass.html">mcpProxyClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpTemplateClass.html">mcpTemplateClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Component.mcpToolsClass.html">mcpToolsClass</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-629100480"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.Model.html" style="margin-left: 30px; padding-left: 0">Model</a>
+            </div>
+            <div id="namespace-629100480" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                    <li class="interface"><a href="../classes/LinHUniX.Mcp.Model.mcpServiceProviderModelClass.html">mcpServiceProviderModelClass</a></li>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpBaseModelClass.html">mcpBaseModelClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpConfigArrayModelClass.html">mcpConfigArrayModelClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpDebugModelClass.html">mcpDebugModelClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpRemoteApiModelClass.html">mcpRemoteApiModelClass</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Model.mcpRemoteObjectModelClass.html">mcpRemoteObjectModelClass</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-107802823"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.Provider.html" style="margin-left: 30px; padding-left: 0">Provider</a>
+            </div>
+            <div id="namespace-107802823" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Provider.loggerProviderModel.html">loggerProviderModel</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Provider.settingsProviderModel.html">settingsProviderModel</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1118317001"></a>
+                                <a href="../namespaces/LinHUniX.Mcp.Tools.html" style="margin-left: 30px; padding-left: 0">Tools</a>
+            </div>
+            <div id="namespace-1118317001" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Tools.browserData.html">browserData</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Tools.pharizeBase.html">pharizeBase</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.Tools.pharizeShell.html">pharizeShell</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Mcp.masterControlProgram.html">masterControlProgram</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1592983672"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.html" style="margin-left: 30px; padding-left: 0">Pdo</a>
+            </div>
+            <div id="namespace-1592983672" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-931238635"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.Driver.html" style="margin-left: 30px; padding-left: 0">Driver</a>
+            </div>
+            <div id="namespace-931238635" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Driver.mysqlDriver.html">mysqlDriver</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Driver.pdoDriver.html">pdoDriver</a></li>
+                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Driver.sqliteDriver.html">sqliteDriver</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1862012004"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.Model.html" style="margin-left: 30px; padding-left: 0">Model</a>
+            </div>
+            <div id="namespace-1862012004" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Model.mcpQueryModelClass.html">mcpQueryModelClass</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-428281425"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.Query.html" style="margin-left: 30px; padding-left: 0">Query</a>
+            </div>
+            <div id="namespace-428281425" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Query.JsonQuery.html">JsonQuery</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                                                    <div class="accordion" style="margin-bottom: 0">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2094272396"></a>
+                                <a href="../namespaces/LinHUniX.Pdo.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
+            </div>
+            <div id="namespace-2094272396" class="accordion-body collapse ">
+                <div class="accordion-inner">
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/LinHUniX.Pdo.Service.pdoService.html">pdoService</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+                    
+                    <ul>
+                                                                                                    <li class="class"><a href="../classes/html2text.html">html2text</a></li>
+                                                    <li class="class"><a href="../classes/mcpAutoload.html">mcpAutoload</a></li>
+                                                    <li class="class"><a href="../classes/zebra_image.html">zebra_image</a></li>
+                                            </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        </div>
+    </section>
+    <section class="row-fluid">
+        <div class="span10 offset2">
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <nav>
+                                                <a href="../namespaces/default.html">\</a> <i class="icon-level-up"></i>
+                                            </nav>
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+
+                    <h1><small>\</small>zebra_image</h1>
+                    <p><em>A compact (one-file only) and lightweight PHP library for image manipulation providing methods for performing several
+ types of image manipulation operations and applying filters to images.</em></p>
+                    <p>Read more <a href="https://github.com/stefangabos/Zebra_Image/">here</a></p>
+                    
+                                        
+                    <section id="summary">
+                        <h2>Summary</h2>
+                        <section class="row-fluid heading">
+                            <section class="span4">
+                                <a href="#methods">Methods</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#properties">Properties</a>
+                            </section>
+                            <section class="span4">
+                                <a href="#constants">Constants</a>
+                            </section>
+                        </section>
+                        <section class="row-fluid public">
+                            <section class="span4">
+                                                                    <a href="../classes/zebra_image.html#method___construct" class="">__construct()</a><br />
+                                                                    <a href="../classes/zebra_image.html#method_apply_filter" class="">apply_filter()</a><br />
+                                                                    <a href="../classes/zebra_image.html#method_crop" class="">crop()</a><br />
+                                                                    <a href="../classes/zebra_image.html#method_flip_both" class="">flip_both()</a><br />
+                                                                    <a href="../classes/zebra_image.html#method_flip_horizontal" class="">flip_horizontal()</a><br />
+                                                                    <a href="../classes/zebra_image.html#method_flip_vertical" class="">flip_vertical()</a><br />
+                                                                    <a href="../classes/zebra_image.html#method_resize" class="">resize()</a><br />
+                                                                    <a href="../classes/zebra_image.html#method_rotate" class="">rotate()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <a href="../classes/zebra_image.html#property_chmod_value" class="">$chmod_value</a><br />
+                                                                    <a href="../classes/zebra_image.html#property_enlarge_smaller_images" class="">$enlarge_smaller_images</a><br />
+                                                                    <a href="../classes/zebra_image.html#property_error" class="">$error</a><br />
+                                                                    <a href="../classes/zebra_image.html#property_auto_handle_exif_orientation" class="">$auto_handle_exif_orientation</a><br />
+                                                                    <a href="../classes/zebra_image.html#property_jpeg_quality" class="">$jpeg_quality</a><br />
+                                                                    <a href="../classes/zebra_image.html#property_png_compression" class="">$png_compression</a><br />
+                                                                    <a href="../classes/zebra_image.html#property_preserve_aspect_ratio" class="">$preserve_aspect_ratio</a><br />
+                                                                    <a href="../classes/zebra_image.html#property_preserve_time" class="">$preserve_time</a><br />
+                                                                    <a href="../classes/zebra_image.html#property_sharpen_images" class="">$sharpen_images</a><br />
+                                                                    <a href="../classes/zebra_image.html#property_source_path" class="">$source_path</a><br />
+                                                                    <a href="../classes/zebra_image.html#property_target_path" class="">$target_path</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No constants found</em>
+                                                            </section>
+                        </section>
+                        <section class="row-fluid protected">
+                            <section class="span4">
+                                                                    <em>No protected methods found</em>
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No protected properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                        <section class="row-fluid private">
+                            <section class="span4">
+                                                                    <a href="../classes/zebra_image.html#method__create_from_source" class="">_create_from_source()</a><br />
+                                                                    <a href="../classes/zebra_image.html#method__flip" class="">_flip()</a><br />
+                                                                    <a href="../classes/zebra_image.html#method__hex2rgb" class="">_hex2rgb()</a><br />
+                                                                    <a href="../classes/zebra_image.html#method__prepare_image" class="">_prepare_image()</a><br />
+                                                                    <a href="../classes/zebra_image.html#method__sharpen_image" class="">_sharpen_image()</a><br />
+                                                                    <a href="../classes/zebra_image.html#method__write_image" class="">_write_image()</a><br />
+                                                            </section>
+                            <section class="span4">
+                                                                    <em>No private properties found</em>
+                                                            </section>
+                            <section class="span4">
+                                <em>N/A</em>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+                <aside class="span4 detailsbar">
+                                        
+                    
+                    <dl>
+                        <dt>File</dt>
+                            <dd><a href="../files/Gfx.Component.zebra_image.class.html"><div class="path-wrapper">Gfx/Component/zebra_image.class.php</div></a></dd>
+                                                <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">Default</div></dd>
+                                                <dt>Class hierarchy</dt>
+                            <dd class="hierarchy">
+                                                                                                                                                                    <div class="namespace-wrapper">\zebra_image</div>
+                            </dd>
+
+                        
+                        
+                        
+                        
+                                                                        </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                            <tr>
+                            <th>
+                                author
+                            </th>
+                            <td>
+                                                                    <p>Stefan Gabos <a href="mailto:contact@stefangabos.ro">contact@stefangabos.ro</a>
+@version    2.3.0 (last revision: February 24, 2019)
+@copyright  (c) 2006 - 2019 Stefan Gabos
+@license    <a href="http://www.gnu.org/licenses/lgpl-3.0.txt">http://www.gnu.org/licenses/lgpl-3.0.txt</a> GNU LESSER GENERAL PUBLIC LICENSE
+@package    Zebra_Image</p>
+                                                            </td>
+                        </tr>
+                                        </table>
+                </aside>
+            </div>
+
+                        
+                                    <a id="properties" name="properties"></a>
+            <div class="row-fluid">
+                <div class="span8 content class">
+                    <h2>Properties</h2>
+                </div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_chmod_value" name="property_chmod_value" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$chmod_value</h3>
+                <pre class="signature">$chmod_value : integer</pre>
+                <p><em>Indicates the file system permissions to be set for newly created images.</em></p>
+                <p>Better is to leave this setting as it is.</p>
+<p>If you know what you are doing, here is how you can calculate the permission levels:</p>
+<ul>
+<li>400 Owner Read</li>
+<li>200 Owner Write</li>
+<li>100 Owner Execute</li>
+<li>40 Group Read</li>
+<li>20 Group Write</li>
+<li>10 Group Execute</li>
+<li>4 Global Read</li>
+<li>2 Global Write</li>
+<li>
+<p>1 Global Execute</p>
+<p>Default is 0755</p>
+</li>
+</ul>
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_enlarge_smaller_images" name="property_enlarge_smaller_images" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$enlarge_smaller_images</h3>
+                <pre class="signature">$enlarge_smaller_images : boolean</pre>
+                <p><em>If set to FALSE, images having both width and height smaller than the required width and height, will be left
+ untouched ({@link jpeg_quality} and {@link png_compression} will still apply).</em></p>
+                <p>Available only for the \resize() method</p>
+<p>Default is TRUE</p>
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_error" name="property_error" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$error</h3>
+                <pre class="signature">$error : integer</pre>
+                <p><em>In case of an error read this property&#039;s value to see the error&#039;s code.</em></p>
+                <p>Possible error codes are:</p>
+<ul>
+<li>1:  source file could not be found</li>
+<li>2:  source file is not readable</li>
+<li>3:  could not write target file</li>
+<li>4:  unsupported source file format</li>
+<li>5:  unsupported target file format</li>
+<li>6:  GD library version does not support target file format</li>
+<li>7:  GD library is not installed!</li>
+<li>8:  &quot;chmod&quot; command is disabled via configuration</li>
+<li>
+<p>9:  &quot;exif_read_data&quot; function is not available</p>
+<p>Default is 0 (no error).</p>
+</li>
+</ul>
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_auto_handle_exif_orientation" name="property_auto_handle_exif_orientation" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$auto_handle_exif_orientation</h3>
+                <pre class="signature">$auto_handle_exif_orientation : </pre>
+                <p><em>If set to TRUE, JPEG images will be auto-rotated according to the {@link http://keyj.emphy.de/exif-orientation-rant/ Exif Orientation Tag}
+ so that they are always shown correctly.</em></p>
+                <samp>If you set this to TRUE you must also enable exif-support with --enable-exif. Windows users must enable both
+ the php_mbstring.dll and php_exif.dll DLL's in php.ini. The php_mbstring.dll DLL must be loaded before the
+ php_exif.dll DLL so adjust your php.ini accordingly. See [the PHP manual](http://php.net/manual/en/exif.installation.php)</samp>
+<p>Default is FALSE</p>
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            since
+                        </th>
+                        <td>
+                                                            <p>@var boolean</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_jpeg_quality" name="property_jpeg_quality" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$jpeg_quality</h3>
+                <pre class="signature">$jpeg_quality : integer</pre>
+                <p><em>Indicates the quality of the output image (better quality means bigger file size).</em></p>
+                <p>Used only if the file at \target_path is a JPG/JPEG image.</p>
+<p>Range is 0 - 100</p>
+<p>Default is 85</p>
+
+                                <h4>Type</h4>
+                integer
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_png_compression" name="property_png_compression" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$png_compression</h3>
+                <pre class="signature">$png_compression : </pre>
+                <p><em>Indicates the compression level of the output image (lower compression means bigger file size).</em></p>
+                <p>Available only if PHP version is 5.1.2+, and only if the file at \target_path is a PNG image. It will be
+ignored otherwise.</p>
+<p>Range is 0 - 9</p>
+<p>Default is 9</p>
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            since
+                        </th>
+                        <td>
+                                                            <p>@var integer</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_preserve_aspect_ratio" name="property_preserve_aspect_ratio" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$preserve_aspect_ratio</h3>
+                <pre class="signature">$preserve_aspect_ratio : boolean</pre>
+                <p><em>Specifies whether, upon resizing, images should preserve their aspect ratio.</em></p>
+                <p>Available only for the \resize() method</p>
+<p>Default is TRUE</p>
+
+                                <h4>Type</h4>
+                boolean
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_preserve_time" name="property_preserve_time" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$preserve_time</h3>
+                <pre class="signature">$preserve_time : </pre>
+                <p><em>Indicates whether a target files should preserve the source file&#039;s date/time.</em></p>
+                <p>Default is TRUE</p>
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            since
+                        </th>
+                        <td>
+                                                            <p>@var boolean</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_sharpen_images" name="property_sharpen_images" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$sharpen_images</h3>
+                <pre class="signature">$sharpen_images : </pre>
+                <p><em>Indicates whether the target image should have a &quot;sharpen&quot; filter applied to it.</em></p>
+                <p>Can be very useful when creating thumbnails and should be used only when creating thumbnails.</p>
+<p><i>The sharpen filter relies on the &quot;imageconvolution&quot; PHP function which is available only for PHP version
+5.1.0+, and will leave the images unaltered for older versions!</i></p>
+<p>Default is FALSE</p>
+
+                                <h4>Type</h4>
+                
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            since
+                        </th>
+                        <td>
+                                                            <p>@var boolean</p>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_source_path" name="property_source_path" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$source_path</h3>
+                <pre class="signature">$source_path : string</pre>
+                <p><em>Path to an image file to apply the transformations to.</em></p>
+                <p>Supported file types are <b>GIF</b>, <b>PNG</b> and <b>JPEG</b>.</p>
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="property_target_path" name="property_target_path" class="anchor"></a>
+            <article class="property">
+                <h3 class="public ">$target_path</h3>
+                <pre class="signature">$target_path : string</pre>
+                <p><em>Path (including file name) to where to save the transformed image.</em></p>
+                <p><i>Can be a different than \source_path - the type of the transformed image will be as indicated by the
+file's extension (supported file types are GIF, PNG and JPEG)</i>.</p>
+
+                                <h4>Type</h4>
+                string
+                                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                        <dl>
+                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                            
+                                    <a id="methods" name="methods"></a>
+            <div class="row-fluid">
+                <div class="span8 content class"><h2>Methods</h2></div>
+                <aside class="span4 detailsbar"></aside>
+            </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method___construct" name="method___construct" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">__construct()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">__construct() : void</pre>
+                <p><em>Constructor of the class.</em></p>
+                <p>Initializes the class and the default properties</p>
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_apply_filter" name="method_apply_filter" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">apply_filter()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">apply_filter(string  <span class="argument">$filter</span>,   <span class="argument">$arg1 = &#039;&#039;</span>,   <span class="argument">$arg2 = &#039;&#039;</span>,   <span class="argument">$arg3 = &#039;&#039;</span>,   <span class="argument">$arg4 = &#039;&#039;</span>) </pre>
+                <p><em>Applies one or more filters to the image given as {@link source_path} and outputs it as the file specified as
+ {@link target_path}.</em></p>
+                <samp>This method is available only if the [imagefilter](http://php.net/manual/en/function.imagefilter.php)
+ function is available (available from PHP 5+), and will leave images unaltered otherwise.</samp>
+<p><code>
+// include the Zebra_Image library
+require 'path/to/Zebra_Image.php';</p>
+<p>// instantiate the class
+$img = new Zebra_Image();</p>
+<p>// a source image
+$img-&gt;source_path = 'path/to/source.ext';</p>
+<p>// path to where should the resulting image be saved
+// note that by simply setting a different extension to the file will
+// instruct the script to create an image of that particular type
+$img-&gt;target_path = 'path/to/target.ext';</p>
+<p>// apply the &quot;grayscale&quot; filter
+$img-&gt;apply_filter('grayscale');</p>
+<p>// apply the &quot;contrast&quot; filter
+$img-&gt;apply_filter('contrast', -20);
+</code></p>
+<p>You can also apply multiple filters at once. In this case, the method requires a single argument, an array of
+arrays, containing the filters and associated arguments, where applicable:</p>
+<p><code>
+// create a sepia effect
+// note how we're applying multiple filters at once
+// each filter is in its own array
+$img-&gt;apply_filter(array(</p>
+<pre><code> // first we apply the "grayscale" filter
+ array('grayscale'),
+
+ // then we apply the "colorize" filter with 90, 60, 40 as
+ // the values for red, green and blue
+ array('colorize', 90, 60, 40),</code></pre>
+<p>));
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$filter </td>
+                                <td><p>The (case-insensitive) name of the filter to apply. Can be one of the following:</p>
+<pre><code>                         -   &lt;b&gt;brightness&lt;/b&gt;       -   changes the brightness of the image; use &lt;b&gt;arg1&lt;/b&gt;
+                                                         to set the level of brightness; the range of brightness
+                                                         is -255 to 255;
+                         -   &lt;b&gt;colorize&lt;/b&gt;         -   adds (subtracts) specified RGB values to each pixel;
+                                                         use &lt;b&gt;arg1&lt;/b&gt;, &lt;b&gt;arg2&lt;/b&gt; and &lt;b&gt;arg3&lt;/b&gt; in the
+                                                         form of red, green, blue and &lt;b&gt;arg4&lt;/b&gt; for the alpha
+                                                         channel. the range for each color is -255 to 255 and
+                                                         0 to 127 for alpha; &lt;i&gt;alpha support is available only
+                                                         for PHP 5.2.5+&lt;/i&gt;;
+                         -   &lt;b&gt;contrast&lt;/b&gt;         -   changes the contrast of the image; use &lt;b&gt;arg1&lt;/b&gt;
+                                                         to set the level of contrast; the range of contrast
+                                                         is -100 to 100;
+                         -   &lt;b&gt;gausian_blur&lt;/b&gt;     -   blurs the image using the Gaussian method;
+                         -   &lt;b&gt;grayscale&lt;/b&gt;        -   converts the image into grayscale;
+                         -   &lt;b&gt;edgedetect&lt;/b&gt;       -   uses edge detection to highlight the edges in the image;
+                         -   &lt;b&gt;emboss&lt;/b&gt;           -   embosses the image;
+                         -   &lt;b&gt;mean_removal&lt;/b&gt;     -   uses mean removal to achieve a "sketchy" effect;
+                         -   &lt;b&gt;negate&lt;/b&gt;           -   reverses all the colors of the image;
+                         -   &lt;b&gt;pixelate&lt;/b&gt;         -   applies pixelation effect to the image, use &lt;b&gt;arg1&lt;/b&gt;
+                                                         to set the block size and &lt;b&gt;arg2&lt;/b&gt; to set the
+                                                         pixelation effect mode; &lt;i&gt;this filter is available
+                                                         only for PHP 5.3.0+&lt;/i&gt;;
+                         -   &lt;b&gt;selective_blur&lt;/b&gt;   -   blurs the image;
+                         -   &lt;b&gt;smooth&lt;/b&gt;           -   makes the image smoother. Use &lt;b&gt;arg1&lt;/b&gt; to set the
+                                                         level of smoothness. applies a 9-cell convolution matrix
+                                                         where center pixel has the weight of &lt;b&gt;arg1&lt;/b&gt; and
+                                                         others weight of 1.0. the result is normalized by dividing
+                                                         the sum with &lt;b&gt;arg1&lt;/b&gt; + 8.0 (sum of the matrix).
+                                                         any float is accepted;</code></pre>
+<p>@param  mixed   $arg1       Used by the following filters:</p>
+<ul>
+<li><b>brightness</b>       -   sets the brightness level (-255 to 255)</li>
+<li><b>contrast</b>         -   sets the contrast level (-100 to 100)</li>
+<li><b>colorize</b>         -   sets the value of the red component (-255 to 255)</li>
+<li><b>smooth</b>           -   sets the smoothness level</li>
+<li>
+<p><b>pixelate</b>         -   sets the block size, in pixels</p>
+<p>@param  mixed   $arg2       Used by the following filters:</p>
+</li>
+<li><b>colorize</b>         -   sets the value of the green component (-255 to 255)</li>
+<li>
+<p><b>pixelate</b>         -   whether to use advanced pixelation effect or not (defaults to FALSE).</p>
+<p>@param  mixed   $arg3       Used by the following filters:</p>
+</li>
+<li>
+<p><b>colorize</b>         -   sets the value of the blue component (-255 to 255)</p>
+<p>@param  mixed   $arg4       Used by the following filters:</p>
+</li>
+<li>
+<p><b>colorize</b>         -   alpha channel; a value between 0 and 127. 0 indicates
+completely opaque while 127 indicates completely
+transparent.</p>
+<p>@since 2.2.2</p>
+<p>@return boolean             Returns TRUE on success or FALSE on error.</p>
+<pre><code>                     If {@link http://php.net/manual/en/function.imagefilter.php imagefilter} is not
+                     available the method will return FALSE without setting an {@link error} code.
+
+                     If the requested filter doesn't exist, or invalid arguments are passed, the method
+                     will trigger a warning.
+
+                     If FALSE is returned and you are sure that
+                     {@link http://php.net/manual/en/function.imagefilter.php imagefilter} exists and that
+                     the requested filter is valid, check the {@link error} property to see the error code.</code></pre>
+</li>
+</ul></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$arg1 </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$arg2 </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$arg3 </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$arg4 </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_crop" name="method_crop" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">crop()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">crop(integer  <span class="argument">$start_x</span>,   <span class="argument">$start_y</span>,   <span class="argument">$end_x</span>,   <span class="argument">$end_y</span>) </pre>
+                <p><em>Crops a portion of the image given as {@link source_path} and outputs it as the file specified as {@link target_path}.</em></p>
+                <p><code>
+// include the Zebra_Image library
+require 'path/to/Zebra_Image.php';</p>
+<p>// instantiate the class
+$img = new Zebra_Image();</p>
+<p>// a source image
+$img-&gt;source_path = 'path/to/source.ext';</p>
+<p>// path to where should the resulting image be saved
+// note that by simply setting a different extension to the file will
+// instruct the script to create an image of that particular type
+$img-&gt;target_path = 'path/to/target.ext';</p>
+<p>// crop a rectangle of 100x100 pixels, starting from the top-left corner
+$img-&gt;crop(0, 0, 100, 100);
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$start_x </td>
+                                <td><p>x coordinate to start cropping from</p>
+<p>@param  integer     $start_y    y coordinate to start cropping from</p>
+<p>@param  integer     $end_x      x coordinate where to end the cropping</p>
+<p>@param  integer     $end_y      y coordinate where to end the cropping</p>
+<p>@since  1.0.4</p>
+<p>@return boolean     Returns TRUE on success or FALSE on error.</p>
+<pre><code>                 If FALSE is returned, check the {@link error} property to see the error code.</code></pre></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$start_y </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$end_x </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$end_y </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_flip_both" name="method_flip_both" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">flip_both()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">flip_both() </pre>
+                <p><em>Flips both horizontally and vertically the image given as {@link source_path} and outputs the resulted image as
+ {@link target_path}</em></p>
+                <p><code>
+// include the Zebra_Image library
+require 'path/to/Zebra_Image.php';</p>
+<p>// instantiate the class
+$img = new Zebra_Image();</p>
+<p>// a source image
+$img-&gt;source_path = 'path/to/source.ext';</p>
+<p>// path to where should the resulting image be saved
+// note that by simply setting a different extension to the file will
+// instruct the script to create an image of that particular type
+$img-&gt;target_path = 'path/to/target.ext';</p>
+<p>// flip the image both horizontally and vertically
+$img-&gt;flip_both();
+</code></p>
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr>
+                        <th>
+                            since
+                        </th>
+                        <td>
+                                                            2.1                                <p>@return boolean     Returns TRUE on success or FALSE on error.</p>
+<pre><code>                 If FALSE is returned, check the {@link error} property to see the error code.</code></pre>
+                                                    </td>
+                    </tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_flip_horizontal" name="method_flip_horizontal" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">flip_horizontal()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">flip_horizontal() : boolean</pre>
+                <p><em>Flips horizontally the image given as {@link source_path} and outputs the resulted image as {@link target_path}</em></p>
+                <p><code>
+// include the Zebra_Image library
+require 'path/to/Zebra_Image.php';</p>
+<p>// instantiate the class
+$img = new Zebra_Image();</p>
+<p>// a source image
+$img-&gt;source_path = 'path/to/source.ext';</p>
+<p>// path to where should the resulting image be saved
+// note that by simply setting a different extension to the file will
+// instruct the script to create an image of that particular type
+$img-&gt;target_path = 'path/to/target.ext';</p>
+<p>// flip the image horizontally
+$img-&gt;flip_horizontal();
+</code></p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Returns TRUE on success or FALSE on error.</p>
+<pre><code>                 If FALSE is returned, check the {@link error} property to see the error code.</code></pre>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_flip_vertical" name="method_flip_vertical" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">flip_vertical()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">flip_vertical() : boolean</pre>
+                <p><em>Flips vertically the image given as {@link source_path} and outputs the resulted image as {@link target_path}</em></p>
+                <p><code>
+// include the Zebra_Image library
+require 'path/to/Zebra_Image.php';</p>
+<p>// instantiate the class
+$img = new Zebra_Image();</p>
+<p>// a source image
+$img-&gt;source_path = 'path/to/source.ext';</p>
+<p>// path to where should the resulting image be saved
+// note that by simply setting a different extension to the file will
+// instruct the script to create an image of that particular type
+$img-&gt;target_path = 'path/to/target.ext';</p>
+<p>// flip the image vertically
+$img-&gt;flip_vertical();
+</code></p>
+
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Returns TRUE on success or FALSE on error.</p>
+<pre><code>                 If FALSE is returned, check the {@link error} property to see the error code.</code></pre>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_resize" name="method_resize" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">resize()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">resize(integer  <span class="argument">$width</span>,   <span class="argument">$height</span>,   <span class="argument">$method = ZEBRA_IMAGE_CROP_CENTER</span>,   <span class="argument">$background_color = -1</span>) </pre>
+                <p><em>Resizes the image given as {@link source_path} and outputs the resulted image as {@link target_path}.</em></p>
+                <p><code>
+// include the Zebra_Image library
+require 'path/to/Zebra_Image.php';</p>
+<p>// instantiate the class
+$img = new Zebra_Image();</p>
+<p>// a source image
+$img-&gt;source_path = 'path/to/source.ext';</p>
+<p>// path to where should the resulting image be saved
+// note that by simply setting a different extension to the file will
+// instruct the script to create an image of that particular type
+$img-&gt;target_path = 'path/to/target.ext';</p>
+<p>// apply a &quot;sharpen&quot; filter to the resulting images
+$img-&gt;sharpen_images = true;</p>
+<p>// resize the image to exactly 150x150 pixels, without altering
+// aspect ratio, by using the CROP_CENTER method
+$img-&gt;resize(150, 150, ZEBRA_IMAGE_CROP_CENTER);
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$width </td>
+                                <td><p>The width to resize the image to.</p>
+<pre><code>                                     If set to &lt;b&gt;0&lt;/b&gt;, the width will be automatically adjusted, depending
+                                     on the value of the &lt;b&gt;height&lt;/b&gt; argument so that the image preserves
+                                     its aspect ratio.
+
+                                     If {@link preserve_aspect_ratio} is set to TRUE and both this and the
+                                     &lt;b&gt;height&lt;/b&gt; arguments are values greater than &lt;b&gt;0&lt;/b&gt;, the image will
+                                     be resized to the exact required width and height and the aspect ratio
+                                     will be preserved - (also see the description for the &lt;b&gt;method&lt;/b&gt;
+                                     argument below on how can this be done).
+
+                                     If {@link preserve_aspect_ratio} is set to FALSE, the image will be
+                                     resized to the required width and the aspect ratio will be ignored.
+
+                                     If both &lt;b&gt;width&lt;/b&gt; and &lt;b&gt;height&lt;/b&gt; are set to &lt;b&gt;0&lt;/b&gt;, a copy of
+                                     the source image will be created ({@link jpeg_quality} and
+                                     {@link png_compression} will still apply).
+
+                                     If either &lt;b&gt;width&lt;/b&gt; or &lt;b&gt;height&lt;/b&gt; are set to &lt;b&gt;0&lt;/b&gt;, the script
+                                     will consider the value of the {@link preserve_aspect_ratio} to bet set
+                                     to TRUE regardless of its actual value!</code></pre>
+<p>@param  integer     $height             The height to resize the image to.</p>
+<pre><code>                                     If set to &lt;b&gt;0&lt;/b&gt;, the height will be automatically adjusted, depending
+                                     on the value of the &lt;b&gt;width&lt;/b&gt; argument so that the image preserves
+                                     its aspect ratio.
+
+                                     If {@link preserve_aspect_ratio} is set to TRUE and both this and the
+                                     &lt;b&gt;width&lt;/b&gt; arguments are values greater than &lt;b&gt;0&lt;/b&gt;, the image will
+                                     be resized to the exact required width and height and the aspect ratio
+                                     will be preserved - (also see the description for the &lt;b&gt;method&lt;/b&gt;
+                                     argument below on how can this be done).
+
+                                     If {@link preserve_aspect_ratio} is set to FALSE, the image will be
+                                     resized to the required height and the aspect ratio will be ignored.
+
+                                     If both &lt;b&gt;width&lt;/b&gt; and &lt;b&gt;height&lt;/b&gt; are set to &lt;b&gt;0&lt;/b&gt;, a copy of
+                                     the source image will be created ({@link jpeg_quality} and
+                                     {@link png_compression} will still apply).
+
+                                     If either &lt;b&gt;height&lt;/b&gt; or &lt;b&gt;width&lt;/b&gt; are set to &lt;b&gt;0&lt;/b&gt;, the script
+                                     will consider the value of the {@link preserve_aspect_ratio} to bet set
+                                     to TRUE regardless of its actual value!</code></pre>
+<p>@param  int     $method                 (Optional) Method to use when resizing images to exact width and height
+while preserving aspect ratio.</p>
+<pre><code>                                     If the {@link preserve_aspect_ratio} property is set to TRUE and both the
+                                     &lt;b&gt;width&lt;/b&gt; and &lt;b&gt;height&lt;/b&gt; arguments are values greater than &lt;b&gt;0&lt;/b&gt;,
+                                     the image will be resized to the exact given width and height and the
+                                     aspect ratio will be preserved by using on of the following methods:
+
+                                     -   &lt;b&gt;ZEBRA_IMAGE_BOXED&lt;/b&gt; - the image will be scaled so that it will
+                                         fit in a box with the given width and height (both width/height will
+                                         be smaller or equal to the required width/height) and then it will
+                                         be centered both horizontally and vertically. The blank area will be
+                                         filled with the color specified by the &lt;b&gt;bgcolor&lt;/b&gt; argument. (the
+                                         blank area will be filled only if the image is not transparent!)
+
+                                     -   &lt;b&gt;ZEBRA_IMAGE_NOT_BOXED&lt;/b&gt; - the image will be scaled so that it
+                                         &lt;i&gt;could&lt;/i&gt; fit in a box with the given width and height but will
+                                         not be enclosed in a box with given width and height. The new width/
+                                         height will be both smaller or equal to the required width/height
+
+                                     -   &lt;b&gt;ZEBRA_IMAGE_CROP_TOPLEFT&lt;/b&gt;
+                                     -   &lt;b&gt;ZEBRA_IMAGE_CROP_TOPCENTER&lt;/b&gt;
+                                     -   &lt;b&gt;ZEBRA_IMAGE_CROP_TOPRIGHT&lt;/b&gt;
+                                     -   &lt;b&gt;ZEBRA_IMAGE_CROP_MIDDLELEFT&lt;/b&gt;
+                                     -   &lt;b&gt;ZEBRA_IMAGE_CROP_CENTER&lt;/b&gt;
+                                     -   &lt;b&gt;ZEBRA_IMAGE_CROP_MIDDLERIGHT&lt;/b&gt;
+                                     -   &lt;b&gt;ZEBRA_IMAGE_CROP_BOTTOMLEFT&lt;/b&gt;
+                                     -   &lt;b&gt;ZEBRA_IMAGE_CROP_BOTTOMCENTER&lt;/b&gt;
+                                     -   &lt;b&gt;ZEBRA_IMAGE_CROP_BOTTOMRIGHT&lt;/b&gt;
+
+                                     For the methods involving crop, first the image is scaled so that both
+                                     its sides are equal or greater than the respective sizes of the bounding
+                                     box; next, a region of required width and height will be cropped from
+                                     indicated region of the resulted image.
+
+                                     Default is ZEBRA_IMAGE_CROP_CENTER</code></pre>
+<p>@param  hexadecimal $background_color   (Optional) The hexadecimal color (like &quot;#FFFFFF&quot; or &quot;#FFF&quot;) of the
+blank area. See the <b>method</b> argument.</p>
+<pre><code>                                     When set to -1 the script will preserve transparency for transparent GIF
+                                     and PNG images. For non-transparent images the background will be white
+                                     (#FFFFFF) in this case.
+
+                                     Default is -1</code></pre>
+<p>@return boolean                         Returns TRUE on success or FALSE on error.</p>
+<pre><code>                                     If FALSE is returned, check the {@link error} property to see what went
+                                     wrong</code></pre></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$height </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$method </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$background_color </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method_rotate" name="method_rotate" class="anchor"></a>
+            <article class="method">
+                <h3 class="public ">rotate()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">rotate(double  <span class="argument">$angle</span>,   <span class="argument">$background_color = -1</span>) </pre>
+                <p><em>Rotates the image given as {@link source_path} and outputs the resulted image as {@link target_path}.</em></p>
+                <p><code>
+// include the Zebra_Image library
+require 'path/to/Zebra_Image.php';</p>
+<p>// instantiate the class
+$img = new Zebra_Image();</p>
+<p>// a source image
+$img-&gt;source_path = 'path/to/source.ext';</p>
+<p>// path to where should the resulting image be saved
+// note that by simply setting a different extension to the file will
+// instruct the script to create an image of that particular type
+$img-&gt;target_path = 'path/to/target.ext';</p>
+<p>// rotate the image 45 degrees, clockwise
+$img-&gt;rotate(45);
+</code></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>double</td>
+                                <td>$angle </td>
+                                <td><p>Angle by which to rotate the image clockwise.</p>
+<pre><code>                                     Between 0 and 360.</code></pre>
+<p>@param  mixed   $background_color       (Optional) The hexadecimal color (like &quot;#FFFFFF&quot; or &quot;#FFF&quot;) of the
+uncovered zone after the rotation.</p>
+<pre><code>                                     When set to -1 the script will preserve transparency for transparent GIF
+                                     and PNG images. For non-transparent images the background will be white
+                                     (#FFFFFF) in this case.
+
+                                     Default is -1.</code></pre>
+<p>@return boolean                         Returns TRUE on success or FALSE on error.</p>
+<pre><code>                                     If FALSE is returned, check the {@link error} property to see the error
+                                     code.</code></pre></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$background_color </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method__create_from_source" name="method__create_from_source" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">_create_from_source()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">_create_from_source() </pre>
+                <p><em>Returns an array containing the image identifier representing the image obtained from {@link $source_path}, the
+ image&#039;s width and height and the image&#039;s type</em></p>
+                <p>@access private</p>
+
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method__flip" name="method__flip" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">_flip()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">_flip(  <span class="argument">$orientation</span>) </pre>
+                <p><em>Flips horizontally or vertically or both ways the image given as {@link source_path}.</em></p>
+                <p>@since 2.1</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$orientation </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method__hex2rgb" name="method__hex2rgb" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">_hex2rgb()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">_hex2rgb(string  <span class="argument">$color</span>,   <span class="argument">$default_on_error = &#039;#FFFFFF&#039;</span>) </pre>
+                <p><em>Converts a hexadecimal representation of a color (i.e. #123456 or #AAA) to a RGB representation.</em></p>
+                <p>The RGB values will be a value between 0 and 255 each.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td>string</td>
+                                <td>$color </td>
+                                <td><p>Hexadecimal representation of a color (i.e. #123456 or #AAA).</p>
+<p>@param  string  $default_on_error   (Optional) Hexadecimal representation of a color to be used in case $color
+is not recognized as a hexadecimal color.</p>
+<pre><code>                                 Default is #FFFFFF</code></pre>
+<p>@return array                       Returns an associative array with the values of (R)ed, (G)reen and (B)lue</p>
+<p>@access private</p></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$default_on_error </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method__prepare_image" name="method__prepare_image" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">_prepare_image()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">_prepare_image(  <span class="argument">$width</span>, integer  <span class="argument">$height</span>,   <span class="argument">$background_color = &#039;#FFFFFF&#039;</span>) </pre>
+                <p><em>Creates a blank image of given width, height and background color.</em></p>
+                <p>@param  integer     $width              Width of the new image.</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$width </td>
+                                <td></td>
+                            </tr>
+                                                    <tr>
+                                <td>integer</td>
+                                <td>$height </td>
+                                <td><p>Height of the new image.</p>
+<p>@param  string      $background_color   (Optional) The hexadecimal color of the background.</p>
+<pre><code>                                     Can also be -1 case in which the script will try to create a transparent
+                                     image, if possible.
+
+                                     Default is #FFFFFF.</code></pre>
+<p>@return                                 Returns the identifier of the newly created image.</p>
+<p>@access private</p></td>
+                            </tr>
+                                                    <tr>
+                                <td></td>
+                                <td>$background_color </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method__sharpen_image" name="method__sharpen_image" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">_sharpen_image()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">_sharpen_image(  <span class="argument">$image</span>) </pre>
+                <p><em>Sharpens images. Useful when creating thumbnails.</em></p>
+                <p>Code taken from the comments at <a href="http://docs.php.net/imageconvolution"><a href="http://docs.php.net/imageconvolution">http://docs.php.net/imageconvolution</a></a>.</p>
+<p><i>This function will yield a result only for PHP version 5.1.0+ and will leave the image unaltered for older
+versions!</i></p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$image </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    <div class="row-fluid">
+        <div class="span8 content class">
+            <a id="method__write_image" name="method__write_image" class="anchor"></a>
+            <article class="method">
+                <h3 class="private ">_write_image()</h3>
+                <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal" style="font-size: 1.1em; padding: 9px 14px"><i class="icon-code"></i></a>
+                <pre class="signature" style="margin-right: 54px;">_write_image(  <span class="argument">$identifier</span>) : boolean</pre>
+                <p><em>Creates a new image from given image identifier having the extension as specified by {@link target_path}.</em></p>
+                <p>@param  $identifier identifier  An image identifier</p>
+
+                                    <h4>Parameters</h4>
+                    <table class="table table-condensed table-hover">
+                                                    <tr>
+                                <td></td>
+                                <td>$identifier </td>
+                                <td></td>
+                            </tr>
+                                            </table>
+                
+                
+                                    <h4>Returns</h4>
+                    boolean
+                                            &mdash; <p>Returns TRUE on success or FALSE on error.</p>
+<pre><code>                             If FALSE is returned, check the {@link error} property to see the error code.</code></pre>
+<p>@access private</p>
+                                    				
+                            </article>
+        </div>
+        <aside class="span4 detailsbar">
+            <h1><i class="icon-arrow-down"></i></h1>
+                                                            <dl>
+                                                                            </dl>
+            <h2>Tags</h2>
+            <table class="table table-condensed">
+                                    <tr><td colspan="2"><em>None found</em></td></tr>
+                            </table>
+        </aside>
+    </div>
+
+                                    </div>
+    </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label">zebra_image.class.php</h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Gfx/Component/zebra_image.class.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
+
+    <footer class="row-fluid">
+        <section class="span10 offset2">
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <section class="row-fluid footer-sections">
+                        <section class="span4">
+                                                        <h1><i class="icon-code"></i></h1>
+                            <div>
+                                <ul>
+                                                                            <li><a href="../namespaces/LinHUniX.html">\LinHUniX</a></li>
+                                                                    </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-bar-chart"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../graphs/class.html">Class Hierarchy Diagram</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                        <section class="span4">
+                                                        <h1><i class="icon-pushpin"></i></h1>
+                            <div>
+                                <ul>
+                                    <li><a href="../reports/errors.html">Errors</a></li>
+                                    <li><a href="../reports/markers.html">Markers</a></li>
+                                </ul>
+                            </div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+            <section class="row-fluid">
+                <section class="span10 offset1">
+                    <hr />
+                    Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor </a> and authored
+                    on April 1st, 2019 at 07:32.
+                </section>
+            </section>
+        </section>
+    </footer>
+</div>
+
+</body>
+</html>
