@@ -1,4 +1,5 @@
 <?php
+namespace LinHUniX\Gfx\Component;
 
 /**
  *  Methods used with the {@link resize()} method.

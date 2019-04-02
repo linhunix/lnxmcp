@@ -1,0 +1,89 @@
+<?php
+/**
+ * LinHUniX Web Application Framework
+ *
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
+ * @license   Proprietary See LICENSE.md
+ * @version GIT:2018-v2
+ */
+
+namespace LinHUniX\Gfx\Controller;
+use LinHUniX\Mcp\Model\mcpRemoteApiModelClass;
+use LinHUniX\Mcp\masterControlProgram;
+
+class uploadController extends mcpRemoteApiModelClass {
+    /**
+     * __construct
+     *
+     * @param  mixed $mcp
+     * @param  mixed $scopeCtl
+     * @param  mixed $scopeIn
+     *
+     * @return void
+     */
+    public function __construct (masterControlProgram &$mcp, array $scopeCtl, array $scopeIn) {
+        parent::__construct($mcp, $scopeCtl, $scopeIn);
+    }
+    /**
+     * moduleCore
+     *
+     * @return void
+     */
+    protected function moduleCore()
+    {
+        if (!isset($this->argIn["upload_dir"]) or ! isset($this->argIn["upload_field"])){
+            lnxmcp()->warning("uploadController: no upload_dir or upload_field setted!!!");
+            return false;
+        }
+        if ( !is_dir($this->argIn["upload_dir"])) {
+            lnxmcp()->warning("uploadController: no upload_dir valid!!!");
+            return false;
+        }
+        if ( !is_writable($this->argIn["upload_dir"])) {
+            lnxmcp()->warning("uploadController: no upload_dir permission!!!");
+            return false;
+        }
+        if (!isset($_FILES[$this->argIn["upload_field"]])){
+            lnxmcp()->info("uploadController: no upload_field present!!");
+            return false;
+        }
+        $uploadDirectory = $this->argIn["upload_dir"];
+        $uploadField = $this->argIn["upload_field"];
+        $fileName = $_FILES[$uploadField]['name'];
+        $fileSize = $_FILES[$uploadField]['size'];
+        $fileTmpName  = $_FILES[$uploadField]['tmp_name'];
+        $fileType = $_FILES[$uploadField]['type'];
+        if (empty($fileType) ) {
+            $fileType = strtolower(end(explode('.',$fileName)));
+        }
+
+        if (isset($this->argIn["upload_ext"])){
+            $isvalid=false;
+            $fileExts=$this->argIn["upload_ext"];
+            if(! is_array($fileExts)){
+                $fileExts=explode(',', $this->argIn["upload_ext"]);
+            }
+            foreach( $fileExts as $extvalid){
+                if (stristr($fileType,$extvalid)!=false) {
+                    $isvalid=true;
+                }
+            }
+            if ($isvalid==false) {
+                lnxmcp()->info("uploadController: no valid ext on upload_field !!");
+                return false;
+            }
+        }
+
+        $filenamedest=preg_replace('/[^0-9a-zA-Z\_\.]/','',$fileName);
+        if (empty($filenamedest)){
+            $filenamedest=str_replace(" ","_",$uploadField).strtolower(end(explode('.',$fileName)));
+        }
+        $uploadPath= $uploadDirectory.DIRECTORY_SEPARATOR.$filenamedest;
+        if (! move_uploaded_file($fileTmpName, $uploadPath)){
+            lnxmcp()->warning("uploadController: upload error!!!");
+            return false;
+        }
+        return true;
+    }
+}

@@ -1,5 +1,5 @@
 <?php
-
+namespace LinHUniX\Gfx\Component;
 /*************************************************************************
  *                                                                       *
  * class.html2text.inc                                                   *

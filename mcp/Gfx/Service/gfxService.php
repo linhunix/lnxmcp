@@ -65,7 +65,7 @@ class gfxService extends mcpBaseModelClass
     {
         if (self::$html2txt == null) {
             include_once __DIR__ . "./../Component/html2text.class.php";
-            self::$html2txt = new \html2text();
+            self::$html2txt = new \LinHUniX\Gfx\Component\html2text();
         }
         self::$html2txt->set_html($source, $from_file);
         self::$html2txt->set_base_url();
@@ -128,7 +128,7 @@ class gfxService extends mcpBaseModelClass
         $rmsg="DONE";
         if (self::$zebraimage == null) {
             include_once __DIR__ . "./../Component/zebra_image.class.php";
-            self::$zebraimage = new \zebra_image();
+            self::$zebraimage = new \LinHUniX\Gfx\Component\zebra_image();
         }
         self::$zebraimage->source_path=$source_file;
         self::$zebraimage->target_path=$dest_file;
@@ -168,6 +168,7 @@ class gfxService extends mcpBaseModelClass
                  $rmsg=$this->getZebraImageError(self::$zebraimage->error);
                  return false;
             }
+            $this->argOut["msg"]=$res;
             return true;
         }
 
