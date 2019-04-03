@@ -19,6 +19,7 @@ use \LinHUniX\Mcp\Component\mcpProxyClass;
 use \LinHUniX\Mcp\Component\mcpTemplateClass;
 use \LinHUniX\Mcp\Component\mcpLanguageClass;
 use \LinHUniX\Mcp\Component\mcpMailClass;
+use \LinHUniX\Mcp\Component\mcpApiClass;
 
 /*
  * this Master Control Programs Class is to prepare
@@ -991,24 +992,12 @@ final class masterControlProgram
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
-     * @return array $ScopeOut
+     * @return void Exit
      */
     public function api($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
-        if ($vendor == null) {
-            $vendor = $this->defapp;
-        }
-        $this->info("MCP>>" . $vendor . ">>api>>" . $srvprc);
-        if (! is_array($scopeIn)) {
-            $scopeIn=array("In"=>$scopeIn);
-        }
-        $scopeIn["prev-output"] = ob_get_clean();
-        $res = $this->module($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Api");
-        ob_end_clean();
-        header('Content-type: application/json');
-        echo json_encode($res);
+       mcpApiClass::api($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall , $vendor );
     }
-
     /**
      * Run Module as ToolApi Components
      * @param string $srvprc  name of the driver
@@ -1016,19 +1005,50 @@ final class masterControlProgram
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
-     * @return array $ScopeOut
+     * @return void Exit
+     */
+     public function apiR($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+     {
+        mcpApiClass::apiReturn($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall , $vendor );
+     }
+    /**
+     * Run Module as ToolApi Components
+     * @param string $srvprc  name of the driver
+     * @param bool $ispreload is only a preload (ex page) or need to be execute (ex controller)
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
+     * @return array $scopeOut;
+     */
+    public function apiA($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    {
+       mcpApiClass::apiArray($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall , $vendor );
+    }    
+    /**
+     * Run Module as ToolApi Components
+     * @param string $srvprc  name of the driver
+     * @param bool $ispreload is only a preload (ex page) or need to be execute (ex controller)
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
+     * @return void Exit
      */
     public function apiCommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
     {
-        $this->info("MCP>>api(C)>>" . $srvprc);
-        if (! is_array($scopeIn)) {
-            $scopeIn=array("In"=>$scopeIn);
-        }
-        $scopeIn["prev-output"] = ob_get_clean();
-        $res = $this->module($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Api");
-        ob_end_clean();
-        header('Content-type: application/json');
-        echo json_encode($res);
+        mcpApiClass::apiCommon($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall , $this->defvnd );
+    }
+    /**
+     * Run Module as ToolApi Components
+     * @param string $srvprc  name of the driver
+     * @param bool $ispreload is only a preload (ex page) or need to be execute (ex controller)
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
+     * @return void Exit
+     */
+    public function apiACommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
+    {
+        mcpApiClass::apiCommonArray($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall , $this->defvnd );
     }
     /**
      * Run Module as ToolApi Components on remote system

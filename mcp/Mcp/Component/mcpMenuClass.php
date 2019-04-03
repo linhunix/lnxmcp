@@ -32,7 +32,7 @@ class mcpMenuClass
      */
     public static function runCommand(array $scopectl, array $scopeIn = array())
     {
-        lnxmcp()->debug(print_r($scopectl,1));
+        lnxmcp()->debug(print_r($scopectl, 1));
         $callname = "none";
         if (isset($scopectl["name"])) {
             $callname = $scopectl["name"];
@@ -73,14 +73,14 @@ class mcpMenuClass
             $blockModule = $scopectl["blockModule"];
         }
         if (isset($scopectl["ScopeInDefault"])) {
-            foreach ($scopectl["ScopeInDefault"] as $ink=>$inv){
-                if(! isset($scopeIn[$ink])) {
+            foreach ($scopectl["ScopeInDefault"] as $ink=>$inv) {
+                if (! isset($scopeIn[$ink])) {
                     $scopeIn[$ink]=$inv;
                 }
             }
         }
         if (isset($scopectl["ScopeInRewrite"])) {
-            foreach($scopectl["ScopeInRewrite"] as $ink=>$inv) {
+            foreach ($scopectl["ScopeInRewrite"] as $ink=>$inv) {
                 $scopeIn[$ink]=$inv;
             }
         }
@@ -137,6 +137,12 @@ class mcpMenuClass
             case "api":
                 $result = lnxmcp()->api($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
                 break;
+            case "apiReturn":
+                $result = lnxmcp()->apiR($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+                break;
+            case "apiArray":
+                $result = lnxmcp()->apiA($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+                break;
             case "apiRemote":
                 $result = lnxmcp()->apiRemote($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
                 break;
@@ -145,6 +151,9 @@ class mcpMenuClass
                 break;
             case "apiCommon":
                 $result = lnxmcp()->apiCommon($callname, $ispreload, $scopeIn, $modinit, $subcall);
+                break;
+            case "apiCommon":
+                $result = lnxmcp()->apiACommon($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
                 break;
             case "service":
                 $result = lnxmcp()->service($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
@@ -277,7 +286,7 @@ class mcpMenuClass
         return $ret;
     }
     /**
-     * Search special Tags sequence on module and run it 
+     * Search special Tags sequence on module and run it
      * @param string $test test to be searched
      * @param array $scopeIn   Input Array with the value need to work
      * @return any $ScopeOut
@@ -330,4 +339,3 @@ class mcpMenuClass
         return $text;
     }
 }
-
