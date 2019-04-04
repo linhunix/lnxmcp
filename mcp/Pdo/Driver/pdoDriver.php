@@ -214,18 +214,13 @@ class pdoDriver extends mcpBaseModelClass
 
     public function getTable($sql, $var = array(), $err = true)
     {
-        $rs = $this->simpleQuery($sql, $var, $err);
-        if (empty($rs)) {
-            $this->getMcp()->warning($this->database . " Data is Null");
-            return false;
-        }
-        return $rs;
+        return $this->simpleQuery($sql, $var, $err);
     }
 
     // Compatibility Mode for The older code 
     public function data_table($sql, $var = array(), $err = true)
     {
-        $this->getTable($sql);
+        return $this->simpleQuery($sql, $var, $err);
     }
 
     public function dataWalk($sql, $callback, $var = array(), &$funarr = array(), $err = true)

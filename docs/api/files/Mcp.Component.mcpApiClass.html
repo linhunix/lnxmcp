@@ -21,7 +21,55 @@
     <script src="../js/jquery.smooth-scroll.js"></script>
     <script src="../js/prism.min.js"></script>
     <!-- TODO: Add http://jscrollpane.kelvinluck.com/ to style the scrollbars for browsers not using webkit-->
-    
+        <script type="text/javascript">
+        function loadExternalCodeSnippets() {
+            Array.prototype.slice.call(document.querySelectorAll('pre[data-src]')).forEach(function (pre) {
+                var src = pre.getAttribute('data-src');
+                var extension = (src.match(/\.(\w+)$/) || [, ''])[1];
+                var language = 'php';
+
+                var code = document.createElement('code');
+                code.className = 'language-' + language;
+
+                pre.textContent = '';
+
+                code.textContent = 'Loading…';
+
+                pre.appendChild(code);
+
+                var xhr = new XMLHttpRequest();
+
+                xhr.open('GET', src, true);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4) {
+
+                        if (xhr.status < 400 && xhr.responseText) {
+                            code.textContent = xhr.responseText;
+
+                            Prism.highlightElement(code);
+                        }
+                        else if (xhr.status >= 400) {
+                            code.textContent = '✖ Error ' + xhr.status + ' while fetching file: ' + xhr.statusText;
+                        }
+                        else {
+                            code.textContent = '✖ Error: File does not exist or is empty';
+                        }
+                    }
+                };
+
+                xhr.send(null);
+            });
+        }
+
+        $(document).ready(function(){
+            loadExternalCodeSnippets();
+        });
+        $('#source-view').on('shown', function () {
+            loadExternalCodeSnippets();
+        })
+    </script>
+
     <link rel="shortcut icon" href="../images/favicon.ico"/>
     <link rel="apple-touch-icon" href="../images/apple-touch-icon.png"/>
     <link rel="apple-touch-icon" sizes="72x72" href="../images/apple-touch-icon-72x72.png"/>
@@ -96,37 +144,37 @@
                                 <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-275789390"></a>
+                                    <a class="accordion-toggle " data-toggle="collapse" data-target="#namespace-1653726325"></a>
                                 <a href="../namespaces/default.html" style="margin-left: 30px; padding-left: 0">\</a>
             </div>
-            <div id="namespace-275789390" class="accordion-body collapse in">
+            <div id="namespace-1653726325" class="accordion-body collapse in">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-76084679"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1688329979"></a>
                                 <a href="../namespaces/LinHUniX.html" style="margin-left: 30px; padding-left: 0">LinHUniX</a>
             </div>
-            <div id="namespace-76084679" class="accordion-body collapse ">
+            <div id="namespace-1688329979" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-833418755"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1731913891"></a>
                                 <a href="../namespaces/LinHUniX.Gfx.html" style="margin-left: 30px; padding-left: 0">Gfx</a>
             </div>
-            <div id="namespace-833418755" class="accordion-body collapse ">
+            <div id="namespace-1731913891" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1230231109"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2030155304"></a>
                                 <a href="../namespaces/LinHUniX.Gfx.Component.html" style="margin-left: 30px; padding-left: 0">Component</a>
             </div>
-            <div id="namespace-1230231109" class="accordion-body collapse ">
+            <div id="namespace-2030155304" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -142,10 +190,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-779420512"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-842954106"></a>
                                 <a href="../namespaces/LinHUniX.Gfx.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
             </div>
-            <div id="namespace-779420512" class="accordion-body collapse ">
+            <div id="namespace-842954106" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -160,10 +208,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-563722348"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-379438581"></a>
                                 <a href="../namespaces/LinHUniX.Gfx.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
             </div>
-            <div id="namespace-563722348" class="accordion-body collapse ">
+            <div id="namespace-379438581" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -186,19 +234,19 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-465043449"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-317015957"></a>
                                 <a href="../namespaces/LinHUniX.ln4.html" style="margin-left: 30px; padding-left: 0">ln4</a>
             </div>
-            <div id="namespace-465043449" class="accordion-body collapse ">
+            <div id="namespace-317015957" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2104759326"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-798724126"></a>
                                 <a href="../namespaces/LinHUniX.ln4.Controller.html" style="margin-left: 30px; padding-left: 0">Controller</a>
             </div>
-            <div id="namespace-2104759326" class="accordion-body collapse ">
+            <div id="namespace-798724126" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -221,19 +269,19 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-66597620"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1988922348"></a>
                                 <a href="../namespaces/LinHUniX.Mail.html" style="margin-left: 30px; padding-left: 0">Mail</a>
             </div>
-            <div id="namespace-66597620" class="accordion-body collapse ">
+            <div id="namespace-1988922348" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-433998677"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-536896312"></a>
                                 <a href="../namespaces/LinHUniX.Mail.Component.html" style="margin-left: 30px; padding-left: 0">Component</a>
             </div>
-            <div id="namespace-433998677" class="accordion-body collapse ">
+            <div id="namespace-536896312" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -251,10 +299,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-2075389142"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-553596640"></a>
                                 <a href="../namespaces/LinHUniX.Mail.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
             </div>
-            <div id="namespace-2075389142" class="accordion-body collapse ">
+            <div id="namespace-553596640" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -277,19 +325,19 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-913530694"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1092437350"></a>
                                 <a href="../namespaces/LinHUniX.Mcp.html" style="margin-left: 30px; padding-left: 0">Mcp</a>
             </div>
-            <div id="namespace-913530694" class="accordion-body collapse ">
+            <div id="namespace-1092437350" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1650471697"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1531355970"></a>
                                 <a href="../namespaces/LinHUniX.Mcp.Component.html" style="margin-left: 30px; padding-left: 0">Component</a>
             </div>
-            <div id="namespace-1650471697" class="accordion-body collapse ">
+            <div id="namespace-1531355970" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -312,10 +360,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1384200907"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1409240444"></a>
                                 <a href="../namespaces/LinHUniX.Mcp.Model.html" style="margin-left: 30px; padding-left: 0">Model</a>
             </div>
-            <div id="namespace-1384200907" class="accordion-body collapse ">
+            <div id="namespace-1409240444" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -335,10 +383,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-615772687"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-437307440"></a>
                                 <a href="../namespaces/LinHUniX.Mcp.Provider.html" style="margin-left: 30px; padding-left: 0">Provider</a>
             </div>
-            <div id="namespace-615772687" class="accordion-body collapse ">
+            <div id="namespace-437307440" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -354,10 +402,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1273619302"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1675852322"></a>
                                 <a href="../namespaces/LinHUniX.Mcp.Tools.html" style="margin-left: 30px; padding-left: 0">Tools</a>
             </div>
-            <div id="namespace-1273619302" class="accordion-body collapse ">
+            <div id="namespace-1675852322" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -383,19 +431,19 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1074976673"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-387134191"></a>
                                 <a href="../namespaces/LinHUniX.Pdo.html" style="margin-left: 30px; padding-left: 0">Pdo</a>
             </div>
-            <div id="namespace-1074976673" class="accordion-body collapse ">
+            <div id="namespace-387134191" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1566890049"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1468612267"></a>
                                 <a href="../namespaces/LinHUniX.Pdo.Driver.html" style="margin-left: 30px; padding-left: 0">Driver</a>
             </div>
-            <div id="namespace-1566890049" class="accordion-body collapse ">
+            <div id="namespace-1468612267" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -412,10 +460,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1747792394"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1640578549"></a>
                                 <a href="../namespaces/LinHUniX.Pdo.Model.html" style="margin-left: 30px; padding-left: 0">Model</a>
             </div>
-            <div id="namespace-1747792394" class="accordion-body collapse ">
+            <div id="namespace-1640578549" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -430,10 +478,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1064033905"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-215257146"></a>
                                 <a href="../namespaces/LinHUniX.Pdo.Query.html" style="margin-left: 30px; padding-left: 0">Query</a>
             </div>
-            <div id="namespace-1064033905" class="accordion-body collapse ">
+            <div id="namespace-215257146" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -448,10 +496,10 @@
                                                     <div class="accordion" style="margin-bottom: 0">
         <div class="accordion-group">
             <div class="accordion-heading">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1861806276"></a>
+                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-target="#namespace-1500575085"></a>
                                 <a href="../namespaces/LinHUniX.Pdo.Service.html" style="margin-left: 30px; padding-left: 0">Service</a>
             </div>
-            <div id="namespace-1861806276" class="accordion-body collapse ">
+            <div id="namespace-1500575085" class="accordion-body collapse ">
                 <div class="accordion-inner">
 
                     
@@ -493,60 +541,69 @@
     <section class="row-fluid">
         <div class="span10 offset2">
             <div class="row-fluid">
-                <div class="span8 content namespace">
+                <div class="span8 content file">
                     <nav>
-                                                <a href="../namespaces/LinHUniX.Pdo.html">\LinHUniX\Pdo</a>
-                                            </nav>
-                    <h1><small>\LinHUniX\Pdo</small>Query</h1>
+                                                                    </nav>
 
+                    <a href="#source-view" role="button" class="pull-right btn" data-toggle="modal"><i class="icon-code"></i></a>
+                    <h1><small>Mcp/Component</small>mcpApiClass.php</h1>
+                    <p><em>LinHUniX Web Application Framework</em></p>
                     
+
                     
                     
                                         <h2>Classes</h2>
                     <table class="table table-hover">
                                             <tr>
-                            <td><a href="../classes/LinHUniX.Pdo.Query.JsonQuery.html">JsonQuery</a></td>
-                            <td><em>&gt;&gt;&gt;$scopeInis array
-var [&quot;J&quot;] = name of the json file used to populate the query vars :
-var [&quot;M&quot;] = contain the module folder that need to found the query json
-var [&quot;V&quot;] = contain the vendor folder that need to found the query json
-var [&quot;P&quot;] = contain the path folder that need to found the query json
-&gt;&gt;&gt; $this-&gt;query
-var [&quot;T&quot;]:
- e  = execute : exec query with boolean results
- ec  = execute : exec query with boolean results
- f  = firstRow : return only first row
- q  = retrive array of all results
- c  = return the count of the results
- s  = return the sql information
- r  = return sql and env
- d  = search on cfg the data form another query
- p  = puth data on the database (using setrow) &quot;Q&quot; is table
- g  = get data on the database (using getrows)
-      &quot;Q&quot; is table &quot;S&quot; is sort , &quot;L&quot; limit and &quot;W&quot; where cause
- other case return false;
-var [&quot;Q&quot;] = query
-var [&quot;E&quot;] = env or instance of specific database
-var [&quot;V&quot;] = contain the values that need to remplace on query scripts
-var [&quot;S&quot;] = stored in Session
-var [&quot;G&quot;] = stored in Glboal cfg</em></td>
+                            <td><a href="../classes/LinHUniX.Mcp.Component.mcpApiClass.html">mcpApiClass</a></td>
+                            <td><em>Core class for load modules</em></td>
                         </tr>
                                         </table>
                                     </div>
 
                 <aside class="span4 detailsbar">
                     <dl>
-                        <dt>Namespace hierarchy</dt>
-                        <dd class="hierarchy">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
-                                    <div class="namespace-wrapper"><a href="../namespaces/default.html">\</a></div>
-                                                            
-                                    <div class="namespace-wrapper"><a href="../namespaces/LinHUniX.html">\LinHUniX</a></div>
-                                                            
-                                    <div class="namespace-wrapper"><a href="../namespaces/LinHUniX.Pdo.html">\LinHUniX\Pdo</a></div>
-                                                                                        <div class="namespace-wrapper">\LinHUniX\Pdo\Query</div>
-                        </dd>
+                                                    <dt>Package</dt>
+                            <dd><div class="namespace-wrapper">\Default</div></dd>
+                        
+                        
                     </dl>
+                    <h2>Tags</h2>
+                    <table class="table table-condensed">
+                                                    <tr>
+                                <th>
+                                    author
+                                </th>
+                                <td>
+                                                                            <p>Andrea Morello <a href="mailto:andrea.morello@linhunix.com">andrea.morello@linhunix.com</a></p>
+                                                                    </td>
+                            </tr>
+                                                    <tr>
+                                <th>
+                                    copyright
+                                </th>
+                                <td>
+                                                                            <p>LinHUniX L.t.d., 2018, UK</p>
+                                                                    </td>
+                            </tr>
+                                                    <tr>
+                                <th>
+                                    license
+                                </th>
+                                <td>
+                                                                            <p>Proprietary See LICENSE.md</p>
+                                                                    </td>
+                            </tr>
+                                                    <tr>
+                                <th>
+                                    version
+                                </th>
+                                <td>
+                                                                            <p>GIT:2018-v2</p>
+                                                                    </td>
+                            </tr>
+                                            </table>
+
                 </aside>
             </div>
 
@@ -554,6 +611,16 @@ var [&quot;G&quot;] = stored in Glboal cfg</em></td>
             
         </div>
     </section>
+
+    <div id="source-view" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="source-view-label" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="source-view-label"></h3>
+        </div>
+        <div class="modal-body">
+            <pre data-src="../files/Mcp/Component/mcpApiClass.php.txt" class="language-php line-numbers"></pre>
+        </div>
+    </div>
 
     <footer class="row-fluid">
         <section class="span10 offset2">
