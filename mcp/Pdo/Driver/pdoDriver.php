@@ -127,39 +127,51 @@ class pdoDriver extends mcpBaseModelClass
     /**
      * execute
      *
-     * @param  mixed $query
+     * @param  mixed $sql
      * @param  mixed $var
      *
      * @return bool
      */
-    public function execute($query, $var = array())
+    public function execute($sql, $var = array())
     {
-        foreach ($var as $k => $v) {
-            $query = str_replace('[' . $k . ']', $this->real_escape_string($v), $query);
+        $this->getMcp()->debug("queryIn:" . $this->database . "=" . $sql);
+        if (isset($var["WHERE"])) {
+            $sql = str_replace('[WHERE]', $var["WHERE"], $sql);
+            unset($var["WHERE"]);
         }
-        if ($this->intexec($query) == false) {
-            $this->getMcp()->debug("[OK]" . $this->database . "=" . $query);
+        foreach ($var as $k => $v) {
+            $sql = str_replace('[' . $k . ']', $this->real_escape_string($v), $sql);
+        }
+        $this->getMcp()->debug("queryOut:" . $this->database . "=" . $sql);
+        if ($this->intexec($sql) == false) {
+            $this->getMcp()->debug("[OK]" . $this->database . "=" . $sql);
             return false;
         }
-        $this->getMcp()->warning("[KO]" . $this->database . "=" . $query);
+        $this->getMcp()->warning("[KO]" . $this->database . "=" . $sql);
         return true;
     }
 
     /**
      * executeWithRollback use the conventional pdo transaction esectution 
      *
-     * @param  mixed $query
+     * @param  mixed $sql
      * @param  mixed $var
      *
      * @return array
      */
-    public function executeWithRollback($query, $var = array())
+    public function executeWithRollback($sql, $var = array())
     {
-        foreach ($var as $k => $v) {
-            $query = str_replace('[' . $k . ']', $this->real_escape_string($v), $query);
+        $this->getMcp()->debug("queryIn:" . $this->database . "=" . $sql);
+        if (isset($var["WHERE"])) {
+            $sql = str_replace('[WHERE]', $var["WHERE"], $sql);
+            unset($var["WHERE"]);
         }
+        foreach ($var as $k => $v) {
+            $sql = str_replace('[' . $k . ']', $this->real_escape_string($v), $sql);
+        }
+        $this->getMcp()->debug("queryOut:" . $this->database . "=" . $sql);
         $res = array();
-        $stmt = $this->PDO->prepare($query);
+        $stmt = $this->PDO->prepare($sql);
         try {
             $this->PDO->beginTransaction();
             $stmt->execute($var);
@@ -167,7 +179,7 @@ class pdoDriver extends mcpBaseModelClass
             $res = $this->PDO->lastInsertId();
         } catch (Exception $e) {
             $this->PDO->rollback();
-            $this->getMcp()->warning("[KO]" . $this->database . "=" . $query . ":" . $e->getMessage());
+            $this->getMcp()->warning("[KO]" . $this->database . "=" . $sql . ":" . $e->getMessage());
             return null;
         }
         return $res;
@@ -456,13 +468,21 @@ class pdoDriver extends mcpBaseModelClass
         return null;
     }
 
-    //Add/Update Row
+    /**
+     * setRow Add/Update Row
+     *
+     * @param  mixed $_fields
+     * @param  mixed $_table
+     * @param  mixed $run
+     *
+     * @return void
+     */
     function setRow($_fields, $_table, $run = true)
     {
         if ((count($_fields) > 0) && ($_table != '')) {
             $_stmt = $this->getSql($_fields, $_table);
             if ($run)
-                $_result = $this->query($_stmt);
+                $_result = $this->executeWithRollback($_stmt);
             else
                 $_result = $_stmt;
         }
