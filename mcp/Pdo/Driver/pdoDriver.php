@@ -477,10 +477,10 @@ class pdoDriver extends mcpBaseModelClass
      *
      * @return void
      */
-    function setRow($_fields, $_table, $run = true)
+    function setRow($_fields, $_table, $run = true,$emptyval=false)
     {
         if ((count($_fields) > 0) && ($_table != '')) {
-            $_stmt = $this->getSql($_fields, $_table);
+            $_stmt = $this->getSql($_fields, $_table,$emptyval);
             if ($run)
                 $_result = $this->executeWithRollback($_stmt);
             else
@@ -493,13 +493,13 @@ class pdoDriver extends mcpBaseModelClass
     }
 
     //GET SetRow SQL
-    function getSql($_fields, $_table)
+    function getSql($_fields, $_table,$emptyval=false)
     {
         $_stmt = '';
         if ($_fields['id'] > 0) {
             $_stmt .= 'UPDATE `' . $_table . '` SET ';
             foreach ($_fields as $_key => $_val) {
-                if ($_val != '') {
+                if (($_val != '') or ($emptyval==true) ) {
                     $_stmt .= '`' . $_key . '` = \'' . addslashes($_val) . '\',';
                 }
             }
