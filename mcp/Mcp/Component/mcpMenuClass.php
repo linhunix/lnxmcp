@@ -153,7 +153,7 @@ class mcpMenuClass
                 $result = lnxmcp()->apiCommon($callname, $ispreload, $scopeIn, $modinit, $subcall);
                 break;
             case "apiCommon":
-                $result = lnxmcp()->apiACommon($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+                $result = lnxmcp()->apiACommon($callname, $ispreload, $scopeIn, $modinit, $subcall);
                 break;
             case "service":
                 $result = lnxmcp()->service($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);

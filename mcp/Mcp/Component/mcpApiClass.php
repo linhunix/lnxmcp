@@ -29,7 +29,7 @@ use LinHUniX\Mcp\masterControlProgram;
      public static function apiBase(masterControlProgram $mcp, $type, $srvprc, $pathsrc,$ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
      {
          if ($vendor == null) {
-             $vendor = $this->defapp;
+             $vendor = $mcp->getDefApp();
          }
          $mcp->info("MCP>>" . $vendor . ">>".$type.">>" . $srvprc);
          if (! is_array($scopeIn)) {
@@ -79,7 +79,7 @@ use LinHUniX\Mcp\masterControlProgram;
      */
      public static function apiReturn(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
      {
-         $res = self::apiBase($mcp, "Api(R)",$mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+         $res = self::apiBase($mcp, "Api(Return)",$mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
          ob_end_clean();
          header('Content-type: application/json');
          if (isset($res["return"])) {
