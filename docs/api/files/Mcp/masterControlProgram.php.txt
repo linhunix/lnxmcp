@@ -42,15 +42,52 @@ final class masterControlProgram
      */
     private $pathapp;
     /**
+     * getPathApp Path Application Folder
+     *
+     * @return string
+     */
+    public function getPathApp(){
+        return $this->pathapp;
+    }
+    /**
      *
      * @var string path of the template positions on the code
      */
     private $pathtpl;
     /**
+     * getPathTpl : Path Template Folder
+     *
+     * @return string
+     */
+    public function getPathTpl(){
+        return $this->pathtpl;
+    }
+    /**
+     *
+     * @var string path of the module positions on the code
+     */
+    private $pathsrc;
+    /**
+     * getPathTpl : Path Application Module Source  Folder
+     *
+     * @return string
+     */
+    public function getPathSrc(){
+        return $this->pathsrc;
+    }
+    /**
      *
      * @var string path of the template positions on the code
      */
     private $pathmcp;
+    /**
+     * getPathMcp : Path Mxp Folder
+     *
+     * @return string
+     */
+    public function getPathMcp(){
+        return $this->pathmcp;
+    }
     /**
      *
      * @var Slim Content as a test of integrations
@@ -70,13 +107,28 @@ final class masterControlProgram
      * Short Name of this application
      * @var string
      */
-
     private $defapp;
+    /**
+     * getDefApp : Path Mxp Folder
+     *
+     * @return string
+     */
+    public function getDefApp(){
+        return $this->defapp;
+    }
     /**
      * Short Name of the vendors
      * @var string
      */
     private $defvnd = "LinHUniX";
+    /**
+     * getDefApp : Path Mxp Folder
+     *
+     * @return string
+     */
+    public function getDefVnd(){
+        return $this->defvnd;
+    }
     /**
      *
      * @var class
@@ -1023,7 +1075,7 @@ final class masterControlProgram
     public function apiA($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
        mcpApiClass::apiArray($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall , $vendor );
-    }    
+    }
     /**
      * Run Module as ToolApi Components
      * @param string $srvprc  name of the driver
@@ -1035,7 +1087,7 @@ final class masterControlProgram
      */
     public function apiCommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
     {
-        mcpApiClass::apiCommon($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall , $this->defvnd );
+        mcpApiClass::apiCommon($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall );
     }
     /**
      * Run Module as ToolApi Components
@@ -1048,7 +1100,7 @@ final class masterControlProgram
      */
     public function apiACommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
     {
-        mcpApiClass::apiCommonArray($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall , $this->defvnd );
+        mcpApiClass::apiCommonArray($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall );
     }
     /**
      * Run Module as ToolApi Components on remote system
