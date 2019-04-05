@@ -49,7 +49,7 @@ use LinHUniX\Mcp\masterControlProgram;
       */
      public static function apiArray(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
      {
-         return self::apiBase($mcp, "Api(A)",$mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+         return self::apiBase($mcp, "Api(A)",$srvprc, $mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
      }
      /**
       * Run Module as ToolApi Components and exit
@@ -62,7 +62,7 @@ use LinHUniX\Mcp\masterControlProgram;
       */
      public static function api(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
      {
-         $res = self::apiBase($mcp, "Api",$mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+         $res = self::apiBase($mcp, "Api",$srvprc, $mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
          ob_end_clean();
          header('Content-type: application/json');
          echo json_encode($res);
@@ -79,7 +79,7 @@ use LinHUniX\Mcp\masterControlProgram;
      */
      public static function apiReturn(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
      {
-         $res = self::apiBase($mcp, "Api(Return)",$mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+         $res = self::apiBase($mcp, "Api(Return)",$srvprc, $mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
          ob_end_clean();
          header('Content-type: application/json');
          if (isset($res["return"])) {
@@ -100,7 +100,7 @@ use LinHUniX\Mcp\masterControlProgram;
      */
      public static function apiCommon(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
      {
-         $res = self::apiBase($mcp, "Api(C)",$mcp->getPathMcp(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+         $res = self::apiBase($mcp, "Api(C)",$srvprc, $mcp->getPathMcp(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
          ob_end_clean();
          header('Content-type: application/json');
          echo json_encode($res);
@@ -117,7 +117,7 @@ use LinHUniX\Mcp\masterControlProgram;
       */
      public static function apiCommonArray(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
      {
-         return self::apiBase($mcp, "Api(CA)",$mcp->getPathMcp(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+         return self::apiBase($mcp, "Api(CA)",$srvprc, $mcp->getPathMcp(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
      }
  }
 
