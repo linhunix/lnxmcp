@@ -1,0 +1,16 @@
+{
+    "logo":{
+        "type":"serviceCommon",
+        "name":"gfx",
+        "module":"Gfx",
+        "isPreload":false,
+        "ScopeInRewrite":{
+            "source":"Gfx/Base/img/ueclogo.gif",
+            "mimetype":"image/gif",
+            "T":"INT"
+        }
+    },
+    "bye":{
+        "type":"exit"
+    }
+}

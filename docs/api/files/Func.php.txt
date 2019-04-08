@@ -171,6 +171,7 @@ function lnxPutJsonFile($content,$file, $path = "", $ext = "")
     }
     return null;
 }
+
 /**
  * lnxmcp
  *
@@ -311,4 +312,43 @@ function lnxmcpDbM($command=null,$element=null)
         new LinHUniX\McpModules\DbMig\Shell\mcpDbMigrate($command,$element);
         echo "DbMigrate Complete!!\n";
     }
+}
+/**
+ * linhunix json array converter
+ *
+ * @param  mixed $content
+ * @param  mixed $file
+ * @param  mixed $path if is need
+ * @param  mixed $ext with out the '.'
+ *
+ * @return bool
+ */
+function lnxHtmlPage($file, $path = "", $ext = "html",$scopeIn=array())
+{
+    $hfile = realpath($path);
+    if ($hfile == "") {
+        $hfile = $path;
+    }
+    if ($hfile != "") {
+        $hfile .= DIRECTORY_SEPARATOR . $file;
+    }
+    if ($ext != "") {
+        $hfile .= "." . $ext;
+    }
+    if (!file_exists($hfile)) {
+        $app_path=lnxmcp()->getResource("path");
+        $hfile=$app_path.DIRECTORY_SEPARATOR.$hfile;
+    }
+    if (file_exists($hfile)) {
+        try {
+            lnxmcp()->info("lnxHtmlPage:" . $hfile);
+            return lnxmcp()->converTag(file_get_contents($hfile),$scopeIn);
+        } catch (\Exception $e) {
+            lnxmcp()->warning("lnxHtmlPage>>file:" . $hfile . " and err:" . $e->getMessage());
+            return false;
+        }
+    } else {
+        lnxmcp()->info("lnxHtmlPage>>file:" . $hfile . " and not found");
+    }
+    return null;
 }

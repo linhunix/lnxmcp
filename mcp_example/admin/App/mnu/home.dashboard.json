@@ -1,0 +1,10 @@
+{
+    "forum":{
+        "type":"htmlPage",
+        "path":"html/",
+        "name":"home"
+    },
+    "bye":{
+        "type":"exit"
+    }
+}

@@ -166,6 +166,9 @@ class pdoService extends mcpBaseModelClass
                     break;
             }
             $this->putToSession();
+
+
+            
             $this->putToGlobal();
             $this->putToJsonCache();
         } catch (Exception $e)

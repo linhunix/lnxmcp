@@ -73,15 +73,15 @@ class mcpMenuClass
             $blockModule = $scopectl["blockModule"];
         }
         if (isset($scopectl["ScopeInDefault"])) {
-            foreach ($scopectl["ScopeInDefault"] as $ink=>$inv) {
-                if (! isset($scopeIn[$ink])) {
-                    $scopeIn[$ink]=$inv;
+            foreach ($scopectl["ScopeInDefault"] as $ink => $inv) {
+                if (!isset($scopeIn[$ink])) {
+                    $scopeIn[$ink] = $inv;
                 }
             }
         }
         if (isset($scopectl["ScopeInRewrite"])) {
-            foreach ($scopectl["ScopeInRewrite"] as $ink=>$inv) {
-                $scopeIn[$ink]=$inv;
+            foreach ($scopectl["ScopeInRewrite"] as $ink => $inv) {
+                $scopeIn[$ink] = $inv;
             }
         }
         $result = null;
@@ -106,6 +106,9 @@ class mcpMenuClass
             case "headerClose":
                 $header = @$scopectl["header"];
                 lnxmcp()->header($header, true);
+                break;
+            case "load":
+                $result = lnxmcp()->moduleLoad($callname,$modinit,$vendor, $scopeIn);
                 break;
             case "run":
                 $result = lnxmcp()->moduleRun($callname, $scopeIn);
@@ -194,8 +197,27 @@ class mcpMenuClass
             case "showFullCommonBlock":
                 $result = lnxmcp()->showFullCommonBlock($callname, $scopeIn, $controllerModule, $blockModule);
                 break;
+            case "htmlPage":
+                echo lnxHtmlPage($callname,$path,"html",$scopeIn);
+                break;
             default:
                 $result = lnxmcp()->module($callname, $path, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $type);
+        }
+        if (isset($result["return"])) {
+            if (isset($scopectl["CommonByReturn"])) {
+                foreach ($scopectl["CommonByReturn"] as $ink => $inv) {
+                    if (!isset($result["return"][$inv])) {
+                        lnxmcp()->setCommon($ink, $result["return"][$inv]);
+                    }
+                }
+            }
+        }
+        if (isset($scopectl["CommonByOut"])) {
+            foreach ($scopectl["CommonByOut"] as $ink => $inv) {
+                if (!isset($result[$inv])) {
+                    lnxmcp()->setCommon($ink, $result[$inv]);
+                }
+            }
         }
         return $result;
     }
@@ -293,6 +315,35 @@ class mcpMenuClass
      */
     public static function TagConverter($text, $scopeIn = array(), $label = null)
     {
+        $lnxmcp_cnt = 0;
+        while (stripos($text, "<lnxmcp ") !== false) {
+            $lnxmcp_cnt++;
+            $lp1 = stripos($text, "<lnxmcp");
+            $lp2 = stripos($text, ">", $lp1);
+            $lp3 = stripos($text, "</lnxmcp>", $lp2);
+            $lcmdx = substr($text, ($lp1 + 8), ($lp2 - $lp1 - 9));
+            $lblcks = substr($test, ($lp2 + 8), ($lp3 - 9));
+            $subblk = "<lnxmcp " . substr($text, ($lp1 +8), ($lp3- $lp1 - 8)) . "</lnxmcp>";
+            $scopeCtl = array();
+            $scopeInSub = $scopeIn;
+            $scopeInSub["blockIn"] = $lblcks;
+            $largs = explode(" ", $lcmdx);
+            foreach ($largs as $ck => $cv) {
+                if (strpos($cv, "=") !== false) {
+                    $cvx = explode("=", $cv);
+                    $scopeCtl[$cvx[0]] = str_replace(array("\"","\'"), "" ,($cvx[1]));
+                } else {
+                    $scopeCtl[$ck] = $cv;
+                }
+            }
+            ob_start();
+            self::runcommand($scopeCtl, $scopeInSub);
+            $lres = ob_get_contents();
+            ob_end_clean();
+            $lret = "\n<!-- lnxmcp[" . $lnxmcp_cnt . "] " . $lcmdx . " !-->\n" . $lres . "\n<!-- /lnxmcp[" . $lnxmcp_cnt . "] !-->\n";
+            $text = str_ireplace($subblk, $lret, $text);
+
+        }
         while (stripos($text, "[lnxmcp-") !== false) {
             $lp1 = stripos($text, "[lnxmcp-");
             $lp2 = stripos($text, "]", $lp1);

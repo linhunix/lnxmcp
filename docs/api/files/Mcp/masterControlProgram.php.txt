@@ -837,6 +837,20 @@ final class masterControlProgram
      * @param array $scopeIn  Input Array with the value need to work
      * @return array $ScopeOut
      */
+    public function moduleLoad($libname,$module,$vendor, $scopeIn = array())
+    {
+        if (! is_array($scopeIn)) {
+            $scopeIn=array("In"=>$scopeIn);
+        }
+        return $this->module($libname, $this->pathsrc, true, $scopeIn,$module,null,$vendor);
+    }
+
+    /**
+     * similar to module but to easy
+     * @param string $libname name of the functionality
+     * @param array $scopeIn  Input Array with the value need to work
+     * @return array $ScopeOut
+     */
     public function moduleRun($libname, $scopeIn = array())
     {
         if (! is_array($scopeIn)) {
