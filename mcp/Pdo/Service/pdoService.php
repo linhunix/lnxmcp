@@ -61,6 +61,7 @@ class pdoService extends mcpBaseModelClass
      * var ["V"] = contain the values that need to remplace on query scripts 
      * var ["S"] = stored in session 
      * var ["G"] = stored in globals 
+     * var ["J"] = stored in Json Cache 
      * @author Andrea Morello <andrea.morello@linhunix.com>
      * @version GIT:2018-v1
      * @param Container $cfg Dipendecy injection for Pimple\Container
@@ -81,6 +82,10 @@ class pdoService extends mcpBaseModelClass
         {
             return;
         }
+        if ($this->getFromJsonCache())
+        {
+            return;
+        }
         $this->where();
         try
         {
@@ -98,6 +103,14 @@ class pdoService extends mcpBaseModelClass
                     if ($drv != null)
                     {
                         $this->argOut = $drv->execute($this->argIn["Q"], $this->argIn["V"]);
+                    }
+                    $this->cleanAllCache();
+                    break;
+                case "er":
+                    $drv = $this->getDatabase($this->argIn["E"]);
+                    if ($drv != null)
+                    {
+                        $this->argOut = $drv->executeWithRollback($this->argIn["Q"], $this->argIn["V"]);
                     }
                     $this->cleanAllCache();
                     break;
@@ -154,6 +167,7 @@ class pdoService extends mcpBaseModelClass
             }
             $this->putToSession();
             $this->putToGlobal();
+            $this->putToJsonCache();
         } catch (Exception $e)
         {
             $this->getMcp()->warning("QueryIdx:Index=" . $this->argIn["I"] . ",Error:" . $e->getMessage());
@@ -305,6 +319,28 @@ class pdoService extends mcpBaseModelClass
         }
         return false;
     }
+    private function putToSession()
+    {
+
+        if (isset($this->argIn["S"]))
+        {
+            if (!isset($_SESSION))
+            {
+                return;
+            }
+            if (!isset($_SESSION["pdo.cache"]))
+            {
+                $_SESSION["pdo.cache"] = array();
+            }
+            if (!empty($this->argIn["S"]))
+            {
+                $lblS = $this->argIn["S"];
+                $_SESSION["pdo.cache"][$lblS] = $this->argOut;
+                $this->getMcp()->debug("store from session:" . $lblS);
+            }
+        }
+    }
+
     private function getFromGlobal()
     {
         if (!isset($GLOBALS["pdo.cache"]))
@@ -349,27 +385,83 @@ class pdoService extends mcpBaseModelClass
             }
         }
     }
-    private function putToSession()
+    private function getFromJsonCache()
     {
-
-        if (isset($this->argIn["S"]))
+        $path_cache=$this->getMcp()->getResource("path.cache");
+        if (! is_dir($path_cache)){
+            return false;
+        }
+        if (! is_writable($path_cache)){
+            return false;
+        }
+        if (isset($this->argIn["J"]))
         {
-            if (!isset($_SESSION))
+            if (!empty($this->argIn["J"]))
             {
-                return;
+                $lblG = $this->argIn["J"];
+                $filecache = $path_cache.DIRECTORY_SEPARATOR.$lblG.".json";
+                $this->getMcp()->debug("try to read from jsoncache:" . $lblG);
+                if (file_exists($filecache))
+                {
+                    $ret=lnxGetJsonFile($lblG,$path_cache,".json");
+                    if (!empty($ret))
+                    {
+                        $this->argOut =$ret;
+                        $this->getMcp()->debug("read from jsoncache:" . $lblG);
+                        return true;
+                    } else
+                    {
+                        $this->getMcp()->debug("can't read (empty) from jsoncache:" . $lblG);
+                    }
+                }
             }
-            if (!isset($_SESSION["pdo.cache"]))
+        }
+        return false;
+    }
+    private function putToJsonCache()
+    {
+        $path_cache=$this->getMcp()->getResource("path.cache");
+        if (! is_dir($path_cache)){
+            return false;
+        }
+        if (! is_writable($path_cache)){
+            return false;
+        }
+        if (isset($this->argIn["J"]))
+        {
+            if (!empty($this->argIn["J"]))
             {
-                $_SESSION["pdo.cache"] = array();
-            }
-            if (!empty($this->argIn["S"]))
-            {
-                $lblS = $this->argIn["S"];
-                $_SESSION["pdo.cache"][$lblS] = $this->argOut;
-                $this->getMcp()->debug("store from session:" . $lblS);
+                $lblG = $this->argIn["J"];
+                if (lnxPutJsonFile($this->argOut,$lblG,$path_cache,".json")) {
+                    $this->getMcp()->debug("store from jsoncache:" . $lblG);
+                }else {
+                    $this->getMcp()->debug("can't write to jsoncache:" . $lblG);
+                }
             }
         }
     }
+    private function ClearJsonCache() { 
+        $path_cache=$this->getMcp()->getResource("path.cache");
+        if (! is_dir($path_cache)){
+            return false;
+        }
+        if (! is_writable($path_cache)){
+            return false;
+        }
+        try {
+            $objects = scandir($path_cache); 
+            foreach ($objects as $object) { 
+                if ($object != "." && $object != "..") { 
+                    if (! is_dir($path_cache."/".$object)) {
+                        unlink($path_cache."/".$object); 
+                    } 
+                }
+            } 
+        } catch (Exception $e)
+        {
+            $this->getMcp()->warning("Can delete cache!!!");
+        }
+      }
 
     private function cleanAllCache()
     {
@@ -385,5 +477,6 @@ class pdoService extends mcpBaseModelClass
         {
             $GLOBALS["pdo.cache"] = array();
         }
+        $this->ClearJsonCache();
     }
 }

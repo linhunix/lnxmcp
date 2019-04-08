@@ -85,6 +85,7 @@ class mcpQueryModelClass extends mcpBaseModelClass
      * 
      * @param String $flagType the flag for this specific request
      *  e  = execute : exec query with boolean results  
+     *  er  = execute : exec query with rollback  
      *  f  = firstRow : return only first row 
      *  q  = retrive array of all results 
      *  c  = return the count of the results 
