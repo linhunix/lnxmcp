@@ -121,11 +121,27 @@ class mcpBaseModelClass {
     }
 
     /**
-     * this a static metod fo call the mcp class functions
+     * this a metod fo call the mcp class functions
      * @return lnxmcp class
      */
     protected function getMcp() {
         return $this->mcp;
+    }
+
+    /**
+     * this a  metod fo call the mcp class functions
+     * @return lnxmcp class
+     */
+    protected function getDriver($drvlabel) {
+        return $this->mcp->getResource("Driver.".$drvlabel);
+    }
+
+    /**
+     * this a  metod fo call the mcp class functions
+     * @return lnxmcp class
+     */
+    protected function getCommon($name) {
+        return $this->mcp->getCommon($name);
     }
 
     /**
