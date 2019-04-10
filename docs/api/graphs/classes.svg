@@ -114,7 +114,7 @@
 <text text-anchor="middle" x="600" y="-1293.2" font-family="Courier,monospace" font-size="11.00">settingsProviderModel</text>
 </g>
 <!-- \\LinHUniX\\Mcp\\Provider\\settingsProviderModel&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpServiceProviderModelClass -->
-<g id="edge13" class="edge"><title>\\LinHUniX\\Mcp\\Provider\\settingsProviderModel&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpServiceProviderModelClass</title>
+<g id="edge14" class="edge"><title>\\LinHUniX\\Mcp\\Provider\\settingsProviderModel&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpServiceProviderModelClass</title>
 <path fill="none" stroke="black" stroke-dasharray="1,5" d="M520.991,-1312.72C495.741,-1318.13 467.467,-1324.19 441.172,-1329.82"/>
 <polygon fill="none" stroke="black" points="440.246,-1326.44 431.202,-1331.96 441.713,-1333.28 440.246,-1326.44"/>
 </g>
@@ -154,7 +154,7 @@
 <text text-anchor="middle" x="346" y="-1239.2" font-family="Courier,monospace" font-size="11.00">mcpRemoteApiModelClass</text>
 </g>
 <!-- \\LinHUniX\\Mcp\\Model\\mcpRemoteApiModelClass&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass -->
-<g id="edge12" class="edge"><title>\\LinHUniX\\Mcp\\Model\\mcpRemoteApiModelClass&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass</title>
+<g id="edge13" class="edge"><title>\\LinHUniX\\Mcp\\Model\\mcpRemoteApiModelClass&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass</title>
 <path fill="none" stroke="black" d="M272.527,-1260.05C262.552,-1262.87 252.484,-1265.88 243,-1269 214.449,-1278.39 183.235,-1290.59 157.871,-1301.02"/>
 <polygon fill="none" stroke="black" points="156.354,-1297.86 148.454,-1304.92 159.032,-1304.32 156.354,-1297.86"/>
 </g>
@@ -293,7 +293,7 @@
 <text text-anchor="middle" x="600" y="-1873.2" font-family="Courier,monospace" font-size="11.00">ArrayQuery</text>
 </g>
 <!-- \\LinHUniX\\Pdo\\Query\\ArrayQuery&#45;&gt;\\LinHUniX\\Pdo\\Model\\mcpQueryModelClass -->
-<g id="edge17" class="edge"><title>\\LinHUniX\\Pdo\\Query\\ArrayQuery&#45;&gt;\\LinHUniX\\Pdo\\Model\\mcpQueryModelClass</title>
+<g id="edge12" class="edge"><title>\\LinHUniX\\Pdo\\Query\\ArrayQuery&#45;&gt;\\LinHUniX\\Pdo\\Model\\mcpQueryModelClass</title>
 <path fill="none" stroke="black" d="M557.951,-1876C522.11,-1876 469.105,-1876 425.194,-1876"/>
 <polygon fill="none" stroke="black" points="425.111,-1872.5 415.11,-1876 425.11,-1879.5 425.111,-1872.5"/>
 </g>
@@ -349,7 +349,7 @@
 <text text-anchor="middle" x="105.5" y="-14.3" font-family="Times,serif" font-size="14.00" fill="gray">\Exception</text>
 </g>
 <!-- \\LinHUniX\\Mail\\Component\\phpmailerException&#45;&gt;\\Exception -->
-<g id="edge15" class="edge"><title>\\LinHUniX\\Mail\\Component\\phpmailerException&#45;&gt;\\Exception</title>
+<g id="edge16" class="edge"><title>\\LinHUniX\\Mail\\Component\\phpmailerException&#45;&gt;\\Exception</title>
 <path fill="none" stroke="black" d="M276.994,-237.321C264.652,-233.286 252.652,-227.442 243,-219 180.003,-163.902 230.058,-104.301 171,-45 166.446,-40.4278 161.003,-36.5902 155.236,-33.3794"/>
 <polygon fill="none" stroke="black" points="156.506,-30.1037 145.987,-28.8341 153.418,-36.386 156.506,-30.1037"/>
 </g>
@@ -364,7 +364,7 @@
 <text text-anchor="middle" x="346" y="-431.2" font-family="Courier,monospace" font-size="11.00">mailService</text>
 </g>
 <!-- \\LinHUniX\\Mail\\Service\\mailService&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass -->
-<g id="edge16" class="edge"><title>\\LinHUniX\\Mail\\Service\\mailService&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass</title>
+<g id="edge17" class="edge"><title>\\LinHUniX\\Mail\\Service\\mailService&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpBaseModelClass</title>
 <path fill="none" stroke="black" d="M340.128,-452.161C310.125,-563.996 150.53,-1158.88 113.967,-1295.17"/>
 <polygon fill="none" stroke="black" points="110.575,-1294.3 111.364,-1304.87 117.336,-1296.12 110.575,-1294.3"/>
 </g>
@@ -374,7 +374,7 @@
 <text text-anchor="middle" x="600" y="-431.2" font-family="Courier,monospace" font-size="11.00">ln4Controller</text>
 </g>
 <!-- \\LinHUniX\\ln4\\Controller\\ln4Controller&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpRemoteApiModelClass -->
-<g id="edge14" class="edge"><title>\\LinHUniX\\ln4\\Controller\\ln4Controller&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpRemoteApiModelClass</title>
+<g id="edge15" class="edge"><title>\\LinHUniX\\ln4\\Controller\\ln4Controller&#45;&gt;\\LinHUniX\\Mcp\\Model\\mcpRemoteApiModelClass</title>
 <path fill="none" stroke="black" d="M569.274,-452.228C549.651,-466.02 525.359,-486.855 513,-512 443.873,-652.648 558.534,-1095.62 457,-1215 451.67,-1221.27 445.145,-1226.21 437.956,-1230.08"/>
 <polygon fill="none" stroke="black" points="436.138,-1227.07 428.537,-1234.45 439.082,-1233.42 436.138,-1227.07"/>
 </g>

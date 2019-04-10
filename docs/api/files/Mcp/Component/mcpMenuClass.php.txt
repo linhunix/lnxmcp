@@ -203,6 +203,9 @@ class mcpMenuClass
             case "htmlPage":
                 echo lnxHtmlPage($callname,$path,"html",$scopeIn);
                 break;
+            case "tag":
+                echo lnxMcpTag($callname,$scopeIn);
+                break;
             default:
                 $result = lnxmcp()->module($callname, $path, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $type);
         }
