@@ -974,6 +974,19 @@ final class masterControlProgram
     }
 
     /**
+     * Run Module as database query by Array file
+     * @param string $dbproc  name of the driver by default json
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized by default Pdo
+     * @param string $path     path where present the basedirectory of the data
+     * @return array $ScopeOut
+     */
+    public function queryArrayR($scopeIn = array())
+    {
+        $this->info("MCP>>" . $this->defapp . ">>query[A]>>");
+        return $this->queryCommonR("Array", false, $scopeIn, "Pdo");
+    }
+    /**
      * Run Module as controller
      * @param string $ctrlproc name of the driver
      * @param bool $ispreload  is only a preload (ex page) or need to be execute (ex controller)

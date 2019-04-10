@@ -125,6 +125,9 @@ class mcpMenuClass
             case "queryJson":
                 $result = lnxmcp()->queryJsonR($callname, $scopeIn, $modinit, $vendor, $path);
                 break;
+            case "queryArray":
+                $result = lnxmcp()->queryArrayR($scopeIn);
+                break;
             case "controller":
                 $result = lnxmcp()->controller($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
                 break;
