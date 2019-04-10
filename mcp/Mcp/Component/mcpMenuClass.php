@@ -201,7 +201,9 @@ class mcpMenuClass
                 $result = lnxmcp()->showFullCommonBlock($callname, $scopeIn, $controllerModule, $blockModule);
                 break;
             case "htmlPage":
-                echo lnxHtmlPage($callname,$path,"html",$scopeIn);
+                $ext = @$scopectl["ext"];
+                if (empty($ext)){$ext="html";}
+                echo lnxHtmlPage($callname,$path,$ext,$scopeIn);
                 break;
             case "tag":
                 echo lnxMcpTag($callname,$scopeIn);
