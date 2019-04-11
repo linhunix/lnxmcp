@@ -333,7 +333,7 @@ class mcpMenuClass
             $lp2 = stripos($text, ">", $lp1);
             $lp3 = stripos($text, "</lnxmcp>", $lp2);
             $lcmdx = substr($text, ($lp1 + 8), ($lp2 - $lp1 - 9));
-            $lblcks = substr($test, ($lp2 + 8), ($lp3 - 9));
+            $lblcks = substr($text, ($lp2 + 1), ($lp3- $lp2 - 1));
             $subblk = "<lnxmcp " . substr($text, ($lp1 +8), ($lp3- $lp1 - 8)) . "</lnxmcp>";
             $scopeCtl = array();
             $scopeInSub = $scopeIn;
@@ -344,7 +344,7 @@ class mcpMenuClass
                     $cvx = explode("=", $cv);
                     $scopeCtl[$cvx[0]] = str_replace(array("\"","\'"), "" ,($cvx[1]));
                 } else {
-                    $scopeCtl[$ck] = $cv;
+                    $scopeCtl[$cv] = true;
                 }
             }
             $showrem=true;
@@ -352,6 +352,8 @@ class mcpMenuClass
                 $showrem=false;
             }
             if (isset($scopeCtl["block-type"])){
+                lnxmcp()->info ("TagConverter:block-type: ".$scopeCtl["block-type"]);
+                lnxmcp()->debug($lblcks);
                 switch  ($scopeCtl["block-type"]) {
                     case "json";
                         try {
@@ -387,11 +389,13 @@ class mcpMenuClass
             }
             $lret="";
             if (isset($scopeCtl["type"])){
+                lnxmcp()->info ("TagConverter:runcommand by type: ".$scopeCtl["type"]);
                 ob_start();
                 self::runcommand($scopeCtl, $scopeInSub);
                 $lres = ob_get_contents();
                 ob_end_clean();
             }else {
+                lnxmcp()->info ("TagConverter:passive ");
                 $lres=$scopeInSub["blockIn"];
             }
             $lret =  $lres;

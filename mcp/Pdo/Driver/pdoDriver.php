@@ -180,7 +180,7 @@ class pdoDriver extends mcpBaseModelClass
         } catch (Exception $e) {
             $this->PDO->rollback();
             $this->getMcp()->warning("[KO]" . $this->database . "=" . $sql . ":" . $e->getMessage());
-            return null;
+            return false;
         }
         return $res;
     }
@@ -481,15 +481,16 @@ class pdoDriver extends mcpBaseModelClass
     {
         if ((count($_fields) > 0) && ($_table != '')) {
             $_stmt = $this->getSql($_fields, $_table,$emptyval);
-            if ($run)
+            if ($run) {
                 $_result = $this->executeWithRollback($_stmt);
-            else
+            } else {
                 $_result = $_stmt;
+            }
         }
         if ($_result) {
             return $_result;
         }
-        return false;
+        return true;
     }
 
     //GET SetRow SQL
