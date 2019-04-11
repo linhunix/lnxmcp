@@ -347,11 +347,57 @@ class mcpMenuClass
                     $scopeCtl[$ck] = $cv;
                 }
             }
-            ob_start();
-            self::runcommand($scopeCtl, $scopeInSub);
-            $lres = ob_get_contents();
-            ob_end_clean();
+            $showrem=true;
+            if (isset($scopeCtl["disable-rem"])){
+                $showrem=false;
+            }
+            if (isset($scopeCtl["block-type"])){
+                switch  ($scopeCtl["block-type"]) {
+                    case "json";
+                        try {
+                            $arr=json_decode($lblcks,true);
+                            if (is_array($arr)){
+                                foreach ($arr as $ak => $av) {
+                                    $scopeInSub[$ak]=$av;
+                                }
+                            }
+                        } catch (\Exception $e) {
+                            lnxmcp()->warning ("TagConverter:block-type json error ".$e->getMessage());
+                        }
+                    break;
+                    case "config":
+                        $scopeInSub["blockIn"]=lnxmcp()->getCfg($lblcks);
+                        break;
+                    case "common":
+                        $scopeInSub["blockIn"]=lnxmcp()->getCommon($lblcks);
+                        break;
+                    case "scope":
+                        $scopeInSub["blockIn"]=@$scopeIn[$lblcks];
+                        break;
+                    case "translate":
+                        if (isset($scopeCtl["block-lang"])){
+                            $scopeInSub["blockIn"]=lnxmcp()->translateMulti($lang,$lblcks);
+                        } else {
+                            $scopeInSub["blockIn"]=lnxmcp()->translate($lblcks);
+                        }
+                        break;
+                    default:
+                        $scopeInSub["blockIn"] = $lblcks;
+                }
+            }
+            $lret="";
+            if (isset($scopeCtl["type"])){
+                ob_start();
+                self::runcommand($scopeCtl, $scopeInSub);
+                $lres = ob_get_contents();
+                ob_end_clean();
+            }else {
+                $lres=$scopeInSub["blockIn"];
+            }
+            $lret =  $lres;
+            if ($showrem==true){
             $lret = "\n<!-- lnxmcp[" . $lnxmcp_cnt . "] " . $lcmdx . " !-->\n" . $lres . "\n<!-- /lnxmcp[" . $lnxmcp_cnt . "] !-->\n";
+            }
             $text = str_ireplace($subblk, $lret, $text);
 
         }
