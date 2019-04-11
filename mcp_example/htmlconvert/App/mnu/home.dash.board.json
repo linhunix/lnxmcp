@@ -1,9 +1,8 @@
 {
     "forum":{
-        "type":"extTemplate",
+        "type":"extFile",
         "path":"html/",
-        "name":"home",
-        "ext":"html"
+        "name":"home.html"
     },
     "bye":{
         "type":"exit"

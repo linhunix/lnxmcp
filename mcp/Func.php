@@ -320,10 +320,12 @@ function lnxmcpDbM($command=null,$element=null)
  * @param  mixed $file
  * @param  mixed $path if is need
  * @param  mixed $ext with out the '.'
+ * @param  mixed $scopeIn array in
+ * @param  mixed $convert if need to  convert or  only load
  *
  * @return bool
  */
-function lnxHtmlPage($file, $path = "", $ext = "html",$scopeIn=array())
+function lnxMcpExtLoad($file, $path = "", $ext = null,$scopeIn=array(),$convert=true)
 {
     $hfile = realpath($path);
     if ($hfile == "") {
@@ -332,19 +334,25 @@ function lnxHtmlPage($file, $path = "", $ext = "html",$scopeIn=array())
     if ($hfile != "") {
         $hfile .= DIRECTORY_SEPARATOR . $file;
     }
-    if ($ext != "") {
+    if (!empty($ext)) {
         $hfile .= "." . $ext;
     }
     if (!file_exists($hfile)) {
         $app_path=lnxmcp()->getResource("path");
         $hfile=$app_path.DIRECTORY_SEPARATOR.$hfile;
     }
+    lnxmcp()->info("lnxMcpExtLoad try to load and convert :".$hfile);
     if (file_exists($hfile)) {
         try {
-            lnxmcp()->info("lnxHtmlPage:" . $hfile);
-            return lnxmcp()->converTag(file_get_contents($hfile),$scopeIn);
+            if ($convert==true) {
+                lnxmcp()->info("lnxMcpExtLoad:(with Convert)" . $hfile);
+                return lnxmcp()->converTag(file_get_contents($hfile),$scopeIn);
+            }else{
+                lnxmcp()->info("lnxMcpExtLoad:(without Convert)" . $hfile);
+                return file_get_contents($hfile);
+            }
         } catch (\Exception $e) {
-            lnxmcp()->warning("lnxHtmlPage>>file:" . $hfile . " and err:" . $e->getMessage());
+            lnxmcp()->warning("lnxMcpExtLoad>>file:" . $hfile . " and err:" . $e->getMessage());
             return false;
         }
     } else {
