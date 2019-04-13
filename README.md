@@ -36,11 +36,14 @@ The logic inside support both nmespace function and class
  - Data cache 
  - Log service 
  - Mail service 
- - Debug Serices 
+ - Debug Serices
+ - BlackBox Logic
  - Remote Api Proxy 
  - Array's enrichment
- - Shell command service 
+ - Html tag Converter
  - Model View Controller 
+ - Lazy Component Loader 
+ - Shell command service 
  - Multi Site Configuration
  - Function Sequence Manager
  - Multi Language Integration
