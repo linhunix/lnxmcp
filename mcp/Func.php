@@ -200,6 +200,19 @@ function lnxMcpTag($tagname, array $scopeIn = array())
     lnxmcp()->runTag($tagname, $scopeIn);
 }
 /**
+ * LinHUnix Master Control Program 
+ * Fast Command caller 
+ *
+ * @param  array $scopeCtl
+ * @param  array $scopein
+ *
+ * @return mixed $scopeout
+ */
+function lnxMcpCmd(array $scopeCtl, array $scopeIn = array())
+{
+    return lnxmcp()->runCommand($scopeCtl, $scopeIn);
+}
+/**
  * linhunixErrorHandlerDev
  *
  * @param  mixed $errno

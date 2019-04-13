@@ -631,6 +631,16 @@ final class masterControlProgram
     }
 
     /**
+     * Make a script array  with this name
+     * @param string $message
+     * @param string $var
+     */
+    public function toJavascript($message, array $scopeIn)
+    {
+        $this->mcpLogging->JsScript($message, $scopeIn);
+    }
+
+    /**
      * Make a Web Rem  with this message
      * @param string $message
      * @param string $var

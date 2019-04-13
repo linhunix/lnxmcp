@@ -184,6 +184,17 @@ class mcpDebugClass
         }
     }
 
+    public function jsDumpScript ($name,array $scopeIn) {
+        echo "<script type='text/javascript' >\n";
+        try {
+            echo "window.".$name."=".json_encode($scopeIn,JSON_PRETTY_PRINT);
+        }catch (\Exception $e) {
+            echo "alert('".$e->getMessage()."');\n";
+        }
+        echo "</script>\n";
+    }
+
+
     /**
      * notFound
      *

@@ -94,8 +94,10 @@ class mcpMenuClass
                 DumpAndExit(@$scopectl["message"]);
                 break;
             case "print":
-                echo $scopeIn;
+                print_r ($scopeIn);
                 break;
+            case "javascript":
+                lnxmcp()->toJavascript($callname,$scopeIn);
             case "clear":
                 $scopeIn = array();
                 break;
