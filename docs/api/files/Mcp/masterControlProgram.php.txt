@@ -637,7 +637,7 @@ final class masterControlProgram
      */
     public function toJavascript($message, array $scopeIn)
     {
-        $this->mcpLogging->JsScript($message, $scopeIn);
+        $this->mcpLogging->jsDumpScript($message, $scopeIn);
     }
 
     /**

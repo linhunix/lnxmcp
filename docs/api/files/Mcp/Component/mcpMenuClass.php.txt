@@ -98,6 +98,10 @@ class mcpMenuClass
                 break;
             case "javascript":
                 lnxmcp()->toJavascript($callname,$scopeIn);
+                break;
+            case "javascriptCommon":
+                lnxmcp()->toJavascript("common",lnxmcp()->getCommon());
+                break;
             case "clear":
                 $scopeIn = array();
                 break;
@@ -380,6 +384,7 @@ class mcpMenuClass
                         break;
                     case "translate":
                         if (isset($scopeCtl["block-lang"])){
+                            $lang=$scopeCtl["block-lang"];
                             $scopeInSub["blockIn"]=lnxmcp()->translateMulti($lang,$lblcks);
                         } else {
                             $scopeInSub["blockIn"]=lnxmcp()->translate($lblcks);
