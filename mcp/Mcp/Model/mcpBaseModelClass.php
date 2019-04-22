@@ -152,7 +152,18 @@ class mcpBaseModelClass {
     protected function setScopeOut($name, $value) {
         $this->getMcp()->setScopeOut($name, $value);
     }
-
+    /*
+     * call Cmd on blackbox mode call the remote action 
+     */
+    protected function callCmd(array $scopeCtl,array $scopeIn) {
+        return $this->getMcp()->runCommand($scopeCtl,$scopeIn);
+    }
+    /*
+     * call Tag on blackbox mode call the remote action 
+     */
+    protected function callTag($action,array $scopeIn,$buffer=true) {
+        return $this->getMcp()->runTag($action,$scopeIn,$buffer);
+    }
     /**
      * is a confortable method to set the return values
      * @param type $return
@@ -165,14 +176,14 @@ class mcpBaseModelClass {
      *  Ideally this method shuld be used to insert the model code and the other are to be used only as normal
      */
     protected function moduleCore() {
-        /// is empty waith to be implemented 
+        /// is empty waith to be implemented
     }
 
     /**
      *  Ideally this method shuld be used to insert the model code and the other are to be used only as normal
      */
     protected function moduleSingleTon() {
-        /// is empty waith to be implemented 
+        /// is empty waith to be implemented
     }
 
 
@@ -219,6 +230,39 @@ class mcpBaseModelClass {
      */
     protected function setArgOut($name, $value) {
         return $this->argOut[$name] = $value;
+    }
+
+    /**
+     * only to have a confortable solutions to debug data
+     * @param string $message
+     * @return void
+     */
+    protected function debug($messge) {
+        $this->getMcp()->debug(__CLASS__.":".$messge);
+    }
+    /**
+     * only to have a confortable solutions to debug data
+     * @param string $message
+     * @return void
+     */
+    protected function info($messge) {
+        $this->getMcp()->info(__CLASS__.":".$messge);
+    }
+    /**
+     * only to have a confortable solutions to debug data
+     * @param string $message
+     * @return void
+     */
+    protected function warning($messge) {
+        $this->getMcp()->warning(__CLASS__.":".$messge);
+    }
+    /**
+     * only to have a confortable solutions to debug data
+     * @param string $message
+     * @return void
+     */
+    protected function error($messge) {
+        $this->getMcp()->error(__CLASS__.":".$messge);
     }
 
 }

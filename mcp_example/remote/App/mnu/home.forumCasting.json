@@ -1,0 +1,12 @@
+{
+    "api":{
+        "type":"apiRemote",
+        "name":"RestTList",
+        "ScopeInRewrite":{
+            "DocType":"forumCasting"
+        }
+    },
+    "exit":{
+        "type":"exit"
+    }
+}

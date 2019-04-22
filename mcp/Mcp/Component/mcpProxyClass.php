@@ -55,6 +55,7 @@ class mcpProxyClass
             }
             $url .= "/" . $srvprc;
             $ch = curl_init();
+            lnxmcp()->info("apiRemote=>url:".$url);
             curl_setopt($ch, CURLOPT_URL, $url);
             if (isset($scopeIn["proxy"])) {
                 curl_setopt($ch, CURLOPT_PROXY, $scopeIn["proxy"]);
@@ -68,15 +69,11 @@ class mcpProxyClass
             curl_setopt($ch, CURLOPT_TIMEOUT, 200); // http request timeout 20 seconds
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow redirects, need this if the url changes
             curl_setopt($ch, CURLOPT_MAXREDIRS, 2); //if http server gives redirection responce
-            if (isset($scopeIn["user_agent"])) {
-                curl_setopt($ch, CURLOPT_USERAGENT, $scopeIn["user_agent"]);
-            } else {
-                curl_setopt(
-                    $ch,
-                    CURLOPT_USERAGENT,
-                    "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.7) Gecko/20070914 Firefox/2.0.0.7"
-                );
+            if (!isset($scopeIn["user_agent"])) {
+                $scopeIn["user_agent"]="Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.7) Gecko/20070914 Firefox/2.0.0.7";
             }
+            lnxmcp()->info("apiRemote=>user_agent:".$scopeIn["user_agent"]);
+            curl_setopt($ch, CURLOPT_USERAGENT, $scopeIn["user_agent"]);
             if (isset($scopeIn["cookiesfile"])) {
                 curl_setopt($ch, CURLOPT_COOKIEJAR, $scopeIn["cookiesFile"]); // cookies storage / here the changes have been made
                 curl_setopt($ch, CURLOPT_COOKIEFILE, $scopeIn["cookiesFile"]);
