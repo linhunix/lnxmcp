@@ -23,13 +23,13 @@ class mcpPageApiModelClass extends mcpControllerModelClass
     protected function moduleCore()
     {
         $this->ApiStart();
-        if (!empty($this->argIn["event"])) {
-            if (method_exists($this, $this->argIn["event"])) {
-                $this->$this->argIn["event"]();
-                $method .= $this->argIn["event"];
+        if (!empty($this->argIn["E"])) {
+            if (method_exists($this, $this->argIn["E"])) {
+                $this->$this->argIn["E"]();
+                $method .= $this->argIn["E"];
             }else{
                 if ($this->Service instanceof mcpServiceModelClass ) {
-                    $this->Service->runEvent("Api",$this->argIn["event"]);
+                    $this->Service->runEvent("Api",$this->argIn["E"]);
                 }
             }
         } else {

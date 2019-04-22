@@ -55,8 +55,8 @@ class mcpServiceModelClass extends mcpBaseModelClass
     public function runCommonEvent($name)
     {
         $argin = $this->getMcp()->getCommon();
-        $argin["event_type"] = "common";
-        $argin["event_name"] = $name;
+        $argin["T"] = "common";
+        $argin["E"] = $name;
         $res = $this->run($this->argCtl, $argin);
         if (isset($res["return"])) {
             $res = $res["return"];
@@ -72,16 +72,16 @@ class mcpServiceModelClass extends mcpBaseModelClass
      */
     public function runEvent($type, $name, $scopeIn)
     {
-        $scopeIn["event_type"] = $type;
-        $scopeIn["event_name"] = $name;
+        $scopeIn["T"] = $type;
+        $scopeIn["E"] = $name;
         return $this->run($this->argCtl, $scopeIn);
     }
 
     /**
      * In this service class is premanaged the module core as reflection calling
      * so  inf asking an event this call the specific method if is present the order 
-     *  type method
-     *  name method
+     *  (T)type method
+     *  (E)ventname method
      *  type_name method
      *
      * @return void
@@ -89,19 +89,19 @@ class mcpServiceModelClass extends mcpBaseModelClass
     protected function moduleCore()
     {
         $method = "";
-        if (!empty($this->argIn["event_type"])) {
-            if (method_exists($this, $this->argIn["event_type"])) {
-                $this->$this->argIn["event_type"]();
-                $method .= $this->argIn["event_type"];
+        if (!empty($this->argIn["T"])) {
+            if (method_exists($this, $this->argIn["T"])) {
+                $this->$this->argIn["T"]();
+                $method .= $this->argIn["T"];
             }
         }
-        if (!empty($scopeIn["event_name"])) {
-            if (method_exists($this, $this->argIn["event_name"])) {
-                $this->$this->argIn["event_name"]();
+        if (!empty($scopeIn["E"])) {
+            if (method_exists($this, $this->argIn["E"])) {
+                $this->$this->argIn["E"]();
                 if (!empty($method)) {
                     $method .= "_";
                 }
-                $method .= $this->argIn["event_name"];
+                $method .= $this->argIn["E"];
             }
         }
         if (!empty($method)) {
@@ -126,5 +126,6 @@ class mcpServiceModelClass extends mcpBaseModelClass
                 $this->argCfg[$k] = $v;
             }
         }
+        $this->runCommonEvent("Init");
     }
 }

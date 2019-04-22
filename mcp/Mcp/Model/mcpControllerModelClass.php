@@ -54,7 +54,10 @@ class mcpControllerModelClass extends mcpBaseModelClass
              !empty($this->ClassName) &&
              !empty($this->ClassModule) )
         {
-            $this->Service=$mcp->service("main",true,$mcp->getCommon(),$this->ClassModule,null,$this->ClassVendor);
+            $this->Service=$mcp->service($this->ClassModule,true,$mcp->getCommon(),$this->ClassModule,null,$this->ClassVendor);
+            if ($this->Service==null){
+                $this->Service=$mcp->service("main",true,$mcp->getCommon(),$this->ClassModule,null,$this->ClassVendor);
+            }
             if ($this->Service instanceof mcpServiceModelClass) {
                 $this->Service->runEvent("Init",$this->ClassName,$scopeIn);
             }
