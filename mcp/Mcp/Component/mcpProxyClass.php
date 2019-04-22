@@ -25,6 +25,7 @@ class mcpProxyClass
     public static function apiRemote(masterControlProgram &$mcp, $srvprc, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
         if (function_exists("curl_setopt") == false) {
+            lnxmcp()->warning("apiRemote:curl_setopt not enable");
             return $scopeIn;
         }
         $scopeOut = $scopeIn;
@@ -80,10 +81,36 @@ class mcpProxyClass
             }
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // false for https
             curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $scopeIn);
+            if (isset($scopeIn["postdata"])) {
+                $postarr=$scopeIn["postdata"];
+            }else{
+                $postarr=$scopeIn;
+                unset($postarr["url"]);
+                unset($postarr["cookiesfile"]);
+                unset($postarr["user_agent"]);
+                unset($postarr["proxyUser"]);
+                unset($postarr["proxyPass"]);
+            }
+            $postfield="";
+            foreach ($postarr as $sik=>$siv) {
+                if (is_array($siv)){
+                    $siv=json_encode($siv);
+                }
+                if (!empty($postfield)) {
+                    $postfield.="&";
+                }
+                $postfield.=$sik."=".$siv;
+            }
+            lnxmcp()->debug("apiRemote=>post:".$postfield);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $postfield);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_ENCODING, "gzip"); // the page encoding
-            $scopeOut = json_decode(curl_exec($ch), 1); // execute the http request
+            $output=curl_exec($ch);
+            lnxmcp()->debug("apiRemote=>output:".$output);
+            $scopeOut = json_decode($output, 1); // execute the http request
+            if (empty($scopeOut)){
+                $scopeOut=array("output"=>$output);
+            }
             curl_close($ch); // close the connection
         } catch (\Exception $e) {
             $mcp->warning($e->getMessage());

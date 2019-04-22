@@ -12,7 +12,6 @@ namespace LinHUniX\Mcp;
 
 use LinHUniX\Mcp\Provider\settingsProviderModel;
 use LinHUniX\Mcp\Model\mcpServiceProviderModelClass;
-use LinHUniX\Mcp\Model\mcpBaseModelClass;
 use LinHUniX\Mcp\Model\mcpConfigArrayModelClass;
 use \LinHUniX\Mcp\Component\mcpMenuClass;
 use \LinHUniX\Mcp\Component\mcpProxyClass;
