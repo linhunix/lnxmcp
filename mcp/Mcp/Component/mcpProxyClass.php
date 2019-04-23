@@ -22,7 +22,7 @@ class mcpProxyClass
 {
     //    public function apiCommon ($srvprc, $ispreload = false, $scopeIn = array (), $modinit = null, $subcall = null)
 
-    public static function apiRemote(masterControlProgram &$mcp, $srvprc, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    public static function Remote(masterControlProgram &$mcp, $srvprc, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
         if (function_exists("curl_setopt") == false) {
             lnxmcp()->warning("apiRemote:curl_setopt not enable");
@@ -65,7 +65,15 @@ class mcpProxyClass
                     curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);   // Use if proxy have username and password
                 }
             }
-            curl_setopt($ch, CURLOPT_HEADER, 0); // return headers 0 no 1 yes
+            if (isset($scopeIn["headers"])){
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $scopeIn["headers"]);
+                curl_setopt($ch, CURLOPT_HEADER, 1);
+            }else {
+                curl_setopt($ch, CURLOPT_HEADER, 0); // return headers 0 no 1 yes
+            }
+            if (isset($scopeIn["authUser"]) && isset($scopeIn["authPass"])) {
+                curl_setopt($ch, CURLOPT_USERPWD, $scopeIn["authUser"] . ":" . $scopeIn["authPass"]);
+            }
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // return page 1:yes
             curl_setopt($ch, CURLOPT_TIMEOUT, 200); // http request timeout 20 seconds
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Follow redirects, need this if the url changes
@@ -118,7 +126,7 @@ class mcpProxyClass
         }
         return $scopeOut;
     }
-    public static function apiShell(masterControlProgram &$mcp, $srvprc, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    public static function Shell(masterControlProgram &$mcp, $srvprc, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
     {
         try {
             foreach ($scopeIn as $ek => $ev) {
@@ -137,57 +145,20 @@ class mcpProxyClass
                 }
                 $cmd .= $modinit;
             }
-            if ($subcall != null) {
-                if ($cmd != "") {
-                    $cmd .= DIRECTORY_SEPARATOR;
-                }
-                $cmd .= $subcall;
-            }
             if ($cmd != "") {
                 $cmd .= DIRECTORY_SEPARATOR;
             }
             $cmd .= $srvprc;
+            if ($subcall != null) {
+                if ($cmd != "") {
+                    $cmd .= " ";
+                }
+                $cmd .= $subcall;
+            }
             return shell_exec($cmd);
         } catch (\Exception $e) {
             $mcp->warning($e->getMessage());
             return $scopeIn;
-        }
-    }
-    public static function blockShell(masterControlProgram &$mcp, $srvprc, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
-    {
-        try {
-            foreach ($scopeIn as $ek => $ev) {
-                putenv($ek . "=" . $ev);
-            }
-            $cmd = "";
-            if ($vendor != null) {
-                if ($cmd != "") {
-                    $cmd .= DIRECTORY_SEPARATOR;
-                }
-                $cmd .= $vendor;
-            }
-            if ($modinit != null) {
-                if ($cmd != "") {
-                    $cmd .= DIRECTORY_SEPARATOR;
-                }
-                $cmd .= $modinit;
-            }
-            if ($subcall != null) {
-                if ($cmd != "") {
-                    $cmd .= DIRECTORY_SEPARATOR;
-                }
-                $cmd .= $subcall;
-            }
-            if ($cmd != "") {
-                $cmd .= DIRECTORY_SEPARATOR;
-            }
-            $cmd .= $srvprc;
-            if (isset($scopeIn["MIME_TYPE"])){
-                header('Content-type: '.$scopeIn["MIME_TYPE"]);
-            }
-            passthru($cmd);
-        } catch (\Exception $e) {
-            $mcp->warning($e->getMessage());
         }
     }
 

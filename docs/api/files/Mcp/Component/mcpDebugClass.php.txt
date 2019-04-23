@@ -195,6 +195,15 @@ class mcpDebugClass
     }
 
 
+    public function jsonDump (array $scopeIn) {
+        try {
+           echo json_encode($scopeIn,JSON_PRETTY_PRINT);
+        }catch (\Exception $e) {
+           echo "{\n'error':'".$e->getMessage()."'}\n";
+        }
+    }
+
+
     /**
      * notFound
      *

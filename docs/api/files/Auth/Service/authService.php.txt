@@ -13,7 +13,7 @@ namespace LinHUniX\Auth\Service;
 
 use LinHUniX\Mcp\Model\mcpServiceModelClass;
 
-class AuthService extends mcpServiceModelClass {
+class authService extends mcpServiceModelClass {
     protected $session_id;
     protected $session_privacy;
     protected $session_user;
