@@ -1238,6 +1238,9 @@ final class masterControlProgram
         }
         return mcpMailClass::mailService($page, $scopeIn, $modinit);
     }
+    /////////////////////////////////////////////////////////////////////////////
+    // PAGE TEMPLATE / VIEW
+    /////////////////////////////////////////////////////////////////////////////
     /**
      * Load a page with your ScopeIn
      * @param string $page    name of the Page
@@ -1266,6 +1269,54 @@ final class masterControlProgram
     /////////////////////////////////////////////////////////////////////////////
     // BLOCK TEMPLATE / VIEW
     /////////////////////////////////////////////////////////////////////////////
+    /**
+     * Load a Block with your ScopeIn
+     * @param string $block   name of the Block
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     * @return string output (if is true return flag)
+     */
+    public function render($block, $scopeIn = array(), $modinit = null, $vendor = null, $pathsrc = null, $hasreturn = false)
+    {
+        if ($vendor == null) {
+            $vendor = $this->defapp;
+        }
+        if ($pathsrc == null) {
+            $pathsrc = $this->pathsrc;
+        }
+        if (! is_array($scopeIn)) {
+            $scopeIn=array("In"=>$scopeIn);
+        }
+        $this->info("MCP>>" . $vendor . ">>Render>>" . $block);
+        $this->RunEvent("block_start_" . $block);
+        $ret = $this->template($block, $pathsrc, true, $scopeIn, $modinit, null, $vendor, "Render", $hasreturn);
+        $this->RunEvent("block_start_" . $block);
+        return $ret;
+    }
+    /**
+     * Load a Block with your ScopeIn
+     * @param string $block   name of the Block
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     * @return string output (if is true return flag)
+     */
+    public function renderCommon($block, $scopeIn = array(), $modinit = null, $vendor = null, $pathsrc = null, $hasreturn = false)
+    {
+        if ($vendor == null) {
+            $vendor = $this->defapp;
+        }
+        if ($pathsrc == null) {
+            $pathsrc = $this->pathmcp;
+        }
+        if (! is_array($scopeIn)) {
+            $scopeIn=array("In"=>$scopeIn);
+        }
+        $this->info("MCP>>" . $vendor . ">>Render>>" . $block);
+        $this->RunEvent("block_start_" . $block);
+        $ret = $this->template($block, $pathsrc, true, $scopeIn, $modinit, null, $vendor, "Render", $hasreturn);
+        $this->RunEvent("block_start_" . $block);
+        return $ret;
+    }
     /**
      * Load a Block with your ScopeIn
      * @param string $block   name of the Block

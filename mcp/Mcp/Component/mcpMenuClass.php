@@ -179,6 +179,12 @@ class mcpMenuClass
             case "mail":
                 $result = lnxmcp()->mail($callname, $scopeIn, $modinit);
                 break;
+            case "render":
+                $result = lnxmcp()->render($callname, $scopeIn, $modinit, $vendor);
+                break;
+            case "renderCommon":
+                $result = lnxmcp()->renderCommon($callname, $scopeIn, $modinit, $vendor);
+                break;
             case "block":
                 $result = lnxmcp()->block($callname, $scopeIn, $modinit, $vendor);
                 break;
