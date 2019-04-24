@@ -2,15 +2,24 @@ Master Control Program
 =========================
 Is a simple MCP/MVC framework with out compose or other features an compatible with php 5.3 and more 
 
+### Download ###
+[Stable Phar Version](https://github.com/linhunix/lnxmcp/blob/3.4.0/dist/lnxmcp.phar)
+
 ### Why MCP? ###
 The big difference of a standard **mvc** and **mvp** is the presence obbligatories of a central code.
 and your functionality is an extension of it :
-- Slim 
-- Laravel
 
         Web >> MVP/MVC >> Your Code (as an extension of MVP/MVC);
 
+- Slim 
+- Laravel
+
+
+
+
+
 A MCP is a layer, whe you ad this on your code, then is automatic estended with this features
+
 
         Web >> Your Code << MCP >> New Features;
     
@@ -63,9 +72,11 @@ the logic of LN4 Java Backend and create around it the functionality need to ext
 
 Java LN4 Backend and Middle Ware >> Json Api >> lnxfea/lnxmcp fronted  >> Site or application
 
-**For more info [[ https://github.com/linhunix/lnxmcp/wiki/ | Wiki GitHub Pages ]]**
-  
+**For more info:**
+* [Wiki Pages](https://github.com/linhunix/lnxmcp/wiki/)
+* [Api Pages](https://linhunix.github.io/lnxmcp-docs/Docs/api)
+* [Api Modules Pages](https://linhunix.github.io/lnxmcp-docs/Docs/api/modules)
    
 tag to init row:
 
-    <? /*LNXMCP-INIT*/ if (function_exists("lnxmcp")==false){ include $_SERVER["DOCUMENT_ROOT"]."/app.php" ; }; lnxmcp()->imhere(); /*LNXMCP-END*/ ?>
+    <?php /*LNXMCP-INIT*/ if (function_exists("lnxmcp")==false){ include $_SERVER["DOCUMENT_ROOT"]."/app.php" ; }; lnxmcp()->imhere(); /*LNXMCP-END*/ ?>
