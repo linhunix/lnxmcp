@@ -918,18 +918,24 @@ final class masterControlProgram
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
+     * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
+     * @param string $vendor   this code is part of specific vendor (ex ft )
+     * @param string $path     path where present the basedirectory of the data
      * @return array $ScopeOut
      */
-    public function driver($libname, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    public function driver($libname, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $path = null)
     {
+        if ($path == null) {
+            $path = $this->pathsrc;
+        }
         if ($vendor == null) {
             $vendor = $this->defvnd;
         }
         if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
-        $this->info("MCP>>" . $vendor . ">>driver>>" . $libname);
-        return $this->module($libname, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Driver");
+        $this->info("MCP>>" . $vendor . ">>Driver>>" . $libname);
+        return $this->module($libname, $path, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Driver");
     }
 
     /**

@@ -20,6 +20,17 @@ use LinHUniX\Mcp\masterControlProgram;
 class mcpBaseModelClass {
 
     /**
+     * @var string is the name of the class namespace  
+     */
+    protected $spacename=__NAMESPACE__;
+
+    /**
+     * @var string is the name of the class 
+     */
+    protected $classname=__CLASS__;
+
+
+    /**
      * on this class need to set the number of the dependency need to use to work with this
      * class ant that information was stored on $scopeCtl and share when execute this specific modules
      * @example $require=array("app.page","app.config");
@@ -39,7 +50,7 @@ class mcpBaseModelClass {
     protected $bootCtl;
 
     /**
-     *
+     *class
      * @var array contains the boot data informations
      */
     protected $bootData;
@@ -70,6 +81,13 @@ class mcpBaseModelClass {
     protected $mcp;
 
     /**
+     *  Pre init is a method to use on the new version
+     */
+    protected function moduleInit(){
+        
+    }
+
+    /**
      * @param array                (reference of) $scopeCtl => calling Controlling definitions
      * @param array                (reference of) $scopeIn temproraney array auto cleanable
      * @param masterControlProgram to call back the father
@@ -80,6 +98,7 @@ class mcpBaseModelClass {
         $this->bootCtl = $scopeCtl;
         $this->bootData = $scopeIn;
         $this->require = array();
+        $this->moduleInit();
         $this->singleTon=false;
         if (isset($scopeIn["public"])) {
             if (is_array($scopeIn["public"])) {
@@ -110,8 +129,9 @@ class mcpBaseModelClass {
         $this->argCtl = $scopeCtl;
         $this->argIn = $scopeIn;
         $this->argOut = array();
-        if ($this->singleTon==false){
+        if ($this->singleTon==false) {
             $this->singleTon=true;
+            $this->debug("SingleTon");
             $this->moduleSingleTon();
         }
         $this->moduleCore();
@@ -138,7 +158,7 @@ class mcpBaseModelClass {
 
     /**
      * this a  metod fo call the mcp class functions
-     * @return lnxmcp class
+     * @return mixed
      */
     protected function getCommon($name) {
         return $this->mcp->getCommon($name);
@@ -153,13 +173,13 @@ class mcpBaseModelClass {
         $this->getMcp()->setScopeOut($name, $value);
     }
     /*
-     * call Cmd on blackbox mode call the remote action 
+     * call Cmd on blackbox mode call the remote action
      */
     protected function callCmd(array $scopeCtl,array $scopeIn) {
         return $this->getMcp()->runCommand($scopeCtl,$scopeIn);
     }
     /*
-     * call Tag on blackbox mode call the remote action 
+     * call Tag on blackbox mode call the remote action
      */
     protected function callTag($action,array $scopeIn,$buffer=true) {
         return $this->getMcp()->runTag($action,$scopeIn,$buffer);
@@ -238,7 +258,7 @@ class mcpBaseModelClass {
      * @return void
      */
     protected function debug($messge) {
-        $this->getMcp()->debug(__CLASS__.":".$messge);
+        $this->getMcp()->debug($this->classname.":".$messge);
     }
     /**
      * only to have a confortable solutions to debug data
@@ -246,7 +266,7 @@ class mcpBaseModelClass {
      * @return void
      */
     protected function info($messge) {
-        $this->getMcp()->info(__CLASS__.":".$messge);
+        $this->getMcp()->info($this->classname.":".$messge);
     }
     /**
      * only to have a confortable solutions to debug data
@@ -254,7 +274,7 @@ class mcpBaseModelClass {
      * @return void
      */
     protected function warning($messge) {
-        $this->getMcp()->warning(__CLASS__.":".$messge);
+        $this->getMcp()->warning($this->classname.":".$messge);
     }
     /**
      * only to have a confortable solutions to debug data
@@ -262,7 +282,7 @@ class mcpBaseModelClass {
      * @return void
      */
     protected function error($messge) {
-        $this->getMcp()->error(__CLASS__.":".$messge);
+        $this->getMcp()->error($this->classname.":".$messge);
     }
 
 }

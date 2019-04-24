@@ -123,7 +123,7 @@ class mcpMenuClass
                 $result = lnxmcp()->moduleRun($callname, $scopeIn);
                 break;
             case "driver":
-                $result = lnxmcp()->driver($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+                $result = lnxmcp()->driver($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor,$path);
                 break;
             case "query":
                 $result = lnxmcp()->queryR($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);

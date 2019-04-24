@@ -101,7 +101,7 @@ function selfAutoLoad($srcPath)
             $autoLoadFolders[] = $folder;
         }
     }
-    spl_autoload_register('legacyAutoload', true/*, true*/ );
+    spl_autoload_register('legacyAutoload', true /*, true*/);
 }
 
 /**
@@ -126,12 +126,15 @@ function lnxGetJsonFile($file, $path = "", $ext = "")
         try {
             lnxmcp()->info("lnxGetJsonFile:" . $jfile);
             return json_decode(file_get_contents($jfile), true);
+        } catch (\ErrorException $e) {
+            lnxmcp()->warning("lnxGetJsonFile>>file:" . $jfile . " and err:" . $e->get_message());
+            return false;
         } catch (\Exception $e) {
             lnxmcp()->warning("lnxGetJsonFile>>file:" . $jfile . " and err:" . $e->get_message());
             return false;
         }
     } else {
-        lnxmcp()->info("lnxGetJsonFile>>file:" . $jfile . " and not found");
+        lnxmcp()->info("lnxGetJsonFile>>file:" . $jfile . " and err not found");
     }
     return null;
 }
@@ -145,7 +148,7 @@ function lnxGetJsonFile($file, $path = "", $ext = "")
  *
  * @return bool
  */
-function lnxPutJsonFile($content,$file, $path = "", $ext = "")
+function lnxPutJsonFile($content, $file, $path = "", $ext = "")
 {
     $jfile = $path;
     if ($jfile != "") {
@@ -154,17 +157,17 @@ function lnxPutJsonFile($content,$file, $path = "", $ext = "")
     if ($ext != "") {
         $jfile .= "." . $ext;
     }
-    if (! is_dir(dirname($jfile))) {
-        lnxmcp()->warning("lnxPutJsonFile:" . dirname($jfile). " not exist!!");
+    if (!is_dir(dirname($jfile))) {
+        lnxmcp()->warning("lnxPutJsonFile:" . dirname($jfile) . " not exist!!");
         return false;
     }
-    if (! is_writable(dirname($jfile))) {
-        lnxmcp()->warning("lnxPutJsonFile:" . dirname($jfile). " not writable!!");
+    if (!is_writable(dirname($jfile))) {
+        lnxmcp()->warning("lnxPutJsonFile:" . dirname($jfile) . " not writable!!");
         return false;
     }
     try {
         lnxmcp()->info("lnxPutJsonFile:" . $jfile);
-        return file_put_contents($jfile, json_encode($content,JSON_PRETTY_PRINT));
+        return file_put_contents($jfile, json_encode($content, JSON_PRETTY_PRINT));
     } catch (\Exception $e) {
         lnxmcp()->warning("lnxPutJsonFile>>file:" . $jfile . " and err:" . $e->get_message());
         return false;
@@ -238,7 +241,7 @@ function linhunixErrorHandlerDev($errno, $errstr, $errfile, $errline)
             break;
         case E_PARSE:
         case E_CORE_ERROR:
-        case E_COMPILE_ERROR :
+        case E_COMPILE_ERROR:
         case E_RECOVERABLE_ERROR:
         case E_USER_ERROR:
             lnxmcp()->error($errstr . "[" . $errfile . "] [" . $errline . "]");
@@ -287,10 +290,10 @@ function mcpErrorHandlerInit()
  * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
  * @return array $ScopeOut
  */
-function lnxmcpChk($checkmenu=null)
+function lnxmcpChk($checkmenu = null)
 {
     $mcpCheckFile = lnxmcp()->getCfg("mcp.path") . "/../mcp_modules/Chk/Shell/mcpCheck.php";
-    lnxmcp()->info("Try to load CheckModule:".$mcpCheckFile);
+    lnxmcp()->info("Try to load CheckModule:" . $mcpCheckFile);
     if (file_exists($mcpCheckFile)) {
         echo "load Check Env on $mcpCheckFile..\n";
         include_once($mcpCheckFile);
@@ -308,21 +311,21 @@ function lnxmcpChk($checkmenu=null)
  * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
  * @return array $ScopeOut
  */
-function lnxmcpDbM($command=null,$element=null)
+function lnxmcpDbM($command = null, $element = null)
 {
-    if (empty($command)){
-        $command= "help";
+    if (empty($command)) {
+        $command = "help";
     }
-    if (empty($element)){
-        $element= null;
+    if (empty($element)) {
+        $element = null;
     }
     $mcpCheckFile = lnxmcp()->getCfg("mcp.path") . "/../mcp_modules/DbMig/Shell/mcpDbMigrate.php";
-    lnxmcp()->info("Try to load DbMigrateModule:".$mcpCheckFile);
+    lnxmcp()->info("Try to load DbMigrateModule:" . $mcpCheckFile);
     if (file_exists($mcpCheckFile)) {
         echo "load DbMigrate Env on $mcpCheckFile..\n";
         include_once($mcpCheckFile);
         echo "Run DbMigrate:$command\n";
-        new LinHUniX\McpModules\DbMig\Shell\mcpDbMigrate($command,$element);
+        new LinHUniX\McpModules\DbMig\Shell\mcpDbMigrate($command, $element);
         echo "DbMigrate Complete!!\n";
     }
 }
@@ -338,7 +341,7 @@ function lnxmcpDbM($command=null,$element=null)
  *
  * @return bool
  */
-function lnxMcpExtLoad($file, $path = "", $ext = null,$scopeIn=array(),$convert=true)
+function lnxMcpExtLoad($file, $path = "", $ext = null, $scopeIn = array(), $convert = true)
 {
     $hfile = realpath($path);
     if ($hfile == "") {
@@ -351,16 +354,16 @@ function lnxMcpExtLoad($file, $path = "", $ext = null,$scopeIn=array(),$convert=
         $hfile .= "." . $ext;
     }
     if (!file_exists($hfile)) {
-        $app_path=lnxmcp()->getResource("path");
-        $hfile=$app_path.DIRECTORY_SEPARATOR.$hfile;
+        $app_path = lnxmcp()->getResource("path");
+        $hfile = $app_path . DIRECTORY_SEPARATOR . $hfile;
     }
-    lnxmcp()->info("lnxMcpExtLoad try to load and convert :".$hfile);
+    lnxmcp()->info("lnxMcpExtLoad try to load and convert :" . $hfile);
     if (file_exists($hfile)) {
         try {
-            if ($convert==true) {
+            if ($convert == true) {
                 lnxmcp()->info("lnxMcpExtLoad:(with Convert)" . $hfile);
-                return lnxmcp()->converTag(file_get_contents($hfile),$scopeIn);
-            }else{
+                return lnxmcp()->converTag(file_get_contents($hfile), $scopeIn);
+            } else {
                 lnxmcp()->info("lnxMcpExtLoad:(without Convert)" . $hfile);
                 return file_get_contents($hfile);
             }
@@ -372,4 +375,16 @@ function lnxMcpExtLoad($file, $path = "", $ext = null,$scopeIn=array(),$convert=
         lnxmcp()->info("lnxHtmlPage>>file:" . $hfile . " and not found");
     }
     return null;
+}
+
+/**
+ * LnxMcpFullDebugOn
+ *
+ * @return void
+ */
+function LnxMcpFullDebugOn()
+{
+    ini_set('display_startup_errors', 1);
+    ini_set('display_errors', 1);
+    error_reporting(-1);
 }

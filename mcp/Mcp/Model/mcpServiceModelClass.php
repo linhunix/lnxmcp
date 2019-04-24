@@ -17,6 +17,7 @@ class mcpServiceModelClass extends mcpBaseModelClass
      */
     protected $argCfg;
 
+
     /**
      * getSvcCfg
      *
@@ -54,14 +55,21 @@ class mcpServiceModelClass extends mcpBaseModelClass
      */
     public function runCommonEvent($name)
     {
-        $argin = $this->getMcp()->getCommon();
-        $argin["T"] = "common";
-        $argin["E"] = $name;
-        $res = $this->run($this->argCtl, $argin);
-        if (isset($res["return"])) {
-            $res = $res["return"];
+        try{
+            //LnxMcpFullDebugOn();
+            $argin = $this->getMcp()->getCommon();
+            $argin["T"] = "common";
+            $argin["E"] = $name;
+            $this->debug("Common Event:".print_r($argin,1));
+            $res = $this->run($this->bootCtl, $argin);
+            if (isset($res["return"])) {
+                $res = $res["return"];
+            }
+            $this->debug("Common ".$name.":".print_r($res,1));
+            $this->getMcp()->setCommon($name, $res);
+        } catch (\ErrorException $e){
+            $this->warning($e->getMessage());
         }
-        $this->getMcp()->setCommon($name, $res);
     }
     /**
      * runCommonEvent
@@ -111,6 +119,8 @@ class mcpServiceModelClass extends mcpBaseModelClass
         }
     }
 
+
+
     /**
      * @param array (reference of) $scopeCtl => calling Controlling definitions
      * @param array (reference of) $scopeIn temproraney array auto cleanable
@@ -119,13 +129,16 @@ class mcpServiceModelClass extends mcpBaseModelClass
     {
         parent::__construct($mcp, $scopeCtl, $scopeIn);
         $this->argCfg = $scopeCtl;
-        $cfgfile = str_replace("\\", ".", __NAMESPACE__);
-        $cfgarr = lnxGetJsonFile($cfgfile, $mcp->getCfg("app.cfg"), "json");
+        $cfgfile = "".str_replace("\\", "_",$this->spacename);
+        $this->debug("get config from ".$cfgfile);
+        $cfgpath=$mcp->getCfg("app.path.config");
+        $cfgarr = lnxGetJsonFile($cfgfile, $cfgpath, "json");
         if (is_array($cfgarr)) {
             foreach ($cfgarr as $k => $v) {
                 $this->argCfg[$k] = $v;
             }
         }
+        $this->debug("CommonEventInit");
         $this->runCommonEvent("Init");
     }
 }
