@@ -6,9 +6,9 @@ let e=0;
 find $MCP_HOME -type f  -name '*.php'| while read rr ; do
 	ROW="$(    php -l "$rr" 2>&1 | grep -iv 'no syntax error' )";
 	if [ "$ROW" == "" ]; then 
-	    echo "check $rr is OK!!";
+	    echo "check OK for $rr ";
 	else
-	    echo "check $rr error Found";
+	    echo "check ERR found on $rr !!";
 	    echo $ROW;
 	    let e++;
 	fi;
