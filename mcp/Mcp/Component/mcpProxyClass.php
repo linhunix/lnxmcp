@@ -65,10 +65,10 @@ class mcpProxyClass
                     curl_setopt($ch, CURLOPT_PROXYUSERPWD, $proxyauth);   // Use if proxy have username and password
                 }
             }
-            if (isset($scopeIn["headers"])){
+            if (isset($scopeIn["headers"])) {
                 curl_setopt($ch, CURLOPT_HTTPHEADER, $scopeIn["headers"]);
                 curl_setopt($ch, CURLOPT_HEADER, 1);
-            }else {
+            } else {
                 curl_setopt($ch, CURLOPT_HEADER, 0); // return headers 0 no 1 yes
             }
             if (isset($scopeIn["authUser"]) && isset($scopeIn["authPass"])) {
@@ -88,35 +88,34 @@ class mcpProxyClass
                 curl_setopt($ch, CURLOPT_COOKIEFILE, $scopeIn["cookiesFile"]);
             }
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // false for https
-            curl_setopt($ch, CURLOPT_POST, 1);
             if (isset($scopeIn["postdata"])) {
                 $postarr=$scopeIn["postdata"];
-            }else{
-                $postarr=$scopeIn;
-                unset($postarr["url"]);
-                unset($postarr["cookiesfile"]);
-                unset($postarr["user_agent"]);
-                unset($postarr["proxyUser"]);
-                unset($postarr["proxyPass"]);
-            }
-            $postfield="";
-            foreach ($postarr as $sik=>$siv) {
-                if (is_array($siv)){
-                    $siv=json_encode($siv);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                $postfield="";
+                if (is_array($postarr)) {
+                    foreach ($postarr as $sik=>$siv) {
+                        if (is_array($siv)) {
+                            $siv=json_encode($siv);
+                        }
+                        if (!empty($postfield)) {
+                            $postfield.="&";
+                        }
+                        $postfield.=$sik."=".$siv;
+                    }
+                } else {
+                    $postfield=$postarr;
                 }
-                if (!empty($postfield)) {
-                    $postfield.="&";
-                }
-                $postfield.=$sik."=".$siv;
+                lnxmcp()->debug("apiRemote=>post:".$postfield);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $postfield);
+            } else {
+                curl_setopt($ch, CURLOPT_POST, 0);
             }
-            lnxmcp()->debug("apiRemote=>post:".$postfield);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $postfield);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_ENCODING, "gzip"); // the page encoding
             $output=curl_exec($ch);
             lnxmcp()->debug("apiRemote=>output:".$output);
             $scopeOut = json_decode($output, 1); // execute the http request
-            if (empty($scopeOut)){
+            if (empty($scopeOut)) {
                 $scopeOut=array("output"=>$output);
             }
             curl_close($ch); // close the connection
@@ -161,5 +160,4 @@ class mcpProxyClass
             return $scopeIn;
         }
     }
-
 }
