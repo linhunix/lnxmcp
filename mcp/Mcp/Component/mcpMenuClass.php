@@ -25,6 +25,20 @@ class mcpMenuClass
 
     /**
      * Run a command inside $scopeCtl
+     * Scopectl params are:
+     * - name
+     * - path
+     * - ispreload
+     * - modinit
+     * - module
+     * - vendor
+     * - subcall
+     * - type
+     * - controllerModule
+     * - blockModule
+     * - ScopeInDefault
+     * - ScopeInRewrite
+     * - ScopeInOverwrite
      *
      * @param  mixed $scopectl
      * @param  mixed $scopeIn
@@ -83,6 +97,9 @@ class mcpMenuClass
             foreach ($scopectl["ScopeInRewrite"] as $ink => $inv) {
                 $scopeIn[$ink] = $inv;
             }
+        }
+        if (isset($scopectl["ScopeInOverwrite"])) {
+            $scopeIn=$scopectl["ScopeInOverwrite"];
         }
         $result = null;
         lnxmcp()->info("command try to call " . $type . ">> app." . $callname);
@@ -252,6 +269,15 @@ class mcpMenuClass
         if ($actionsSeq == null) {
             lnxmcp()->warning("sequence null!!");
             return $scopeIn;
+        }
+        if (isset($actionsSeq["cache"]["name"])) {
+            $name=$actionsSeq["cache"]["name"];
+            $expire=3600;
+            if (isset($actionsSeq["cache"]["expire"])) {
+                $expire=$actionsSeq["cache"]["expire"];
+            }
+            unset($actionsSeq["cache"]);
+            return lnxCacheCtl($name,$expire,$actionsSeq, $scopeIn );
         }
         foreach ($actionsSeq as $callname => $scopeCtl) {
             lnxmcp()->info("Sequence call app." . $callname);
