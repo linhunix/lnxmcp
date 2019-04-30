@@ -102,6 +102,7 @@ class mailService extends mcpBaseModelClass
      */
     public function stdMail($to, $subject, $message, $additional_headers = null, $additional_parameters = null, $from = null, $attachDoc = array(), $html = false)
     {
+        $this->mcp->info("StdMail: to/subject = " .$to."/".$subject);
         try {
             $mymail = clone $this->Mailer;
             if ($additional_headers != null) {
@@ -136,6 +137,7 @@ class mailService extends mcpBaseModelClass
             }
             $mymail->body = $message;
             $mymail->send();
+            $this->mcp->info("StdMail: success sent to/subject = " .$to."/".$subject);
             return true;
         } catch (\Exception $e) {
             $this->mcp->error("StdMail:" . $e->get_message());

@@ -293,15 +293,22 @@ function mcpCheck($chkmenu = null)
         $chkcls = new mcpCheckModel();
     }
     echo ".. Verify Class is mcpCheckModel \n";
+    $resmsg="";
     if ($chkcls instanceof mcpCheckModel) {
         if ($chkcls->RunTest(lnxmcp(), $chkarg)) {
-            echo "TEST SUCCESS!!!\n";
+            $resmsg="TEST SUCCESS!!!\n";
         } else {
-            DumpCheckAndExit("TEST FAILED!!");
+            $resmsg="TEST FAILED!!";
         }
     } else {
-        DumpCheckAndExit("BAD CLASS is not mcpCheckModel");
+        $resmsg="BAD CLASS is not mcpCheckModel";
     }
 }
-
+echo $resmsg;
+lnxmcp()->mail(null,array(
+    "to"=>"andrea.morello@linhunix.com",
+    "from"=>"test@localhost",
+    "subject"=>"lnxmcp - Run Text",
+    "message"=>"Arg<hr>\n<pre>".print_r($chkarg,1)."</pre><hr>\n".$resmsg
+));
 echo "Check Env Loaded!!\n";

@@ -1201,20 +1201,26 @@ final class masterControlProgram
 
     /**
      * mail
-     *
+     * where $scopeIn :
+     * - to : 
+     * - from :
+     * - subject :
+     * - message :
+     * - files :
+     * 
      * @param  mixed $page
      * @param  mixed $scopeIn
      * @param  mixed $modinit
      *
      * @return void
      */
-    public function mail($page = nulltestmail, $scopeIn = array(), $modinit = null)
+    public function mail($page = nulltestmail, $scopeIn = array(), $modinit = null,$vendor=null)
     {
         $this->info("MCP>>mail>>" . $page);
         if (!is_array($scopeIn)) {
             return null;
         }
-        return mcpMailClass::mailService($page, $scopeIn, $modinit);
+        return mcpMailClass::mailService($page, $scopeIn, $modinit,$vendor);
     }
     /////////////////////////////////////////////////////////////////////////////
     // PAGE TEMPLATE / VIEW

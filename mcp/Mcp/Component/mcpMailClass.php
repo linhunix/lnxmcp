@@ -55,16 +55,16 @@ class mcpMailClass
             return false;
         }
     }
-    public static function mailService($page = null, $scopeIn = array(), $modinit = null)
+    public static function mailService($page = null, $scopeIn = array(), $modinit = null, $vendor = null)
     {
         lnxmcp()->info("MCP>>mail>>" . $page);
-        try{
+        try {
             if (!is_array($scopeIn)) {
                 $scopeIn = array("In" => $scopeIn);
             }
             if (lnxmcp()->getCfg("app.Service.mail") != null) {
                 if (($page != null) || ($page != "none") || ($page != ".")) {
-                    $scopeIn["message"] = lnxmcp()->page($page, $scopeIn, $modinit, null, null, true);
+                    $scopeIn["message"] = lnxmcp()->page($page, $scopeIn, $modinit, $vendor, null, true);
                 }
                 lnxmcp()->Service("mail", false, $scopeIn);
             } else {
@@ -73,10 +73,10 @@ class mcpMailClass
                 $subject = $scopeIn["subject"];
                 $message = $scopeIn["message"];
                 $files = $scopeIn["files"];
-                mcpMailClass::mailSimple($to,$from,$subject,$message,true,$files);
+                mcpMailClass::mailSimple($to, $from, $subject, $message, true, $files);
             }
             return true;
-        }catch (\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -85,32 +85,32 @@ class mcpMailClass
     {
         if (lnxmcp()->getResource("support.onerrorsend") == true) {
             $mailto = lnxmcp()->getResource("support.mail");
-            if ($mailto != null && $mailto!=false) {
+            if ($mailto != null && $mailto != false) {
                 try {
-                    lnxmcp()->info("Prepare Mail Support to ".$mailto);
-                    $from = "noreply.".lnxmcp()->getResource("def")."@localhost";
+                    lnxmcp()->info("Prepare Mail Support to " . $mailto);
+                    $from = "noreply." . lnxmcp()->getResource("def") . "@localhost";
                     $subject = "Error Reporting - " . lnxmcp()->getResource("def") . " - " . date('d/m/y g:i a');
-                            if (function_exists("debug_backtrace")) {
+                    if (function_exists("debug_backtrace")) {
                         $message .= "\n\n" . print_r(debug_backtrace(), 1);
                     }
                     $message .= "\n\n" . print_r(lnxmcp(), 1);
                     if (lnxmcp()->getCfg("app.Service.mail") != null) {
-                        lnxmcp()->debug("Prepare Mail Support (mcp) to ".$mailto);
-                        $scopeIn=array(
-                            "to"=>$mailto,
-                            "from"=>$from,
-                            "subject"=>$subject,
-                            "message"=>$message
+                        lnxmcp()->debug("Prepare Mail Support (mcp) to " . $mailto);
+                        $scopeIn = array(
+                            "to" => $mailto,
+                            "from" => $from,
+                            "subject" => $subject,
+                            "message" => $message
                         );
                         mcpMailClass::mailService($scopeIn);
-                    }else{
-                        lnxmcp()->debug("Prepare Mail Support (classic) to ".$mailto);
-                        mcpMailClass::mailSimple($mailto,$form,$subject,$message,false);
+                    } else {
+                        lnxmcp()->debug("Prepare Mail Support (classic) to " . $mailto);
+                        mcpMailClass::mailSimple($mailto, $form, $subject, $message, false);
                     }
                 } catch (\Exception $e) {
                     lnxmcp()->warning("Support Mail Error:" . $e->getMessage());
                 }
-            }else{
+            } else {
                 lnxmcp()->warning("No Support Mail Error!!");
             }
         }
