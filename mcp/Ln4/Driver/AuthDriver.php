@@ -1,11 +1,15 @@
 <?php
-namespace LinHUniX\Auth\Driver;
-
+namespace LinHUniX\Ln4\Driver;
 use LinHUniX\Mcp\Model\mcpServiceModelClass;
+
 /**
- * 
+ * LinHUniX Web Application Framework
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
+ * @license   Proprietary See LICENSE.md
+ * @version GIT:2018-v2
  */
-class SqliteDriver extends mcpServiceModelClass {
+class AuthDriver extends mcpServiceModelClass {
     protected $session_id;
     protected $session_privacy;
     protected $session_user;
@@ -17,10 +21,12 @@ class SqliteDriver extends mcpServiceModelClass {
         $this->spacename=__NAMESPACE__;
         $this->classname=__CLASS__;
     }
-
+    /**
+     * Check if session is ready or make logout
+     */
     public function user_session(){
         $session_id=$this->getMcp()->getCommon("session.id");
-        lnxCacheCtl(
+        return lnxCacheCtl(
             "user_session_".$session_id,
             3600,
             array(
@@ -37,5 +43,6 @@ class SqliteDriver extends mcpServiceModelClass {
             $this->argIn
         );
     }
+    
 
 }

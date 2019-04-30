@@ -310,7 +310,8 @@ function lnxMcpCmd(array $scopeCtl, array $scopeIn = array())
  */
 function linhunixErrorHandlerDev($errno, $errstr, $errfile, $errline)
 {
-    if (!(error_reporting() & $errno)) {
+    lnxmcp()->info("linhunixErrorHandlerDev:".$errno."-".$errstr);
+    if (empty($errno)) {
         return false;
     }
     $errtype = $errno;
@@ -353,7 +354,28 @@ function linhunixErrorHandlerDev($errno, $errstr, $errfile, $errline)
     }
     return true;
 }
+/**
+ * linhunixFatalHandlerDev
+ *
+ * @return void
+ */
+function linhunixFatalHandlerDev() {
+    $errfile = "unknown file";
+    $errstr  = "shutdown";
+    $errno   = E_CORE_ERROR;
+    $errline = 0;
 
+    $error = error_get_last();
+
+    if( $error !== NULL) {
+        $errno   = $error["type"];
+        $errfile = $error["file"];
+        $errline = $error["line"];
+        $errstr  = $error["message"];
+
+    }
+    linhunixErrorHandlerDev($errno, $errstr, $errfile, $errline);
+}
 /**
  * mcpErrorHandlerInit
  *
@@ -362,6 +384,7 @@ function linhunixErrorHandlerDev($errno, $errstr, $errfile, $errline)
 function mcpErrorHandlerInit()
 {
     $old_error_handler = set_error_handler("linhunixErrorHandlerDev");
+    register_shutdown_function( "linhunixFatalHandlerDev" );
 }
 
 /**

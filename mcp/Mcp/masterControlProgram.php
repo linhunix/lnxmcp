@@ -253,6 +253,12 @@ final class masterControlProgram
         } else {
             $this->cfg[$resname] = $revalue;
         }
+        if ($this->getCfg("app.debug") == true) {
+            if ($this->mcpLogging != null) {
+                $this->mcpLogging->imhere();
+                $this->mcpLogging->info("setCfg:".$resname);
+            }
+        }
         return true;
     }
     /////////////////////////////////////////////////////////////////////////////

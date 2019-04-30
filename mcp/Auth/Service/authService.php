@@ -40,7 +40,7 @@ class authService extends mcpServiceModelClass {
         $cmd=$this->getSvcCfg("command.session");
         if (empty($cmd)) {
             $cmd=array(
-                "type"=>"Driver",
+                "type"=>"driver",
                 "module"=>"Auth",
                 "name"=>"sqlite",
                 "input"=>array(
@@ -128,7 +128,7 @@ class authService extends mcpServiceModelClass {
         $cmd=$this->getSvcCfg("command.login");
         if (empty($cmd)) {
             $cmd=array(
-                "type"=>"Driver",
+                "type"=>"driver",
                 "module"=>"Auth",
                 "name"=>"sqlite",
                 "input"=>array(
@@ -168,7 +168,7 @@ class authService extends mcpServiceModelClass {
         $cmd=$this->getSvcCfg("command.register");
         if (empty($cmd)) {
             $cmd=array(
-                "type"=>"Driver",
+                "type"=>"driver",
                 "module"=>"Auth",
                 "name"=>"sqlite",
                 "input"=>array(
@@ -192,7 +192,7 @@ class authService extends mcpServiceModelClass {
         $cmd=$this->getSvcCfg("command.update");
         if (empty($cmd)) {
             $cmd=array(
-                "type"=>"Driver",
+                "type"=>"driver",
                 "module"=>"Auth",
                 "name"=>"sqlite",
                 "input"=>array(
@@ -216,7 +216,7 @@ class authService extends mcpServiceModelClass {
         $cmd=$this->getSvcCfg("command.delete");
         if (empty($cmd)) {
             $cmd=array(
-                "type"=>"Driver",
+                "type"=>"driver",
                 "module"=>"Auth",
                 "name"=>"sqlite",
                 "input"=>array(
@@ -228,4 +228,26 @@ class authService extends mcpServiceModelClass {
         $this->session_data=$this->callCmd($cmd, $this->getSvcCfg());
         $this->session_update();
     }
+    /***
+     * user_forgot
+     * [T]= user
+     * [E]= delete
+     */
+     public function user_forgot(){
+        $cmd=$this->getSvcCfg("command.forgot");
+        if (empty($cmd)) {
+            $cmd=array(
+                "type"=>"driver",
+                "module"=>"Auth",
+                "name"=>"sqlite",
+                "input"=>array(
+                    "T"=>"user",
+                    "E"=>"forgot"
+                )
+            );
+        }
+        $this->session_data=$this->callCmd($cmd, $this->getSvcCfg());
+        $this->cookie_delete();
+     }
+
 }

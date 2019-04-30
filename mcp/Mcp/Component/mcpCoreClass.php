@@ -11,6 +11,8 @@
 namespace LinHUniX\Mcp\Component;
 
 use LinHUniX\Mcp\masterControlProgram;
+use \Exception;
+use \ErrorException;
 
 /**
  * Core class for load modules
@@ -29,11 +31,6 @@ final class mcpCoreClass
      * @var mcp App Module
      */
     private $mcp;
-    /**
-     *
-     * @var cfg container app module
-     */
-    private $cfg;
 
     /**
      * counter of number of sub function work in a moment
@@ -67,10 +64,8 @@ final class mcpCoreClass
     public function __construct(masterControlProgram &$mcp)
     {
         $this->mcp = &$mcp;
-        {
-            @$this->cfg = &$mcp->getCfg();
-        }
-        $this->defapp = ucwords($this->cfg["app.def"]);
+
+        $this->defapp = ucwords($this->mcp->getCfg("app.def"));
         $this->mcp->debug("app.def:" . $this->defapp);
         $this->flagClearVars = true;
         $this->clearModuleVars();
@@ -192,6 +187,7 @@ final class mcpCoreClass
     public function statmentModule($path, $callname, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $type = null)
     {
         //// BASE SETTINGS
+        $moduledef="mod.path";
         if ($this->flagClearVars) {
             $this->sub++;
             $this->scopeIn[$this->sub] = array();
@@ -210,6 +206,8 @@ final class mcpCoreClass
         $this->scopeCtl[$this->sub]["type"] = $type;
         //// VENDOR SETTINGS
         if ($vendor != null) {
+            $moduledef.=".".$vendor;
+            $modulepath=$this->mcp->getCfg($moduledef);
             if ($vendor == "LinHUniX") {
                 $this->scopeCtl[$this->sub]["module"] = "LinHUniX\\";
                 $this->scopeCtl[$this->sub]["altmodule"] = "LinHUniX_";
@@ -225,6 +223,10 @@ final class mcpCoreClass
                     $this->scopeCtl[$this->sub]["file"] .= "/" . $vendor . "/";
                 }
             }
+            if ( !empty($modulepath)) {
+                $this->scopeCtl[$this->sub]["file"]=$modulepath."/";
+                $this->scopeCtl[$this->sub]["auto"]=$modulepath."/";
+            }
         }
         //// MODULE SETTINGS
         if ($modinit == null) {
@@ -234,12 +236,18 @@ final class mcpCoreClass
             $subcall = $callname;
         }
         $this->scopeCtl[$this->sub]["content"] = $subcall . $type;
-        $this->scopeCtl[$this->sub]["file"] .= $modinit;
-        $this->scopeCtl[$this->sub]["dir"] = $this->scopeCtl[$this->sub]["file"];
-        $this->scopeCtl[$this->sub]["auto"] .= $modinit . "/autoload.php";
         $this->scopeCtl[$this->sub]["module"] .= $modinit;
         $this->scopeCtl[$this->sub]["defmodule"] .= $modinit;
         $this->scopeCtl[$this->sub]["altmodule"] .= $modinit;
+        $moduledef.=".".$modinit;
+        $modulepath=$this->mcp->getCfg($moduledef);
+        $this->scopeCtl[$this->sub]["file"] .= $modinit;
+        if ( !empty($modulepath)) {
+            $this->scopeCtl[$this->sub]["file"]=$modulepath."/";
+            $this->scopeCtl[$this->sub]["auto"]=$modulepath."/";
+        }
+        $this->scopeCtl[$this->sub]["auto"] .= $modinit . "/autoload.php";
+        $this->scopeCtl[$this->sub]["dir"] = $this->scopeCtl[$this->sub]["file"];
         /// TYPE DEFINITIONS 
         if ($type != null) {
             $this->scopeCtl[$this->sub]["altdir"]=$this->scopeCtl[$this->sub]["dir"]. "/";
@@ -498,6 +506,9 @@ final class mcpCoreClass
                 }
                 $this->shareModuleVars();
             }
+        } catch (ErrorException $ee) {
+            $res = "executeModule:error >" . $this->scopeCtl[$this->sub]["tag"] . ":" . $ee->getMessage();
+            $this->setStatus(false, $res);
         } catch (Exception $e) {
             $res = "executeModule:error >" . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage();
             $this->setStatus(false, $res);
@@ -509,6 +520,9 @@ final class mcpCoreClass
                 $this->shareModuleVars();
                 return true;
             }
+        } catch (ErrorException $ee) {
+            $res = "executeModule:error >" . $this->scopeCtl[$this->sub]["tag"] . ":" . $ee->getMessage();
+            $this->setStatus(false, $res);
         } catch (Exception $e) {
             $res = "executeModule:error >>" . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage();
             $this->setStatus(false, $res);
@@ -681,6 +695,9 @@ final class mcpCoreClass
                     }
                 }
             }
+        } catch (\ErrorException $ee) {
+            $res = "error in loadMod " . $this->scopeCtl[$this->sub]["tag"] . ":" . $ee->getMessage();
+            $this->setStatus(false, $res);
         } catch (\Exception $e) {
             $res = "error in loadMod " . $this->scopeCtl[$this->sub]["tag"] . ":" . $e->getMessage();
             $this->setStatus(false, $res);
@@ -733,6 +750,10 @@ final class mcpCoreClass
                 }
                 $this->setScopeOut("return", $retobj);
             }
+        } catch (ErrorException $ee) {
+            $res = "error in loadMod " . $tag . ":" . $ee->getMessage();
+            $this->getMcp()->warning($res);
+            $this->setStatus(false, $res);
         } catch (Exception $e) {
             $res = "error in loadMod " . $tag . ":" . $e->getMessage();
             $this->getMcp()->warning($res);
