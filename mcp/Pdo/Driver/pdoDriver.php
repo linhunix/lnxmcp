@@ -58,7 +58,7 @@ class pdoDriver extends mcpBaseModelClass
                 $mcp->warning("DBCONN: ERR=" . $e->getMessage());
                 return null;
             }
-            $data = $this->getTable("SHOW TABLES");
+            $data = $this->listTable();
             if (is_array($data)) {
                 foreach ($data as $dt) {
                     foreach ($dt as $k => $v) {
@@ -75,6 +75,11 @@ class pdoDriver extends mcpBaseModelClass
         $this->tmp = array();
         $this->cache = array();
     }
+
+    protected function listTable(){
+        return $this->getTable("SHOW TABLES");
+    }
+
     /*
      * real_escape_string
      * remplace the mysqlLegacyRealEscapeString

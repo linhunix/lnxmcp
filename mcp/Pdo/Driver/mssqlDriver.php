@@ -29,4 +29,9 @@ class mssqlDriver extends pdoDriver {
         $scopeIn["options"]=array(PDO::ATTR_PERSISTENT => true);
         parent::__construct($mcp,$scopeCtl, $scopeIn);
     }
+
+    protected function listTable(){
+        return $this->getTable("SELECT * FROM sys.databases ");
+    }
+
 }

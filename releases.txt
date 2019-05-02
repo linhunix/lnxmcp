@@ -32,3 +32,5 @@ Releases:
 3.4.8.20190502 -  BlacBox - linhunix@linux-veyj.suse - gio  2 mag 2019, 23.00.22, BST 
 3.4.8.20190502 -  BlacBox - linhunix@linux-veyj.suse - gio  2 mag 2019, 23.01.11, BST 
 3.4.8.20190502 -  BlacBox - linhunix@linux-veyj.suse - gio  2 mag 2019, 23.12.31, BST 
+3.4.8.20190502 -  BlacBox - linhunix@linux-veyj.suse - gio  2 mag 2019, 23.17.47, BST 
+3.4.8.20190502 -  BlacBox - linhunix@linux-veyj.suse - gio  2 mag 2019, 23.19.18, BST 
