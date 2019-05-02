@@ -25,7 +25,7 @@ class mssqlDriver extends pdoDriver {
         if (!empty($hostport)){
             $port=";port=".$hostport;
         }
-        $scopeIn["dburlcon"]='dblib:host=' . $hostname .$port. ';dbname=' . $database;
+        $scopeIn["dburlcon"]='sqlsrv:Server=' . $hostname .$port. ';dbname=' . $database;
         $scopeIn["options"]=array(PDO::ATTR_PERSISTENT => true);
         parent::__construct($mcp,$scopeCtl, $scopeIn);
     }
