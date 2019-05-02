@@ -2,4 +2,5 @@
 include_once __DIR__.DIRECTORY_SEPARATOR."pdoDriver.php";
 include_once __DIR__.DIRECTORY_SEPARATOR."sqliteDriver.php";
 include_once __DIR__.DIRECTORY_SEPARATOR."mysqlDriver.php";
+include_once __DIR__.DIRECTORY_SEPARATOR."mssqlDriver.php";
 ?>
