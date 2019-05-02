@@ -12,7 +12,6 @@ namespace LinHUniX\Mcp;
 
 use LinHUniX\Mcp\Provider\settingsProviderModel;
 use LinHUniX\Mcp\Model\mcpServiceProviderModelClass;
-use LinHUniX\Mcp\Model\mcpBaseModelClass;
 use LinHUniX\Mcp\Model\mcpConfigArrayModelClass;
 use \LinHUniX\Mcp\Component\mcpMenuClass;
 use \LinHUniX\Mcp\Component\mcpProxyClass;
@@ -253,6 +252,12 @@ final class masterControlProgram
             }
         } else {
             $this->cfg[$resname] = $revalue;
+        }
+        if ($this->getCfg("app.debug") == true) {
+            if ($this->mcpLogging != null) {
+                $this->mcpLogging->imhere();
+                $this->mcpLogging->info("setCfg:".$resname);
+            }
         }
         return true;
     }
@@ -641,6 +646,16 @@ final class masterControlProgram
     }
 
     /**
+     * Make a script array  with this name
+     * @param string $message
+     * @param string $var
+     */
+    public function toJson( array $scopeIn)
+    {
+        $this->mcpLogging->jsonDump( $scopeIn);
+    }
+
+    /**
      * Make a Web Rem  with this message
      * @param string $message
      * @param string $var
@@ -869,7 +884,39 @@ final class masterControlProgram
         return $this->module($libname, $this->pathsrc, false, $scopeIn);
     }
 
-
+    /**
+     * Remote calling 
+     * @param string $ctrlproc name of the driver
+     * @param array $scopeIn   Input Array with the value need to work
+     * @param string $modinit  Module name where is present the code and be load and initalized
+     * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
+     * @return array $ScopeOut
+     */
+    public function remote($ctrlproc, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    {
+        $this->info("MCP>>Remote>>" . $ctrlproc);
+        if (! is_array($scopeIn)) {
+            $scopeIn=array("In"=>$scopeIn);
+        }
+        return mcpProxyClass::Remote($this, $ctrlproc, $scopeIn, $modinit, $subcall, $vendor);
+    }
+    /**
+     * Run Shell
+     * @param string $ctrlproc name of the driver
+     * @param array $scopeIn   Input Array with the value need to work
+     * @param string $modinit  Module name where is present the code and be load and initalized
+     * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
+     * @return array $ScopeOut
+     */
+    public function shell($ctrlproc, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    {
+        $this->info("MCP>>Shell>>" . $ctrlproc);
+        if (! is_array($scopeIn)) {
+            $scopeIn=array("In"=>$scopeIn);
+        }
+        return mcpProxyClass::Shell($this, $ctrlproc, $scopeIn, $modinit, $subcall, $vendor);
+    }
+    
     /**
      * Run Module as Driver
      * @param string $libname name of the driver
@@ -877,18 +924,24 @@ final class masterControlProgram
      * @param array $scopeIn  Input Array with the value need to work
      * @param string $modinit Module name where is present the code and be load and initalized
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
+     * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
+     * @param string $vendor   this code is part of specific vendor (ex ft )
+     * @param string $path     path where present the basedirectory of the data
      * @return array $ScopeOut
      */
-    public function driver($libname, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    public function driver($libname, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $path = null)
     {
+        if ($path == null) {
+            $path = $this->pathsrc;
+        }
         if ($vendor == null) {
             $vendor = $this->defvnd;
         }
         if (! is_array($scopeIn)) {
             $scopeIn=array("In"=>$scopeIn);
         }
-        $this->info("MCP>>" . $vendor . ">>driver>>" . $libname);
-        return $this->module($libname, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Driver");
+        $this->info("MCP>>" . $vendor . ">>Driver>>" . $libname);
+        return $this->module($libname, $path, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Driver");
     }
 
     /**
@@ -1034,46 +1087,7 @@ final class masterControlProgram
         }
         return $this->module($ctrlproc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, "Controller");
     }
-    /**
-     * Run Module as controller as retestmailmote
-     * @param string $ctrlproc name of the driver
-     * @param bool $ispreload  is only a preload (ex page) or need to be execute (ex controller)
-     * @param array $scopeIn   Input Array with the value need to work
-     * @param string $modinit  Module name where is present the code and be load and initalized
-     * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
-     * @return array $ScopeOut
-     */
-    public function controllerRemote($ctrlproc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
-    {
-        $this->info("MCP>>controller(Remote)>>" . $ctrlproc);
-        if (! is_array($scopeIn)) {
-            $scopeIn=array("In"=>$scopeIn);
-        }
-        return mcpProxyClass::apiRemote($this, $ctrlproc, $scopeIn, $modinit, $subcall, $vendor);
-    }
-    /**
-     * Run Module as controller as Shell
-     * @param string $ctrlproc name of the driver
-     * @param bool $ispreload  is only a preload (ex page) or need to be execute (ex controller)
-     * @param array $scopeIn   Input Array with the value need to work
-     * @param string $modinit  Module name where is present the code and be load and initalized
-     * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
-     * @return array $ScopeOut
-     */
-    public function controllerShell($ctrlproc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
-    {
-        $this->info("MCP>>controller(Shell)>>" . $ctrlproc);
-        if (! is_array($scopeIn)) {
-            $scopeIn=array("In"=>$scopeIn);
-        }
-        $res = mcpProxyClass::apiShell($this, $ctrlproc, $scopeIn, $modinit, $subcall, $vendor);
-        try {
-            return json_decode($res);
-        } catch (\Exception $e) {
-            $this->warning($e->getMessage());
-            return $res;
-        }
-    }
+
     /**
      * Run Module as ToolApi Components
      * @param string $srvprc  name of the driver
@@ -1087,6 +1101,7 @@ final class masterControlProgram
     {
        mcpApiClass::api($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall , $vendor );
     }
+
     /**
      * Run Module as ToolApi Components
      * @param string $srvprc  name of the driver
@@ -1100,7 +1115,8 @@ final class masterControlProgram
      {
         mcpApiClass::apiReturn($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall , $vendor );
      }
-    /**
+
+     /**
      * Run Module as ToolApi Components
      * @param string $srvprc  name of the driver
      * @param bool $ispreload is only a preload (ex page) or need to be execute (ex controller)
@@ -1113,6 +1129,7 @@ final class masterControlProgram
     {
        mcpApiClass::apiArray($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall , $vendor );
     }
+
     /**
      * Run Module as ToolApi Components
      * @param string $srvprc  name of the driver
@@ -1126,6 +1143,7 @@ final class masterControlProgram
     {
         mcpApiClass::apiCommon($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall );
     }
+
     /**
      * Run Module as ToolApi Components
      * @param string $srvprc  name of the driver
@@ -1139,48 +1157,7 @@ final class masterControlProgram
     {
         mcpApiClass::apiCommonArray($this,$srvprc, $ispreload, $scopeIn, $modinit , $subcall );
     }
-    /**
-     * Run Module as ToolApi Components on remote system
-     * @param string $srvprc  name of the driver
-     * @param bool $ispreload is only a preload (ex page) or need to be execute (ex controller)
-     * @param array $scopeIn  Input Array with the value need to work
-     * @param string $modinit Module name where is present the code and be load and initalized
-     * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
-     * @return array $ScopeOut
-     */
-    public function apiRemote($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
-    {
-        $this->info("MCP>>api(Remote)>>" . $srvprc);
-        if (! is_array($scopeIn)) {
-            $scopeIn=array("In"=>$scopeIn);
-        }
-        $scopeIn["prev-output"] = ob_get_clean();
-        $res = mcpProxyClass::apiRemote($this, $srvprc, $scopeIn, $modinit, $subcall, $vendor);
-        ob_end_clean();
-        header('Content-type: application/json');
-        echo json_encode($res);
-    }
-    /**
-     * Run Module as ToolApi Components on shell system
-     * @param string $srvprc  name of the driver
-     * @param bool $ispreload is only a preload (ex page) or need to be execute (ex controller)
-     * @param array $scopeIn  Input Array with the value need to work
-     * @param string $modinit Module testmailname where is present the code and be load and initalized
-     * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
-     * @return array $ScopeOut
-     */
-    public function apiShell($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
-    {
-        $this->info("MCP>>api(Shell)>>" . $srvprc);
-        if (! is_array($scopeIn)) {
-            $scopeIn=array("In"=>$scopeIn);
-        }
-        $scopeIn["prev-output"] = ob_get_clean();
-        $res = mcpProxyClass::apiShell($this, $srvprc, $scopeIn, $modinit, $subcall, $vendor);
-        ob_end_clean();
-        header('Content-type: application/json');
-        echo $res;
-    }
+
     /**
      * Run Module as service
      * @param string $srvprc  name of the driver
@@ -1224,21 +1201,30 @@ final class masterControlProgram
 
     /**
      * mail
-     *
+     * where $scopeIn :
+     * - to : 
+     * - from :
+     * - subject :
+     * - message :
+     * - files :
+     * 
      * @param  mixed $page
      * @param  mixed $scopeIn
      * @param  mixed $modinit
      *
      * @return void
      */
-    public function mail($page = nulltestmail, $scopeIn = array(), $modinit = null)
+    public function mail($page = nulltestmail, $scopeIn = array(), $modinit = null,$vendor=null)
     {
         $this->info("MCP>>mail>>" . $page);
         if (!is_array($scopeIn)) {
             return null;
         }
-        return mcpMailClass::mailService($page, $scopeIn, $modinit);
+        return mcpMailClass::mailService($page, $scopeIn, $modinit,$vendor);
     }
+    /////////////////////////////////////////////////////////////////////////////
+    // PAGE TEMPLATE / VIEW
+    /////////////////////////////////////////////////////////////////////////////
     /**
      * Load a page with your ScopeIn
      * @param string $page    name of the Page
@@ -1267,6 +1253,54 @@ final class masterControlProgram
     /////////////////////////////////////////////////////////////////////////////
     // BLOCK TEMPLATE / VIEW
     /////////////////////////////////////////////////////////////////////////////
+    /**
+     * Load a Block with your ScopeIn
+     * @param string $block   name of the Block
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     * @return string output (if is true return flag)
+     */
+    public function render($block, $scopeIn = array(), $modinit = null, $vendor = null, $pathsrc = null, $hasreturn = false)
+    {
+        if ($vendor == null) {
+            $vendor = $this->defapp;
+        }
+        if ($pathsrc == null) {
+            $pathsrc = $this->pathsrc;
+        }
+        if (! is_array($scopeIn)) {
+            $scopeIn=array("In"=>$scopeIn);
+        }
+        $this->info("MCP>>" . $vendor . ">>Render>>" . $block);
+        $this->RunEvent("block_start_" . $block);
+        $ret = $this->template($block, $pathsrc, true, $scopeIn, $modinit, null, $vendor, "Render", $hasreturn);
+        $this->RunEvent("block_start_" . $block);
+        return $ret;
+    }
+    /**
+     * Load a Block with your ScopeIn
+     * @param string $block   name of the Block
+     * @param array $scopeIn  Input Array with the value need to work
+     * @param string $modinit Module name where is present the code and be load and initalized
+     * @return string output (if is true return flag)
+     */
+    public function renderCommon($block, $scopeIn = array(), $modinit = null, $vendor = null, $pathsrc = null, $hasreturn = false)
+    {
+        if ($vendor == null) {
+            $vendor = $this->defapp;
+        }
+        if ($pathsrc == null) {
+            $pathsrc = $this->pathmcp;
+        }
+        if (! is_array($scopeIn)) {
+            $scopeIn=array("In"=>$scopeIn);
+        }
+        $this->info("MCP>>" . $vendor . ">>Render>>" . $block);
+        $this->RunEvent("block_start_" . $block);
+        $ret = $this->template($block, $pathsrc, true, $scopeIn, $modinit, null, $vendor, "Render", $hasreturn);
+        $this->RunEvent("block_start_" . $block);
+        return $ret;
+    }
     /**
      * Load a Block with your ScopeIn
      * @param string $block   name of the Block

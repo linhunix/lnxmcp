@@ -3,6 +3,8 @@
 namespace LinHUniX\Pdo\Driver;
 
 use \PDO;
+use \PDOException;
+use \Exception;
 use LinHUniX\Mcp\Model\mcpBaseModelClass;
 
 /*
@@ -15,7 +17,9 @@ use LinHUniX\Mcp\Model\mcpBaseModelClass;
 
 class pdoDriver extends mcpBaseModelClass
 {
-
+    /**
+     * @var \PDO $PDO 
+     */
     var $PDO;
     var $tables;
     var $tabcount;
@@ -50,7 +54,7 @@ class pdoDriver extends mcpBaseModelClass
             $this->getMcp()->info("database:" . $this->database);
             try {
                 $this->PDO = new PDO($this->dburlcon, $username, $password, $options);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $mcp->warning("DBCONN: ERR=" . $e->getMessage());
                 return null;
             }
@@ -116,9 +120,15 @@ class pdoDriver extends mcpBaseModelClass
     public function intexec($query)
     {
         try {
+            if ($this->PDO==null) {
+                return false;
+            }
             $query = str_replace("'", '"', $query);
             return $this->PDO->exec($query);
-        } catch (\Exception $e) {
+        } catch (PDOException $pe) {
+            $this->getMcp()->warning($this->database . $pe->getMessage());
+            return false;
+        } catch (Exception $e) {
             $this->getMcp()->warning($this->database . $e->getMessage());
             return false;
         }
@@ -144,10 +154,10 @@ class pdoDriver extends mcpBaseModelClass
         }
         $this->getMcp()->debug("queryOut:" . $this->database . "=" . $sql);
         if ($this->intexec($sql) == false) {
-            $this->getMcp()->debug("[OK]" . $this->database . "=" . $sql);
+            $this->getMcp()->debug("[KO]" . $this->database . "=" . $sql);
             return false;
         }
-        $this->getMcp()->warning("[KO]" . $this->database . "=" . $sql);
+        $this->getMcp()->warning("[OK]" . $this->database . "=" . $sql);
         return true;
     }
 
@@ -170,9 +180,12 @@ class pdoDriver extends mcpBaseModelClass
             $sql = str_replace('[' . $k . ']', $this->real_escape_string($v), $sql);
         }
         $this->getMcp()->debug("queryOut:" . $this->database . "=" . $sql);
+        if ($this->PDO==null) {
+            return false;
+        }
         $res = array();
-        $stmt = $this->PDO->prepare($sql);
         try {
+            $stmt = $this->PDO->prepare($sql);
             $this->PDO->beginTransaction();
             $stmt->execute($var);
             $this->PDO->commit();
@@ -199,8 +212,14 @@ class pdoDriver extends mcpBaseModelClass
             list($usec, $sec) = explode(' ', microtime());
             $starttime = ((float)$usec + (float)$sec);
         }
+        if ($this->PDO==null) {
+            return false;
+        }
         try {
             $statement = $this->PDO->query($sql);
+        } catch (PDOException $pe) {
+            $this->getMcp()->warning($this->database . $pe->getMessage());
+            return null;
         } catch (Exception $e) {
             $this->getMcp()->warning($this->database . $e->getMessage());
             return null;
@@ -440,12 +459,15 @@ class pdoDriver extends mcpBaseModelClass
     public function getLastRun()
     {
         $res = array();
+        if ($this->PDO==null) {
+            return false;
+        }
         try {
             $res = $this->PDO->lastInsertId();
             if (!empty($res)) {
                 return $res;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             lnxmcp()->warning("PDOgetLastId:err:" . $e->getMessage());
             return null;
         }
@@ -583,7 +605,7 @@ class pdoDriver extends mcpBaseModelClass
                     );
                     break;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->getMcp()->warning("QueryIdx:Index=" . $this->argIn["I"] . ",Error:" . $e->getMessage());
         }
     }

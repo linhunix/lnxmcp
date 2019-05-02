@@ -25,6 +25,20 @@ class mcpMenuClass
 
     /**
      * Run a command inside $scopeCtl
+     * Scopectl params are:
+     * - name
+     * - path
+     * - ispreload
+     * - modinit
+     * - module
+     * - vendor
+     * - subcall
+     * - type
+     * - controllerModule
+     * - blockModule
+     * - ScopeInDefault
+     * - ScopeInRewrite
+     * - ScopeInOverwrite
      *
      * @param  mixed $scopectl
      * @param  mixed $scopeIn
@@ -84,6 +98,9 @@ class mcpMenuClass
                 $scopeIn[$ink] = $inv;
             }
         }
+        if (isset($scopectl["ScopeInOverwrite"])) {
+            $scopeIn=$scopectl["ScopeInOverwrite"];
+        }
         $result = null;
         lnxmcp()->info("command try to call " . $type . ">> app." . $callname);
         switch ($type) {
@@ -97,10 +114,13 @@ class mcpMenuClass
                 print_r ($scopeIn);
                 break;
             case "javascript":
-                lnxmcp()->toJavascript($callname,$scopeIn);
+                lnxmcp()->toJavascript($callname, $scopeIn);
+                break;
+            case "json":
+                lnxmcp()->toJson($scopeIn);
                 break;
             case "javascriptCommon":
-                lnxmcp()->toJavascript("common",lnxmcp()->getCommon());
+                lnxmcp()->toJavascript("common", lnxmcp()->getCommon());
                 break;
             case "clear":
                 $scopeIn = array();
@@ -120,7 +140,7 @@ class mcpMenuClass
                 $result = lnxmcp()->moduleRun($callname, $scopeIn);
                 break;
             case "driver":
-                $result = lnxmcp()->driver($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+                $result = lnxmcp()->driver($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor,$path);
                 break;
             case "query":
                 $result = lnxmcp()->queryR($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
@@ -137,11 +157,11 @@ class mcpMenuClass
             case "controller":
                 $result = lnxmcp()->controller($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
                 break;
-            case "controllerRemote":
-                $result = lnxmcp()->controllerRemote($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+            case "remote":
+                $result = lnxmcp()->remote($callname, $scopeIn, $modinit, $subcall, $vendor);
                 break;
-            case "controllerShell":
-                $result = lnxmcp()->controllerShell($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+            case "shell":
+                $result = lnxmcp()->shell($callname, $scopeIn, $modinit, $subcall, $vendor);
                 break;
             case "controllerCommon":
                 $result = lnxmcp()->controllerCommon($callname, $ispreload, $scopeIn, $modinit, $subcall);
@@ -154,12 +174,6 @@ class mcpMenuClass
                 break;
             case "apiArray":
                 $result = lnxmcp()->apiA($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
-                break;
-            case "apiRemote":
-                $result = lnxmcp()->apiRemote($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
-                break;
-            case "apiShell":
-                $result = lnxmcp()->apiShell($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
                 break;
             case "apiCommon":
                 $result = lnxmcp()->apiCommon($callname, $ispreload, $scopeIn, $modinit, $subcall);
@@ -178,6 +192,12 @@ class mcpMenuClass
                 break;
             case "mail":
                 $result = lnxmcp()->mail($callname, $scopeIn, $modinit);
+                break;
+            case "render":
+                $result = lnxmcp()->render($callname, $scopeIn, $modinit, $vendor);
+                break;
+            case "renderCommon":
+                $result = lnxmcp()->renderCommon($callname, $scopeIn, $modinit, $vendor);
                 break;
             case "block":
                 $result = lnxmcp()->block($callname, $scopeIn, $modinit, $vendor);
@@ -249,6 +269,15 @@ class mcpMenuClass
         if ($actionsSeq == null) {
             lnxmcp()->warning("sequence null!!");
             return $scopeIn;
+        }
+        if (isset($actionsSeq["cache"]["name"])) {
+            $name=$actionsSeq["cache"]["name"];
+            $expire=3600;
+            if (isset($actionsSeq["cache"]["expire"])) {
+                $expire=$actionsSeq["cache"]["expire"];
+            }
+            unset($actionsSeq["cache"]);
+            return lnxCacheCtl($name,$expire,$actionsSeq, $scopeIn );
         }
         foreach ($actionsSeq as $callname => $scopeCtl) {
             lnxmcp()->info("Sequence call app." . $callname);

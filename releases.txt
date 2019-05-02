@@ -1,0 +1,30 @@
+Actual Version:3.4.8
+Actual Topic: BlacBox
+Releases:
+3.4.8.20190424 -  BlacBox - linhunix@linux-veyj.suse - mer 24 apr 2019, 12.03.19, BST 
+3.4.8.20190424 -  BlacBox - linhunix@linux-veyj.suse - mer 24 apr 2019, 13.44.48, BST 
+3.4.8.20190424 -  BlacBox - linhunix@linux-veyj.suse - mer 24 apr 2019, 20.23.48, BST 
+3.4.8.20190425 -  BlacBox - linhunix@linux-yi10 - Thu 25 Apr 13:32:52 BST 2019 
+3.4.8.20190425 -  BlacBox - linhunix@linux-yi10 - Thu 25 Apr 13:52:43 BST 2019 
+3.4.8.20190425 -  BlacBox - linhunix@linux-yi10 - Thu 25 Apr 15:36:32 BST 2019 
+3.4.8.20190425 -  BlacBox - linhunix@linux-veyj.suse - gio 25 apr 2019, 23.05.49, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 22.10.42, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 22.11.01, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 22.11.27, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 22.15.44, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 22.50.58, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 22.56.52, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 22.58.07, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 22.59.46, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 23.01.09, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 23.03.39, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 23.24.16, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 23.29.07, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 23.29.30, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 23.29.48, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 23.35.34, BST 
+3.4.8.20190430 -  BlacBox - linhunix@linux-veyj.suse - mar 30 apr 2019, 23.39.45, BST 
+3.4.8.20190501 -  BlacBox - linhunix@linux-veyj.suse - mer  1 mag 2019, 00.20.10, BST 
+3.4.8.20190502 -  BlacBox - linhunix@linux-veyj.suse - gio  2 mag 2019, 08.12.09, BST 
+3.4.8.20190501 -  BlacBox - linhunix@linux-yi10 - Wed  1 May 15:21:55 BST 2019 
+3.4.8.20190502 -  BlacBox - linhunix@linux-veyj.suse - gio  2 mag 2019, 08.18.23, BST 

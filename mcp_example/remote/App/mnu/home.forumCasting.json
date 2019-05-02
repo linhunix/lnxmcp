@@ -1,0 +1,21 @@
+{
+    "head":{
+        "type":"header",
+        "header":"content-type: text/json;"
+    },
+    "api":{
+        "type":"remote",
+        "name":"-/RestTList",
+        "input":{
+            "postdata":{
+                "DocType":"forumCasting"
+            }
+        }
+    },
+    "json":{
+        "type":"json"
+    },
+    "exit":{
+        "type":"exit"
+    }
+}

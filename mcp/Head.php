@@ -107,6 +107,7 @@ foreach( array(
     "app.menu.InitCommon" => array(
         "pdo" => array("module" => "Pdo", "type" => "serviceCommon", "input" => $scopePdo),
         "gfx" => array("module" => "Gfx", "type" => "serviceCommon"),
+        "auth" => array("module" => "Auth", "type" => "serviceCommon"),
         "mail" => array("module" => "Mail", "type" => "serviceCommon")
     ),
     "app.menu.InitApp" => array(),
@@ -259,14 +260,16 @@ if (class_exists("\Composer\Autoload\ClassLoader")) {
         $classLoader->addPsr4("LinHUniX\\Gfx\\", $scopeInit["purl"] . "/mcp/Gfx");
         $classLoader->addPsr4("LinHUniX\\Pdo\\", $scopeInit["purl"] . "/mcp/Pdo");
         $classLoader->addPsr4("LinHUniX\\Mail\\", $scopeInit["purl"] . "/mcp/Mail");
-        $classLoader->addPsr4("LinHUniX\\ln4\\", $scopeInit["purl"] . "/mcp/ln4");
+        $classLoader->addPsr4("LinHUniX\\Ln4\\", $scopeInit["purl"] . "/mcp/Ln4");
+        $classLoader->addPsr4("LinHUniX\\Auth\\", $scopeInit["purl"] . "/mcp/Auth");
         $scopeInit["mcp.loader"] = "AutoLoadPhar";
     } else {
         $classLoader->addPsr4("LinHUniX\\Mcp\\", $app_path . "/mcp/Mcp");
         $classLoader->addPsr4("LinHUniX\\Gfx\\", $app_path . "/mcp/Gfx");
         $classLoader->addPsr4("LinHUniX\\Pdo\\", $app_path . "/mcp/Pdo");
         $classLoader->addPsr4("LinHUniX\\Mail\\", $app_path . "/mcp/Mail");
-        $classLoader->addPsr4("LinHUniX\\ln4\\", $app_path . "/mcp/ln4");
+        $classLoader->addPsr4("LinHUniX\\Ln4\\", $app_path . "/mcp/Ln4");
+        $classLoader->addPsr4("LinHUniX\\Auth\\", $app_path . "/mcp/Auth");
         $scopeInit["mcp.loader"] = "AutoLoadSrc";
     }
     $classLoader->register();

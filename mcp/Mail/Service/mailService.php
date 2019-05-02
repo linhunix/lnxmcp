@@ -102,6 +102,7 @@ class mailService extends mcpBaseModelClass
      */
     public function stdMail($to, $subject, $message, $additional_headers = null, $additional_parameters = null, $from = null, $attachDoc = array(), $html = false)
     {
+        $this->mcp->info("StdMail: to/subject = " .$to."/".$subject);
         try {
             $mymail = clone $this->Mailer;
             if ($additional_headers != null) {
@@ -136,6 +137,7 @@ class mailService extends mcpBaseModelClass
             }
             $mymail->body = $message;
             $mymail->send();
+            $this->mcp->info("StdMail: success sent to/subject = " .$to."/".$subject);
             return true;
         } catch (\Exception $e) {
             $this->mcp->error("StdMail:" . $e->get_message());
@@ -247,6 +249,10 @@ class mailService extends mcpBaseModelClass
         $files = @$this->argIn["files"];
         $headers = @$this->argIn["headers"];
         $parameters = @$this->argIn["parameters"];
+        if (empty($to)) {
+            $this->warning("Mail Service has empty sender to !!");
+            return; 
+        }
         if (isset($this->argIn["template"])) {
             $message = $this->loadTemplate($message, $this->argIn["template"]);
         }
