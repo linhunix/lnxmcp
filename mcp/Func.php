@@ -360,9 +360,9 @@ function linhunixErrorHandlerDev($errno, $errstr, $errfile, $errline)
  * @return void
  */
 function linhunixFatalHandlerDev() {
-    $errfile = "unknown file";
-    $errstr  = "shutdown";
-    $errno   = E_CORE_ERROR;
+    $errfile = "no file";
+    $errstr  = "End Of Service";
+    $errno   = 0;
     $errline = 0;
 
     $error = error_get_last();

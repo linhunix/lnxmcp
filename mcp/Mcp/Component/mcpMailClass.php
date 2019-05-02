@@ -20,6 +20,10 @@ class mcpMailClass
 {
     public static function mailSimple($to, $from, $subject, $body, $html = false, $attachment = array())
     {
+        if (empty($to)) {
+            lnxmcp()->warning("Mail Class has empty sender to !!");
+            return false; 
+        }
         try {
             $headers = "From: " . strip_tags($from) . "\r\n";
             $headers .= "Reply-To: " . strip_tags($form) . "\r\n";
@@ -49,7 +53,7 @@ class mcpMailClass
                         "Content-Transfer-Encoding: base64\n\n" . $data . "\n\n";
                 }
             }
-            mail($to, $subject, $message, $headers);
+            \mail($to, $subject, $message, $headers);
             return true;
         } catch (\Exception $e) {
             return false;
@@ -73,7 +77,11 @@ class mcpMailClass
                 $subject = $scopeIn["subject"];
                 $message = $scopeIn["message"];
                 $files = $scopeIn["files"];
-                mcpMailClass::mailSimple($to, $from, $subject, $message, true, $files);
+                if (empty($to)) {
+                    lnxmcp()->warning("Mail Class has empty sender to !!");
+                    return false; 
+                }
+                return mcpMailClass::mailSimple($to, $from, $subject, $message, true, $files);
             }
             return true;
         } catch (\Exception $e) {

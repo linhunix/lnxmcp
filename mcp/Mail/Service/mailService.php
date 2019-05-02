@@ -249,6 +249,10 @@ class mailService extends mcpBaseModelClass
         $files = @$this->argIn["files"];
         $headers = @$this->argIn["headers"];
         $parameters = @$this->argIn["parameters"];
+        if (empty($to)) {
+            $this->warning("Mail Service has empty sender to !!");
+            return; 
+        }
         if (isset($this->argIn["template"])) {
             $message = $this->loadTemplate($message, $this->argIn["template"]);
         }
