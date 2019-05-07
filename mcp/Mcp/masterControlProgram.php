@@ -1194,6 +1194,27 @@ final class masterControlProgram
     }
 
     /**
+     * Run Module as controller only return.
+     *
+     * @param string $ctrlproc  name of the driver
+     * @param bool   $ispreload is only a preload (ex page) or need to be execute (ex controller)
+     * @param array  $scopeIn   Input Array with the value need to work
+     * @param string $modinit   Module name where is present the code and be load and initalized
+     * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
+     *
+     * @return mixed|bool $ScopeOut["return"]
+     */
+    public function controllerR($ctrlproc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    {
+        $res = $this->controller($ctrlproc, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+        if (isset($res['return'])) {
+            return $res['return'];
+        }
+
+        return false;
+    }
+
+    /**
      * Run Module as controller as common for all.
      *
      * @param string $ctrlproc  name of the driver
@@ -1212,6 +1233,27 @@ final class masterControlProgram
         }
 
         return $this->module($ctrlproc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, 'Controller');
+    }
+
+    /**
+     * Run Module as controller as common for all only the return.
+     *
+     * @param string $ctrlproc  name of the driver
+     * @param bool   $ispreload is only a preload (ex page) or need to be execute (ex controller)
+     * @param array  $scopeIn   Input Array with the value need to work
+     * @param string $modinit   Module name where is present the code and be load and initalized
+     * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
+     *
+     * @return mixed|bool $ScopeOut["return"]
+     */
+    public function controllerCommonR($ctrlproc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
+    {
+        $res = $this->controllerCommon($ctrlproc, $ispreload, $scopeIn, $modinit, $subcall);
+        if (isset($res['return'])) {
+            return $res['return'];
+        }
+
+        return false;
     }
 
     /**
