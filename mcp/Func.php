@@ -316,7 +316,9 @@ function lnxMcpCmd(array $scopeCtl, array $scopeIn = array())
  */
 function linhunixErrorHandlerDev($errno, $errstr, $errfile, $errline)
 {
-    lnxmcp()->info('linhunixErrorHandlerDev:'.$errno.'-'.$errstr);
+    if (lnxmcp()->isDebug()) {
+        lnxmcp()->info('linhunixErrorHandlerDev:'.$errno.'-'.$errstr);
+    }
     if (empty($errno)) {
         return false;
     }
@@ -364,10 +366,11 @@ function linhunixErrorHandlerDev($errno, $errstr, $errfile, $errline)
 /**
  * linhunixFatalHandlerDev.
  */
-function linhunixFatalHandlerDev() {
-    $errfile = "no file";
-    $errstr  = "End Of Service";
-    $errno   = 0;
+function linhunixFatalHandlerDev()
+{
+    $errfile = 'no file';
+    $errstr = 'End Of Service';
+    $errno = 0;
     $errline = 0;
 
     $error = error_get_last();
