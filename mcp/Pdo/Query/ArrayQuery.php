@@ -1,10 +1,11 @@
 <?php
 /**
- * LinHUniX Web Application Framework
+ * LinHUniX Web Application Framework.
  *
  * @author Andrea Morello <andrea.morello@linhunix.com>
  * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
+ *
  * @version GIT:2018-v2
  */
 
@@ -14,65 +15,74 @@ use LinHUniX\Mcp\masterControlProgram;
 use LinHUniX\Pdo\Model\mcpQueryModelClass;
 
 /**
- *
- * 
  * >>>$scopeIn need to have ["Query"] as array of :
  * var ["T"]:
- *  e  = execute : exec query with boolean results  
- *  ec  = execute : exec query with boolean results  
- *  f  = firstRow : return only first row 
- *  q  = retrive array of all results 
- *  c  = return the count of the results 
- *  s  = return the sql information 
- *  r  = return sql and env 
+ *  e  = execute : exec query with boolean results
+ *  ec  = execute : exec query with boolean results
+ *  f  = firstRow : return only first row
+ *  q  = retrive array of all results
+ *  c  = return the count of the results
+ *  s  = return the sql information
+ *  r  = return sql and env
  *  d  = search on cfg the data form another query
  *  p  = puth data on the database (using setrow) "Q" is table
- *  g  = get data on the database (using getrows) 
- *       "Q" is table "S" is sort , "L" limit and "W" where cause 
+ *  g  = get data on the database (using getrows)
+ *       "Q" is table "S" is sort , "L" limit and "W" where cause
  *  other case return false;
- * var ["Q"] = query 
- * var ["E"] = env or instance of specific database 
- * var ["V"] = contain the values that need to remplace on query scripts 
+ * var ["Q"] = query
+ * var ["E"] = env or instance of specific database
+ * var ["V"] = contain the values that need to remplace on query scripts
  * var ["S"] = stored in Session
- * var ["G"] = stored in Glboal cfg
+ * var ["G"] = stored in Glboal cfg.
+ *
  * @author Andrea Morello <andrea.morello@linhunix.com>
+ *
  * @version GIT:2018-v1
- * @param Container $cfg Dipendecy injection for Pimple\Container
- * @param array $this->argIn temproraney array auto cleanable 
- * @return boolean|array query results 
- * @see Pdo  module 
- * @see mcpQueryModelClass 
+ *
+ * @param Container $cfg         Dipendecy injection for Pimple\Container
+ * @param array     $this->argIn temproraney array auto cleanable
+ *
+ * @return bool|array query results
+ *
+ * @see Pdo  module
+ * @see mcpQueryModelClass
  * @see [vendor]/mcp/Head.php caller of the config
  */
-class ArrayQuery  extends mcpQueryModelClass
+class ArrayQuery extends mcpQueryModelClass
 {
     private $querypath;
+
     public function __construct(masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
     {
         parent::__construct($mcp, $scopeCtl, $scopeIn);
+        if (isset($scopeCtl['Query'])) {
+            $this->query = $scopeCtl['Query'];
+        }
     }
+
     /**
-     * execute the query, verify the results and store and return 
+     * execute the query, verify the results and store and return.
+     *
      * @return array response of code = like scope out;
      */
     protected function moduleCore()
     {
         $isok = false;
-        if (isset($this->argIn["Query"])) {
-            if (is_array($this->argIn["Query"])) {
+        if (isset($this->argIn['Query'])) {
+            if (is_array($this->argIn['Query'])) {
                 $isok = true;
             }
         }
         if ($isok == false) {
             return false;
         }
-        $this->query = $this->argIn["Query"];
-        $vars =  $this->argIn;
-        unset($vars["Query"]);
-        $this->query["V"] = $vars;
+        $this->query = $this->argIn['Query'];
+        $vars = $this->argIn;
+        unset($vars['Query']);
+        $this->query['V'] = $vars;
         $res = $this->getPdo()->run($this->argCtl, $this->query);
-        if (isset($res["return"])) {
-            $this->argOut = $res["return"];
+        if (isset($res['return'])) {
+            $this->argOut = $res['return'];
         }
     }
 }
