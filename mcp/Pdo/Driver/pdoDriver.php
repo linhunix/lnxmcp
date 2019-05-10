@@ -159,10 +159,15 @@ class pdoDriver extends mcpBaseModelClass
         }
         $this->getMcp()->debug("queryOut:" . $this->database . "=" . $sql);
         if ($this->intexec($sql) == false) {
-            $this->getMcp()->debug("[KO]" . $this->database . "=" . $sql);
+            $this->getMcp()->warning("[KO]" . $this->database . "=" . $sql);
+            if ($this->PDO!=null) {
+                $this->getMcp()->warning("[KO]" . $this->database . ": " . print_r($this->PDO->errorInfo(),1));
+            } else {
+                $this->getMcp()->warning("[KO]" . $this->database . ": PDO IS NULL!!!" );
+            }
             return false;
         }
-        $this->getMcp()->warning("[OK]" . $this->database . "=" . $sql);
+        $this->getMcp()->debug("[OK]" . $this->database . "=" . $sql);
         return true;
     }
 
