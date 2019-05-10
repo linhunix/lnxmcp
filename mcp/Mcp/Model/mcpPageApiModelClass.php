@@ -26,7 +26,6 @@ class mcpPageApiModelClass extends mcpControllerModelClass
         if (!empty($this->argIn["E"])) {
             if (method_exists($this, $this->argIn["E"])) {
                 $this->$this->argIn["E"]();
-                $method .= $this->argIn["E"];
             }else{
                 if ($this->Service instanceof mcpServiceModelClass ) {
                     $this->Service->runEvent("Api",$this->argIn["E"]);
