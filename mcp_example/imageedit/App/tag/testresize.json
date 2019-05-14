@@ -1,0 +1,15 @@
+{
+    "convert":{
+        "type":"serviceCommon",
+        "name":"gfx",
+        "module":"Gfx",
+        "input":{
+            "T":"IMG",
+            "effect":"resize",
+            "source":"source.gif",
+            "dest":"dest.gif",
+            "width":100,
+            "height":100
+        }
+    }
+}
