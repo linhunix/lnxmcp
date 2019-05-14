@@ -81,30 +81,30 @@ class gfxService extends mcpBaseModelClass
         $res = '';
         // if there was an error, let's see what the error is about
         switch ($error_code) {
-            case 1:
-                $res = 'Source file "'.$source_path.'" could not be found!';
-                break;
-            case 2:
-                $res = 'Source file "'.$source_path.'" is not readable!';
-                break;
-            case 3:
-                $res = 'Could not write target file "'.$source_path.'"!';
-                break;
-            case 4:
-                $res = $source_path.'" is an unsupported source file format!';
-                break;
-            case 5:
-                $res = $target_path.'" is an unsupported target file format!';
-                break;
-            case 6:
-                $res = 'GD library version does not support target file format!';
-                break;
-            case 7:
-                $res = 'GD library is not installed!';
-                break;
-            case 8:
-                $res = '"chmod" command is disabled via configuration!';
-                break;
+        case 1:
+            $res = 'Source file "'.$source_path.'" could not be found!';
+            break;
+        case 2:
+            $res = 'Source file "'.$source_path.'" is not readable!';
+            break;
+        case 3:
+            $res = 'Could not write target file "'.$source_path.'"!';
+            break;
+        case 4:
+            $res = $source_path.'" is an unsupported source file format!';
+            break;
+        case 5:
+            $res = $target_path.'" is an unsupported target file format!';
+            break;
+        case 6:
+            $res = 'GD library version does not support target file format!';
+            break;
+        case 7:
+            $res = 'GD library is not installed!';
+            break;
+        case 8:
+            $res = '"chmod" command is disabled via configuration!';
+            break;
         }
 
         return $res;
@@ -127,7 +127,7 @@ class gfxService extends mcpBaseModelClass
      *                            - "rotate" rotate image
      *                            -- args:angle
      *
-     * @return string text converted
+     * @return bool status
      */
     public function getZebraImage($action, $source_file, $dest_file, $arg = array())
     {
@@ -140,59 +140,65 @@ class gfxService extends mcpBaseModelClass
         self::$zebraimage->source_path = $source_file;
         self::$zebraimage->target_path = $dest_file;
         switch ($action) {
-            case 'resize':
+        case 'resize':
             lnxmcp()->info('getZebraImage:resize');
             if (!self::$zebraimage->resize($arg['width'], $arg['height'], ZEBRA_IMAGE_BOXED, -1)) {
-                $rmsg = $this->getZebraImageError($image->error);
+                $rmsg = $this->getZebraImageError(self::$zebraimage->error);
+                lnxmcp()->warning('getZebraImage:error='.$rmsg);
 
                 return false;
             }
 
             return true;
-            case 'flip_horizontal':
+        case 'flip_horizontal':
             lnxmcp()->info('getZebraImage:flip_horizontal');
             if (!self::$zebraimage->flip_horizontal()) {
                 $rmsg = $this->getZebraImageError(self::$zebraimage->error);
+                lnxmcp()->warning('getZebraImage:error='.$rmsg);
 
                 return false;
             }
 
             return true;
-            case 'flip_vertical':
+        case 'flip_vertical':
             lnxmcp()->info('getZebraImage:flip_vertical');
             if (!self::$zebraimage->flip_vertical()) {
-                $rmsg = $this->getZebraImageError($image->error);
+                $rmsg = $this->getZebraImageError(self::$zebraimage->error);
+                lnxmcp()->warning('getZebraImage:error='.$rmsg);
 
                 return false;
             }
 
             return true;
-            case 'flip_both':
+        case 'flip_both':
             lnxmcp()->info('getZebraImage:flip_both');
             if (!self::$zebraimage->flip_both()) {
-                $rmsg = $this->getZebraImageError($image->error);
+                $rmsg = $this->getZebraImageError(self::$zebraimage->error);
+                lnxmcp()->warning('getZebraImage:error='.$rmsg);
 
                 return false;
             }
 
             return true;
-            case 'crop':
+        case 'crop':
             lnxmcp()->info('getZebraImage:crop');
             if (!self::$zebraimage->crop($arg['start_x'], $arg['start_y'], $arg['end_x'], $arg['end_y'])) {
-                $rmsg = $this->getZebraImageError($image->error);
+                $rmsg = $this->getZebraImageError(self::$zebraimage->error);
+                lnxmcp()->warning('getZebraImage:error='.$rmsg);
 
                 return false;
             }
 
             return true;
-            case 'rotate':
+        case 'rotate':
             lnxmcp()->info('getZebraImage:rotate');
             if (!self::$zebraimage->rotate($arg['angle'])) {
                 $rmsg = $this->getZebraImageError(self::$zebraimage->error);
+                lnxmcp()->warning('getZebraImage:error='.$rmsg);
 
                 return false;
             }
-            $this->argOut['msg'] = $res;
+            $this->argOut['msg'] = $rmsg;
 
             return true;
         }
