@@ -73,6 +73,7 @@ function legacyAutoload($className)
     foreach ($autoLoadFolders as $folder) {
         $classPath = $folder.DIRECTORY_SEPARATOR.$className.'.php';
         if (file_exists($classPath)) {
+            LnxMcpCodeCompile($classPath);
             require_once $classPath;
 
             return true;
@@ -520,4 +521,25 @@ function LnxMcpRealEscape($value)
     $replace = array('\\\\', '\\0', '\\n', '\\r', "\'", '\"', '\\Z');
 
     return str_replace($search, $replace, $value);
+}
+
+/**
+ * LnxMcpCodeCompile base on opcache.
+ *
+ * @param string $file
+ * @param string $bin
+ *
+ * @return bool status
+ */
+function LnxMcpCodeCompile($file)
+{
+    if (function_exists('opcache_is_script_cached')) {
+        if (!opcache_is_script_cached($file)) {
+            return opcache_compile_file($file);
+        }
+
+        return true;
+    }
+
+    return false;
 }
