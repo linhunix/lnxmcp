@@ -1,7 +1,7 @@
 ## EXAMPLE OF PATH REDIRECT 
 
 * run  
-    > cd mcp_example/webcheck
+    > cd mcp_example/imagedit
     > php -S localhost:6500
 
 * on browser

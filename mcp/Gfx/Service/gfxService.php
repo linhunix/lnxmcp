@@ -45,7 +45,7 @@ class gfxService extends mcpBaseModelClass
     {
         try {
             if ($this->getMcp()->getCfg("phar")==true) {
-                return $this->getMcp()->getCfg("purl")."mcp/";
+                return str_replace(array("\"","\'"),"",$this->getMcp()->getCfg("purl")."mcp/");
             } else {
                 return $this->getMcp()->getCfg("mcp.path");
             }

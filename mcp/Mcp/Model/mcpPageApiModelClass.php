@@ -29,6 +29,10 @@ class mcpPageApiModelClass extends mcpControllerModelClass
             }
         }
         if (isset($this->argIn["E"])) {
+            $apifun="Api".$this->argIn["E"];
+            if (method_exists($this, $apifun)) {
+                $this->$apifun();
+            }
             if (method_exists($this, $this->argIn["E"])) {
                 $this->$this->argIn["E"]();
             }

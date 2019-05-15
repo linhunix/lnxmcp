@@ -100,6 +100,7 @@ foreach( array(
     "app.path.template" => $app_path . "/App/tpl/",
     "app.path.workjob" => $app_path . "/work/job/",
     "app.path.cache" => $app_path . "/work/cache/",
+    "app.path.session" => $app_path . "/work/session/",
     "app.path.exchange" => $app_path . "/work/exchange/",
     "app.path.sqllite" => $app_path . "/work/sqlite/",
     "app.path.config" => $app_path . "/cfg/",

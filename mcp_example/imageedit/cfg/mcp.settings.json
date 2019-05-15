@@ -1,0 +1,9 @@
+{
+    "app.def":"testimage",
+    "app.level":0,
+    "app.debug":true,
+    "app.title":"LnxMcp - Test DashBoard - imageedit",
+    "app.copyright":"Unix European Company - 2019 (based on lnxmcp , ln4 and fondation)",
+    "app.logourl":"/ueclogo2.jpeg",
+    "app.gfx.default":["Base","FndJq"]
+}
