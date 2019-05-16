@@ -31,7 +31,13 @@ if (isset($_REQUEST['file'])) {
 //LNXMCP IF RESOURCE REQUIRED SIZE
 ///////////////////////////////////////////////////////////////////////////////////////
 if (isset($_REQUEST['h']) && isset($_REQUEST['w'])) {
+    // image check value
+    $iw = intval($_REQUEST['w']);
+    $_REQUEST['w'] = $iw;
+    $ih = intval($_REQUEST['h']);
+    $_REQUEST['h'] = $ih;
     $iscorrect = false;
+    // check if
     if (file_exists($path.$_REQUEST['w'].'x'.$_REQUEST['h'].'_'.$_SERVER['REQUEST_URI'])) {
         $filename = $path.$_REQUEST['w'].'x'.$_REQUEST['h'].'_'.$_SERVER['REQUEST_URI'];
         $iscorrect = true;
@@ -78,6 +84,8 @@ if (file_exists($filename)) {
             echo file_get_contents($path.$_SERVER['REQUEST_URI']);
     }
     if (isset($_REQUEST['h']) && isset($_REQUEST['w']) && $iscorrect == false) {
+        if ($_REQUEST['h'] != 0) {
+        }
         lnxMcpCmd(
             array(
                 'type' => 'serviceCommon',
