@@ -414,7 +414,8 @@ class UniversalContentManager
             if ($batch == false) {
                 $this->writeConvertRequest();
             } else {
-                $this->executeConvertRequest($loadfile);
+                $this->executeConvertRequest($loadfile
+            );
             }
         }
     }
