@@ -28,6 +28,7 @@ class UniversalContentManager
     private $ranges;
     private $ext;
     private $path;
+    private $jsonpath;
     private $folder;
     private $allow;
     private $convert;
@@ -35,6 +36,7 @@ class UniversalContentManager
     private $remote_cache;
     private $remote_url;
     private $remote_img;
+    private $mode;
 
     /**
      * load config from mcp.
@@ -45,6 +47,7 @@ class UniversalContentManager
         if ($this->path == null) {
             $this->path = lnxmcp()->getResource('path');
         }
+        $this->jsonpath=lnxmcp()->getResource("path.exchange");
         $this->allow = lnxmcp()->getResource('ucm.allow');
         $this->convert = lnxmcp()->getResource('ucm.convert');
         if ($this->convert == null) {
@@ -95,7 +98,7 @@ class UniversalContentManager
         } else {
             $earr = explode('/', $this->file);
             $this->file = array_pop($earr);
-            $this->folder = implode('/', $earr).'/';
+            $this->folder = implode('/', $earr) . '/';
             unset($earr);
         }
         if (isset($scopein['ext'])) {
@@ -107,6 +110,10 @@ class UniversalContentManager
         }
         if (isset($scopein['U404'])) {
             $this->remote_url = $scopein['U404'];
+        }
+        $this->mode = 'live';
+        if (isset($scopein['mode'])) {
+            $this->background = $scopein['mode'];
         }
     }
 
@@ -149,7 +156,7 @@ class UniversalContentManager
                     }
                 }
             } else {
-                $this->callRedirect();
+                return false;
             }
         }
 
@@ -163,17 +170,18 @@ class UniversalContentManager
      */
     private function checkFilePresent()
     {
+        $filebase=$this->path."/".$this->folder;
         if (($this->w === 0) && ($this->h === 0)) {
             $this->convert = false;
         }
-        $filename = $filebase.$this->tag.$this->file;
+        $filename = $filebase . $this->tag . $this->file;
         // check if file exitst
         if (file_exists($filename)) {
             $this->convert = false;
 
             return $filename;
         }
-        $filename = $filebase.$this->w.'x'.$this->h.$this->file;
+        $filename = $filebase . $this->w . 'x' . $this->h . $this->file;
         if (file_exists($filename)) {
             $this->convert = false;
 
@@ -182,37 +190,60 @@ class UniversalContentManager
         if ($this->convert == true) {
             if (is_array($this->ranges)) {
                 foreach ($this->ranges as $rtag => $rvalue) {
-                    if (isset($rvalue['max'])) {
-                        $rvalue['max'] = 0;
-                    }
-                    $rmax = intval($rvalue['max']);
-                    if (isset($rvalue['min'])) {
-                        $rvalue['min'] = 0;
-                    }
-                    $rmin = intval($rvalue['min']);
-                    if ($rvalue == 'h') {
-                        if (($this->h >= $rmin) && ($this->h <= $rmax)) {
+                    if (strstr($rtag, 'x')) {
+                        if (isset($rvalue['wmax'])) {
+                            $rvalue['wmax'] = 0;
+                        }
+                        $rwmax = intval($rvalue['wmax']);
+                        if (isset($rvalue['wmin'])) {
+                            $rvalue['wmin'] = 0;
+                        }
+                        $rwmin = intval($rvalue['wmin']);
+                        if (isset($rvalue['hmax'])) {
+                            $rvalue['hmax'] = 0;
+                        }
+                        $rhmax = intval($rvalue['hmax']);
+                        if (isset($rvalue['hmin'])) {
+                            $rvalue['hmin'] = 0;
+                        }
+                        $rhmin = intval($rvalue['hmin']);
+                        if (($this->h >= $rhmin) && ($this->h <= $rhmax) && ($this->w >= $rwmin) && ($this->w <= $rwmax)) {
                             $this->tag = $rtag;
-                            $this->h = $rtag;
-                            $this->w = 0;
+                            $rarr = explode('x', $rtag);
+                            $this->w = $rarr[0];
+                            $this->h = $rarr[1];
                         }
                     } else {
-                        if (($this->w >= $rmin) && ($this->w <= $rmax)) {
-                            $this->tag = $rtag;
-                            $this->w = $rtag;
-                            $this->h = 0;
+                        if (isset($rvalue['max'])) {
+                            $rvalue['max'] = 0;
+                        }
+                        $rmax = intval($rvalue['max']);
+                        if (isset($rvalue['min'])) {
+                            $rvalue['min'] = 0;
+                        }
+                        $rmin = intval($rvalue['min']);
+                        if ($rvalue == 'h') {
+                            if (($this->h >= $rmin) && ($this->h <= $rmax)) {
+                                $this->h = $rtag;
+                                $this->w = 0;
+                            }
+                        } else {
+                            if (($this->w >= $rmin) && ($this->w <= $rmax)) {
+                                $this->w = $rtag;
+                                $this->h = 0;
+                            }
                         }
                     }
                 }
             }
         }
-        $filename = $filebase.$this->tag.$this->file;
+        $filename = $filebase . $this->tag . $this->file;
         if (file_exists($filename)) {
             $this->convert = false;
 
             return $filename;
         }
-        $filename = $filebase.$this->w.'x'.$this->h.$this->file;
+        $filename = $filebase . $this->w . 'x' . $this->h . $this->file;
         if (file_exists($filename)) {
             $this->convert = false;
 
@@ -221,7 +252,7 @@ class UniversalContentManager
         if ($this->convert == true) {
             if ($this->w < $this->h) {
                 $this->w = 0;
-                $filename = $filebase.$this->w.'x'.$this->h.$this->file;
+                $filename = $filebase . $this->w . 'x' . $this->h . $this->file;
                 if (file_exists($filename)) {
                     $this->convert = false;
 
@@ -232,7 +263,7 @@ class UniversalContentManager
         if ($this->convert == true) {
             if ($this->w > $this->h) {
                 $this->h = 0;
-                $filename = $filebase.$this->w.'x'.$this->h.$this->file;
+                $filename = $filebase . $this->w . 'x' . $this->h . $this->file;
                 if (file_exists($filename)) {
                     $this->convert = false;
 
@@ -240,7 +271,7 @@ class UniversalContentManager
                 }
             }
         }
-        $filename = $filebase.$this->file;
+        $filename = $filebase . $this->file;
         if (file_exists($filename)) {
             return $filename;
         }
@@ -257,34 +288,136 @@ class UniversalContentManager
         lnxMcpTag('UCM-NOT-FOUND');
         if (($this->remote_url != null) && ($this->redirect_img != null)) {
             if ($this->remote_url != 'IMG') {
-                lnxmcp()->header('Location: '.$this->remote_url, true);
+                lnxmcp()->header('Location: ' . $this->remote_url, true);
             }
         }
         if ($this->remote_dynamic) {
             if ($this->remote_url != null) {
-                lnxmcp()->header('Location: '.$this->remote_url.$this->folder.'/'.$this->file, true);
+                lnxmcp()->header('Location: ' . $this->remote_url . $this->folder . '/' . $this->file, true);
             }
         }
         if ($this->remote_url != null) {
-            lnxmcp()->header('Location: '.$this->remote_url, true);
+            lnxmcp()->header('Location: ' . $this->remote_url, true);
         }
         if ($this->remote_img != null) {
-            lnxmcp()->header('Location: '.$this->remote_img, true);
+            lnxmcp()->header('Location: ' . $this->remote_img, true);
         }
         lnxmcp()->header('HTTP/1.0 404 Not Found', true, 404);
         exit;
     }
 
-    private function run()
+    /**
+     * callSendFile send file to  live 
+     *
+     * @param  mixed $filename
+     *
+     * @return void
+     */
+    private function callSendFile($filename)
     {
-        $this->checkAllow();
-
-        if (file_exists($path.$scopein['file'])) {
-            $filename = $path.$_REQUEST['file'];
-            $_SERVER['REQUEST_URI'] = $_REQUEST['file'];
+        if (file_exists($filename)) {
+            $filename = realpath($filename);
+            $dirname = dirname($filename);
+            $mime = mime_content_type($filename);
+            $size = filesize($filename);
+            lnxmcp()->debug('file:' . $filename . ' - mime:' . $mime . ' - size:' . $size);
+            lnxmcp()->header('Content-Type: ' . $mime, false);
+            echo file_get_contents($path . $_SERVER['REQUEST_URI']);
+            return;
         }
+        $this->callRedirect();
     }
 
+
+    /**
+     * writeConvertRequest
+     *
+     * @return void
+     */
+    private function writeConvertRequest () {
+        $req=array(
+            "mode"=>"background",
+            "file"=>$this->file,
+            "folder"=>$this->folder,
+            "ext"=>$this->ext,
+            "tag"=>$this->tag,
+            "w"=>$this->w,
+            "h"=>$this->h
+        );
+        lnxPutJsonFile($req,$file,$this->jsonpath,"json");
+    }
+
+    /**
+     * executeConvertRequest
+     *
+     * @return void
+     */
+    private function executeConvertRequest ($filedest) {
+        $filesource=$this->path."/".$this->folder."/".$this->file;
+        lnxMcpCmd(
+            array(
+                'type' => 'serviceCommon',
+                'name' => 'gfx',
+                'module' => 'Gfx',
+            ),
+            array(
+                'T' => 'IMG',
+                'effect' => 'resize',
+                'source' => $filesource,
+                'dest' => $filedest,
+                'width' => $this->w,
+                'height' => $this->h,
+            )
+        );
+    }
+
+    /**
+     * run script 
+     *
+     * @return void
+     */
+    private function run()
+    {
+        $live = true;
+        $batch = false;
+        switch ($this->mode) {
+            case 'background':
+                $live = false;
+                $batch = true;
+                break;;
+            case 'live':
+                $live = true;
+                $batch = false;
+                break;;
+            case 'all':
+                $live = true;
+                $batch = true;
+                break;;
+        }
+        if ($this->checkAllow() == false) {
+            if ($live == true) {
+                $this->callRedirect();
+            }
+            return;
+        }
+        $loadfile = $this->checkFilePresent();
+        if ($loadfile == null) {
+            if ($live == true) {
+                $this->callRedirect();
+            }
+            return;
+        }
+        if ($live == true) {
+            $this->callSendFile($loadfile);
+        }
+        if ($this->convert==true){
+            if ($batch == false) {
+                $this->writeConvertRequest();
+            } else {
+                $this->executeConvertRequest($loadfile);
+            }
+        }
+    }
     /**
      * UniversalContentManager __construct function.
      *
@@ -298,11 +431,7 @@ class UniversalContentManager
             $scopein = $_REQUEST;
         }
         if (!is_array($scopein)) {
-            $scopeinx = array(
-                'file' => $scopein,
-            );
-            $scopein = $scopeinx;
-            unset($scopeinx);
+            $scopein=lnxGetJsonFile($scopein,$this->jsonpath,"json");
         }
         $this->loadScope($scopein);
         $this->run();
