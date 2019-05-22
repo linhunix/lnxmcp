@@ -16,11 +16,9 @@ namespace LinHUniX\Mcp\Tools;
  */
 class UniversalContentManager
 {
-    /**
-     * run function.
-     *
-     * @param string $url = if is null get data for request
-     */
+    /////////////////////////////////////////////////////////////////////////////////////
+    /// VARIABLES
+    /////////////////////////////////////////////////////////////////////////////////////
     private $file;
     private $w;
     private $h;
@@ -32,11 +30,21 @@ class UniversalContentManager
     private $folder;
     private $allow;
     private $convert;
+    private $head_expire_cache;
     private $remote_dynamic;
     private $remote_cache;
     private $remote_url;
     private $remote_img;
+    private $action_load;
+    private $action_live;
+    private $action_batch;
+    private $action_cache;
+    private $action_redirect;
     private $mode;
+
+    /////////////////////////////////////////////////////////////////////////////////////
+    // PRIVATE FUNCTION - LOAD CONFIG
+    /////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * load config from mcp.
@@ -47,7 +55,7 @@ class UniversalContentManager
         if ($this->path == null) {
             $this->path = lnxmcp()->getResource('path');
         }
-        $this->jsonpath=lnxmcp()->getResource("path.exchange");
+        $this->jsonpath = lnxmcp()->getResource('path.exchange');
         $this->allow = lnxmcp()->getResource('ucm.allow');
         $this->convert = lnxmcp()->getResource('ucm.convert');
         if ($this->convert == null) {
@@ -67,6 +75,15 @@ class UniversalContentManager
                 $this->remote_dynamic = true;
             }
         }
+        $this->head_expire_cache = lnxmcp()->getResource('ucm.expirecache');
+        if ($this->head_expire_cache == null) {
+            $this->head_expire_cache = '60';
+        }
+        $this->action_load = lnxmcp()->getResource('ucm.action.load');
+        $this->action_live = lnxmcp()->getResource('ucm.action.live');
+        $this->action_batch = lnxmcp()->getResource('ucm.action.batch');
+        $this->action_redirect = lnxmcp()->getResource('ucm.action.cache');
+        $this->action_redirect = lnxmcp()->getResource('ucm.action.redirect');
     }
 
     /**
@@ -78,7 +95,13 @@ class UniversalContentManager
     {
         $this->w = 0;
         $this->h = 0;
-        $this->file = $scopein['REQUEST_URI'];
+        $this->file = @$scopein['REQUEST_URI'];
+        $obj = lnxGetJsonFile($this->file, $this->path, 'json');
+        if (is_array($obj)) {
+            foreach ($obj as $ok => $ov) {
+                $scopein[$ok] = $ov;
+            }
+        }
         if (isset($scopein['file'])) {
             $this->file = $scopein['file'];
         }
@@ -98,7 +121,7 @@ class UniversalContentManager
         } else {
             $earr = explode('/', $this->file);
             $this->file = array_pop($earr);
-            $this->folder = implode('/', $earr) . '/';
+            $this->folder = implode('/', $earr).'/';
             unset($earr);
         }
         if (isset($scopein['ext'])) {
@@ -114,6 +137,9 @@ class UniversalContentManager
         $this->mode = 'live';
         if (isset($scopein['mode'])) {
             $this->background = $scopein['mode'];
+        }
+        if (isset($scopein['expire'])) {
+            $this->head_expire_cache = $scopein['expire'];
         }
     }
 
@@ -133,9 +159,6 @@ class UniversalContentManager
                     if (isset($this->allow[$this->ext]['path'])) {
                         $this->path = $this->allow[$this->ext]['path'];
                     }
-                    if (isset($this->allow[$this->ext]['convert'])) {
-                        $this->convert = $this->allow[$this->ext]['convert'];
-                    }
                     if (isset($this->allow[$this->ext]['tag'])) {
                         $this->tag = $this->allow[$this->ext]['tag'];
                     }
@@ -148,11 +171,32 @@ class UniversalContentManager
                     if (isset($this->allow[$this->ext]['redirect_404_img'])) {
                         $this->remote_img = $this->allow[$this->ext]['redirect_404_img'];
                     }
+                    if (isset($this->allow[$this->ext]['ranges'])) {
+                        $this->ranges = $this->allow[$this->ext]['ranges'];
+                    }
+                    if (isset($this->allow[$this->ext]['expire'])) {
+                        $this->head_expire_cache = $this->allow[$this->ext]['expire'];
+                    }
+                    if (isset($this->allow[$this->ext]['convert'])) {
+                        $this->convert = $this->allow[$this->ext]['convert'];
+                    }
                     if (isset($this->allow[$this->ext]['cache'])) {
                         $this->remote_cache = $this->allow[$this->ext]['cache'];
                     }
-                    if (isset($this->allow[$this->ext]['ranges'])) {
-                        $this->ranges = $this->allow[$this->ext]['ranges'];
+                    if (isset($this->allow[$this->ext]['action_load'])) {
+                        $this->action_load = $this->allow[$this->ext]['action_load'];
+                    }
+                    if (isset($this->allow[$this->ext]['action_live'])) {
+                        $this->action_live = $this->allow[$this->ext]['action_live'];
+                    }
+                    if (isset($this->allow[$this->ext]['action_batch'])) {
+                        $this->action_batch = $this->allow[$this->ext]['action_batch'];
+                    }
+                    if (isset($this->allow[$this->ext]['action_cache'])) {
+                        $this->action_cache = $this->allow[$this->ext]['action_cache'];
+                    }
+                    if (isset($this->allow[$this->ext]['action_redirect'])) {
+                        $this->action_redirect = $this->allow[$this->ext]['action_redirect'];
                     }
                 }
             } else {
@@ -163,6 +207,10 @@ class UniversalContentManager
         return true;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////
+    // PRIVATE FUNCTION - VERIFIY FILE
+    /////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * checkFilePresent function check if exist local the file.
      *
@@ -170,18 +218,18 @@ class UniversalContentManager
      */
     private function checkFilePresent()
     {
-        $filebase=$this->path."/".$this->folder;
+        $filebase = $this->path.'/'.$this->folder;
         if (($this->w === 0) && ($this->h === 0)) {
             $this->convert = false;
         }
-        $filename = $filebase . $this->tag . $this->file;
+        $filename = $filebase.$this->tag.$this->file;
         // check if file exitst
         if (file_exists($filename)) {
             $this->convert = false;
 
             return $filename;
         }
-        $filename = $filebase . $this->w . 'x' . $this->h . $this->file;
+        $filename = $filebase.$this->w.'x'.$this->h.$this->file;
         if (file_exists($filename)) {
             $this->convert = false;
 
@@ -237,13 +285,13 @@ class UniversalContentManager
                 }
             }
         }
-        $filename = $filebase . $this->tag . $this->file;
+        $filename = $filebase.$this->tag.$this->file;
         if (file_exists($filename)) {
             $this->convert = false;
 
             return $filename;
         }
-        $filename = $filebase . $this->w . 'x' . $this->h . $this->file;
+        $filename = $filebase.$this->w.'x'.$this->h.$this->file;
         if (file_exists($filename)) {
             $this->convert = false;
 
@@ -252,7 +300,7 @@ class UniversalContentManager
         if ($this->convert == true) {
             if ($this->w < $this->h) {
                 $this->w = 0;
-                $filename = $filebase . $this->w . 'x' . $this->h . $this->file;
+                $filename = $filebase.$this->w.'x'.$this->h.$this->file;
                 if (file_exists($filename)) {
                     $this->convert = false;
 
@@ -263,7 +311,7 @@ class UniversalContentManager
         if ($this->convert == true) {
             if ($this->w > $this->h) {
                 $this->h = 0;
-                $filename = $filebase . $this->w . 'x' . $this->h . $this->file;
+                $filename = $filebase.$this->w.'x'.$this->h.$this->file;
                 if (file_exists($filename)) {
                     $this->convert = false;
 
@@ -271,7 +319,7 @@ class UniversalContentManager
                 }
             }
         }
-        $filename = $filebase . $this->file;
+        $filename = $filebase.$this->file;
         if (file_exists($filename)) {
             return $filename;
         }
@@ -288,72 +336,95 @@ class UniversalContentManager
         lnxMcpTag('UCM-NOT-FOUND');
         if (($this->remote_url != null) && ($this->redirect_img != null)) {
             if ($this->remote_url != 'IMG') {
-                lnxmcp()->header('Location: ' . $this->remote_url, true);
+                lnxmcp()->header('Location: '.$this->remote_url, true);
             }
         }
         if ($this->remote_dynamic) {
             if ($this->remote_url != null) {
-                lnxmcp()->header('Location: ' . $this->remote_url . $this->folder . '/' . $this->file, true);
+                lnxmcp()->header('Location: '.$this->remote_url.$this->folder.'/'.$this->file, true);
             }
         }
         if ($this->remote_url != null) {
-            lnxmcp()->header('Location: ' . $this->remote_url, true);
+            lnxmcp()->header('Location: '.$this->remote_url, true);
         }
         if ($this->remote_img != null) {
-            lnxmcp()->header('Location: ' . $this->remote_img, true);
+            lnxmcp()->header('Location: '.$this->remote_img, true);
         }
         lnxmcp()->header('HTTP/1.0 404 Not Found', true, 404);
         exit;
     }
 
     /**
-     * callSendFile send file to  live 
+     * callSendFile send file to  live.
      *
-     * @param  mixed $filename
-     *
-     * @return void
+     * @param mixed $filename
      */
     private function callSendFile($filename)
     {
         if (file_exists($filename)) {
             $filename = realpath($filename);
-            $dirname = dirname($filename);
             $mime = mime_content_type($filename);
             $size = filesize($filename);
-            lnxmcp()->debug('file:' . $filename . ' - mime:' . $mime . ' - size:' . $size);
-            lnxmcp()->header('Content-Type: ' . $mime, false);
-            echo file_get_contents($path . $_SERVER['REQUEST_URI']);
+            lnxmcp()->debug('file:'.$filename.' - mime:'.$mime.' - size:'.$size);
+            lnxmcp()->header('Content-Type: '.$mime, false);
+            lnxmcp()->header('Cache-Control: max-age='.$this->head_expire_cache, false);
+            echo file_get_contents($filename);
+
             return;
         }
         $this->callRedirect();
     }
 
-
     /**
-     * writeConvertRequest
+     * CreateBgRequest function.
      *
-     * @return void
+     * @param string $mode
+     * @param string $realfile
+     *
+     * @return array
      */
-    private function writeConvertRequest () {
-        $req=array(
-            "mode"=>"background",
-            "file"=>$this->file,
-            "folder"=>$this->folder,
-            "ext"=>$this->ext,
-            "tag"=>$this->tag,
-            "w"=>$this->w,
-            "h"=>$this->h
+    private function CreateBgRequest($realfile = null)
+    {
+        return array(
+            'mode' => $this->mode,
+            'action_load' => $this->action_load,
+            'action_live' => $this->action_live,
+            'action_batch' => $this->action_batch,
+            'action_cache' => $this->action_cache,
+            'action_redirect' => $this->action_redirect,
+            'realfile' => $realfile,
+            'convert' => $this->convert,
+            'cache' => $this->remote_cache,
+            'expire' => $this->head_expire_cache,
+            'file' => $this->file,
+            'folder' => $this->folder,
+            'ext' => $this->ext,
+            'tag' => $this->tag,
+            'w' => $this->w,
+            'h' => $this->h,
         );
-        lnxPutJsonFile($req,$file,$this->jsonpath,"json");
     }
 
     /**
-     * executeConvertRequest
-     *
-     * @return void
+     * writeConvertRequest.
      */
-    private function executeConvertRequest ($filedest) {
-        $filesource=$this->path."/".$this->folder."/".$this->file;
+    private function writeBgRequest($req)
+    {
+        lnxPutJsonFile($req, $this->file, $this->jsonpath, 'json');
+    }
+
+    /**
+     * executeConvertRequest.
+     */
+    private function executeBgRequest($obj)
+    {
+        if (!is_array($obj)) {
+            return;
+        }
+        if (isset($obj['realfile'])) {
+            $filedest = $obj['realfile'];
+        }
+        $filesource = $this->path.'/'.$this->folder.'/'.$this->file;
         lnxMcpCmd(
             array(
                 'type' => 'serviceCommon',
@@ -372,53 +443,96 @@ class UniversalContentManager
     }
 
     /**
-     * run script 
-     *
-     * @return void
+     * run script.
      */
     private function run()
     {
+        /////// DEFINE THE SITUATION
         $live = true;
         $batch = false;
         switch ($this->mode) {
             case 'background':
+            case 'execute':
                 $live = false;
                 $batch = true;
-                break;;
+                break;
             case 'live':
                 $live = true;
                 $batch = false;
-                break;;
+                break;
             case 'all':
                 $live = true;
                 $batch = true;
-                break;;
+                break;
         }
+        /////// DEFINE IF IS ALLOW TO CONTROL THIS ELEMENT
         if ($this->checkAllow() == false) {
             if ($live == true) {
                 $this->callRedirect();
             }
+
             return;
         }
-        $loadfile = $this->checkFilePresent();
+        /////// INIT THE EXCHANGE OBJECT
+        $obj = $this->CreateBgRequest();
+        /////// CHECK IF IS PRESENT A LOADABLE FILE
+        $loadfile = null;
+        if ($this->action_load != null) {
+            if (is_array($this->action_load)) {
+                $obj = lnxMcpCmd($this->action_load, $obj);
+            } else {
+                $obj = lnxMcpTag($this->action_load, $obj);
+            }
+            if (isset($obj['return'])) {
+                $obj = $obj['return'];
+            }
+            if (isset($obj['realfile'])) {
+                $loadfile = $obj['realfile'];
+            }
+        } else {
+            $loadfile = $this->checkFilePresent();
+            $obj = $this->CreateBgRequest($loadfile);
+        }
+        /////// IF IS NOT FOUND GO ON CHECK CACHE AND/OR CALL REDIRECT
         if ($loadfile == null) {
             if ($live == true) {
-                $this->callRedirect();
+                $this->callRedirect($obj);
             }
+            if ($batch == true) {
+                $this->executeBgRequest($obj);
+            } else {
+                $obj['mode'] = 'background';
+                $this->writeBgRequest($obj);
+            }
+
             return;
         }
+        /////// IF IS FOUND AND MODE LIVE, GO ON RUN LIVE SEQUENCE
         if ($live == true) {
-            $this->callSendFile($loadfile);
-        }
-        if ($this->convert==true){
-            if ($batch == false) {
-                $this->writeConvertRequest();
+            if ($this->action_live != null) {
+                if (is_array($this->action_live)) {
+                    $obj = lnxMcpCmd($this->action_live, $obj);
+                } else {
+                    $obj = lnxMcpTag($this->action_live, $obj);
+                }
+                if (isset($obj['return'])) {
+                    $obj = $obj['return'];
+                }
             } else {
-                $this->executeConvertRequest($loadfile
-            );
+                $this->callSendFile($loadfile);
+            }
+        }
+        /////// IF IS FOUND AND BATCH GO ON RUN BATCH SEQUENCE
+        if ($this->convert == true) {
+            if ($batch == false) {
+                $obj['mode'] = 'background';
+                $this->writeBgRequest($obj);
+            } else {
+                $this->executeBgRequest($obj);
             }
         }
     }
+
     /**
      * UniversalContentManager __construct function.
      *
@@ -432,7 +546,7 @@ class UniversalContentManager
             $scopein = $_REQUEST;
         }
         if (!is_array($scopein)) {
-            $scopein=lnxGetJsonFile($scopein,$this->jsonpath,"json");
+            $scopein = lnxGetJsonFile($scopein, $this->jsonpath, 'json');
         }
         $this->loadScope($scopein);
         $this->run();
