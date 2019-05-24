@@ -14,7 +14,7 @@ namespace LinHUniX\Mcp\Tools;
 /**
  * This class is used to manage the universal content manager.
  */
-class UniversalContentManager
+final class UniversalContentManager
 {
     /////////////////////////////////////////////////////////////////////////////////////
     /// VARIABLES
@@ -77,7 +77,7 @@ class UniversalContentManager
         }
         $this->head_expire_cache = lnxmcp()->getResource('ucm.expirecache');
         if ($this->head_expire_cache == null) {
-            $this->head_expire_cache = '60';
+            $this->head_expire_cache = '3600';
         }
         $this->action_load = lnxmcp()->getResource('ucm.action.load');
         $this->action_live = lnxmcp()->getResource('ucm.action.live');
@@ -333,6 +333,7 @@ class UniversalContentManager
      */
     private function callRedirect()
     {
+        lnxmcp()->debug('ucm action callRedirect');
         lnxMcpTag('UCM-NOT-FOUND');
         if (($this->remote_url != null) && ($this->redirect_img != null)) {
             if ($this->remote_url != 'IMG') {
@@ -361,6 +362,7 @@ class UniversalContentManager
      */
     private function callSendFile($filename)
     {
+        lnxmcp()->debug('ucm action callSendFile');
         if (file_exists($filename)) {
             $filename = realpath($filename);
             $mime = mime_content_type($filename);
@@ -385,6 +387,8 @@ class UniversalContentManager
      */
     private function CreateBgRequest($realfile = null)
     {
+        lnxmcp()->debug('ucm action CreateBgRequest');
+
         return array(
             'mode' => $this->mode,
             'action_load' => $this->action_load,
@@ -410,6 +414,7 @@ class UniversalContentManager
      */
     private function writeBgRequest($req)
     {
+        lnxmcp()->debug('ucm action writeBgRequest');
         lnxPutJsonFile($req, $this->file, $this->jsonpath, 'json');
     }
 
@@ -418,6 +423,7 @@ class UniversalContentManager
      */
     private function executeBgRequest($obj)
     {
+        lnxmcp()->debug('ucm action executeBgRequest');
         if (!is_array($obj)) {
             return;
         }
@@ -466,18 +472,23 @@ class UniversalContentManager
                 break;
         }
         /////// DEFINE IF IS ALLOW TO CONTROL THIS ELEMENT
+        lnxmcp()->debugVar('ucm', ' live', $live);
+        lnxmcp()->debugVar('ucm', ' batch', $batch);
         if ($this->checkAllow() == false) {
+            lnxmcp()->debug('ucm check false');
             if ($live == true) {
                 $this->callRedirect();
             }
 
             return;
         }
+        lnxmcp()->debug('ucm check true');
         /////// INIT THE EXCHANGE OBJECT
         $obj = $this->CreateBgRequest();
         /////// CHECK IF IS PRESENT A LOADABLE FILE
         $loadfile = null;
         if ($this->action_load != null) {
+            lnxmcp()->debug('ucm action load');
             if (is_array($this->action_load)) {
                 $obj = lnxMcpCmd($this->action_load, $obj);
             } else {
@@ -490,11 +501,14 @@ class UniversalContentManager
                 $loadfile = $obj['realfile'];
             }
         } else {
+            lnxmcp()->debug('ucm action checkFilePresent');
             $loadfile = $this->checkFilePresent();
             $obj = $this->CreateBgRequest($loadfile);
         }
+        lnxmcp()->debugVar('ucm', ' loadfile', $loadfile);
         /////// IF IS NOT FOUND GO ON CHECK CACHE AND/OR CALL REDIRECT
         if ($loadfile == null) {
+            lnxmcp()->debug('ucm file not present');
             if ($live == true) {
                 $this->callRedirect($obj);
             }
@@ -507,9 +521,11 @@ class UniversalContentManager
 
             return;
         }
+        lnxmcp()->debug('ucm file present');
         /////// IF IS FOUND AND MODE LIVE, GO ON RUN LIVE SEQUENCE
         if ($live == true) {
             if ($this->action_live != null) {
+                lnxmcp()->debug('ucm action live');
                 if (is_array($this->action_live)) {
                     $obj = lnxMcpCmd($this->action_live, $obj);
                 } else {
@@ -519,11 +535,13 @@ class UniversalContentManager
                     $obj = $obj['return'];
                 }
             } else {
+                lnxmcp()->debug('ucm action callSendFile');
                 $this->callSendFile($loadfile);
             }
         }
         /////// IF IS FOUND AND BATCH GO ON RUN BATCH SEQUENCE
         if ($this->convert == true) {
+            lnxmcp()->debug('ucm action convert');
             if ($batch == false) {
                 $obj['mode'] = 'background';
                 $this->writeBgRequest($obj);
@@ -541,14 +559,21 @@ class UniversalContentManager
      */
     public function __construct($scopein = null)
     {
+        lnxmcp()->debug('ucm load Cfg');
         $this->loadCfg();
+        lnxmcp()->debug('ucm load ScopeIn');
         if ($scopein == null) {
             $scopein = $_REQUEST;
+            $scopein['REQUEST_URI'] = $_SERVER['REQUEST_URI'];
+            lnxmcp()->debug('ucm load request');
         }
         if (!is_array($scopein)) {
             $scopein = lnxGetJsonFile($scopein, $this->jsonpath, 'json');
+            lnxmcp()->debug('ucm try to load scopein' + $scopein);
         }
+        lnxmcp()->debug('ucm load Scope');
         $this->loadScope($scopein);
+        lnxmcp()->debug('ucm RUN');
         $this->run();
     }
 }
