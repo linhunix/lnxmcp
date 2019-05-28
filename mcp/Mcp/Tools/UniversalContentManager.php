@@ -96,15 +96,21 @@ final class UniversalContentManager
         $this->w = 0;
         $this->h = 0;
         $this->file = @$scopein['REQUEST_URI'];
+        if (isset($scopein['file'])) {
+            $this->file = $scopein['file'];
+        }
+        if (strstr($this->file, '?') != false) {
+            $farr = explode('?', $this->file);
+            $this->file = $farr[0];
+        }
         $obj = lnxGetJsonFile($this->file, $this->path, 'json');
         if (is_array($obj)) {
             foreach ($obj as $ok => $ov) {
                 $scopein[$ok] = $ov;
             }
         }
-        if (isset($scopein['file'])) {
-            $this->file = $scopein['file'];
-        }
+        lnxmcp()->debugVar('ucm loadScope', 'file', $this->file);
+
         if (isset($scopein['tag'])) {
             $this->tag = $scopein['tag'];
         } elseif (isset($scopein['size'])) {
@@ -116,6 +122,7 @@ final class UniversalContentManager
         if (isset($scopein['h'])) {
             $this->h = intval($scopein['h']);
         }
+
         if (isset($scopein['folder'])) {
             $this->folder = $scopein['folder'];
         } else {
