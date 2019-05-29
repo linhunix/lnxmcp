@@ -22,9 +22,11 @@ final class UniversalContentManager
     private $file;
     private $w;
     private $h;
-    private $tag;
+    private $tag_pre;
+    private $tag_post;
     private $ranges;
     private $ext;
+    private $base;
     private $path;
     private $jsonpath;
     private $folder;
@@ -110,11 +112,17 @@ final class UniversalContentManager
             }
         }
         lnxmcp()->debugVar('ucm loadScope', 'file', $this->file);
-
+        $this->tag_pre="";
         if (isset($scopein['tag'])) {
-            $this->tag = $scopein['tag'];
+            $this->tag_post = $scopein['tag'];
         } elseif (isset($scopein['size'])) {
-            $this->tag = $scopein['size'];
+            $this->tag_post = $scopein['size'];
+        }
+        if (isset($scopein['tag_post'])) {
+            $this->tag_post = $scopein['tag_post'];
+        }
+        if (isset($scopein['tag_pre'])) {
+            $this->tag_pre = $scopein['tag_pre'];
         }
         if (isset($scopein['w'])) {
             $this->w = intval($scopein['w']);
@@ -131,12 +139,12 @@ final class UniversalContentManager
             $this->folder = implode('/', $earr).'/';
             unset($earr);
         }
+        $earr = explode('.', $this->file);
+        $this->ext = array_pop($earr);
+        $this->base = implode('.',$earr);
+        unset($earr);
         if (isset($scopein['ext'])) {
             $this->ext = $scopein['ext'];
-        } else {
-            $earr = explode('.', $this->file);
-            $this->ext = array_pop($earr);
-            unset($earr);
         }
         if (isset($scopein['U404'])) {
             $this->remote_url = $scopein['U404'];
@@ -149,6 +157,66 @@ final class UniversalContentManager
             $this->head_expire_cache = $scopein['expire'];
         }
     }
+    /**
+     *  loadAllow ref
+     * @param array $allowcfg
+     * @return void
+     */
+    private function LoadAllow($allowcfg){
+        if (isset($allowcfg['folder'])) {
+            $this->folder = $allowcfg['folder'];
+        }
+        if (isset($allowcfg['path'])) {
+            $this->path = $allowcfg['path'];
+        }
+        if (isset($allowcfg['tag'])) {
+            $this->tag_post = $allowcfg['tag'];
+        }
+        if (isset($allowcfg['tag_post'])) {
+            $this->tag_post = $allowcfg['tag_post'];
+        }
+        if (isset($allowcfg['tag_pre'])) {
+            $this->tag_pre = $allowcfg['tag_pre'];
+        }
+        if (isset($allowcfg['dynamic'])) {
+            $this->remote_dynamic = $allowcfg['dynamic'];
+        }
+        if (isset($allowcfg['redirect_404_url'])) {
+            $this->remote_url = $allowcfg['redirect_404_url'];
+        }
+        if (isset($allowcfg['redirect_404_img'])) {
+            $this->remote_img = $allowcfg['redirect_404_img'];
+        }
+        if (isset($allowcfg['ranges'])) {
+            $this->ranges = $allowcfg['ranges'];
+        }
+        if (isset($allowcfg['expire'])) {
+            $this->head_expire_cache = $allowcfg['expire'];
+        }
+        if (isset($allowcfg['convert'])) {
+            $this->convert = $allowcfg['convert'];
+        }
+        if (isset($allowcfg['cache'])) {
+            $this->remote_cache = $allowcfg['cache'];
+        }
+        if (isset($allowcfg['action_load'])) {
+            $this->action_load = $allowcfg['action_load'];
+        }
+        if (isset($allowcfg['action_live'])) {
+            $this->action_live = $allowcfg['action_live'];
+        }
+        if (isset($allowcfg['action_batch'])) {
+            $this->action_batch = $allowcfg['action_batch'];
+        }
+        if (isset($allowcfg['action_cache'])) {
+            $this->action_cache = $allowcfg['action_cache'];
+        }
+        if (isset($allowcfg['action_redirect'])) {
+            $this->action_redirect = $allowcfg['action_redirect'];
+        }
+    }
+
+
 
     /**
      * isallow function check if is allow or not a specific extension.
@@ -158,90 +226,98 @@ final class UniversalContentManager
     private function checkAllow()
     {
         if (is_array($this->allow)) {
-            if (isset($this->allow[$this->ext])) {
+            $folderext=$this->folder."/*.".$this.ext;
+            if (isset($this->allow[$folderext])) {
+                if (is_array($this->allow[$folderext])) {
+                    $this->LoadAllow($this->allow[$folderext]);
+                }
+            }else if (isset($this->allow[$this->folder])) {
+                if (is_array($this->allow[$this->folder])) {
+                    $this->LoadAllow($this->allow[$this->folder]);
+                }
+            }else if (isset($this->allow[$this->ext])) {
                 if (is_array($this->allow[$this->ext])) {
-                    if (isset($this->allow[$this->ext]['folder'])) {
-                        $this->folder = $this->allow[$this->ext]['folder'];
-                    }
-                    if (isset($this->allow[$this->ext]['path'])) {
-                        $this->path = $this->allow[$this->ext]['path'];
-                    }
-                    if (isset($this->allow[$this->ext]['tag'])) {
-                        $this->tag = $this->allow[$this->ext]['tag'];
-                    }
-                    if (isset($this->allow[$this->ext]['dynamic'])) {
-                        $this->remote_dynamic = $this->allow[$this->ext]['dynamic'];
-                    }
-                    if (isset($this->allow[$this->ext]['redirect_404_url'])) {
-                        $this->remote_url = $this->allow[$this->ext]['redirect_404_url'];
-                    }
-                    if (isset($this->allow[$this->ext]['redirect_404_img'])) {
-                        $this->remote_img = $this->allow[$this->ext]['redirect_404_img'];
-                    }
-                    if (isset($this->allow[$this->ext]['ranges'])) {
-                        $this->ranges = $this->allow[$this->ext]['ranges'];
-                    }
-                    if (isset($this->allow[$this->ext]['expire'])) {
-                        $this->head_expire_cache = $this->allow[$this->ext]['expire'];
-                    }
-                    if (isset($this->allow[$this->ext]['convert'])) {
-                        $this->convert = $this->allow[$this->ext]['convert'];
-                    }
-                    if (isset($this->allow[$this->ext]['cache'])) {
-                        $this->remote_cache = $this->allow[$this->ext]['cache'];
-                    }
-                    if (isset($this->allow[$this->ext]['action_load'])) {
-                        $this->action_load = $this->allow[$this->ext]['action_load'];
-                    }
-                    if (isset($this->allow[$this->ext]['action_live'])) {
-                        $this->action_live = $this->allow[$this->ext]['action_live'];
-                    }
-                    if (isset($this->allow[$this->ext]['action_batch'])) {
-                        $this->action_batch = $this->allow[$this->ext]['action_batch'];
-                    }
-                    if (isset($this->allow[$this->ext]['action_cache'])) {
-                        $this->action_cache = $this->allow[$this->ext]['action_cache'];
-                    }
-                    if (isset($this->allow[$this->ext]['action_redirect'])) {
-                        $this->action_redirect = $this->allow[$this->ext]['action_redirect'];
-                    }
+                    $this->LoadAllow($this->allow[$this->ext]);
+                }
+            } else if (isset($this->allow['default'])) {
+                if (is_array($this->allow['default'])) {
+                    $this->LoadAllow($this->allow['default']);
                 }
             } else {
                 return false;
             }
         }
-
         return true;
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
     // PRIVATE FUNCTION - VERIFIY FILE
     /////////////////////////////////////////////////////////////////////////////////////
-
     /**
-     * checkFilePresent function check if exist local the file.
-     *
+     * checkFilePresentBySize check file by size
+     * @param mixed wsize
+     * @param mixed hsize
      * @return string filename
      */
-    private function checkFilePresent()
-    {
+    private function checkFilePresentBySize($wsize,$hsize) {
         $filebase = $this->path.'/'.$this->folder;
-        if (($this->w === 0) && ($this->h === 0)) {
+        $filename = $filebase.$wsize.'x'.$hsize."_".$this->file;
+        lnxmcp()->debugVar('ucm', ' try if exist', $filename);
+        if (file_exists($filename)) {
             $this->convert = false;
+            return $filename;
         }
-        $filename = $filebase.$this->tag.$this->file;
+        $filename = $filebase.$this->base."_".$wsize.'x'.$hsize.'.'.$this->ext;
+        lnxmcp()->debugVar('ucm', ' try if exist', $filename);
+        if (file_exists($filename)) {
+            $this->convert = false;
+            return $filename;
+        }
+        return null;
+    }
+    /**
+     * checkFilePresentByTag check file by tag
+     * @param string tpre
+     * @param string tpost
+     * @return string filename
+     */
+    private function checkFilePresentByTag($tpre,$tpost) {
+        $filebase = $this->path.'/'.$this->folder;
+        $filename = $filebase.$tpre.$this->base.$tpost.".".$this->ext;
+        lnxmcp()->debugVar('ucm', ' try if exist', $filename);
+        // check if file exitst
+        if (file_exists($filename)) {
+            $this->convert = false;
+            return $filename;
+        }
+        $filename = $filebase.$this->base.$tpost.".".$this->ext;
+        lnxmcp()->debugVar('ucm', ' try if exist', $filename);
+        // check if file exitst
+        if (file_exists($filename)) {
+            $this->convert = false;
+            return $filename;
+        }
+        $filename = $filebase.$tpre.$this->file;
+        lnxmcp()->debugVar('ucm', ' try if exist', $filename);
         // check if file exitst
         if (file_exists($filename)) {
             $this->convert = false;
 
             return $filename;
         }
-        $filename = $filebase.$this->w.'x'.$this->h.$this->file;
-        if (file_exists($filename)) {
-            $this->convert = false;
+        return null;
+    }
 
-            return $filename;
-        }
+    /**
+     * checkFilePresentByRanges function check if exist local the file as part of ranges.
+     * tag+filename+tag.ext
+     * filename+tag.ext
+     * tag+filename.ext
+     * wxh_filename.ext
+     * filename_wxh.ext
+     * @return string filename
+     */
+    private function checkFilePresentByRanges() {
         if ($this->convert == true) {
             if (is_array($this->ranges)) {
                 foreach ($this->ranges as $rtag => $rvalue) {
@@ -263,7 +339,7 @@ final class UniversalContentManager
                         }
                         $rhmin = intval($rvalue['hmin']);
                         if (($this->h >= $rhmin) && ($this->h <= $rhmax) && ($this->w >= $rwmin) && ($this->w <= $rwmax)) {
-                            $this->tag = $rtag;
+                            $this->tag_post = $rtag;
                             $rarr = explode('x', $rtag);
                             $this->w = $rarr[0];
                             $this->h = $rarr[1];
@@ -292,25 +368,19 @@ final class UniversalContentManager
                 }
             }
         }
-        $filename = $filebase.$this->tag.$this->file;
-        if (file_exists($filename)) {
-            $this->convert = false;
-
+        $filename=$this->checkFilePresentByTag($this->tag_pre,$this->tag_post);
+        if ($filename!=null){
             return $filename;
         }
-        $filename = $filebase.$this->w.'x'.$this->h.$this->file;
-        if (file_exists($filename)) {
-            $this->convert = false;
-
+        $filename=$this->checkFilePresentBySize($this->w,$this->h);
+        if ($filename!=null){
             return $filename;
         }
         if ($this->convert == true) {
             if ($this->w < $this->h) {
                 $this->w = 0;
-                $filename = $filebase.$this->w.'x'.$this->h.$this->file;
-                if (file_exists($filename)) {
-                    $this->convert = false;
-
+                $filename=$this->checkFilePresentBySize($this->w,$this->h);
+                if ($filename!=null){
                     return $filename;
                 }
             }
@@ -318,20 +388,49 @@ final class UniversalContentManager
         if ($this->convert == true) {
             if ($this->w > $this->h) {
                 $this->h = 0;
-                $filename = $filebase.$this->w.'x'.$this->h.$this->file;
-                if (file_exists($filename)) {
-                    $this->convert = false;
-
+                $filename=$this->checkFilePresentBySize($this->w,$this->h);
+                if ($filename!=null){
                     return $filename;
                 }
             }
         }
+        return null;
+
+    }
+
+    /**
+     * checkFilePresent function check if exist local the file.
+     * tag+filename+tag.ext
+     * filename+tag.ext
+     * tag+filename.ext
+     * wxh_filename.ext
+     * filename_wxh.ext
+     * @return string filename
+     */
+    private function checkFilePresent()
+    {
+        $filebase = $this->path.'/'.$this->folder;
+        if (($this->w === 0) && ($this->h === 0)) {
+            $this->convert = false;
+        }
+        $filename=$this->checkFilePresentByTag($this->tag_pre,$this->tag_post);
+        if ($filename!=null){
+            return $filename;
+        }
+        $filename=$this->checkFilePresentBySize($this->w,$this->h);
+        if ($filename!=null){
+            return $filename;
+        }
+        $filename=$this->checkFilePresentByRanges();
+        if ($filename!=null){
+            return $filename;
+        }
         $filename = $filebase.$this->file;
+        lnxmcp()->debugVar('ucm', ' try if exist', $filename);
         if (file_exists($filename)) {
             return $filename;
         }
-
-        return null;
+        return  null;
     }
 
     /**
@@ -395,7 +494,20 @@ final class UniversalContentManager
     private function CreateBgRequest($realfile = null)
     {
         lnxmcp()->debug('ucm action CreateBgRequest');
-
+        if ($realfile==null){
+            $realfile=$this->path.'/'.$this->folder;
+            if (!empty($this->tag_pre)) {
+                $realfile.=$this->tag_pre;
+            }
+            $realfile.=$this->$base;
+            if (!empty($this->tag_post)) {
+                $realfile.=$this->tag_post;
+            }else if( ($this->w!=0) or ($this->h!=0) ) {
+                $realfile.="_".$this->w.'x'.$this->h;
+            }
+            $realfile.='.'.$this->$ext;
+        }
+        lnxmcp()->debugVar('ucm', 'obj realfile', $realfile);
         return array(
             'mode' => $this->mode,
             'action_load' => $this->action_load,
@@ -410,7 +522,8 @@ final class UniversalContentManager
             'file' => $this->file,
             'folder' => $this->folder,
             'ext' => $this->ext,
-            'tag' => $this->tag,
+            'tag_pre' => $this->tag_pre,
+            'tag_post' => $this->tag_post,
             'w' => $this->w,
             'h' => $this->h,
         );
@@ -436,6 +549,9 @@ final class UniversalContentManager
         }
         if (isset($obj['realfile'])) {
             $filedest = $obj['realfile'];
+        }
+        if ($filedest==null){
+            return;
         }
         $filesource = $this->path.'/'.$this->folder.'/'.$this->file;
         lnxMcpCmd(
