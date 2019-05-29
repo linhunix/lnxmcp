@@ -459,10 +459,32 @@ function lnxmcpDbM($command = null, $element = null)
  */
 function lnxMcpExtLoad($file, $path = '', $ext = null, $scopeIn = array(), $convert = true)
 {
+    switch ($path) {
+    case 'app.path':
+        $path = lnxmcp()->getResource('path');
+        break;
+    case 'app.path.module':
+        $path = lnxmcp()->getResource('path.module');
+        break;
+    case 'app.path.template':
+        $path = lnxmcp()->getResource('path.template');
+        break;
+    case 'app.path.workjob':
+        $path = lnxmcp()->getResource('path.workjob');
+        break;
+    case 'app.path.exchange':
+        $path = lnxmcp()->getResource('path.exchange');
+        break;
+    case 'app.path.language':
+        $path = lnxmcp()->getResource('path.language');
+        break;
+    }
     $hfile = realpath($path);
     if ($hfile == '') {
         $hfile = $path;
     }
+    lnxmcp()->debugvar('lnxMcpExtLoad', 'path', $path);
+
     if ($hfile != '') {
         $hfile .= DIRECTORY_SEPARATOR.$file;
     }
@@ -475,6 +497,30 @@ function lnxMcpExtLoad($file, $path = '', $ext = null, $scopeIn = array(), $conv
     }
     lnxmcp()->info('lnxMcpExtLoad try to load and convert :'.$hfile);
     if (file_exists($hfile)) {
+        $mime = 'text/html';
+        switch ($ext) {
+        case 'tpl':
+            break;
+        case 'css':
+            $mime = 'text/css';
+            break;
+        case 'js':
+            $mime = 'text/js';
+            break;
+        case 'jpg':
+        case 'jpg':
+            $mime = 'image/jpg';
+            break;
+        case 'gif':
+            $mime = 'image/gif';
+            break;
+        case 'png':
+            $mime = 'image/png';
+            break;
+        default:
+            $mime = mime_content_type($hfile);
+        }
+        lnxmcp()->header('Content-Type: '.$mime, false, 200);
         try {
             if ($convert == true) {
                 lnxmcp()->info('lnxMcpExtLoad:(with Convert)'.$hfile);

@@ -2,9 +2,9 @@
 
 namespace LinHUniX\Pdo\Driver;
 
-use \PDO;
-use \PDOException;
-use \Exception;
+use PDO;
+use PDOException;
+use Exception;
 use LinHUniX\Mcp\Model\mcpBaseModelClass;
 
 /*
@@ -18,44 +18,43 @@ use LinHUniX\Mcp\Model\mcpBaseModelClass;
 class pdoDriver extends mcpBaseModelClass
 {
     /**
-     * @var \PDO $PDO 
+     * @var \PDO
      */
-    var $PDO;
-    var $tables;
-    var $tabcount;
-    var $tmp;
-    var $cache;
-    var $debug;
-    var $database;
-    var $dburlcon;
+    public $PDO;
+    public $tables;
+    public $tabcount;
+    public $tmp;
+    public $cache;
+    public $debug;
+    public $database;
+    public $dburlcon;
 
     /**
-     * __construct
+     * __construct.
      *
-     * @param  mixed $mcp
-     * @param  mixed $scopeCtl
-     * @param  mixed $scopeIn
-     *
-     * @return void
+     * @param mixed $mcp
+     * @param mixed $scopeCtl
+     * @param mixed $scopeIn
      */
-    function __construct(\LinHUniX\Mcp\masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
+    public function __construct(\LinHUniX\Mcp\masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
     {
         parent::__construct($mcp, $scopeCtl, $scopeIn);
         $i = 0;
-        if (isset($scopeIn["dburlcon"])) {
+        if (isset($scopeIn['dburlcon'])) {
             $this->debug = false;
-            $this->dburlcon = $scopeIn["dburlcon"];
-            $this->database = $scopeIn["database"];
-            $username = $scopeIn["username"];
-            $password = $scopeIn["password"];
-            $options = $scopeIn["options"];
-            $this->getMcp()->info("dburlcon:" . $this->dburlcon);
-            $this->getMcp()->debug("username:" . $username);
-            $this->getMcp()->info("database:" . $this->database);
+            $this->dburlcon = $scopeIn['dburlcon'];
+            $this->database = $scopeIn['database'];
+            $username = $scopeIn['username'];
+            $password = $scopeIn['password'];
+            $options = $scopeIn['options'];
+            $this->getMcp()->info('dburlcon:'.$this->dburlcon);
+            $this->getMcp()->debug('username:'.$username);
+            $this->getMcp()->info('database:'.$this->database);
             try {
                 $this->PDO = new PDO($this->dburlcon, $username, $password, $options);
             } catch (Exception $e) {
-                $mcp->warning("DBCONN: ERR=" . $e->getMessage());
+                $mcp->warning('DBCONN: ERR='.$e->getMessage());
+
                 return null;
             }
             $data = $this->listTable();
@@ -63,12 +62,13 @@ class pdoDriver extends mcpBaseModelClass
                 foreach ($data as $dt) {
                     foreach ($dt as $k => $v) {
                         $this->tables[$i] = $v;
-                        $i++;
+                        ++$i;
                     }
                 }
             }
         } else {
-            $this->warning("Not Db Connection Found!!");
+            $this->warning('Not Db Connection Found!!');
+
             return null;
         }
         $this->tabcount = $i;
@@ -76,33 +76,35 @@ class pdoDriver extends mcpBaseModelClass
         $this->cache = array();
     }
 
-    protected function listTable(){
-        return $this->getTable("SHOW TABLES");
+    protected function listTable()
+    {
+        return $this->getTable('SHOW TABLES');
     }
 
     /*
      * real_escape_string
      * remplace the mysqlLegacyRealEscapeString
      * for an issue on Php 5.6 change to
-     * 
+     *
      * @see mysqlLegacyRealEscapeString(),PDO->quote()
-     * 
+     *
      * @param  mixed $value
-     * 
+     *
      * @return string
      */
     public function real_escape_string($value)
     {
-        $search = array("\\",  "\x00", "\n",  "\r",  "'",  '"', "\x1a");
-        $replace = array("\\\\", "\\0", "\\n", "\\r", "\'", '\"', "\\Z");
+        $search = array('\\',  "\x00", "\n",  "\r",  "'",  '"', "\x1a");
+        $replace = array('\\\\', '\\0', '\\n', '\\r', "\'", '\"', '\\Z');
+
         return str_replace($search, $replace, $value);
     }
 
     /**
      * table_exist
-     * Check if the table exists in the database
+     * Check if the table exists in the database.
      *
-     * @param  mixed $tablename
+     * @param mixed $tablename
      *
      * @return bool
      */
@@ -116,81 +118,86 @@ class pdoDriver extends mcpBaseModelClass
     }
 
     /**
-     * intexec  Direct PDO execution 
+     * intexec  Direct PDO execution.
      *
-     * @param  mixed $query
+     * @param mixed $query
      *
      * @return any
      */
     public function intexec($query)
     {
         try {
-            if ($this->PDO==null) {
+            if ($this->PDO == null) {
                 return false;
             }
             $query = str_replace("'", '"', $query);
+
             return $this->PDO->exec($query);
         } catch (PDOException $pe) {
-            $this->getMcp()->warning($this->database . $pe->getMessage());
+            $this->getMcp()->warning($this->database.$pe->getMessage());
+
             return false;
         } catch (Exception $e) {
-            $this->getMcp()->warning($this->database . $e->getMessage());
+            $this->getMcp()->warning($this->database.$e->getMessage());
+
             return false;
         }
     }
 
     /**
-     * execute
+     * execute.
      *
-     * @param  mixed $sql
-     * @param  mixed $var
+     * @param mixed $sql
+     * @param mixed $var
      *
      * @return bool
      */
     public function execute($sql, $var = array())
     {
-        $this->getMcp()->debug("queryIn:" . $this->database . "=" . $sql);
-        if (isset($var["WHERE"])) {
-            $sql = str_replace('[WHERE]', $var["WHERE"], $sql);
-            unset($var["WHERE"]);
+        $this->getMcp()->debug('queryIn:'.$this->database.'='.$sql);
+        if (isset($var['WHERE'])) {
+            $sql = str_replace('[WHERE]', $var['WHERE'], $sql);
+            unset($var['WHERE']);
         }
         foreach ($var as $k => $v) {
-            $sql = str_replace('[' . $k . ']', $this->real_escape_string($v), $sql);
+            $sql = str_replace('['.$k.']', $this->real_escape_string($v), $sql);
         }
-        $this->getMcp()->debug("queryOut:" . $this->database . "=" . $sql);
+        $this->getMcp()->debug('queryOut:'.$this->database.'='.$sql);
         if ($this->intexec($sql) == false) {
-            $this->getMcp()->warning("[KO]" . $this->database . "=" . $sql);
-            if ($this->PDO!=null) {
-                $this->getMcp()->warning("[KO]" . $this->database . ": " . print_r($this->PDO->errorInfo(),1));
+            $this->getMcp()->warning('[KO]'.$this->database.'='.$sql);
+            if ($this->PDO != null) {
+                $this->getMcp()->warning('[KO]'.$this->database.': '.print_r($this->PDO->errorInfo(), 1));
             } else {
-                $this->getMcp()->warning("[KO]" . $this->database . ": PDO IS NULL!!!" );
+                $this->getMcp()->warning('[KO]'.$this->database.': PDO IS NULL!!!');
             }
+
             return false;
         }
-        $this->getMcp()->debug("[OK]" . $this->database . "=" . $sql);
+        $this->getMcp()->debug('[OK]'.$this->database.'='.$sql);
+
         return true;
     }
 
     /**
-     * executeWithRollback use the conventional pdo transaction esectution 
+     * executeWithRollback use the conventional pdo transaction esectution.
      *
-     * @param  mixed $sql
-     * @param  mixed $var
+     * @param mixed $sql
+     * @param mixed $var
      *
      * @return array
      */
     public function executeWithRollback($sql, $var = array())
     {
-        $this->getMcp()->debug("queryIn:" . $this->database . "=" . $sql);
-        if (isset($var["WHERE"])) {
-            $sql = str_replace('[WHERE]', $var["WHERE"], $sql);
-            unset($var["WHERE"]);
+        $this->getMcp()->debug('queryIn:'.$this->database.'='.$sql);
+        if (isset($var['WHERE'])) {
+            $sql = str_replace('[WHERE]', $var['WHERE'], $sql);
+            unset($var['WHERE']);
         }
         foreach ($var as $k => $v) {
-            $sql = str_replace('[' . $k . ']', $this->real_escape_string($v), $sql);
+            $sql = str_replace('['.$k.']', $this->real_escape_string($v), $sql);
         }
-        $this->getMcp()->debug("queryOut:" . $this->database . "=" . $sql);
-        if ($this->PDO==null) {
+        $this->getMcp()->debug('queryOut:'.$this->database.'='.$sql);
+        if ($this->PDO == null) {
             return false;
         }
         $res = array();
@@ -202,17 +209,19 @@ class pdoDriver extends mcpBaseModelClass
             $res = $this->PDO->lastInsertId();
         } catch (Exception $e) {
             $this->PDO->rollback();
-            $this->getMcp()->warning("[KO]" . $this->database . "=" . $sql . ":" . $e->getMessage());
+            $this->getMcp()->warning('[KO]'.$this->database.'='.$sql.':'.$e->getMessage());
+
             return false;
         }
+
         return $res;
     }
 
     /**
-     * queryReturnResultSet Get Database Query Results
+     * queryReturnResultSet Get Database Query Results.
      *
-     * @param  mixed $sql
-     * @param  mixed $logging
+     * @param mixed $sql
+     * @param mixed $logging
      *
      * @return statement
      */
@@ -220,57 +229,61 @@ class pdoDriver extends mcpBaseModelClass
     {
         if ($this->debug) {
             list($usec, $sec) = explode(' ', microtime());
-            $starttime = ((float)$usec + (float)$sec);
+            $starttime = ((float) $usec + (float) $sec);
         }
-        if ($this->PDO==null) {
+        if ($this->PDO == null) {
             return false;
         }
         try {
             $statement = $this->PDO->query($sql);
         } catch (PDOException $pe) {
-            $this->getMcp()->warning($this->database . $pe->getMessage());
+            $this->getMcp()->warning($this->database.$pe->getMessage());
+
             return null;
         } catch (Exception $e) {
-            $this->getMcp()->warning($this->database . $e->getMessage());
+            $this->getMcp()->warning($this->database.$e->getMessage());
+
             return null;
         }
         if ($this->debug) {
             list($usec, $sec) = explode(' ', microtime());
-            $finishtime = ((float)$usec + (float)$sec);
+            $finishtime = ((float) $usec + (float) $sec);
             $this->querycache($sql, $starttime, $finishtime);
         }
+
         return $statement;
     }
 
     /**
-     * simpleQuery
+     * simpleQuery.
      *
-     * @param  mixed $sql
-     * @param  mixed $var
-     * @param  mixed $err
+     * @param mixed $sql
+     * @param mixed $var
+     * @param mixed $err
      *
      * @return array
      */
     public function simpleQuery($sql, $var = array(), $err = true)
     {
         $result_set = array();
-        $this->getMcp()->debug("queryIn:" . $this->database . "=" . $sql);
-        if (isset($var["WHERE"])) {
-            $sql = str_replace('[WHERE]', $var["WHERE"], $sql);
-            unset($var["WHERE"]);
+        $this->getMcp()->debug('queryIn:'.$this->database.'='.$sql);
+        if (isset($var['WHERE'])) {
+            $sql = str_replace('[WHERE]', $var['WHERE'], $sql);
+            unset($var['WHERE']);
         }
         foreach ($var as $k => $v) {
-            $sql = str_replace('[' . $k . ']', $this->real_escape_string($v), $sql);
+            $sql = str_replace('['.$k.']', $this->real_escape_string($v), $sql);
         }
-        $this->getMcp()->debug("queryOut:" . $this->database . "=" . $sql);
+        $this->getMcp()->debug('queryOut:'.$this->database.'='.$sql);
         try {
             $statement = $this->queryReturnResultSet($sql);
             if ($statement == null) {
                 if ($err == false) {
-                    $this->getMcp()->critical($this->database . ":" . $sql . " NULL DATA!!!");
+                    $this->getMcp()->critical($this->database.':'.$sql.' NULL DATA!!!');
                 } else {
-                    $this->getMcp()->warning($this->database . ":" . $sql . " NULL DATA!!!");
+                    $this->getMcp()->warning($this->database.':'.$sql.' NULL DATA!!!');
                 }
+
                 return false;
             } else {
                 while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
@@ -280,39 +293,40 @@ class pdoDriver extends mcpBaseModelClass
             @$statement->closeCursor();
         } catch (Exception $e) {
             if ($err == false) {
-                $this->getMcp()->critical($this->database . $e->getMessage());
+                $this->getMcp()->critical($this->database.$e->getMessage());
             } else {
-                $this->getMcp()->warning($this->database . $e->getMessage());
+                $this->getMcp()->warning($this->database.$e->getMessage());
             }
         }
         if ($result_set == null) {
             return false;
         }
+
         return $result_set;
     }
 
     /**
-     * simpleCount
+     * simpleCount.
      *
-     * @param  mixed $sql
-     * @param  mixed $var
-     * @param  mixed $err
+     * @param mixed $sql
+     * @param mixed $var
+     * @param mixed $err
      *
      * @return number
      */
     public function simpleCount($sql, $var = array(), $err = true)
     {
         $res = $this->simpleQuery($sql, $var, $err);
+
         return count($res);
     }
 
-
     /**
      * getTable
-     * simpleQuery alias
+     * simpleQuery alias.
      *
-     * @param  mixed $sql
-     * @param  mixed $logging
+     * @param mixed $sql
+     * @param mixed $logging
      *
      * @return array
      */
@@ -323,10 +337,10 @@ class pdoDriver extends mcpBaseModelClass
 
     /**
      * getTable
-     * simpleQuery alias
+     * simpleQuery alias.
      *
-     * @param  mixed $sql
-     * @param  mixed $logging
+     * @param mixed $sql
+     * @param mixed $logging
      *
      * @return array
      */
@@ -336,13 +350,13 @@ class pdoDriver extends mcpBaseModelClass
     }
 
     /**
-     * dataWalk  (use array_walk on result )
+     * dataWalk  (use array_walk on result ).
      *
-     * @param  mixed $sql
-     * @param  mixed $callback
-     * @param  mixed $var
-     * @param  mixed $funarr
-     * @param  mixed $err
+     * @param mixed $sql
+     * @param mixed $callback
+     * @param mixed $var
+     * @param mixed $funarr
+     * @param mixed $err
      *
      * @return any
      */
@@ -352,15 +366,16 @@ class pdoDriver extends mcpBaseModelClass
         if (count($res) > 0) {
             return array_walk($res, $callback, $funarr);
         }
+
         return false;
     }
 
     /**
-     * firstRow show only the first record
+     * firstRow show only the first record.
      *
-     * @param  mixed $sql
-     * @param  mixed $var
-     * @param  mixed $err
+     * @param mixed $sql
+     * @param mixed $var
+     * @param mixed $err
      *
      * @return array
      */
@@ -368,19 +383,21 @@ class pdoDriver extends mcpBaseModelClass
     {
         $rs = $this->simpleQuery($sql, $var, $err);
         if ((!is_array($rs)) || (!isset($rs[0]))) {
-            $this->getMcp()->warning($this->database . " Data is Null");
+            $this->getMcp()->warning($this->database.' Data is Null');
+
             return false;
         }
+
         return $rs[0];
     }
 
     /**
      * data_row (alias)
-     * firstRow show only the first record
+     * firstRow show only the first record.
      *
-     * @param  mixed $sql
-     * @param  mixed $var
-     * @param  mixed $err
+     * @param mixed $sql
+     * @param mixed $var
+     * @param mixed $err
      *
      * @return array
      */
@@ -389,64 +406,72 @@ class pdoDriver extends mcpBaseModelClass
         return $this->firstRow($sql);
     }
 
-
     //Delete Row from table
     public function delRow($_table, $_id)
     {
         if (($_table != '') && ($_id > 0)) {
-            $_result = $this->execute('DELETE FROM ' . $_table . ' WHERE id = ' . $_id);
+            $_result = $this->execute('DELETE FROM '.$_table.' WHERE id = '.$_id);
         }
         if ($_result) {
             return true;
         }
+
         return false;
     }
 
-    //Get Row from table
     /**
-     * getRow
+     * getRow.
      *
-     * @param  mixed $_fields
-     * @param  mixed $_table
-     * @param  mixed $_id
+     * Get Row from table
+     *
+     * @param mixed  $_fields
+     * @param string $_table
+     * @param string $_id
+     * @param string $_id_field
      *
      * @return array
      */
-    public function getRow($_fields, $_table, $_id)
+    public function getRow($fields, $table, $refid, $idfield = 'id')
     {
-        if ($_id > 0) {
-            $_result = array();
-            $_row = $this->firstRow('SELECT * FROM ' . $_table . ' WHERE id = ' . $_id . ' LIMIT 1;');
-            if (is_array($_row)) {
-                foreach ($_fields as $_field) {
-                    $_result[$_field] = stripslashes($_row[$_field]);
-                }
-            }
-            return $_result;
+        if (empty($refid)) {
+            return null;
         }
-        return null;
+        $result = array();
+        $row = $this->firstRow('SELECT * FROM '.$table.' WHERE '.$idfield.' = '.$refid.' LIMIT 1 ;');
+        if (!is_array($row)) {
+            return null;
+        }
+        if (!is_array($fields)) {
+            return stripslashes($row[$fields]);
+        }
+        foreach ($fields as $field) {
+            $result[$field] = stripslashes($row[$field]);
+        }
+
+        return $result;
     }
 
     //Get Rows from table
+
     /**
-     * getRows
+     * getRows.
      *
-     * @param  mixed $_fields
-     * @param  mixed $_table
-     * @param  mixed $_order_by
-     * @param  mixed $_from
-     * @param  mixed $_size
-     * @param  mixed $_where_stmt
-     * @param  mixed $id
+     * @param mixed $_fields
+     * @param mixed $_table
+     * @param mixed $_order_by
+     * @param mixed $_from
+     * @param mixed $_size
+     * @param mixed $_where_stmt
+     * @param mixed $id
      *
      * @return array
      */
-    public function getRows($_fields, $_table, $_order_by, $_from, $_size, $_where_stmt = '', $id = "id")
+    public function getRows($_fields, $_table, $_order_by, $_from, $_size, $_where_stmt = '', $id = 'id')
     {
         $_result = array();
         $_cnt = 0;
-        $_where_stmt = $_where_stmt != '' ? ' WHERE ' . $_where_stmt : '';
-        $_res = $this->simpleQuery('SELECT * FROM `' . $_table . '` ' . $_where_stmt . ' ORDER BY ' . $_order_by . ' LIMIT ' . $_from . ', ' . $_size . ';');
+        $_where_stmt = $_where_stmt != '' ? ' WHERE '.$_where_stmt : '';
+        $_res = $this->simpleQuery('SELECT * FROM `'.$_table.'` '.$_where_stmt.' ORDER BY '.$_order_by.' LIMIT '.$_from.', '.$_size.';');
         foreach ($_res as $_cnt => $_row) {
             if (isset($_row[$id])) {
                 $_cnt = $_row[$id];
@@ -455,21 +480,24 @@ class pdoDriver extends mcpBaseModelClass
                 $_result[$_cnt][$_field] = stripslashes($_row[$_field]);
             }
         }
+
         return $_result;
     }
+
     //Get Last Run id from PDO
+
     /**
-     * getLastId
+     * getLastId.
      *
-     * @param  mixed $table
-     * @param  mixed $id
+     * @param mixed $table
+     * @param mixed $id
      *
      * @return any
      */
     public function getLastRun()
     {
         $res = array();
-        if ($this->PDO==null) {
+        if ($this->PDO == null) {
             return false;
         }
         try {
@@ -478,41 +506,43 @@ class pdoDriver extends mcpBaseModelClass
                 return $res;
             }
         } catch (\Exception $e) {
-            lnxmcp()->warning("PDOgetLastId:err:" . $e->getMessage());
+            lnxmcp()->warning('PDOgetLastId:err:'.$e->getMessage());
+
             return null;
         }
     }
+
     //Get Last ID from table
+
     /**
-     * getLastId
+     * getLastId.
      *
-     * @param  mixed $table
-     * @param  mixed $id
+     * @param mixed $table
+     * @param mixed $id
      *
      * @return any
      */
-    public function getLastId($table, $id = "id")
+    public function getLastId($table, $id = 'id')
     {
-        $res = $this->firstRow('SELECT `' . $id . '` FROM `' . $table . '` ORDER BY `' . $id . '` DESC ');
+        $res = $this->firstRow('SELECT `'.$id.'` FROM `'.$table.'` ORDER BY `'.$id.'` DESC ');
         if (isset($res[$id])) {
             return $res[$id];
         }
+
         return null;
     }
 
     /**
-     * setRow Add/Update Row
+     * setRow Add/Update Row.
      *
-     * @param  mixed $_fields
-     * @param  mixed $_table
-     * @param  mixed $run
-     *
-     * @return void
+     * @param mixed $_fields
+     * @param mixed $_table
+     * @param mixed $run
      */
-    function setRow($_fields, $_table, $run = true,$emptyval=false)
+    public function setRow($_fields, $_table, $run = true, $emptyval = false)
     {
         if ((count($_fields) > 0) && ($_table != '')) {
-            $_stmt = $this->getSql($_fields, $_table,$emptyval);
+            $_stmt = $this->getSql($_fields, $_table, $emptyval);
             if ($run) {
                 $_result = $this->executeWithRollback($_stmt);
             } else {
@@ -522,27 +552,28 @@ class pdoDriver extends mcpBaseModelClass
         if ($_result) {
             return $_result;
         }
+
         return true;
     }
 
     //GET SetRow SQL
-    function getSql($_fields, $_table,$emptyval=false)
+    public function getSql($_fields, $_table, $emptyval = false)
     {
         $_stmt = '';
         if ($_fields['id'] > 0) {
-            $_stmt .= 'UPDATE `' . $_table . '` SET ';
+            $_stmt .= 'UPDATE `'.$_table.'` SET ';
             foreach ($_fields as $_key => $_val) {
-                if (($_val != '') or ($emptyval==true) ) {
-                    $_stmt .= '`' . $_key . '` = \'' . addslashes($_val) . '\',';
+                if (($_val != '') or ($emptyval == true)) {
+                    $_stmt .= '`'.$_key.'` = \''.addslashes($_val).'\',';
                 }
             }
             $_stmt = substr($_stmt, 0, strlen($_stmt) - 1);
-            $_stmt .= ' WHERE id = ' . $_fields['id'] . ';';
+            $_stmt .= ' WHERE id = '.$_fields['id'].';';
         } else {
-            $_stmt = 'INSERT INTO `' . $_table . '` ( ';
+            $_stmt = 'INSERT INTO `'.$_table.'` ( ';
             foreach ($_fields as $_key => $_val) {
                 if ($_val != '') {
-                    $_stmt .= '`' . $_key . '`,';
+                    $_stmt .= '`'.$_key.'`,';
                 }
             }
             $_stmt = substr($_stmt, 0, strlen($_stmt) - 1);
@@ -550,7 +581,7 @@ class pdoDriver extends mcpBaseModelClass
 
             foreach ($_fields as $_key => $_val) {
                 if ($_val != '') {
-                    $_stmt .= '\'' . addslashes($_val) . '\',';
+                    $_stmt .= '\''.addslashes($_val).'\',';
                 }
             }
             $_stmt = substr($_stmt, 0, strlen($_stmt) - 1);
@@ -561,74 +592,80 @@ class pdoDriver extends mcpBaseModelClass
     }
 
     /**
-     * $scope array is 
+     * $scope array is
      * var ["T"]:
-     *  e  = execute : exec query with boolean results  
-     *  er  = execute with rollback : exec query with boolean results  
-     *  f  = firstRow : return only first row 
-     *  q  = retrive array of all results 
-     *  c  = return the count of the results 
-     *  s  = return the sql information 
-     *  r  = return sql and env 
+     *  e  = execute : exec query with boolean results
+     *  er  = execute with rollback : exec query with boolean results
+     *  f  = firstRow : return only first row
+     *  q  = retrive array of all results
+     *  c  = return the count of the results
+     *  s  = return the sql information
+     *  r  = return sql and env
      *  other case return false;
-     * var ["Q"] = query 
-     * var ["V"] = contain the values that need to remplace on query scripts 
+     * var ["Q"] = query
+     * var ["V"] = contain the values that need to remplace on query scripts.
+     *
      * @author Andrea Morello <andrea.morello@linhunix.com>
+     *
      * @version GIT:2018-v1
+     *
      * @param Container $GLOBALS["cfg"] Dipendecy injection for Pimple\Container
-     * @param array $this->argIn temproraney array auto cleanable 
-     * @return boolean|array query results 
+     * @param array     $this->argIn    temproraney array auto cleanable
+     *
+     * @return bool|array query results
      */
     public function moduleCore()
     {
         if ($this->PDO == null) {
-            $this->getMcp()->warning("Database Connection Error (not initalizzed!!)");
+            $this->getMcp()->warning('Database Connection Error (not initalizzed!!)');
+
             return false;
         }
-        if ((empty($this->argIn["Q"]))) {
+        if ((empty($this->argIn['Q']))) {
             return false;
         }
         try {
-            switch ($this->argIn["T"]) {
-                case "e":
-                    $this->argOut = $this->execute($this->argIn["Q"], $this->argIn["V"]);
+            switch ($this->argIn['T']) {
+                case 'e':
+                    $this->argOut = $this->execute($this->argIn['Q'], $this->argIn['V']);
                     break;
-                case "er":
-                    $this->argOut = $this->executeWithRollback($this->argIn["Q"], $this->argIn["V"]);
+                case 'er':
+                    $this->argOut = $this->executeWithRollback($this->argIn['Q'], $this->argIn['V']);
                     break;
-                case "f":
-                    $this->argOut = $this->firstRow($this->argIn["Q"], $this->argIn["V"]);
+                case 'f':
+                    $this->argOut = $this->firstRow($this->argIn['Q'], $this->argIn['V']);
                     break;
-                case "q":
-                    $this->argOut = $this->simpleQuery($this->argIn["Q"], $this->argIn["V"]);
+                case 'q':
+                    $this->argOut = $this->simpleQuery($this->argIn['Q'], $this->argIn['V']);
                     break;
-                case "c":
-                    $this->argOut = $this->simpleCount($this->argIn["Q"], $this->argIn["V"]);
+                case 'c':
+                    $this->argOut = $this->simpleCount($this->argIn['Q'], $this->argIn['V']);
                     break;
-                case "s":
-                    $this->argOut = $this->argIn["Q"];
+                case 's':
+                    $this->argOut = $this->argIn['Q'];
                     break;
-                case "r":
+                case 'r':
                     $this->argOut = array(
-                        "sql" => $this->argIn["Q"],
-                        "env" => $this->argIn["E"]
+                        'sql' => $this->argIn['Q'],
+                        'env' => $this->argIn['E'],
                     );
                     break;
             }
         } catch (\Exception $e) {
-            $this->getMcp()->warning("QueryIdx:Index=" . $this->argIn["I"] . ",Error:" . $e->getMessage());
+            $this->getMcp()->warning('QueryIdx:Index='.$this->argIn['I'].',Error:'.$e->getMessage());
         }
     }
 
     //////////////////////////////////////////////////////////////////////////////
     // OLD STYLE COMPATIBILTY
     //////////////////////////////////////////////////////////////////////////////
+
     /**
      * query
-     * simpleQuery alias
+     * simpleQuery alias.
      *
-     * @param  mixed $sql
-     * @param  mixed $logging
+     * @param mixed $sql
+     * @param mixed $logging
      *
      * @return array
      */
@@ -639,46 +676,55 @@ class pdoDriver extends mcpBaseModelClass
         $this->tmp['DSrc'] = $sql;
         $this->tmp['RMin'] = 0;
         $this->tmp['RMax'] = count($this->tmp['Data']);
-        $this->getMcp()->debug("query:" . print_r($this->tmp, 1));
+        $this->getMcp()->debug('query:'.print_r($this->tmp, 1));
+
         return $this->tmp['Data'];
     }
+
     //Get Insert ID - CHECK - function below insertID()
     public function lastData()
     {
         return $this->tmp['Data'];
     }
+
     //Get Next Database Record
     public function nextRow(&$statement = false)
     {
         $this->getMcp()->warning(" please don't use this method !! nextRow ");
         if ($statement == false) {
             if (!isset($this->tmp['Data'])) {
-                $this->getMcp()->warning($this->database . " Data is Null");
+                $this->getMcp()->warning($this->database.' Data is Null');
+
                 return false;
             }
             if (!is_array($this->tmp['Data'])) {
-                $this->getMcp()->warning($this->database . " Data not array");
+                $this->getMcp()->warning($this->database.' Data not array');
+
                 return $this->tmp['Data'];
             }
             $rmin = $this->tmp['RMin'];
             if ($rmin > $this->tmp['RMax']) {
-                $this->getMcp()->warning($this->database . " Data RMin over RMax");
+                $this->getMcp()->warning($this->database.' Data RMin over RMax');
+
                 return false;
             }
-            $rmin++;
+            ++$rmin;
             $this->tmp['RMin'] = $rmin;
-            $this->getMcp()->debug("next_record:" . print_r($this->tmp, 1));
+            $this->getMcp()->debug('next_record:'.print_r($this->tmp, 1));
+
             return $this->tmp['Data'][$rmin];
         }
         if (is_array($statement)) {
             return next($statement);
         }
+
         return $statement->fetch(PDO::FETCH_ASSOC);
     }
 
     public function next_record(&$statement = false)
     {
         $this->getMcp()->warning(" please don't use this method !! next_record ");
+
         return $this->nextRow($statement);
     }
 
@@ -688,20 +734,24 @@ class pdoDriver extends mcpBaseModelClass
         $this->getMcp()->warning(" please don't use this method !! seek ");
         if ($statement == false) {
             if (!isset($this->tmp['Data'])) {
-                $this->getMcp()->warning($this->database . "Data not array");
+                $this->getMcp()->warning($this->database.'Data not array');
+
                 return false;
             }
             if ($position > $this->tmp['RMax']) {
-                $this->getMcp()->warning($this->database . "Data RMin over RMax");
+                $this->getMcp()->warning($this->database.'Data RMin over RMax');
+
                 return false;
             }
             $this->tmp['RMin'] = $position;
-            $this->getMcp()->warning($this->database . "query:" . print_r($this->tmp, 1));
+            $this->getMcp()->warning($this->database.'query:'.print_r($this->tmp, 1));
+
             return $this->tmp['Data'][$position];
         }
         if (is_array($statement)) {
             return $statement[$position];
         }
+
         return $statement->fetch(PDO::FETCH_ASSOC, $position);
     }
 
@@ -720,21 +770,24 @@ class pdoDriver extends mcpBaseModelClass
         $this->getMcp()->warning(" please don't use this method !! numRows ");
         if ($statement === false) {
             if (!isset($this->tmp['RMax'])) {
-                $this->getMcp()->warning($this->database . " Data not array");
+                $this->getMcp()->warning($this->database.' Data not array');
+
                 return false;
             }
+
             return $this->tmp['RMax'];
         }
         if (is_array($statement)) {
             return count($statement);
         }
         try {
-            if (method_exists($statment, "fetchColumn")) {
+            if (method_exists($statment, 'fetchColumn')) {
                 return $statement->fetchColumn();
             }
         } catch (Exception $e) {
-            $this->getMcp()->warning($this->database . $e->getMessage());
+            $this->getMcp()->warning($this->database.$e->getMessage());
         }
+
         return 0;
     }
 
@@ -742,6 +795,7 @@ class pdoDriver extends mcpBaseModelClass
     public function affectedRows($resultSet = false)
     {
         $this->getMcp()->warning(" please don't use this method !! affectedRows ");
+
         return $this->numRows($resultSet);
     }
 
@@ -749,8 +803,7 @@ class pdoDriver extends mcpBaseModelClass
     public function num_rows($resultSet = false)
     {
         $this->getMcp()->warning(" please don't use this method !! num_rows ");
-        {
-            return $this->numRows($resultSet);
-        }
+
+        return $this->numRows($resultSet);
     }
 }

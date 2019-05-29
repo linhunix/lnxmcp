@@ -385,6 +385,15 @@ class mcpMenuClass
     public static function TagConverter($text, $scopeIn = array(), $label = null)
     {
         $lnxmcp_cnt = 0;
+        foreach ($scopeIn as $sink => $sinv) {
+            $text = str_ireplace('[scope-'.$sink.']', $sinv, $text);
+        }
+        foreach (lnxmcp()->getCommon() as $comk => $comv) {
+            $text = str_ireplace('[common-'.$comk.']', $comv, $text);
+        }
+        foreach ($_SERVER as $srvnk => $srvv) {
+            $text = str_ireplace('[server-'.$srvnk.']', $srvv, $text);
+        }
         while (stripos($text, '<lnxmcp ') !== false) {
             ++$lnxmcp_cnt;
             $lp1 = stripos($text, '<lnxmcp');
