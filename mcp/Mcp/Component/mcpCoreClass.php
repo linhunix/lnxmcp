@@ -629,52 +629,86 @@ final class mcpCoreClass
         $tplt = $this->scopeCtl[$ssub]['type'];
         $this->setStatus(true, 'try to load '.$type.' in '.$sdir);
         $fhead = $sdir.'/global.'.$tplt.'.head.inc.php';
+        $fheadt = $sdir.'/global.'.$tplt.'.head.inc.tpl';
         $fmain = $sdir.'/global.'.$tplt.'.main.inc.php';
+        $fmaint = $sdir.'/global.'.$tplt.'.main.inc.tpl';
         $fcss = $sdir.$this->scopeCtl[$ssub]['content'].'.css';
         $xmain = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$type.'.'.$lang.'.php';
+        $xmaint = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$type.'.'.$lang.'.tpl';
         $lmain = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$lang.'.php';
+        $lmaint = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$lang.'.tpl';
         $tmain = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$type.'.php';
+        $tmaint = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$type.'.tpl';
         $smain = $this->scopeCtl[$ssub]['file'];
+        $smaint = $sdir.$this->scopeCtl[$ssub]['content'].'.tpl';
         $fjs = $sdir.$this->scopeCtl[$ssub]['content'].'.js';
         $ffoot = $sdir.'/global.'.$tplt.'.foot.inc.php';
-        $this->setStatus(true, 'load std global.head.php file '.$sdir);
+        $ffoott = $sdir.'/global.'.$tplt.'.foot.inc.tpl';
+        /// load header
         if (file_exists($fhead)) {
+            $this->setStatus(true, 'load std global.head.php file '.$sdir);
             include $fhead;
+        } elseif (file_exists($fheadt)) {
+            $this->setStatus(true, 'load std global.head.tpl file '.$sdir);
+            include $fheadt;
         }
+        /// load style css
         if (file_exists($fcss)) {
             $this->setStatus(true, 'load std css file '.$smain);
             echo "\n<style type='text/css'>\n";
             include_once $fcss;
             echo "\n</style>\n";
         }
+        /// load main global
         if (file_exists($fmain)) {
             $this->setStatus(true, 'load std global.main.php file '.$smain);
             include $fmain;
+        } elseif (file_exists($fmaint)) {
+            $this->setStatus(true, 'load std global.main.tpl file '.$smain);
+            include $fmaint;
         }
+        /// load core
         if (file_exists($xmain)) {
             $this->setStatus(true, 'load std special file '.$xmain);
             include $xmain;
+        } elseif (file_exists($xmaint)) {
+            $this->setStatus(true, 'load std special file '.$xmaint);
+            include $xmaint;
         } elseif (file_exists($tmain)) {
             $this->setStatus(true, 'load std special file '.$tmain);
             include $tmain;
+        } elseif (file_exists($tmaint)) {
+            $this->setStatus(true, 'load std special file '.$tmaint);
+            include $tmaint;
         } elseif (file_exists($lmain)) {
             $this->setStatus(true, 'load std special file '.$lmain);
             include $lmain;
+        } elseif (file_exists($lmaint)) {
+            $this->setStatus(true, 'load std special file '.$lmaint);
+            include $lmaint;
         } elseif (file_exists($smain)) {
             $this->setStatus(true, 'load std inc file '.$smain);
             include $smain;
+        } elseif (file_exists($smaint)) {
+            $this->setStatus(true, 'load std inc file '.$smaint);
+            include $smaint;
         } else {
             $this->setStatus(false, 'unable load std inc file '.$smain);
         }
+        /// load javascript
         if (file_exists($fjs)) {
             $this->setStatus(true, 'load std js file '.$smain);
             echo "\n<script type='text/javascript'>\n";
             include_once $fjs;
             echo "\n</script>\n";
         }
-        $this->setStatus(true, 'load std global.foot.php file '.$smain);
+        /// load footer
         if (file_exists($ffoot)) {
+            $this->setStatus(true, 'load std global.foot.php file '.$smain);
             include $ffoot;
+        } elseif (file_exists($ffoott)) {
+            $this->setStatus(true, 'load std global.foot.tpl file '.$smain);
+            include $ffoott;
         }
     }
 
@@ -710,6 +744,8 @@ final class mcpCoreClass
                     $this->LoadTemplateModule($scopeCtl, $scopeIn, $scopeOut);
                 }
             } else {
+                $tplfile = str_replace('.php', '.tpl', $this->scopeCtl[$this->sub]['file']);
+                $tplfalt = str_replace('.php', '.tpl', $this->scopeCtl[$this->sub]['altfile']);
                 if (file_exists($this->scopeCtl[$this->sub]['auto'])) {
                     $this->setStatus(true, 'load auto file '.$this->scopeCtl[$this->sub]['auto']);
                     include_once $this->scopeCtl[$this->sub]['auto'];
@@ -719,9 +755,15 @@ final class mcpCoreClass
                     if (file_exists($this->scopeCtl[$this->sub]['file'])) {
                         $this->setStatus(true, 'load std file '.$this->scopeCtl[$this->sub]['file']);
                         include_once $this->scopeCtl[$this->sub]['file'];
+                    } elseif (file_exists($tplfile)) {
+                        $this->setStatus(true, 'load std file '.$tplfile);
+                        include_once $tplfile;
                     } elseif (file_exists($this->scopeCtl[$this->sub]['altfile'])) {
                         $this->setStatus(true, 'load std file '.$this->scopeCtl[$this->sub]['altfile']);
                         include_once $this->scopeCtl[$this->sub]['altfile'];
+                    } elseif (file_exists($tplfalt)) {
+                        $this->setStatus(true, 'load std file '.$tplfalt);
+                        include_once $tplfalt;
                     } else {
                         $this->setStatus(false, $this->scopeCtl[$this->sub]['file'].' file not exist!');
                         unset($this->scopeCtl[$this->sub]['file']);
