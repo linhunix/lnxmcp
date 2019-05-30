@@ -103,6 +103,17 @@ function mcpRunHttp()
         $urlpth = 'home';
     }
     lnxmcp()->setCommon('PathUrl', $urlpth);
+    //// BASE DEFINITION FOR THE SCRIPT ;
+    lnxmcp()->setCommon('ucm.url',lnxmcp()->getCfg("app.ucm.url"));
+    lnxmcp()->setCommon('logo',lnxmcp()->getCfg("app.image.logo"));
+    lnxmcp()->setCommon('icon',lnxmcp()->getCfg("app.image.icon"));
+    lnxmcp()->setCommon('def',lnxmcp()->getCfg("app.def"));
+    lnxmcp()->setCommon('version',lnxmcp()->getCfg("app.version"));
+    $noimage=lnxmcp()->getCfg("app.ucm.noimage");
+    if (empty($noimage)) {
+        $noimage='/images/no-image.gif';
+    }
+    lnxmcp()->setCommon('ucm.noimage',$noimage);
     $urlpth = strtolower($urlpth);
     ////// GET BROWSER TYPE INFO
     $browser = new \LinHUniX\Mcp\Tools\browserData();

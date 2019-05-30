@@ -76,5 +76,19 @@
                 "T": "DYN"
             }
         }
+    },
+    "lnxmcp-std-lazyload": {
+        "theme": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Base/tpl/lazyload",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        }
     }
+
 }

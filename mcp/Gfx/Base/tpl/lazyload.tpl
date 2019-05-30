@@ -1,5 +1,6 @@
     <script type="text/javascript">
-    window.no_image='/images/no-image.gif';
+    window.no_image='<?php echo lnxmcp()->getCommon('ucm.noimage');?>';
+    window.ucm_url='<?php echo lnxmcp()->getCommon('ucm.url');?>';
     function lazyJsLoad($url) {
       var element = document.createElement("script");
       element.src = $url;
@@ -23,7 +24,11 @@
                         console.log("load image "+lazyImage.dataset.src );
                         console.log("load page width "+lazyImage.width );
                         console.log("load page height "+lazyImage.height );
-                        lazyImage.src = lazyImage.dataset.src+"?w="+lazyImage.width+"&h="+lazyImage.height;
+                        if (window.ucm_url==''){
+                            lazyImage.src = lazyImage.dataset.src+"?w="+lazyImage.width+"&h="+lazyImage.height;
+                        } else {
+                            lazyImage.src = window.ucm_url+"?file="+lazyImage.dataset.src+"&w="+lazyImage.width+"&h="+lazyImage.height;
+                        }
                         lazyImage.onerror= function (){
                             this.onerror=null;
                             this.src=window.no_image;

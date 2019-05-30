@@ -1,0 +1,19 @@
+{
+    "app.def":"testucm",
+    "app.level":0,
+    "app.debug":true,
+    "app.ucm.convert":true,
+    "app.title":"LnxMcp - Test Universal Content Manager",
+    "app.gfx.default":["Base"],
+    "app.menu.homehome":{
+        "forum":{
+            "type":"extTemplate",
+            "path":"",
+            "name":"home",
+            "ext":"html"
+        },
+        "bye":{
+            "type":"exit"
+        }
+    }
+}

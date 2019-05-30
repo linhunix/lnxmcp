@@ -446,6 +446,23 @@ function lnxmcpDbM($command = null, $element = null)
     }
 }
 /**
+ * lnxMcpMimeFile replace the mime_content_type
+ * @param string $filename
+ * @return string content-type
+ */
+function lnxMcpMimeFile($filename){
+    if (class_exists('finfo')) {
+        $result = new \finfo();
+        if (is_resource($result) === true) {
+            return $result->file($filename, FILEINFO_MIME_TYPE);
+        }
+    } else if (function_exists('mime_content_type')) {
+        return \mime_content_type($filename);
+    }
+    return 'application/octet-stream';
+}
+
+/**
  * linhunix json array converter.
  *
  * @param mixed $content
@@ -500,6 +517,7 @@ function lnxMcpExtLoad($file, $path = '', $ext = null, $scopeIn = array(), $conv
         $mime = 'text/html';
         switch ($ext) {
         case 'tpl':
+        case 'html':
             break;
         case 'css':
             $mime = 'text/css';
@@ -518,7 +536,7 @@ function lnxMcpExtLoad($file, $path = '', $ext = null, $scopeIn = array(), $conv
             $mime = 'image/png';
             break;
         default:
-            $mime = mime_content_type($hfile);
+            $mime = \lnxMcpMimeFile($hfile);
         }
         lnxmcp()->header('Content-Type: '.$mime, false, 200);
         try {

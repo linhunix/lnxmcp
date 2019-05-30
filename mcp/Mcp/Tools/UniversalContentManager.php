@@ -95,6 +95,7 @@ final class UniversalContentManager
      */
     private function loadScope(array $scopein)
     {
+        lnxmcp()->debugVar('ucm loadScope', 'SCOPEIN', $scopein);
         $this->w = 0;
         $this->h = 0;
         $this->file = @$scopein['REQUEST_URI'];
@@ -151,7 +152,7 @@ final class UniversalContentManager
         }
         $this->mode = 'live';
         if (isset($scopein['mode'])) {
-            $this->background = $scopein['mode'];
+            $this->mode = $scopein['mode'];
         }
         if (isset($scopein['expire'])) {
             $this->head_expire_cache = $scopein['expire'];
@@ -225,7 +226,9 @@ final class UniversalContentManager
      */
     private function checkAllow()
     {
+        lnxmcp()->debug('ucm allow array:try');
         if (is_array($this->allow)) {
+            lnxmcp()->debug('ucm allow array:true');
             $folderext=$this->folder."/*.".$this.ext;
             if (isset($this->allow[$folderext])) {
                 if (is_array($this->allow[$folderext])) {
@@ -283,6 +286,9 @@ final class UniversalContentManager
      */
     private function checkFilePresentByTag($tpre,$tpost) {
         $filebase = $this->path.'/'.$this->folder;
+        if (empty($tpre) and empty($tpost)) {
+            return null;
+        }
         $filename = $filebase.$tpre.$this->base.$tpost.".".$this->ext;
         lnxmcp()->debugVar('ucm', ' try if exist', $filename);
         // check if file exitst
@@ -290,20 +296,23 @@ final class UniversalContentManager
             $this->convert = false;
             return $filename;
         }
-        $filename = $filebase.$this->base.$tpost.".".$this->ext;
-        lnxmcp()->debugVar('ucm', ' try if exist', $filename);
-        // check if file exitst
-        if (file_exists($filename)) {
-            $this->convert = false;
-            return $filename;
+        if (! empty($tpost)) {
+            $filename = $filebase.$this->base.$tpost.".".$this->ext;
+            lnxmcp()->debugVar('ucm', ' try if exist', $filename);
+            // check if file exitst
+            if (file_exists($filename)) {
+                $this->convert = false;
+                return $filename;
+            }
         }
-        $filename = $filebase.$tpre.$this->file;
-        lnxmcp()->debugVar('ucm', ' try if exist', $filename);
-        // check if file exitst
-        if (file_exists($filename)) {
-            $this->convert = false;
-
-            return $filename;
+        if (! empty($tpre)) {
+            $filename = $filebase.$tpre.$this->file;
+            lnxmcp()->debugVar('ucm', ' try if exist', $filename);
+            // check if file exitst
+            if (file_exists($filename)) {
+                $this->convert = false;
+                return $filename;
+            }
         }
         return null;
     }
@@ -409,22 +418,25 @@ final class UniversalContentManager
      */
     private function checkFilePresent()
     {
-        $filebase = $this->path.'/'.$this->folder;
         if (($this->w === 0) && ($this->h === 0)) {
             $this->convert = false;
         }
+        lnxmcp()->debug('ucm >> checkFilePresentByTag');
         $filename=$this->checkFilePresentByTag($this->tag_pre,$this->tag_post);
         if ($filename!=null){
             return $filename;
         }
+        lnxmcp()->debug('ucm >> checkFilePresentBySize');
         $filename=$this->checkFilePresentBySize($this->w,$this->h);
         if ($filename!=null){
             return $filename;
         }
+        lnxmcp()->debug('ucm >> checkFilePresentByRanges');
         $filename=$this->checkFilePresentByRanges();
         if ($filename!=null){
             return $filename;
         }
+        $filebase = $this->path.'/'.$this->folder;
         $filename = $filebase.$this->file;
         lnxmcp()->debugVar('ucm', ' try if exist', $filename);
         if (file_exists($filename)) {
@@ -471,7 +483,7 @@ final class UniversalContentManager
         lnxmcp()->debug('ucm action callSendFile');
         if (file_exists($filename)) {
             $filename = realpath($filename);
-            $mime = mime_content_type($filename);
+            $mime = lnxMcpMimeFile($filename);
             $size = filesize($filename);
             lnxmcp()->debug('file:'.$filename.' - mime:'.$mime.' - size:'.$size);
             lnxmcp()->header('Content-Type: '.$mime, false);
@@ -495,17 +507,22 @@ final class UniversalContentManager
     {
         lnxmcp()->debug('ucm action CreateBgRequest');
         if ($realfile==null){
+            lnxmcp()->debug('ucm action CreateBgRequest > generate realfile');
             $realfile=$this->path.'/'.$this->folder;
             if (!empty($this->tag_pre)) {
+                lnxmcp()->debugVar('ucm','action add tag_pre',$this->tag_pre);
                 $realfile.=$this->tag_pre;
             }
-            $realfile.=$this->$base;
+            $realfile.=$this->base;
             if (!empty($this->tag_post)) {
+                lnxmcp()->debugVar('ucm','action add tag_post',$this->tag_post);
                 $realfile.=$this->tag_post;
-            }else if( ($this->w!=0) or ($this->h!=0) ) {
-                $realfile.="_".$this->w.'x'.$this->h;
+            }else if( ($this->w!=0) || ($this->h!=0) ) {
+                $size_tag="_".$this->w.'x'.$this->h;
+                lnxmcp()->debugVar('ucm','action add size',$size_tag);
+                $realfile.=$size_tag;
             }
-            $realfile.='.'.$this->$ext;
+            $realfile.='.'.$this->ext;
         }
         lnxmcp()->debugVar('ucm', 'obj realfile', $realfile);
         return array(
@@ -577,6 +594,7 @@ final class UniversalContentManager
     private function run()
     {
         /////// DEFINE THE SITUATION
+        lnxmcp()->debugVar('ucm', ' mode', $this->mode);
         $live = true;
         $batch = false;
         switch ($this->mode) {
@@ -598,14 +616,14 @@ final class UniversalContentManager
         lnxmcp()->debugVar('ucm', ' live', $live);
         lnxmcp()->debugVar('ucm', ' batch', $batch);
         if ($this->checkAllow() == false) {
-            lnxmcp()->debug('ucm check false');
+            lnxmcp()->debug('ucm check allow false');
             if ($live == true) {
                 $this->callRedirect();
             }
 
             return;
         }
-        lnxmcp()->debug('ucm check true');
+        lnxmcp()->debug('ucm check allow true');
         /////// INIT THE EXCHANGE OBJECT
         $obj = $this->CreateBgRequest();
         /////// CHECK IF IS PRESENT A LOADABLE FILE
@@ -664,6 +682,7 @@ final class UniversalContentManager
         }
         /////// IF IS FOUND AND BATCH GO ON RUN BATCH SEQUENCE
         if ($this->convert == true) {
+            $obj = $this->CreateBgRequest(null);
             lnxmcp()->debug('ucm action convert');
             if ($batch == false) {
                 $obj['mode'] = 'background';
@@ -693,7 +712,14 @@ final class UniversalContentManager
         if (!is_array($scopein)) {
             $scopein = lnxGetJsonFile($scopein, $this->jsonpath, 'json');
             lnxmcp()->debug('ucm try to load scopein' + $scopein);
+        }else{
+            if (isset($scopein["ucmjob"])) {
+                $ucmjob =$scopein["ucmjob"];
+                $ucmjob = stripslashes($ucmjob);
+                $scopein = lnxGetJsonFile($ucmjob, $this->jsonpath, 'json');
+            }
         }
+        
         lnxmcp()->debug('ucm load Scope');
         $this->loadScope($scopein);
         lnxmcp()->debug('ucm RUN');
