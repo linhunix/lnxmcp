@@ -431,15 +431,19 @@ class pdoDriver extends mcpBaseModelClass
      *
      * @return array
      */
-    public function getRow($fields, $table, $refid, $idfield = 'id')
+    public function getRow($fields, $table, $refid, $idfield = 'id', $compare = '=')
     {
         if (empty($refid)) {
             return null;
         }
         $result = array();
-        $row = $this->firstRow('SELECT * FROM '.$table.' WHERE '.$idfield.' = '.$refid.' LIMIT 1 ;');
+
+        $row = $this->firstRow('SELECT * FROM '.$table.' WHERE '.$idfield.' '.$compare.' '.$refid.' LIMIT 1 ;');
         if (!is_array($row)) {
             return null;
+        }
+        if ($fields == null) {
+            return $row;
         }
         if (!is_array($fields)) {
             return stripslashes($row[$fields]);

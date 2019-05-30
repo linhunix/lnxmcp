@@ -90,3 +90,16 @@ Releases:
 3.4.8.20190529 -  BlacBox - linhunix@linux-yi10 - Wed 29 May 18:28:59 BST 2019 
 3.4.8.20190530 -  BlacBox - linhunix@linux-veyj.suse - gio 30 mag 2019, 09.31.25, BST 
 3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 10:26:38 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 12:37:58 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 12:44:24 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 12:52:07 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 12:54:29 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 12:58:41 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 13:01:26 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 13:15:59 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 13:21:46 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 13:27:26 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 13:32:12 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 17:46:54 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 17:47:57 BST 2019 
+3.4.8.20190530 -  BlacBox - linhunix@linux-yi10 - Thu 30 May 18:06:36 BST 2019 
