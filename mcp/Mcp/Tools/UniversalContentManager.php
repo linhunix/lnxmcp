@@ -668,6 +668,7 @@ final class UniversalContentManager
                 'height' => $this->h,
             )
         );
+        lnxDelJsonFile($this->file, $this->jsonpath, 'json');
     }
 
     /**
@@ -778,7 +779,6 @@ final class UniversalContentManager
     /**
      * UniversalContentManager __construct function.
      *
-     * @param string $file
      * @param array  $scopein
      */
     public function __construct($scopein = null)

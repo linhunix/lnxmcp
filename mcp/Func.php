@@ -152,6 +152,39 @@ function lnxGetJsonFile($file, $path = '', $ext = '')
  *
  * @return bool
  */
+function lnxDelJsonFile( $file, $path = '', $ext = '',$expire=null) {
+    $jfile = $path;
+    if ($jfile != '') {
+        $jfile .= DIRECTORY_SEPARATOR.$file;
+    }
+    if ($ext != '') {
+        $jfile .= '.'.$ext;
+    }
+    if (file_exists($jfile)) {
+        if ($expire==null) {
+            unlink($jfile);
+            return true;
+        }
+        $dnow=date('U');
+        $dfile=date('U',filemtime($jfile));
+        $diff_file=$dnow-$dfile;
+        if ($diff_file > intval($expire)) {
+            unlink($jfile);
+            return true;
+        }
+        return false;
+    }
+}
+/**
+ * linhunix json array converter.
+ *
+ * @param mixed $content
+ * @param mixed $file
+ * @param mixed $path    if is need
+ * @param mixed $ext     with out the '.'
+ *
+ * @return bool
+ */
 function lnxPutJsonFile($content, $file, $path = '', $ext = '')
 {
     $jfile = $path;
