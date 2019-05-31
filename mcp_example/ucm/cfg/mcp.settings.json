@@ -2,7 +2,6 @@
     "app.def":"testucm",
     "app.level":0,
     "app.debug":true,
-    "app.ucm.convert":true,
     "app.title":"LnxMcp - Test Universal Content Manager",
     "app.gfx.default":["Base"],
     "app.menu.homehome":{
@@ -14,6 +13,35 @@
         },
         "bye":{
             "type":"exit"
+        }
+    },
+    "app.ucm.convert":true,
+    "app.ucm.allow":{
+        "default":true,
+        "gif":{
+            "ranges":{
+                "_l": {
+                    "taglr":"r",
+                    "min":"310",
+                    "w":600,
+                    "h":300
+                },
+                "_m":{
+                    "taglr":"r",
+                    "min":"150",
+                    "max":"309",
+                    "s":false,
+                    "w":300,
+                    "h":150
+                },
+                "_s":{
+                    "taglr":"r",
+                    "max":"159",
+                    "s":false,
+                    "w":150,
+                    "h":75
+                }
+            }
         }
     }
 }

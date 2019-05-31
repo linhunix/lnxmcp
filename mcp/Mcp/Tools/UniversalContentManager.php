@@ -137,7 +137,7 @@ final class UniversalContentManager
         } else {
             $earr = explode('/', $this->file);
             $this->file = array_pop($earr);
-            $this->folder = implode('/', $earr).'/';
+            $this->folder = implode('/', $earr) . '/';
             unset($earr);
         }
         $earr = explode('.', $this->file);
@@ -230,7 +230,7 @@ final class UniversalContentManager
         lnxmcp()->debug('ucm allow array:try');
         if (is_array($this->allow)) {
             lnxmcp()->debug('ucm allow array:true');
-            $folderext = $this->folder.'/*.'.$this->ext;
+            $folderext = $this->folder . '/*.' . $this->ext;
             $folderext = str_replace('//', '/', $folderext);
             lnxmcp()->debugVar('ucm allow', 'try search', $folderext);
             if (isset($this->allow[$folderext])) {
@@ -274,15 +274,15 @@ final class UniversalContentManager
      */
     private function checkFilePresentBySize($wsize, $hsize)
     {
-        $filebase = $this->path.'/'.$this->folder;
-        $filename = $filebase.$wsize.'x'.$hsize.'_'.$this->file;
+        $filebase = $this->path . '/' . $this->folder;
+        $filename = $filebase . $wsize . 'x' . $hsize . '_' . $this->file;
         lnxmcp()->debugVar('ucm', ' try if exist', $filename);
         if (file_exists($filename)) {
             $this->convert = false;
 
             return $filename;
         }
-        $filename = $filebase.$this->base.'_'.$wsize.'x'.$hsize.'.'.$this->ext;
+        $filename = $filebase . $this->base . '_' . $wsize . 'x' . $hsize . '.' . $this->ext;
         lnxmcp()->debugVar('ucm', ' try if exist', $filename);
         if (file_exists($filename)) {
             $this->convert = false;
@@ -303,11 +303,11 @@ final class UniversalContentManager
      */
     private function checkFilePresentByTag($tpre, $tpost)
     {
-        $filebase = $this->path.'/'.$this->folder;
+        $filebase = $this->path . '/' . $this->folder;
         if (empty($tpre) and empty($tpost)) {
             return null;
         }
-        $filename = $filebase.$tpre.$this->base.$tpost.'.'.$this->ext;
+        $filename = $filebase . $tpre . $this->base . $tpost . '.' . $this->ext;
         lnxmcp()->debugVar('ucm', ' try if exist', $filename);
         // check if file exitst
         if (file_exists($filename)) {
@@ -316,7 +316,7 @@ final class UniversalContentManager
             return $filename;
         }
         if (!empty($tpost)) {
-            $filename = $filebase.$this->base.$tpost.'.'.$this->ext;
+            $filename = $filebase . $this->base . $tpost . '.' . $this->ext;
             lnxmcp()->debugVar('ucm', ' try if exist', $filename);
             // check if file exitst
             if (file_exists($filename)) {
@@ -326,7 +326,7 @@ final class UniversalContentManager
             }
         }
         if (!empty($tpre)) {
-            $filename = $filebase.$tpre.$this->file;
+            $filename = $filebase . $tpre . $this->file;
             lnxmcp()->debugVar('ucm', ' try if exist', $filename);
             // check if file exitst
             if (file_exists($filename)) {
@@ -351,6 +351,7 @@ final class UniversalContentManager
      */
     private function checkFilePresentByRanges()
     {
+        $trysimmetric=true;
         if ($this->convert == true) {
             if (is_array($this->ranges)) {
                 foreach ($this->ranges as $rtag => $rvalue) {
@@ -407,37 +408,53 @@ final class UniversalContentManager
                     }
                     if ($rangefound == true) {
                         lnxmcp()->debugVar('ucm ranges found', $rtag, $rvalue);
+                        if (isset($rvalue['h'])) {
+                            $this->h = $rvalue['h'];
+                        }
+                        if (isset($rvalue['w'])) {
+                            $this->w = $rvalue['w'];
+                        }
+                        if (isset($rvalue['s'])) {
+                            $trysimmetric= $rvalue['s'];
+                        }
                         if (isset($rvalue['taglr'])) {
                             switch ($rvalue['taglr']) {
-                            case 'l':
-                                $this->tag_pre = $rtag;
-                                break;
-                            case 'r':
-                                $this->tag_post = $rtag;
-                                break;
-                            case 'fl':
-                                $this->file = $rtag.$this->file;
-                                break;
-                            case 'fr':
-                                $this->file = $this->base.$rtag.'.'.$this->ext;
-                                break;
-                            case 'e':
-                                $this->ext = $rtag;
-                                break;
-                            case 'fe':
-                                $this->file = $this->base.'.'.$rtag;
-                                $this->ext = $rtag;
-                                break;
-                            case 'f':
-                                $this->file = $rtag.'.'.$this->ext;
-                                $this->base = $rtag;
-                                break;
+                                case 'l':
+                                    $this->tag_pre = $rtag;
+                                    break;
+                                case 'r':
+                                    $this->tag_post = $rtag;
+                                    break;
+                                case 'fl':
+                                    $this->file = $rtag . $this->file;
+                                    break;
+                                case 'fr':
+                                    $this->file = $this->base . $rtag . '.' . $this->ext;
+                                    break;
+                                case 'e':
+                                    $this->ext = $rtag;
+                                    break;
+                                case 'fe':
+                                    $this->file = $this->base . '.' . $rtag;
+                                    $this->ext = $rtag;
+                                    break;
+                                case 'f':
+                                    $this->file = $rtag . '.' . $this->ext;
+                                    $this->base = $rtag;
+                                    break;
                             }
                         }
                     }
                 }
             }
         }
+        lnxmcp()->debugVar('ucm ranges set', 'base', $this->base );
+        lnxmcp()->debugVar('ucm ranges set', 'ext', $this->ext );
+        lnxmcp()->debugVar('ucm ranges set', 'file', $this->file );
+        lnxmcp()->debugVar('ucm ranges set', 'tag_pre', $this->tag_pre );
+        lnxmcp()->debugVar('ucm ranges set', 'tag_post', $this->tag_post);
+        lnxmcp()->debugVar('ucm ranges set', 'h', $this->w );
+        lnxmcp()->debugVar('ucm ranges set', 'w', $this->h);
         $filename = $this->checkFilePresentByTag($this->tag_pre, $this->tag_post);
         if ($filename != null) {
             return $filename;
@@ -446,25 +463,26 @@ final class UniversalContentManager
         if ($filename != null) {
             return $filename;
         }
-        if ($this->convert == true) {
-            if ($this->w < $this->h) {
-                $this->w = 0;
-                $filename = $this->checkFilePresentBySize($this->w, $this->h);
-                if ($filename != null) {
-                    return $filename;
+        if ($trysimmetric==true) {
+            if ($this->convert == true) {
+                if ($this->w < $this->h) {
+                    $this->w = 0;
+                    $filename = $this->checkFilePresentBySize($this->w, $this->h);
+                    if ($filename != null) {
+                        return $filename;
+                    }
+                }
+            }
+            if ($this->convert == true) {
+                if ($this->w > $this->h) {
+                    $this->h = 0;
+                    $filename = $this->checkFilePresentBySize($this->w, $this->h);
+                    if ($filename != null) {
+                        return $filename;
+                    }
                 }
             }
         }
-        if ($this->convert == true) {
-            if ($this->w > $this->h) {
-                $this->h = 0;
-                $filename = $this->checkFilePresentBySize($this->w, $this->h);
-                if ($filename != null) {
-                    return $filename;
-                }
-            }
-        }
-
         return null;
     }
 
