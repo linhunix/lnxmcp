@@ -43,6 +43,7 @@ final class UniversalContentManager
     private $action_cache;
     private $action_redirect;
     private $mode;
+    private $minsizelimit;
 
     /////////////////////////////////////////////////////////////////////////////////////
     // PRIVATE FUNCTION - LOAD CONFIG
@@ -59,6 +60,10 @@ final class UniversalContentManager
         }
         $this->jsonpath = lnxmcp()->getResource('path.exchange');
         $this->allow = lnxmcp()->getResource('ucm.allow');
+        $this->minsizelimit = lnxmcp()->getResource('ucm.minsizelimit');
+        if ($this->minsizelimit == null) {
+            $this->minsizelimit = 50;
+        }
         $this->convert = lnxmcp()->getResource('ucm.convert');
         if ($this->convert == null) {
             $this->convert = false;
@@ -137,7 +142,7 @@ final class UniversalContentManager
         } else {
             $earr = explode('/', $this->file);
             $this->file = array_pop($earr);
-            $this->folder = implode('/', $earr) . '/';
+            $this->folder = implode('/', $earr).'/';
             unset($earr);
         }
         $earr = explode('.', $this->file);
@@ -197,6 +202,9 @@ final class UniversalContentManager
         if (isset($allowcfg['expire'])) {
             $this->head_expire_cache = $allowcfg['expire'];
         }
+        if (isset($allowcfg['minsizelimit'])) {
+            $this->minsizelimit = $allowcfg['minsizelimit'];
+        }
         if (isset($allowcfg['convert'])) {
             $this->convert = $allowcfg['convert'];
         }
@@ -230,7 +238,7 @@ final class UniversalContentManager
         lnxmcp()->debug('ucm allow array:try');
         if (is_array($this->allow)) {
             lnxmcp()->debug('ucm allow array:true');
-            $folderext = $this->folder . '/*.' . $this->ext;
+            $folderext = $this->folder.'/*.'.$this->ext;
             $folderext = str_replace('//', '/', $folderext);
             lnxmcp()->debugVar('ucm allow', 'try search', $folderext);
             if (isset($this->allow[$folderext])) {
@@ -274,15 +282,20 @@ final class UniversalContentManager
      */
     private function checkFilePresentBySize($wsize, $hsize)
     {
-        $filebase = $this->path . '/' . $this->folder;
-        $filename = $filebase . $wsize . 'x' . $hsize . '_' . $this->file;
+        if (($wsize < $this->minsizelimit) && (($hsize < $this->minsizelimit))) {
+            $this->convert = false;
+
+            return null;
+        }
+        $filebase = $this->path.'/'.$this->folder;
+        $filename = $filebase.$wsize.'x'.$hsize.'_'.$this->file;
         lnxmcp()->debugVar('ucm', ' try if exist', $filename);
         if (file_exists($filename)) {
             $this->convert = false;
 
             return $filename;
         }
-        $filename = $filebase . $this->base . '_' . $wsize . 'x' . $hsize . '.' . $this->ext;
+        $filename = $filebase.$this->base.'_'.$wsize.'x'.$hsize.'.'.$this->ext;
         lnxmcp()->debugVar('ucm', ' try if exist', $filename);
         if (file_exists($filename)) {
             $this->convert = false;
@@ -303,11 +316,11 @@ final class UniversalContentManager
      */
     private function checkFilePresentByTag($tpre, $tpost)
     {
-        $filebase = $this->path . '/' . $this->folder;
+        $filebase = $this->path.'/'.$this->folder;
         if (empty($tpre) and empty($tpost)) {
             return null;
         }
-        $filename = $filebase . $tpre . $this->base . $tpost . '.' . $this->ext;
+        $filename = $filebase.$tpre.$this->base.$tpost.'.'.$this->ext;
         lnxmcp()->debugVar('ucm', ' try if exist', $filename);
         // check if file exitst
         if (file_exists($filename)) {
@@ -316,7 +329,7 @@ final class UniversalContentManager
             return $filename;
         }
         if (!empty($tpost)) {
-            $filename = $filebase . $this->base . $tpost . '.' . $this->ext;
+            $filename = $filebase.$this->base.$tpost.'.'.$this->ext;
             lnxmcp()->debugVar('ucm', ' try if exist', $filename);
             // check if file exitst
             if (file_exists($filename)) {
@@ -326,7 +339,7 @@ final class UniversalContentManager
             }
         }
         if (!empty($tpre)) {
-            $filename = $filebase . $tpre . $this->file;
+            $filename = $filebase.$tpre.$this->file;
             lnxmcp()->debugVar('ucm', ' try if exist', $filename);
             // check if file exitst
             if (file_exists($filename)) {
@@ -351,7 +364,7 @@ final class UniversalContentManager
      */
     private function checkFilePresentByRanges()
     {
-        $trysimmetric=true;
+        $trysimmetric = true;
         if ($this->convert == true) {
             if (is_array($this->ranges)) {
                 foreach ($this->ranges as $rtag => $rvalue) {
@@ -415,7 +428,7 @@ final class UniversalContentManager
                             $this->w = $rvalue['w'];
                         }
                         if (isset($rvalue['s'])) {
-                            $trysimmetric= $rvalue['s'];
+                            $trysimmetric = $rvalue['s'];
                         }
                         if (isset($rvalue['taglr'])) {
                             switch ($rvalue['taglr']) {
@@ -426,20 +439,20 @@ final class UniversalContentManager
                                     $this->tag_post = $rtag;
                                     break;
                                 case 'fl':
-                                    $this->file = $rtag . $this->file;
+                                    $this->file = $rtag.$this->file;
                                     break;
                                 case 'fr':
-                                    $this->file = $this->base . $rtag . '.' . $this->ext;
+                                    $this->file = $this->base.$rtag.'.'.$this->ext;
                                     break;
                                 case 'e':
                                     $this->ext = $rtag;
                                     break;
                                 case 'fe':
-                                    $this->file = $this->base . '.' . $rtag;
+                                    $this->file = $this->base.'.'.$rtag;
                                     $this->ext = $rtag;
                                     break;
                                 case 'f':
-                                    $this->file = $rtag . '.' . $this->ext;
+                                    $this->file = $rtag.'.'.$this->ext;
                                     $this->base = $rtag;
                                     break;
                             }
@@ -448,12 +461,12 @@ final class UniversalContentManager
                 }
             }
         }
-        lnxmcp()->debugVar('ucm ranges set', 'base', $this->base );
-        lnxmcp()->debugVar('ucm ranges set', 'ext', $this->ext );
-        lnxmcp()->debugVar('ucm ranges set', 'file', $this->file );
-        lnxmcp()->debugVar('ucm ranges set', 'tag_pre', $this->tag_pre );
+        lnxmcp()->debugVar('ucm ranges set', 'base', $this->base);
+        lnxmcp()->debugVar('ucm ranges set', 'ext', $this->ext);
+        lnxmcp()->debugVar('ucm ranges set', 'file', $this->file);
+        lnxmcp()->debugVar('ucm ranges set', 'tag_pre', $this->tag_pre);
         lnxmcp()->debugVar('ucm ranges set', 'tag_post', $this->tag_post);
-        lnxmcp()->debugVar('ucm ranges set', 'h', $this->w );
+        lnxmcp()->debugVar('ucm ranges set', 'h', $this->w);
         lnxmcp()->debugVar('ucm ranges set', 'w', $this->h);
         $filename = $this->checkFilePresentByTag($this->tag_pre, $this->tag_post);
         if ($filename != null) {
@@ -463,9 +476,12 @@ final class UniversalContentManager
         if ($filename != null) {
             return $filename;
         }
-        if ($trysimmetric==true) {
+        if ($trysimmetric == true) {
             if ($this->convert == true) {
                 if ($this->w < $this->h) {
+                    if ($this->h < $this->minsizelimit) {
+                        $this->h = $this->minsizelimit;
+                    }
                     $this->w = 0;
                     $filename = $this->checkFilePresentBySize($this->w, $this->h);
                     if ($filename != null) {
@@ -475,6 +491,9 @@ final class UniversalContentManager
             }
             if ($this->convert == true) {
                 if ($this->w > $this->h) {
+                    if ($this->w < $this->minsizelimit) {
+                        $this->w = $this->minsizelimit;
+                    }
                     $this->h = 0;
                     $filename = $this->checkFilePresentBySize($this->w, $this->h);
                     if ($filename != null) {
@@ -483,6 +502,7 @@ final class UniversalContentManager
                 }
             }
         }
+
         return null;
     }
 
@@ -599,6 +619,12 @@ final class UniversalContentManager
                 lnxmcp()->debugVar('ucm', 'action add tag_post', $this->tag_post);
                 $realfile .= $this->tag_post;
             } elseif (($this->w != 0) || ($this->h != 0)) {
+                if (($this->w != 0) && ($this->h < $this->minsizelimit)) {
+                    $this->h = $this->minsizelimit;
+                }
+                if (($this->w != 0) && ($this->w < $this->minsizelimit)) {
+                    $this->w = $this->minsizelimit;
+                }
                 $size_tag = '_'.$this->w.'x'.$this->h;
                 lnxmcp()->debugVar('ucm', 'action add size', $size_tag);
                 $realfile .= $size_tag;
@@ -779,7 +805,7 @@ final class UniversalContentManager
     /**
      * UniversalContentManager __construct function.
      *
-     * @param array  $scopein
+     * @param array $scopein
      */
     public function __construct($scopein = null)
     {
