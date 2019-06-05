@@ -110,3 +110,13 @@ Releases:
 3.4.8.20190531 -  BlacBox - linhunix@linux-veyj.suse - ven 31 mag 2019, 09.04.27, BST 
 3.4.8.20190604 -  BlacBox - @linux-yi10 - Tue Jun  4 07:21:45 BST 2019 
 3.4.8.20190604 -  BlacBox - linhunix@linux-yi10 - Tue  4 Jun 13:36:26 BST 2019 
+3.4.8.20190605 -  BlacBox - root@ip-172-31-18-79.eu-west-2.compute.internal - Wed  5 Jun 13:35:26 BST 2019 
+3.4.8.20190605 -  BlacBox - root@ip-172-31-18-79.eu-west-2.compute.internal - Wed  5 Jun 13:41:54 BST 2019 
+3.4.8.20190605 -  BlacBox - root@ip-172-31-18-79.eu-west-2.compute.internal - Wed  5 Jun 13:58:31 BST 2019 
+3.4.8.20190605 -  BlacBox - root@ip-172-31-18-79.eu-west-2.compute.internal - Wed  5 Jun 14:17:26 BST 2019 
+3.4.8.20190605 -  BlacBox - root@ip-172-31-18-79.eu-west-2.compute.internal - Wed  5 Jun 14:34:28 BST 2019 
+3.4.8.20190605 -  BlacBox - root@ip-172-31-18-79.eu-west-2.compute.internal - Wed  5 Jun 16:09:05 BST 2019 
+3.4.8.20190605 -  BlacBox - root@ip-172-31-18-79.eu-west-2.compute.internal - Wed  5 Jun 16:22:14 BST 2019 
+3.4.8.20190605 -  BlacBox - @ip-172-31-18-79.eu-west-2.compute.internal - Wed  5 Jun 16:25:59 BST 2019 
+3.4.8.20190605 -  BlacBox - @ip-172-31-18-79.eu-west-2.compute.internal - Wed  5 Jun 16:29:16 BST 2019 
+3.4.8.20190605 -  BlacBox - root@ip-172-31-18-79.eu-west-2.compute.internal - Wed  5 Jun 16:31:48 BST 2019 

@@ -244,27 +244,34 @@ final class UniversalContentManager
             if (isset($this->allow[$folderext])) {
                 if (is_array($this->allow[$folderext])) {
                     $this->LoadAllow($this->allow[$folderext]);
+                } elseif ($this->allow[$folderext] == false ) {
+                    return false;
                 }
             } elseif (isset($this->allow[$this->folder])) {
                 lnxmcp()->debugVar('ucm allow', 'search found', $this->folder);
                 if (is_array($this->allow[$this->folder])) {
                     $this->LoadAllow($this->allow[$this->folder]);
+                } elseif ($this->allow[$this->folder] == false ) {
+                    return false;
                 }
             } elseif (isset($this->allow[$this->ext])) {
                 lnxmcp()->debugVar('ucm allow', 'search found', $this->ext);
                 if (is_array($this->allow[$this->ext])) {
                     $this->LoadAllow($this->allow[$this->ext]);
+                } elseif ($this->allow[$this-ext] == false ) {
+                    return false;
                 }
             } elseif (isset($this->allow['default'])) {
                 lnxmcp()->debugVar('ucm allow', 'search found', 'default');
                 if (is_array($this->allow['default'])) {
                     $this->LoadAllow($this->allow['default']);
+                } elseif ($this->allow['default'] == false ) {
+                    return false;
                 }
             } else {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -479,8 +486,9 @@ final class UniversalContentManager
         if ($trysimmetric == true) {
             if ($this->convert == true) {
                 if ($this->w < $this->h) {
-                    if ($this->h < $this->minsizelimit) {
-                        $this->h = $this->minsizelimit;
+                    if (($this->h > 0 ) and ($this->h < $this->minsizelimit)) {
+                        $this->w = $this->minsizelimit;
+                        $this->convert =false;
                     }
                     $this->w = 0;
                     $filename = $this->checkFilePresentBySize($this->w, $this->h);
@@ -491,8 +499,10 @@ final class UniversalContentManager
             }
             if ($this->convert == true) {
                 if ($this->w > $this->h) {
-                    if ($this->w < $this->minsizelimit) {
+                    if (($this->w < $this->minsizelimit) and ( $this->w >0 )) {
                         $this->w = $this->minsizelimit;
+                        $this->convert =false;
+
                     }
                     $this->h = 0;
                     $filename = $this->checkFilePresentBySize($this->w, $this->h);
@@ -619,13 +629,17 @@ final class UniversalContentManager
                 lnxmcp()->debugVar('ucm', 'action add tag_post', $this->tag_post);
                 $realfile .= $this->tag_post;
             } elseif (($this->w != 0) || ($this->h != 0)) {
-                if (($this->w != 0) && ($this->h < $this->minsizelimit)) {
-                    $this->h = $this->minsizelimit;
+                if (($this->w > 0) && ($this->h < $this->minsizelimit)) {
+                    $this->h = 0;
                 }
-                if (($this->w != 0) && ($this->w < $this->minsizelimit)) {
-                    $this->w = $this->minsizelimit;
+                if (($this->w > 0) && ($this->w < $this->minsizelimit)) {
+                    $this->w = 0;
                 }
                 $size_tag = '_'.$this->w.'x'.$this->h;
+                if (($this->w==0) and ($this->h==0 )) {
+            	    $this->convert=false;
+            	    $size_tag="_error";
+                }
                 lnxmcp()->debugVar('ucm', 'action add size', $size_tag);
                 $realfile .= $size_tag;
             }
@@ -676,6 +690,15 @@ final class UniversalContentManager
             $filedest = $obj['realfile'];
         }
         if ($filedest == null) {
+            return;
+        }
+        if (($this->w > 0) && ($this->h < $this->minsizelimit)) {
+            $this->h = 0;
+        }
+        if (($this->w > 0) && ($this->w < $this->minsizelimit)) {
+            $this->w = 0;
+        }
+        if (($this->w==0) and ($this->h==0 )) {
             return;
         }
         $filesource = $this->path.'/'.$this->folder.'/'.$this->file;
@@ -729,7 +752,6 @@ final class UniversalContentManager
             if ($live == true) {
                 $this->callRedirect();
             }
-
             return;
         }
         lnxmcp()->debug('ucm check allow true');
@@ -822,8 +844,15 @@ final class UniversalContentManager
             lnxmcp()->debug('ucm try to load scopein' + $scopein);
         } else {
             if (isset($scopein['ucmjob'])) {
+        	lnxmcp()->debug('ucm found a job request:'.$ucmjob);
                 $ucmjob = $scopein['ucmjob'];
                 $ucmjob = stripslashes($ucmjob);
+                if (strstr($ucmjob,'json')!=false){
+            	    $uj_ar=explode('.',$ucmjob);
+            	    array_pop($uj_ar);
+            	    $ucmjob=implode('.',$uj_ar);
+                }
+        	lnxmcp()->debug('ucm try to load job :'.$ucmjob);
                 $scopein = lnxGetJsonFile($ucmjob, $this->jsonpath, 'json');
             }
         }
