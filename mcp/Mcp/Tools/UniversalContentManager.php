@@ -836,7 +836,7 @@ final class UniversalContentManager
         lnxmcp()->debug('ucm load ScopeIn');
         if ($scopein == null) {
             $scopein = $_REQUEST;
-            $scopein['REQUEST_URI'] = $_SERVER['REQUEST_URI'];
+            $scopein['REQUEST_URI'] = urldecode($_SERVER['REQUEST_URI']);
             lnxmcp()->debug('ucm load request');
         }
         if (!is_array($scopein)) {
@@ -846,6 +846,7 @@ final class UniversalContentManager
             if (isset($scopein['ucmjob'])) {
         	lnxmcp()->debug('ucm found a job request:'.$ucmjob);
                 $ucmjob = $scopein['ucmjob'];
+                $ucmjob = urldecode($ucmjob);
                 $ucmjob = stripslashes($ucmjob);
                 if (strstr($ucmjob,'json')!=false){
             	    $uj_ar=explode('.',$ucmjob);
