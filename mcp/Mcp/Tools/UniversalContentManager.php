@@ -44,6 +44,7 @@ final class UniversalContentManager
     private $action_redirect;
     private $mode;
     private $minsizelimit;
+    private $mimetype;
 
     /////////////////////////////////////////////////////////////////////////////////////
     // PRIVATE FUNCTION - LOAD CONFIG
@@ -59,6 +60,7 @@ final class UniversalContentManager
             $this->path = lnxmcp()->getResource('path');
         }
         $this->jsonpath = lnxmcp()->getResource('path.exchange');
+        $this->mimetype = lnxmcp()->getResource('ucm.mimetype');
         $this->allow = lnxmcp()->getResource('ucm.allow');
         $this->minsizelimit = lnxmcp()->getResource('ucm.minsizelimit');
         if ($this->minsizelimit == null) {
@@ -211,6 +213,9 @@ final class UniversalContentManager
         if (isset($allowcfg['cache'])) {
             $this->remote_cache = $allowcfg['cache'];
         }
+        if (isset($allowcfg['mimetype'])) {
+            $this->mimetype = $allowcfg['mimetype'];
+        }
         if (isset($allowcfg['action_load'])) {
             $this->action_load = $allowcfg['action_load'];
         }
@@ -244,34 +249,35 @@ final class UniversalContentManager
             if (isset($this->allow[$folderext])) {
                 if (is_array($this->allow[$folderext])) {
                     $this->LoadAllow($this->allow[$folderext]);
-                } elseif ($this->allow[$folderext] == false ) {
+                } elseif ($this->allow[$folderext] == false) {
                     return false;
                 }
             } elseif (isset($this->allow[$this->folder])) {
                 lnxmcp()->debugVar('ucm allow', 'search found', $this->folder);
                 if (is_array($this->allow[$this->folder])) {
                     $this->LoadAllow($this->allow[$this->folder]);
-                } elseif ($this->allow[$this->folder] == false ) {
+                } elseif ($this->allow[$this->folder] == false) {
                     return false;
                 }
             } elseif (isset($this->allow[$this->ext])) {
                 lnxmcp()->debugVar('ucm allow', 'search found', $this->ext);
                 if (is_array($this->allow[$this->ext])) {
                     $this->LoadAllow($this->allow[$this->ext]);
-                } elseif ($this->allow[$this-ext] == false ) {
+                } elseif ($this->allow[$this - ext] == false) {
                     return false;
                 }
             } elseif (isset($this->allow['default'])) {
                 lnxmcp()->debugVar('ucm allow', 'search found', 'default');
                 if (is_array($this->allow['default'])) {
                     $this->LoadAllow($this->allow['default']);
-                } elseif ($this->allow['default'] == false ) {
+                } elseif ($this->allow['default'] == false) {
                     return false;
                 }
             } else {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -486,9 +492,9 @@ final class UniversalContentManager
         if ($trysimmetric == true) {
             if ($this->convert == true) {
                 if ($this->w < $this->h) {
-                    if (($this->h > 0 ) and ($this->h < $this->minsizelimit)) {
+                    if (($this->h > 0) and ($this->h < $this->minsizelimit)) {
                         $this->w = $this->minsizelimit;
-                        $this->convert =false;
+                        $this->convert = false;
                     }
                     $this->w = 0;
                     $filename = $this->checkFilePresentBySize($this->w, $this->h);
@@ -499,10 +505,9 @@ final class UniversalContentManager
             }
             if ($this->convert == true) {
                 if ($this->w > $this->h) {
-                    if (($this->w < $this->minsizelimit) and ( $this->w >0 )) {
+                    if (($this->w < $this->minsizelimit) and ($this->w > 0)) {
                         $this->w = $this->minsizelimit;
-                        $this->convert =false;
-
+                        $this->convert = false;
                     }
                     $this->h = 0;
                     $filename = $this->checkFilePresentBySize($this->w, $this->h);
@@ -594,7 +599,7 @@ final class UniversalContentManager
         lnxmcp()->debug('ucm action callSendFile');
         if (file_exists($filename)) {
             $filename = realpath($filename);
-            $mime = lnxMcpMimeFile($filename);
+            $mime = lnxMcpMimeFile($filename, $this->mimetype);
             $size = filesize($filename);
             lnxmcp()->debug('file:'.$filename.' - mime:'.$mime.' - size:'.$size);
             lnxmcp()->header('Content-Type: '.$mime, false);
@@ -636,9 +641,9 @@ final class UniversalContentManager
                     $this->w = 0;
                 }
                 $size_tag = '_'.$this->w.'x'.$this->h;
-                if (($this->w==0) and ($this->h==0 )) {
-            	    $this->convert=false;
-            	    $size_tag="_error";
+                if (($this->w == 0) and ($this->h == 0)) {
+                    $this->convert = false;
+                    $size_tag = '_error';
                 }
                 lnxmcp()->debugVar('ucm', 'action add size', $size_tag);
                 $realfile .= $size_tag;
@@ -698,7 +703,7 @@ final class UniversalContentManager
         if (($this->w > 0) && ($this->w < $this->minsizelimit)) {
             $this->w = 0;
         }
-        if (($this->w==0) and ($this->h==0 )) {
+        if (($this->w == 0) and ($this->h == 0)) {
             return;
         }
         $filesource = $this->path.'/'.$this->folder.'/'.$this->file;
@@ -752,6 +757,7 @@ final class UniversalContentManager
             if ($live == true) {
                 $this->callRedirect();
             }
+
             return;
         }
         lnxmcp()->debug('ucm check allow true');
@@ -844,16 +850,16 @@ final class UniversalContentManager
             lnxmcp()->debug('ucm try to load scopein' + $scopein);
         } else {
             if (isset($scopein['ucmjob'])) {
-        	lnxmcp()->debug('ucm found a job request:'.$ucmjob);
+                lnxmcp()->debug('ucm found a job request:'.$ucmjob);
                 $ucmjob = $scopein['ucmjob'];
                 $ucmjob = urldecode($ucmjob);
                 $ucmjob = stripslashes($ucmjob);
-                if (strstr($ucmjob,'json')!=false){
-            	    $uj_ar=explode('.',$ucmjob);
-            	    array_pop($uj_ar);
-            	    $ucmjob=implode('.',$uj_ar);
+                if (strstr($ucmjob, 'json') != false) {
+                    $uj_ar = explode('.', $ucmjob);
+                    array_pop($uj_ar);
+                    $ucmjob = implode('.', $uj_ar);
                 }
-        	lnxmcp()->debug('ucm try to load job :'.$ucmjob);
+                lnxmcp()->debug('ucm try to load job :'.$ucmjob);
                 $scopein = lnxGetJsonFile($ucmjob, $this->jsonpath, 'json');
             }
         }

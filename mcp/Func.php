@@ -152,7 +152,8 @@ function lnxGetJsonFile($file, $path = '', $ext = '')
  *
  * @return bool
  */
-function lnxDelJsonFile( $file, $path = '', $ext = '',$expire=null) {
+function lnxDelJsonFile($file, $path = '', $ext = '', $expire = null)
+{
     $jfile = $path;
     if ($jfile != '') {
         $jfile .= DIRECTORY_SEPARATOR.$file;
@@ -161,17 +162,20 @@ function lnxDelJsonFile( $file, $path = '', $ext = '',$expire=null) {
         $jfile .= '.'.$ext;
     }
     if (file_exists($jfile)) {
-        if ($expire==null) {
+        if ($expire == null) {
             unlink($jfile);
+
             return true;
         }
-        $dnow=date('U');
-        $dfile=date('U',filemtime($jfile));
-        $diff_file=$dnow-$dfile;
+        $dnow = date('U');
+        $dfile = date('U', filemtime($jfile));
+        $diff_file = $dnow - $dfile;
         if ($diff_file > intval($expire)) {
             unlink($jfile);
+
             return true;
         }
+
         return false;
     }
 }
@@ -479,19 +483,27 @@ function lnxmcpDbM($command = null, $element = null)
     }
 }
 /**
- * lnxMcpMimeFile replace the mime_content_type
+ * lnxMcpMimeFile replace the mime_content_type.
+ *
  * @param string $filename
+ * @param string $defaultmime
+ *
  * @return string content-type
  */
-function lnxMcpMimeFile($filename){
+function lnxMcpMimeFile($filename, $defaultmime = null)
+{
     if (class_exists('finfo')) {
         $result = new \finfo();
         if (is_resource($result) === true) {
             return $result->file($filename, FILEINFO_MIME_TYPE);
         }
-    } else if (function_exists('mime_content_type')) {
+    } elseif (function_exists('mime_content_type')) {
         return \mime_content_type($filename);
     }
+    if ($defaultmime != null) {
+        return $defaultmime;
+    }
+
     return 'application/octet-stream';
 }
 
