@@ -1,6 +1,12 @@
     <script type="text/javascript">
-    window.no_image='<?php echo lnxmcp()->getCommon('ucm.noimage');?>';
-    window.ucm_url='<?php echo lnxmcp()->getCommon('ucm.url');?>';
+    window.no_image='<?php echo lnxmcp()->getCommon('ucm.noimage'); ?>';
+    window.ucm_url='<?php echo lnxmcp()->getCommon('ucm.url'); ?>';
+    window.ucm_debug='<?php echo lnxmcp()->getCommon('ucm.debug'); ?>';
+    function ucm_debug($message) {
+        if (window.ucm_debug=="true") {
+            console.log(message);
+        }
+    }
     function lazyJsLoad($url) {
       var element = document.createElement("script");
       element.src = $url;
@@ -11,8 +17,8 @@
     // For use within iPad developer UIWebView
     var ua = navigator.userAgent;
     var isiPad = /iPad/i.test(ua) || /iPhone OS 3_1_2/i.test(ua) || /iPhone OS 3_2_2/i.test(ua);
-    console.log("check ipadmode.....");
-    console.log(isiPad);
+    ucm_debug("check ipadmode.....");
+    ucm_debug(isiPad);
     /// lazy Img Load
     document.addEventListener("DOMContentLoaded", function() {
         var lazyImages = [].slice.call(document.querySelectorAll("img"));
@@ -21,9 +27,9 @@
                 entries.forEach(function(entry) {
                     if (entry.isIntersecting) {
                         var lazyImage = entry.target;
-                        console.log("load image "+lazyImage.dataset.src );
-                        console.log("load page width "+lazyImage.width );
-                        console.log("load page height "+lazyImage.height );
+                        ucm_debug("load image "+lazyImage.dataset.src );
+                        ucm_debug("load page width "+lazyImage.width );
+                        ucm_debug("load page height "+lazyImage.height );
                         if (window.ucm_url==''){
                             lazyImage.src = lazyImage.dataset.src+"?w="+lazyImage.width+"&h="+lazyImage.height;
                         } else {
@@ -34,11 +40,11 @@
                             this.src=window.no_image;
                         }
                         lazyImageObserver.unobserve(lazyImage);
-                        console.log("loaded image "+lazyImage.src );
-                        console.log("loaded real width "+lazyImage.naturalWidth );
-                        console.log("loaded real height "+lazyImage.naturalHeight );
-                        console.log("loaded page width "+lazyImage.width );
-                        console.log("loaded page height "+lazyImage.height );
+                        ucm_debug("loaded image "+lazyImage.src );
+                        ucm_debug("loaded real width "+lazyImage.naturalWidth );
+                        ucm_debug("loaded real height "+lazyImage.naturalHeight );
+                        ucm_debug("loaded page width "+lazyImage.width );
+                        ucm_debug("loaded page height "+lazyImage.height );
                     }
                 });
             });
