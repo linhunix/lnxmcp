@@ -609,7 +609,7 @@ function lnxMcpExtLoad($file, $path = '', $ext = null, $scopeIn = array(), $conv
  * lnxUcm Function 
  *  execute the LinHUniX Universa Content Manager 
  */
-function lnxUcm() {
+function LnxUcm() {
     return new \LinHUniX\Gfx\Tools\UniversalContentManager();
 }
 
