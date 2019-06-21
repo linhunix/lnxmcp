@@ -1,10 +1,11 @@
 <?php
 /**
- * LinHUniX Web Application Framework
+ * LinHUniX Web Application Framework.
  *
  * @author    Andrea Morello <andrea.morello@linhunix.com>
  * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
+ *
  * @version   GIT:2018-v2
  */
 
@@ -14,7 +15,7 @@ use LinHUniX\Mcp\masterControlProgram;
 use LinHUniX\Mcp\Provider\loggerProviderModel;
 
 /**
- * Description of mcpDebugClass
+ * Description of mcpDebugClass.
  *
  * @author andrea
  */
@@ -23,11 +24,9 @@ class mcpDebugClass
     private $mcp;
 
     /**
-     * __construct
+     * __construct.
      *
-     * @param  mixed $mcp
-     *
-     * @return void
+     * @param mixed $mcp
      */
     public function __construct(masterControlProgram &$mcp)
     {
@@ -42,11 +41,9 @@ class mcpDebugClass
     }
 
     /**
-     * debug
+     * debug.
      *
-     * @param  mixed $message
-     *
-     * @return void
+     * @param mixed $message
      */
     public function debug($message)
     {
@@ -54,11 +51,9 @@ class mcpDebugClass
     }
 
     /**
-     * info
+     * info.
      *
-     * @param  mixed $message
-     *
-     * @return void
+     * @param mixed $message
      */
     public function info($message)
     {
@@ -66,37 +61,29 @@ class mcpDebugClass
     }
 
     /**
-     * warning
+     * warning.
      *
-     * @param  mixed $message
-     *
-     * @return void
+     * @param mixed $message
      */
     public function warning($message)
     {
         $this->getLogger()->warning($message);
     }
-    
+
     /**
-     * error
+     * error.
      *
-     * @param  mixed $message
-     *
-     * @return void
+     * @param mixed $message
      */
     public function error($message)
     {
         $this->getLogger()->error($message);
     }
 
-
-
     /**
-     * critical
+     * critical.
      *
-     * @param  mixed $message
-     *
-     * @return void
+     * @param mixed $message
      */
     public function critical($message)
     {
@@ -106,143 +93,135 @@ class mcpDebugClass
     }
 
     /**
-     * imhere
-     *
-     * @return void
+     * imhere.
      */
     public function imhere()
     {
-        if (function_exists("debug_backtrace")) {
+        if (function_exists('debug_backtrace')) {
             $arr = debug_backtrace();
         } else {
-            array(1 => array("file" => "none", "line" => 0));
+            array(1 => array('file' => 'none', 'line' => 0));
         }
-        if ($this->getRes("debug") == true) {
-            $this->debug("[I am here]:" . $arr[1]['file'] . ":" . $arr[1]['line']);
-            $imhere = "/tmp/" . $this->getRes("def") . "imhere";
-            if (!isset($GLOBALS["imhere"])) {
-                $GLOBALS["imhere"] = array();
+        if ($this->getRes('debug') == true) {
+            $this->debug('[I am here]:'.$arr[1]['file'].':'.$arr[1]['line']);
+            $imhere = '/tmp/'.$this->getRes('def').'imhere';
+            if (!isset($GLOBALS['imhere'])) {
+                $GLOBALS['imhere'] = array();
                 if (file_exists($imhere)) {
                     eval(file_get_contents($imhere));
                 }
             }
-            $GLOBALS["imhere"][$arr[1]['file']]++;
-            file_put_contents($imhere, "\$GLOBALS['imhere']=" . var_export($GLOBALS["imhere"], 1) . ";");
+            ++$GLOBALS['imhere'][$arr[1]['file']];
+            file_put_contents($imhere, "\$GLOBALS['imhere']=".var_export($GLOBALS['imhere'], 1).';');
         }
     }
 
     /**
-     * webRem
+     * webRem.
      *
-     * @param  mixed $message
-     * @param  mixed $var
-     *
-     * @return void
+     * @param mixed $message
+     * @param mixed $var
      */
-    public function webRem($message,$var = null)
+    public function webRem($message, $var = null)
     {
+        if (lnxmcp()->getResource('webRem') == false) {
+            return;
+        }
         echo "\n<!-- ======================================================= ===";
-        echo "\n====  " . $this->getRes("def") . " :" . print_r($message, 1);
+        echo "\n====  ".$this->getRes('def').' :'.print_r($message, 1);
         if (!empty($var)) {
             echo "\n==== ======================================================= ===";
-            echo "\n====  " . print_r($var, 1);
+            echo "\n====  ".print_r($var, 1);
         }
         echo "\n==== ======================================================= !-->";
         echo "\n";
     }
+
     /**
-     * webDebugRem show rem if are in debug enable 
+     * webDebugRem show rem if are in debug enable.
      *
-     * @param  mixed $message
-     * @param  mixed $var
-     *
-     * @return void
+     * @param mixed $message
+     * @param mixed $var
      */
-    public function webDebugRem($message,$var = null)
+    public function webDebugRem($message, $var = null)
     {
         if ($this->getLogger()->IsDebug()) {
-            $this->webRem($message,$var);
+            $this->webRem($message, $var);
         }
     }
 
     /**
-     * webDump
+     * webDump.
      *
-     * @param  mixed $message
-     * @param  mixed $var
-     *
-     * @return void
+     * @param mixed $message
+     * @param mixed $var
      */
     public function webDump($message, $var = null)
     {
         echo "\n<hr>\n";
-        echo "<h2> " . $this->getRes("def") . " :" . $message . "</h2>\n";
+        echo '<h2> '.$this->getRes('def').' :'.$message."</h2>\n";
         echo "\n<hr>\n";
         if (!empty($var)) {
-            echo "<pre>" . print_r($var, 1) . "</pre>\n";
+            echo '<pre>'.print_r($var, 1)."</pre>\n";
             echo "\n<hr>\n";
         }
     }
 
-    public function jsDumpScript ($name,array $scopeIn) {
+    public function jsDumpScript($name, array $scopeIn)
+    {
         echo "<script type='text/javascript' >\n";
         try {
-            echo "window.".$name."=".json_encode($scopeIn,JSON_PRETTY_PRINT);
-        }catch (\Exception $e) {
+            echo 'window.'.$name.'='.json_encode($scopeIn, JSON_PRETTY_PRINT);
+        } catch (\Exception $e) {
             echo "alert('".$e->getMessage()."');\n";
         }
         echo "</script>\n";
     }
 
-
-    public function jsonDump (array $scopeIn) {
+    public function jsonDump(array $scopeIn)
+    {
         try {
-           echo json_encode($scopeIn,JSON_PRETTY_PRINT);
-        }catch (\Exception $e) {
-           echo "{\n'error':'".$e->getMessage()."'}\n";
+            echo json_encode($scopeIn, JSON_PRETTY_PRINT);
+        } catch (\Exception $e) {
+            echo "{\n'error':'".$e->getMessage()."'}\n";
         }
     }
 
-
     /**
-     * notFound
+     * notFound.
      *
-     * @param  mixed $message
-     *
-     * @return void
+     * @param mixed $message
      */
     public function notFound($message)
     {
         $this->error($message);
-        $this->header("HTTP/1.1 301 Moved Permanently");
+        $this->header('HTTP/1.1 301 Moved Permanently');
         $this->header('Location:/404', true); //, true, 404);
     }
 
     /**
-     * move
+     * move.
      *
-     * @param  mixed $string
-     *
-     * @return void
+     * @param mixed $string
      */
-    public function move($string, $default = null, $ext = "", $path = null, $andEnd = true)
+    public function move($string, $default = null, $ext = '', $path = null, $andEnd = true)
     {
         if (empty($string)) {
-            $this->critical("Moving to Null Error");
+            $this->critical('Moving to Null Error');
         }
-        $this->info("moving to " . $string);
+        $this->info('moving to '.$string);
         if ($path == null) {
-            $path = $this->getRes("path");
+            $path = $this->getRes('path');
         }
         if ($default == null) {
             $default = $string;
         }
-        if (file_exists($path . $string . $ext)) {
-            include $path . $string . $ext;
-        } elseif (file_exists($path . $default . $ext)) {
-            include $path . $default . $ext;
+        if (file_exists($path.$string.$ext)) {
+            include $path.$string.$ext;
+        } elseif (file_exists($path.$default.$ext)) {
+            include $path.$default.$ext;
         } else {
-            $this->critical("Moving to " . $path . $string . " Error file not found");
+            $this->critical('Moving to '.$path.$string.' Error file not found');
         }
         if ($andEnd == true) {
             exit(0);
@@ -250,22 +229,20 @@ class mcpDebugClass
     }
 
     /**
-     * header
+     * header.
      *
-     * @param  mixed $string
-     * @param  mixed $end
-     * @param  mixed $replace
-     * @param  mixed $retcode
-     *
-     * @return void
+     * @param mixed $string
+     * @param mixed $end
+     * @param mixed $replace
+     * @param mixed $retcode
      */
     public function header($string, $end = false, $replace = true, $retcode = null)
     {
-        $msg = " Not End";
+        $msg = ' Not End';
         if ($end) {
-            $msg = " With End";
+            $msg = ' With End';
         }
-        $this->warning("Header [" . $retcode . "]:" . $string . $msg);
+        $this->warning('Header ['.$retcode.']:'.$string.$msg);
         \header($string, $replace, $retcode);
         if ($end) {
             exit(0);
@@ -273,9 +250,7 @@ class mcpDebugClass
     }
 
     /**
-     * getMCP
-     *
-     * @return void
+     * getMCP.
      */
     private function getMCP()
     {
@@ -283,11 +258,9 @@ class mcpDebugClass
     }
 
     /**
-     * getCfg
+     * getCfg.
      *
-     * @param  mixed $string
-     *
-     * @return void
+     * @param mixed $string
      */
     private function getRes($string)
     {
@@ -295,12 +268,10 @@ class mcpDebugClass
     }
 
     /**
-     * getLogger
-     *
-     * @return void
+     * getLogger.
      */
     private function getLogger()
     {
-        return $this->getMCP()->getCfg("Logger");
+        return $this->getMCP()->getCfg('Logger');
     }
 }
