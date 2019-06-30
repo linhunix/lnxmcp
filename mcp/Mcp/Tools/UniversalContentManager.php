@@ -9,7 +9,7 @@
  * @version GIT:2018-v2
  */
 
-namespace LinHUniX\Gfx\Tools;
+namespace LinHUniX\Mcp\Tools;
 
 /**
  * This class is used to manage the universal content manager.

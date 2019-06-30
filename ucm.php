@@ -6,4 +6,4 @@ if (function_exists('lnxmcp') == false) {
 }
 lnxmcp()->imhere();
 /*LNXMCP-END*/
-lnxUcm();
+new \LinHUniX\Mcp\Tools\UniversalContentManager();
