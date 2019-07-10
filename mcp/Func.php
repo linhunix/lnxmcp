@@ -508,6 +508,24 @@ function lnxMcpMimeFile($filename, $defaultmime = null)
 }
 
 /**
+ *  LnxMcpDebug use debugvar function 
+ *  as a function 
+ *  @param string $where your are ;
+ *  @param string $var name or label;
+ *  @param mixed $value;
+ */
+function lnxMcpDebug($where,$var,$value){
+    lnxmcp()->debugvar($where, $var, $value);
+}
+
+/** 
+ * lnxMcpVersion  function
+ * @return string version 
+*/
+function lnxMcpVersion() {
+    return lnxmcp()->getCfg("mcp.ver");
+}
+/**
  * linhunix json array converter.
  *
  * @param mixed $content
