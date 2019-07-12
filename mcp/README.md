@@ -3,6 +3,13 @@
 * Mail: SendMail Core Module Library
 * Pdo: Database Core Module Library
 * Gfx: Graphics Option Core Module Library
+* Auth: Auth function and group, role definitions
+* Ln4: Api To connect to Ln4 Sys and mini db nosqls
+* Tools: Integrated function and main action 
+
+
+
+## TOOLS 
 
 Over The Folder the are The Correlated Function Script that Manage the primary Bootstrap actvities and cordinate the code loading 
 * Head.php: Organize The Load of Library and the Configuration
