@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * Run Module as Check sequence.
+ *
+ * @param string $cfgvalue name of the Doctrine
+ * @param string $modinit  Module name where is present the code and be load and initalized
+ * @param string $path     path where present the basedirectory of the data
+ * @param array  $scopeIn  Input Array with the value need to work
+ * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
+ *
+ * @return array $ScopeOut
+ */
+function lnxmcpDbM($command = null, $element = null)
+{
+    if (empty($command)) {
+        $command = 'help';
+    }
+    if (empty($element)) {
+        $element = null;
+    }
+    $mcpCheckFile = lnxmcp()->getCfg('mcp.path').'/../mcp_modules/DbMig/Shell/mcpDbMigrate.php';
+    lnxmcp()->info('Try to load DbMigrateModule:'.$mcpCheckFile);
+    if (file_exists($mcpCheckFile)) {
+        echo "load DbMigrate Env on $mcpCheckFile..\n";
+        include_once $mcpCheckFile;
+        echo "Run DbMigrate:$command\n";
+        new LinHUniX\McpModules\DbMig\Shell\mcpDbMigrate($command, $element);
+        echo "DbMigrate Complete!!\n";
+    }
+}

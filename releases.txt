@@ -125,3 +125,8 @@ Releases:
 3.4.8.20190606 -  BlacBox - linhunix@andream - Thu  6 Jun 15:23:21 BST 2019 
 3.4.8.20190710 -  BlacBox - @andream - Wed Jul 10 15:14:05 BST 2019 
 3.4.8.20190712 -  BlacBox - linhunix@andream - Fri 12 Jul 10:44:49 BST 2019 
+3.4.8.20190712 -  BlacBox - linhunix@andream - Fri 12 Jul 11:14:37 BST 2019 
+3.4.8.20190712 -  BlacBox - linhunix@andream - Fri 12 Jul 11:23:29 BST 2019 
+3.4.8.20190712 -  BlacBox - linhunix@andream - Fri 12 Jul 11:37:47 BST 2019 
+3.4.8.20190712 -  BlacBox - linhunix@andream - Fri 12 Jul 11:39:44 BST 2019 
+3.4.8.20190712 -  BlacBox - linhunix@andream - Fri 12 Jul 11:42:34 BST 2019 
