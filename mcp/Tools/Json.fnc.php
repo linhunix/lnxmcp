@@ -119,3 +119,41 @@ function lnxPutJsonFile($content, $file, $path = '', $ext = '')
 
     return null;
 }
+/**
+ * linhunix json array converter.
+ *
+ * @param mixed $content
+ * @param mixed $file
+ * @param mixed $path    if is need
+ * @param mixed $ext     with out the '.'
+ *
+ * @return bool
+ */
+function lnxUpdJsonFile($cntvar,$cntval, $file, $path = '', $ext = '') {
+    $content=lnxGetJsonFile($file,$path,$ext);
+    if (!is_array($content)) {
+        $content=array();
+    }
+    if (!isset($content[$cntvar])) {
+        $content[$cntvar]=0;
+    }
+    switch($cntval) {
+    case "++":
+        $val=intval($content[$cntvar]);
+        $val++;
+        $content[$cntvar]=$val;
+        break;
+    case "--":
+        $val=intval($content[$cntvar]);
+        $val--;
+        $content[$cntvar]=$val;
+        break;
+    case ".":
+        unset($content[$cntvar]);
+        break;
+    default:
+        $content[$cntvar]=$cntval;
+        break;
+    }
+    return lnxPutJsonFile($content,$file,$path,$ext);
+}

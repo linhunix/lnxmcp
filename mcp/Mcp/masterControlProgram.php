@@ -438,7 +438,7 @@ final class masterControlProgram
         return true;
     }
     /**
-     * RemCommon
+     * RemBuffer
      * Display on web comment
      * the common array.
      */
