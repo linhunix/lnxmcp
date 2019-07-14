@@ -119,15 +119,8 @@ class mcpDebugClass
         }
         if ($this->getRes("debug") == true) {
             $this->debug("[I am here]:" . $arr[1]['file'] . ":" . $arr[1]['line']);
-            $imhere = "/tmp/" . $this->getRes("def") . "imhere";
-            if (!isset($GLOBALS["imhere"])) {
-                $GLOBALS["imhere"] = array();
-                if (file_exists($imhere)) {
-                    eval(file_get_contents($imhere));
-                }
-            }
-            $GLOBALS["imhere"][$arr[1]['file']]++;
-            file_put_contents($imhere, "\$GLOBALS['imhere']=" . var_export($GLOBALS["imhere"], 1) . ";");
+            $path=$this->getRes("path.pbkac");
+            lnxUpdJsonFile($arr[1]['file'] . ":" . $arr[1]['line'],"++",$this->getRes("def"),$path,"imhere");
         }
     }
 

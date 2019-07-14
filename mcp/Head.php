@@ -105,6 +105,7 @@ foreach (array(
     'app.path.sqllite' => $app_path.'/work/sqlite/',
     'app.path.config' => $app_path.'/cfg/',
     'app.path.language' => $app_path.'/App/lng/',
+    'app.path.pbkac' => '/tmp/',
     'app.menu.InitCommon' => array(
         'pdo' => array('module' => 'Pdo', 'type' => 'serviceCommon', 'input' => $scopePdo),
         'gfx' => array('module' => 'Gfx', 'type' => 'serviceCommon'),
