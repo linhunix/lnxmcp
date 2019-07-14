@@ -12,7 +12,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // PAGE MESSAGE CONTROL
 ////////////////////////////////////////////////////////////////////////////////
-//error_reporting(E_ERROR);
+error_reporting(E_ERROR);
 ini_set('display_error', 0);
 ob_start();
 ////////////////////////////////////////////////////////////////////////////////
@@ -85,7 +85,7 @@ foreach (array(
     'app.lang' => 'en',
     'app.type' => 'lib',
     'app.path' => $app_path,
-    'app.level' => '0',
+    'app.level' => '70',
     'app.debug' => 'false',
     'app.env' => 'dev',
     'app.support.name' => 'LinHuniX Support Team',
@@ -311,6 +311,7 @@ if (class_exists("\LinHUniX\Mcp\masterControlProgram")) {
     $mcp = new masterControlProgram($scopeInit);
 }
 mcpErrorHandlerInit();
+mcpShutDownInit();
 global $cfg, $mcp;
 ////////////////////////////////////////////////////////////////////////////////
 // Menu Calling

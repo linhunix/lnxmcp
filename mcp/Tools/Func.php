@@ -12,6 +12,8 @@ require_once __DIR__.'/Cache.fnc.php';
 require_once __DIR__.'/Alias.fnc.php';
 // Error Function
 require_once __DIR__.'/Error.fnc.php';
+// Exit Function
+require_once __DIR__.'/Exit.fnc.php';
 // OpCache Function
 require_once __DIR__.'/OpCache.fnc.php';
 // OutPut Function

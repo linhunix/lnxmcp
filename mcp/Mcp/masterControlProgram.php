@@ -111,6 +111,12 @@ final class masterControlProgram
      *
      * @var string
      */
+    private $buffer; // is a test class to integrate slim on the code
+    /**
+     * Short Name of this application.
+     *
+     * @var string
+     */
     private $event; // is a test class to integrate slim on the code
     /**
      * Short Name of this application.
@@ -366,6 +372,82 @@ final class masterControlProgram
     public function RemCommon()
     {
         $this->mcpLogging->webRem('Common', $this->common);
+    }
+     /////////////////////////////////////////////////////////////////////////////
+    // BUFFER CONTROLLER
+    /////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * @param null $resname
+     */
+    public function getBuffer($resname)
+    {
+        if ($resname == null) {
+            return null;
+        }
+        if (isset($this->buffer[$resname])) {
+            return $this->buffer[$resname];
+        }
+        return null;
+    }
+
+    /**
+     * @param $resname name of value
+     * @param $revalue values
+     *
+     * @return bool if operation coplete success true (othervise false)
+     */
+    public function appendBuffer($resname, $resvalue)
+    {
+        if (!isset($this->buffer[$resname])) {
+            $this->buffer[$resname]=array();
+        }
+        $this->buffer[$resname][]=$resvalue;
+        return true;
+    }
+
+    /**
+     * @param $resname name of value
+     * @param $revalue values
+     *
+     * @return bool if operation coplete success true (othervise false)
+     */
+    public function updateBuffer($resname, $resindex,$resvalue)
+    {
+        if (!isset($this->buffer[$resname])) {
+            $this->buffer[$resname]=array();
+        }
+        if (!isset($this->buffer[$resname][$resindex])) {
+            $this->buffer[$resname][$resindex]=0;
+        }
+        switch ($resvalue) {
+        case "++":
+            $val=intval( $this->buffer[$resname][$resindex]);
+            $val++;
+            $this->buffer[$resname][$resindex]=$val;
+            break;
+        case "--":
+            $val=intval( $this->buffer[$resname][$resindex]);
+            $val--;
+            $this->buffer[$resname][$resindex]=$val;
+            break;
+        default:
+            $this->buffer[$resname][$resindex]=$resvalue;
+            break;
+        }
+        return true;
+    }
+    /**
+     * RemCommon
+     * Display on web comment
+     * the common array.
+     */
+    public function RemBuffer($resname)
+    {
+        if (!isset($this->buffer[$resname])) {
+            $this->buffer[$resname]=array();
+        }
+        $this->mcpLogging->webRem('Buffer:'.$resname,$this->buffer[$resname]);
     }
 
     /////////////////////////////////////////////////////////////////////////////
