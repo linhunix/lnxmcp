@@ -142,3 +142,4 @@ Releases:
 3.4.8.20190714 -  BlacBox - linhunix@linux-veyj.suse - dom 14 lug 2019, 05.47.44, BST 
 3.4.8.20190714 -  BlacBox - linhunix@linux-veyj.suse - dom 14 lug 2019, 11.15.17, BST 
 3.4.8.20190714 -  BlacBox - linhunix@linux-veyj.suse - dom 14 lug 2019, 11.18.14, BST 
+3.4.8.20190715 -  BlacBox - linhunix@andream - Mon 15 Jul 09:43:31 BST 2019 

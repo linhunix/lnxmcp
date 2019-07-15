@@ -58,25 +58,27 @@ if (!isset($scopePdo)) {
                 'database' => 'lnxmcp.work.db',
                 'driver' => 'sqlite',
             ),
-            'lnx.ctl' => array(
-                'config' => 'ENV',
-                'hostname' => 'LNX_DB_HOST',
-                'database' => 'LNX_DB_2_NAME',
-                'username' => 'LNX_DB_UID',
-                'password' => 'LNX_DB_PWD',
-                'driver' => 'mysql',
-            ),
-            'lnx.data' => array(
-                'config' => 'ENV',
-                'hostname' => 'LNX_DB_HOST',
-                'database' => 'LNX_DB_1_NAME',
-                'username' => 'LNX_DB_UID',
-                'password' => 'LNX_DB_PWD',
-                'driver' => 'mysql',
-            ),
         ),
     );
 }
+/*
+    'lnx.ctl' => array(
+        'config' => 'ENV',
+        'hostname' => 'LNX_DB_HOST',
+        'database' => 'LNX_DB_2_NAME',
+        'username' => 'LNX_DB_UID',
+        'password' => 'LNX_DB_PWD',
+        'driver' => 'mysql',
+    ),
+    'lnx.data' => array(
+        'config' => 'ENV',
+        'hostname' => 'LNX_DB_HOST',
+        'database' => 'LNX_DB_1_NAME',
+        'username' => 'LNX_DB_UID',
+        'password' => 'LNX_DB_PWD',
+        'driver' => 'mysql',
+    ),
+ */
 if (!isset($scopeInit)) {
     $scopeInit = array();
 }
