@@ -22,3 +22,5 @@ require_once __DIR__.'/Output.fnc.php';
 require_once __DIR__.'/Test.fnc.php';
 // Test Function
 require_once __DIR__.'/Database.fnc.php';
+// Graphic Function
+require_once __DIR__.'/Gfx.fnc.php';
