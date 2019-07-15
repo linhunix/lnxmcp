@@ -112,12 +112,12 @@ class mcpDebugClass
      */
     public function imhere()
     {
-        if (function_exists("debug_backtrace")) {
-            $arr = debug_backtrace();
-        } else {
-            array(1 => array("file" => "none", "line" => 0));
-        }
         if ($this->getRes("debug") == true) {
+            if (function_exists("debug_backtrace")) {
+                $arr = debug_backtrace();
+            } else {
+                array(1 => array("file" => "none", "line" => 0));
+            }
             $this->debug("[I am here]:" . $arr[1]['file'] . ":" . $arr[1]['line']);
             $path=$this->getRes("path.pbkac");
             lnxUpdJsonFile($arr[1]['file'] . ":" . $arr[1]['line'],"++",$this->getRes("def"),$path,"imhere");
