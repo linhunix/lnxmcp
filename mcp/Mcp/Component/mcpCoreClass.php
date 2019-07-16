@@ -204,6 +204,7 @@ final class mcpCoreClass
     {
         //// BASE SETTINGS
         $moduledef = 'mod.path';
+        $moduledns = 'mod.namespace';
         if ($this->flagClearVars) {
             ++$this->sub;
             $this->scopeIn[$this->sub] = array();
@@ -222,17 +223,22 @@ final class mcpCoreClass
         $this->scopeCtl[$this->sub]['type'] = $type;
         //// VENDOR SETTINGS
         if ($vendor != null) {
-            $moduledef .= '.'.$vendor;
+            $moduledef .= '.'.$vendor.'.'.$modinit;
+            $moduledns .= '.'.$vendor;".".$modinit;
             $modulepath = $this->mcp->getCfg($moduledef);
+            $modulens = $this->mcp->getCfg($moduledns);
+            if (empty($modulens)) {
+                $modulens = $vendor;
+            }
             if ($vendor == 'LinHUniX') {
                 $this->scopeCtl[$this->sub]['module'] = 'LinHUniX\\';
                 $this->scopeCtl[$this->sub]['altmodule'] = 'LinHUniX_';
                 $this->scopeCtl[$this->sub]['file'] = '/';
                 $this->scopeCtl[$this->sub]['auto'] = '/';
             } else {
-                $this->scopeCtl[$this->sub]['auto'] .= '/'.$vendor.'/';
-                $this->scopeCtl[$this->sub]['module'] .= $vendor.'\\';
-                $this->scopeCtl[$this->sub]['altmodule'] .= $vendor.'_';
+                $this->scopeCtl[$this->sub]['auto'] .= '/'.$modulens.'/';
+                $this->scopeCtl[$this->sub]['module'] .= $modulens.'\\';
+                $this->scopeCtl[$this->sub]['altmodule'] .= $modulens.'_';
                 if ($vendor == $this->defapp) {
                     $this->scopeCtl[$this->sub]['file'] .= '/';
                 } else {
