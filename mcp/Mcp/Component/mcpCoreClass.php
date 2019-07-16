@@ -92,6 +92,10 @@ final class mcpCoreClass
         if (!isset($this->scopeOut[$this->sub])) {
             $this->scopeOut[$this->sub] = array();
         }
+        if (!is_array($this->scopeOut[$this->sub])) {
+            $prev = $this->scopeOut[$this->sub];
+            $this->scopeOut[$this->sub] = array('prev' => $prev);
+        }
         $this->scopeOut[$this->sub][$name] = $value;
         $this->shareModuleVars();
     }
@@ -352,6 +356,9 @@ final class mcpCoreClass
     {
         $this->setScopeOut('status', $status);
         $this->getMcp()->debug('status:['.$status.']'.$message);
+        if (!isset($this->scopeOut[$this->sub])) {
+            $this->scopeOut[$this->sub] = array('history' => array());
+        }
         if (!isset($this->scopeOut[$this->sub]['history']['ipl'])) {
             $this->scopeOut[$this->sub]['history'] = array('ipl' => 0);
         }
