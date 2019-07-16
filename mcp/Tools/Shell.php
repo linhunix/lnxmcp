@@ -9,9 +9,9 @@ function mcpRunShell()
 {
     global $app_path,$mcp_path,$argc,$argv,$cfg;
     lnxmcp()->setCfg('app.type', 'shell');
-    if (file_exists($app_path.'/Header.txt')) {
-        $content= file_get_contents($app_path.'/Header.txt');
-        $content= str_replace("{{version}}",lnxMcpVersion(),$content);
+    if (file_exists(__DIR__.'/Shell_Header.txt')) {
+        $content = file_get_contents(__DIR__.'/Shell_Header.txt');
+        $content = str_replace('{{version}}', lnxMcpVersion(), $content);
         echo $content;
     }
     echo '';
