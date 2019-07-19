@@ -373,7 +373,8 @@ final class masterControlProgram
     {
         $this->mcpLogging->webRem('Common', $this->common);
     }
-     /////////////////////////////////////////////////////////////////////////////
+
+    /////////////////////////////////////////////////////////////////////////////
     // BUFFER CONTROLLER
     /////////////////////////////////////////////////////////////////////////////
 
@@ -388,6 +389,7 @@ final class masterControlProgram
         if (isset($this->buffer[$resname])) {
             return $this->buffer[$resname];
         }
+
         return null;
     }
 
@@ -400,9 +402,10 @@ final class masterControlProgram
     public function appendBuffer($resname, $resvalue)
     {
         if (!isset($this->buffer[$resname])) {
-            $this->buffer[$resname]=array();
+            $this->buffer[$resname] = array();
         }
-        $this->buffer[$resname][]=$resvalue;
+        $this->buffer[$resname][] = $resvalue;
+
         return true;
     }
 
@@ -412,31 +415,33 @@ final class masterControlProgram
      *
      * @return bool if operation coplete success true (othervise false)
      */
-    public function updateBuffer($resname, $resindex,$resvalue)
+    public function updateBuffer($resname, $resindex, $resvalue)
     {
         if (!isset($this->buffer[$resname])) {
-            $this->buffer[$resname]=array();
+            $this->buffer[$resname] = array();
         }
         if (!isset($this->buffer[$resname][$resindex])) {
-            $this->buffer[$resname][$resindex]=0;
+            $this->buffer[$resname][$resindex] = 0;
         }
         switch ($resvalue) {
-        case "++":
-            $val=intval( $this->buffer[$resname][$resindex]);
-            $val++;
-            $this->buffer[$resname][$resindex]=$val;
+        case '++':
+            $val = intval($this->buffer[$resname][$resindex]);
+            ++$val;
+            $this->buffer[$resname][$resindex] = $val;
             break;
-        case "--":
-            $val=intval( $this->buffer[$resname][$resindex]);
-            $val--;
-            $this->buffer[$resname][$resindex]=$val;
+        case '--':
+            $val = intval($this->buffer[$resname][$resindex]);
+            --$val;
+            $this->buffer[$resname][$resindex] = $val;
             break;
         default:
-            $this->buffer[$resname][$resindex]=$resvalue;
+            $this->buffer[$resname][$resindex] = $resvalue;
             break;
         }
+
         return true;
     }
+
     /**
      * RemBuffer
      * Display on web comment
@@ -445,9 +450,9 @@ final class masterControlProgram
     public function RemBuffer($resname)
     {
         if (!isset($this->buffer[$resname])) {
-            $this->buffer[$resname]=array();
+            $this->buffer[$resname] = array();
         }
-        $this->mcpLogging->webRem('Buffer:'.$resname,$this->buffer[$resname]);
+        $this->mcpLogging->webRem('Buffer:'.$resname, $this->buffer[$resname]);
     }
 
     /////////////////////////////////////////////////////////////////////////////
@@ -1468,7 +1473,7 @@ final class masterControlProgram
      * @param mixed $scopeIn
      * @param mixed $modinit
      */
-    public function mail($page = nulltestmail, $scopeIn = array(), $modinit = null, $vendor = null)
+    public function mail($page = 'sendmail', $scopeIn = array(), $modinit = null, $vendor = null)
     {
         $this->info('MCP>>mail>>'.$page);
         if (!is_array($scopeIn)) {
