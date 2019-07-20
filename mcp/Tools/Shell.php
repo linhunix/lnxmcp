@@ -19,38 +19,58 @@ function mcpRunShell()
     $help['lnxmcp-mnu'] = "Run a Menu \n req arg: <menu name>";
     $help['lnxmcp-tag'] = "Run a Tag \n req arg: <tag name>";
     $help['lnxmcp-chk'] = "Run a Check\n  req arg: <check name>";
-    $help['lnxmcp-cct'] = "Run a common controller\n  req arg: <common controller name> <module name>";
-    $help['lnxmcp-ctl'] = "Run a user controller\n  req arg: < controller name> <module name>";
-    $help['lnxmcp-cbl'] = "Run a common block\n  req arg: < block name> <module name>";
-    $help['lnxmcp-dbj'] = "Run a db query json\n  req arg: < query name> <module name>";
+    $help['lnxmcp-cmd'] = "Run a command\n  req arg: jsonarr '{\"name\":\"value\"}' or name=value element";
     $help['lnxmcp-dbm'] = "Run a db migrate \n  req arg: < command name> <element name>";
     $help['lnxmcp-phr'] = "Generate a phar file of the progam\n req arg <type |shell>";
-    if (isset($argv[1])) {
+    $scopein=array();
+    $argtmp=$argv;
+    $scopein["shell_src"]=$argtmp[0];
+    $scopein["shell_cmd"]=$argtmp[1];
+    $scopein["name"]=$argtmp[2];
+    $cmd=$argtmp[1];
+    $name=$argtmp[2];
+    unset($argtmp[0]);
+    unset($argtmp[1]);
+    foreach ($argtmp as $an=>$argctl){
+        if (strstr($argctl,'=')!=false){
+            $argcar=explode('=',$argctl);
+            $scopein[$argcar[0]]=$argcar[1];
+        } elseif (strstr($argctl,'{')!=false){
+            $argcar=json_decode($argctl,1);
+            if (is_array($argcar)){
+                foreach ($argcar as $ak =>$av) {
+                    $scopein[$ak]=$av;
+                }
+            }else{
+                echo "issue on convert : [".json_last_error_msg()."]".$argctl.PHP_EOL;
+            }
+        }else{
+            $scopein[$argctl]=true;
+        }
+    }
+    echo "RUN $cmd ".PHP_EOL;
+    if (isset($cmd)) {
         lnxmcp()->debugVar('head-shell', 'argv', $argv);
-        switch ($argv[1]) {
+        switch ($cmd) {
             case 'lnxmcp-mnu':
-                lnxmcp()->runMenu($argv[2]);
+            echo "Esecute mnu: $name ".PHP_EOL;
+                lnxmcp()->runMenu($name,$scopein);
                 break;
             case 'lnxmcp-tag':
-                lnxmcp()->runTag($argv[2]);
+            echo "Esecute Tag: $name ".PHP_EOL;
+                lnxmcp()->runTag($name,$scopein);
                 break;
             case 'lnxmcp-chk':
-                lnxmcpChk();
+            echo "Esecute Check Sequence: $name ".PHP_EOL;
+                lnxmcpChk($name);
                 break;
             case 'lnxmcp-dbm':
-                lnxmcpDbM($argv[2], $argv[3]);
+            echo "Esecute Database Migration: $name ".PHP_EOL;
+            lnxmcpDbM($name, $argtmp[3]);
                 break;
-            case 'lnxmcp-cct':
-                lnxmcp()->controllerCommon($argv[2], false, $argv, $argv[3]);
-                break;
-            case 'lnxmcp-ctl':
-                lnxmcp()->controller($argv[2], false, $argv, $argv[3]);
-                break;
-            case 'lnxmcp-dbj':
-                lnxmcp()->queryJsonR($argv[2], false, $argv, $argv[3]);
-                break;
-            case 'lnxmcp-cbl':
-                lnxmcp()->showFullCommonBlock($argv[2], $argv, $argv[3]);
+            case 'lnxmcp-cmd':
+                echo "Esecute Command ".PHP_EOL;
+                lnxMcpCmd($scopein,$argv);
                 break;
             case 'lnxmcp-dmp':
                 // NOT PRESENT ON HELP FOR SECURITY QUESTION
