@@ -22,3 +22,9 @@ function lnxmcpChk($checkmenu = null)
         echo "Check Complete!!\n";
     }
 }
+function lnxmcpAdm($defcmd = null) {
+    $mcpAdminShell = lnxmcp()->getCfg('mcp.path').'/../mcp_modules/Adm/Shell/init.php';
+    if (file_exists($mcpAdminShell)) {
+        include_once $mcpAdminShell;
+    }
+}

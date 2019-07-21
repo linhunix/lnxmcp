@@ -19,14 +19,16 @@ function mcpRunShell()
     $help['lnxmcp-mnu'] = "Run a Menu \n req arg: <menu name>";
     $help['lnxmcp-tag'] = "Run a Tag \n req arg: <tag name>";
     $help['lnxmcp-chk'] = "Run a Check\n  req arg: <check name>";
+    $help['lnxmcp-adm'] = "Run a Admin\n  req arg: <check name>";
     $help['lnxmcp-cmd'] = "Run a command\n  req arg: jsonarr '{\"name\":\"value\"}' or name=value element";
+    $help['lnxmcp-snd'] = "Run a sendmail\n  req arg: jsonarr '{\"name\":\"value\"}' or name=value element";
     $help['lnxmcp-dbm'] = "Run a db migrate \n  req arg: < command name> <element name>";
     $help['lnxmcp-phr'] = "Generate a phar file of the progam\n req arg <type |shell>";
     $scopein=array();
     $argtmp=$argv;
-    $scopein["shell_src"]=$argtmp[0];
-    $scopein["shell_cmd"]=$argtmp[1];
-    $scopein["name"]=$argtmp[2];
+    $scopein["shell_src"]=@$argtmp[0];
+    $scopein["shell_cmd"]=@$argtmp[1];
+    $scopein["name"]=@$argtmp[2];
     $cmd=$argtmp[1];
     $name=$argtmp[2];
     unset($argtmp[0]);
@@ -53,24 +55,32 @@ function mcpRunShell()
         lnxmcp()->debugVar('head-shell', 'argv', $argv);
         switch ($cmd) {
             case 'lnxmcp-mnu':
-            echo "Esecute mnu: $name ".PHP_EOL;
+                echo "Esecute mnu: $name ".PHP_EOL;
                 lnxmcp()->runMenu($name,$scopein);
                 break;
             case 'lnxmcp-tag':
-            echo "Esecute Tag: $name ".PHP_EOL;
+                echo "Esecute Tag: $name ".PHP_EOL;
                 lnxmcp()->runTag($name,$scopein);
                 break;
             case 'lnxmcp-chk':
-            echo "Esecute Check Sequence: $name ".PHP_EOL;
+                echo "Esecute Check Sequence: $name ".PHP_EOL;
                 lnxmcpChk($name);
                 break;
+            case 'lnxmcp-adm':
+                echo "Esecute Administrator: $name ".PHP_EOL;
+                lnxmcpAdm($name);
+                break;
             case 'lnxmcp-dbm':
-            echo "Esecute Database Migration: $name ".PHP_EOL;
-            lnxmcpDbM($name, $argtmp[3]);
+                echo "Esecute Database Migration: $name ".PHP_EOL;
+                lnxmcpDbM($name, $argtmp[3]);
                 break;
             case 'lnxmcp-cmd':
                 echo "Esecute Command ".PHP_EOL;
                 lnxMcpCmd($scopein,$argv);
+                break;
+            case 'lnxmcp-snd':
+                echo "Esecute SendMail ".PHP_EOL;
+                lnxmcp()->mail('sendmail', $scopein);
                 break;
             case 'lnxmcp-dmp':
                 // NOT PRESENT ON HELP FOR SECURITY QUESTION

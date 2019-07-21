@@ -297,7 +297,7 @@ final class mcpCoreClass
         $this->scopeCtl[$this->sub]['preload'] = $ispreload;
         $this->scopeCtl[$this->sub]['path'] = $path;
         $this->scopeCtl[$this->sub]['chk'] = false;
-        if (isset($scopeIn['run'])) {
+        if (isset($scopeIn[$this->sub]['run'])) {
             $this->scopeCtl[$this->sub]['run'] = $this->scopeIn[$this->sub]['run'];
         } else {
             $this->scopeCtl[$this->sub]['run'] = 'run';
@@ -821,7 +821,14 @@ final class mcpCoreClass
             if (class_exists($this->scopeCtl[$this->sub]['module'])) {
                 $this->setStatus(true, 'load class '.$this->scopeCtl[$this->sub]['module']);
                 $modclass = $this->scopeCtl[$this->sub]['module'];
-                @$retobj = new $modclass($this->getMcp(), $this->scopeCtl[$this->sub], $this->scopeIn[$this->sub]);
+                if (!isset($mcp)){
+                    $mcp=$this->getMcp();
+                }
+                $retobj = new $modclass(
+                    $mcp, 
+                    $this->scopeCtl[$this->sub], 
+                    $this->scopeIn[$this->sub]
+                );
             } elseif (function_exists($this->scopeCtl[$this->sub]['module'])) {
                 $this->setStatus(true, 'load function '.$this->scopeCtl[$this->sub]['module']);
                 $modfunction = $this->scopeCtl[$this->sub]['module'];
