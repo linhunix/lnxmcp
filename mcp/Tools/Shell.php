@@ -21,33 +21,35 @@ function mcpRunShell()
     $help['lnxmcp-chk'] = "Run a Check\n  req arg: <check name>";
     $help['lnxmcp-adm'] = "Run a Admin\n  req arg: <check name>";
     $help['lnxmcp-cmd'] = "Run a command\n  req arg: jsonarr '{\"name\":\"value\"}' or name=value element";
+    $help['lnxmcp-ucm'] = "Run a Universal Content Manager\n  req arg: jsonarr '{\"name\":\"value\"}' or name=value element";
     $help['lnxmcp-snd'] = "Run a sendmail\n  req arg: jsonarr '{\"name\":\"value\"}' or name=value element";
+    $help['lnxmcp-din'] = "Run a dump scopeIn \n  req arg: jsonarr '{\"name\":\"value\"}' or name=value element";
     $help['lnxmcp-dbm'] = "Run a db migrate \n  req arg: < command name> <element name>";
     $help['lnxmcp-phr'] = "Generate a phar file of the progam\n req arg <type |shell>";
-    $scopein=array();
-    $argtmp=$argv;
-    $scopein["shell_src"]=@$argtmp[0];
-    $scopein["shell_cmd"]=@$argtmp[1];
-    $scopein["name"]=@$argtmp[2];
-    $cmd=$argtmp[1];
-    $name=$argtmp[2];
+    $scopein = array();
+    $argtmp = $argv;
+    $scopein['shell_src'] = @$argtmp[0];
+    $scopein['shell_cmd'] = @$argtmp[1];
+    $scopein['name'] = @$argtmp[2];
+    $cmd = $argtmp[1];
+    $name = $argtmp[2];
     unset($argtmp[0]);
     unset($argtmp[1]);
-    foreach ($argtmp as $an=>$argctl){
-        if (strstr($argctl,'=')!=false){
-            $argcar=explode('=',$argctl);
-            $scopein[$argcar[0]]=$argcar[1];
-        } elseif (strstr($argctl,'{')!=false){
-            $argcar=json_decode($argctl,1);
-            if (is_array($argcar)){
-                foreach ($argcar as $ak =>$av) {
-                    $scopein[$ak]=$av;
+    foreach ($argtmp as $an => $argctl) {
+        if (strstr($argctl, '=') != false) {
+            $argcar = explode('=', $argctl);
+            $scopein[$argcar[0]] = $argcar[1];
+        } elseif (strstr($argctl, '{') != false) {
+            $argcar = json_decode($argctl, 1);
+            if (is_array($argcar)) {
+                foreach ($argcar as $ak => $av) {
+                    $scopein[$ak] = $av;
                 }
-            }else{
-                echo "issue on convert : [".json_last_error_msg()."]".$argctl.PHP_EOL;
+            } else {
+                echo 'issue on convert : ['.json_last_error_msg().']'.$argctl.PHP_EOL;
             }
-        }else{
-            $scopein[$argctl]=true;
+        } else {
+            $scopein[$argctl] = true;
         }
     }
     echo "RUN $cmd ".PHP_EOL;
@@ -56,11 +58,11 @@ function mcpRunShell()
         switch ($cmd) {
             case 'lnxmcp-mnu':
                 echo "Esecute mnu: $name ".PHP_EOL;
-                lnxmcp()->runMenu($name,$scopein);
+                lnxmcp()->runMenu($name, $scopein);
                 break;
             case 'lnxmcp-tag':
                 echo "Esecute Tag: $name ".PHP_EOL;
-                lnxmcp()->runTag($name,$scopein);
+                lnxmcp()->runTag($name, $scopein);
                 break;
             case 'lnxmcp-chk':
                 echo "Esecute Check Sequence: $name ".PHP_EOL;
@@ -75,12 +77,20 @@ function mcpRunShell()
                 lnxmcpDbM($name, $argtmp[3]);
                 break;
             case 'lnxmcp-cmd':
-                echo "Esecute Command ".PHP_EOL;
-                lnxMcpCmd($scopein,$argv);
+                echo 'Esecute Command '.PHP_EOL;
+                lnxMcpCmd($scopein, $argv);
                 break;
             case 'lnxmcp-snd':
-                echo "Esecute SendMail ".PHP_EOL;
+                echo 'Esecute SendMail '.PHP_EOL;
                 lnxmcp()->mail('sendmail', $scopein);
+                break;
+            case 'lnxmcp-ucm':
+                echo 'Execute Universal Content Manager'.PHP_EOL;
+                LnxUcm($scopein);
+                break;
+            case 'lnxmcp-din':
+                echo 'Execute Dump Scope In '.PHP_EOL;
+                var_dump($scopein);
                 break;
             case 'lnxmcp-dmp':
                 // NOT PRESENT ON HELP FOR SECURITY QUESTION

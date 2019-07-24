@@ -1,6 +1,6 @@
 <?php
 
-function LnxUcm()
+function LnxUcm($scopein = null)
 {
-    new \LinHUniX\Mcp\Tools\UniversalContentManager();
+    new \LinHUniX\Mcp\Tools\UniversalContentManager($scopein);
 }
