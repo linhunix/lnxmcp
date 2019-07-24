@@ -6,4 +6,4 @@ if (function_exists('lnxmcp') == false) {
 }
 lnxmcp()->imhere();
 /*LNXMCP-END*/
-LnxUcm();
+lnxmcp()->ucm();

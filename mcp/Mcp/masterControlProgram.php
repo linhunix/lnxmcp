@@ -1988,4 +1988,20 @@ final class masterControlProgram
 
         return true;
     }
+
+    /////////////////////////////////////////////////////////////////////////////
+    // EVENT CONTROLLER
+    /////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * UCM function.
+     *
+     * @param array $scopein
+     *
+     * @return UniversalContentManager
+     */
+    public function ucm($scopein = null)
+    {
+        return new \LinHUniX\Mcp\Tools\UniversalContentManager($scopein);
+    }
 }
