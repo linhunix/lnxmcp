@@ -164,6 +164,12 @@ final class masterControlProgram
      * @var class
      */
     private $mcpTools;
+    /**
+     * start  variable.
+     *
+     * @var float
+     */
+    private $startTime;
     /////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR AND INIT  - LEGACY SETTING
     /////////////////////////////////////////////////////////////////////////////
@@ -175,6 +181,7 @@ final class masterControlProgram
      */
     public function __construct(array $scopeIn)
     {
+        $this->startTime = $this->getFloatTime();
         $this->pathapp = $scopeIn['app.path'].'/App/';
         $this->common = array();
 
@@ -453,6 +460,43 @@ final class masterControlProgram
             $this->buffer[$resname] = array();
         }
         $this->mcpLogging->webRem('Buffer:'.$resname, $this->buffer[$resname]);
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
+    // BENCHMARCK
+    /////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * getFloatTime function.
+     *
+     * @return float
+     */
+    private function getFloatTime()
+    {
+        list($usec, $sec) = explode(' ', microtime());
+
+        return (float) $usec + (float) $sec;
+    }
+
+    /**
+     * benchmark function.
+     *
+     * @param string $stepmessage
+     * @param bool   $rem
+     *
+     * @return float
+     */
+    public function benchmark($stepmessage, $rem = false)
+    {
+        $time_end = $this->getFloatTime();
+        $time = $time_end - $this->startTime;
+        if ($rem == false) {
+            $this->debug('['.$time.']:'.$stepmessage);
+        } else {
+            $this->Rem($stepmessage, $time);
+        }
+
+        return $time;
     }
 
     /////////////////////////////////////////////////////////////////////////////
@@ -1990,7 +2034,7 @@ final class masterControlProgram
     }
 
     /////////////////////////////////////////////////////////////////////////////
-    // EVENT CONTROLLER
+    // UCM CONTROLLER
     /////////////////////////////////////////////////////////////////////////////
 
     /**
