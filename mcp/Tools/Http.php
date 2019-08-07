@@ -104,16 +104,16 @@ function mcpRunHttp()
     }
     lnxmcp()->setCommon('PathUrl', $urlpth);
     //// BASE DEFINITION FOR THE SCRIPT ;
-    lnxmcp()->setCommon('ucm.url',lnxmcp()->getCfg("app.ucm.url"));
-    lnxmcp()->setCommon('logo',lnxmcp()->getCfg("app.image.logo"));
-    lnxmcp()->setCommon('icon',lnxmcp()->getCfg("app.image.icon"));
-    lnxmcp()->setCommon('def',lnxmcp()->getCfg("app.def"));
-    lnxmcp()->setCommon('version',lnxmcp()->getCfg("app.version"));
-    $noimage=lnxmcp()->getCfg("app.ucm.noimage");
+    lnxmcp()->setCommon('ucm.url', lnxmcp()->getCfg('app.ucm.url'));
+    lnxmcp()->setCommon('logo', lnxmcp()->getCfg('app.image.logo'));
+    lnxmcp()->setCommon('icon', lnxmcp()->getCfg('app.image.icon'));
+    lnxmcp()->setCommon('def', lnxmcp()->getCfg('app.def'));
+    lnxmcp()->setCommon('version', lnxmcp()->getCfg('app.version'));
+    $noimage = lnxmcp()->getCfg('app.ucm.noimage');
     if (empty($noimage)) {
-        $noimage='/images/no-image.gif';
+        $noimage = '/images/no-image.gif';
     }
-    lnxmcp()->setCommon('ucm.noimage',$noimage);
+    lnxmcp()->setCommon('ucm.noimage', $noimage);
     $urlpth = strtolower($urlpth);
     ////// GET BROWSER TYPE INFO
     $browser = new \LinHUniX\Mcp\Tools\browserData();
@@ -184,9 +184,24 @@ function mcpRunHttp()
     ksort($scopein);
     lnxmcp()->setCommon('category', $catlist);
     //// SPECIAL PAGE AREA
-    if (substr($urlpth, 0, 8) == '/lnxmcp/') {
-        if (isset($urlarr[2])) {
-            lnxmcp()->showCommonPage($urlarr[2]);
+    // if is /lnxmcp/tag -> run tag
+    // if is /lnxmcp/module/page -> run module page
+    if (lnxmcp()->getCfg('mcp.web.page') == true) {
+        if (substr($urlpth, 0, 8) == '/lnxmcp/') {
+            if (isset($urlarr[3])) {
+                lnxmcp()->showCommonPage($urlarr[3], $urlarr, $urlarr[2]);
+            } elseif (isset($urlarr[2])) {
+                lnxmcp()->runTag('lnxmcp.'.$urlarr[2]);
+            }
+        }
+        if (lnxmcp()->getCfg('mcp.web.admin') == true) {
+            if (substr($urlpth, 0, 11) == '/lnxmcpadm/') {
+                $webarg = 'home';
+                if (isset($urlarr[2])) {
+                    $webarg = $urlarr[2];
+                }
+                lnxmcpAdm($webarg);
+            }
         }
     }
     lnxmcp()->runMenu($menu, $scopein);
