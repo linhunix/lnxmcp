@@ -13,7 +13,12 @@ function lnxmcp()
     if (isset($GLOBALS['mcp'])) {
         return $GLOBALS['mcp'];
     } else {
-        DumpOnFatal("FATAL ERROR - lnxmcp is NOT SETTED!!! \n", true);
+        error_log("FATAL ERROR - lnxmcp is NOT SETTED!!! \n");
+        foreach (debug_backtrace() as $errarr) {
+            error_log('-> '.$errarr['file'].' : '.$errarr['line'].' <br>');
+        }
+
+        return null;
     }
 }
 

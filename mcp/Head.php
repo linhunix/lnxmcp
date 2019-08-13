@@ -18,7 +18,7 @@ ob_start();
 ////////////////////////////////////////////////////////////////////////////////
 // ENV/CONFIG PATH AND CLASS
 ////////////////////////////////////////////////////////////////////////////////
-global $mcp_path, $app_path, $lnxmcp_phar, $lnxmcp_purl;
+global $mcp_path, $app_path, $lnxmcp_phar, $lnxmcp_purl, $scopeInit, $cfg, $mcp;
 // define path config
 if (!isset($mcp_path)) {
     $mcp_path = __DIR__.'/';
@@ -244,10 +244,9 @@ if (!isset($scopeInit['app.mysqli'])) {
 // CLASS LOADER
 ////////////////////////////////////////////////////////////////////////////////
 $alrf = true;
-$funpath = $mcp_path.'/Tools/Func.php';
-$shlpath = $mcp_path.'/Tools/Shell.php';
-$httpath = $mcp_path.'/Tools/Http.php';
-$aldpath = $mcp_path.'/Tools/Load.php';
+$funpath = $mcp_path.'/Tools/Func.index.php';
+$aldpath = $mcp_path.'/Tools/Class.index.php';
+$stppath = $mcp_path.'/Tools/Step.index.php';
 if (isset($scopeInit['phar']) == false) {
     $scopeInit['phar'] = false;
 }
@@ -256,10 +255,9 @@ if ($scopeInit['phar'] == true) {
         require $scopeInit['purl'].'/vendor/autoload.php';
         $alrf = false;
     }
-    $funpath = $scopeInit['purl'].'/mcp/Tools/Func.php';
-    $aldpath = $scopeInit['purl'].'/mcp/Tools/Load.php';
-    $shlpath = $scopeInit['purl'].'/mcp/Tools/Shell.php';
-    $httpath = $scopeInit['purl'].'/mcp/Tools/Http.php';
+    $funpath = $scopeInit['purl'].'/mcp/Tools/Func.index.php';
+    $aldpath = $scopeInit['purl'].'/mcp/Tools/Class.index.php';
+    $stppath = $scopeInit['purl'].'/mcp/Tools/Step.index.php';
 }
 if ($alrf) {
     if (file_exists($app_path.'/vendor/autoload.php')) {
@@ -302,7 +300,8 @@ if (isset($scopeInit['app.debug'])) {
     if ($scopeInit['app.debug'] == true) {
         if (isset($scopeInit['purl'])) {
             error_log('Load Mcp by '.$scopeInit['mcp.loader'].' ['.$scopeInit['phar'].']');
-            error_log($scopeInit['purl'].'/'.$aldpath);
+            error_log('PURL:'.$scopeInit['purl']);
+            error_log('FILE:'.$aldpath);
         } else {
             error_log('Load Mcp by '.$scopeInit['mcp.loader'].' ['.$scopeInit['mcp.path'].']');
         }
@@ -315,7 +314,6 @@ if (class_exists("\LinHUniX\Mcp\masterControlProgram")) {
 }
 mcpErrorHandlerInit();
 mcpShutDownInit();
-global $cfg, $mcp;
 ////////////////////////////////////////////////////////////////////////////////
 // Menu Calling
 ////////////////////////////////////////////////////////////////////////////////
@@ -324,26 +322,8 @@ lnxmcp()->runMenu('InitApp');
 $GLOBALS['mcp_preload'] = ob_get_clean();
 ob_start();
 ////////////////////////////////////////////////////////////////////////////////
-// Application solution
+// CHECK STANDARD STEP
 ////////////////////////////////////////////////////////////////////////////////
 if (lnxmcp()->getCfg('PreloadOnly') != true) {
-    if (file_exists($app_path.DIRECTORY_SEPARATOR.'main.php')) {
-        include $app_path.DIRECTORY_SEPARATOR.'main.php';
-        DumpAndExit('End Of App');
-    } elseif (isset($_SERVER['REQUEST_URI'])) {
-        if (file_exists($httpath)) {
-            include_once $httpath;
-            mcpRunHttp();
-        }
-    } elseif (isset($_REQUEST['Menu'])) {
-        lnxmcp()->runMenu($_REQUEST['Menu']);
-    } else {
-        $GLOBALS['mcp_preload'] .= ob_get_clean();
-        if (file_exists($shlpath)) {
-            include_once $shlpath;
-            mcpRunShell();
-        } else {
-            DumpAndExit('App Not Configured!!!');
-        }
-    }
+    include_once $stppath;
 }
