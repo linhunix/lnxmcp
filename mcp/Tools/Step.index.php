@@ -8,7 +8,7 @@
         DumpAndExit('End Of App');
     } elseif (isset($_SERVER['REQUEST_URI'])) {
         include_once __DIR__.'/Step/Http.step.php';
-        mcpRunHttp();
+        new mcpRunHttp();
     } elseif (isset($_REQUEST['Menu'])) {
         lnxmcp()->runMenu($_REQUEST['Menu']);
     } else {
