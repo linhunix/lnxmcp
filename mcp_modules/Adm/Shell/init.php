@@ -31,7 +31,8 @@ if (file_exists($idxpath)) {
     $idxok = 'OK';
     $idxpath = $id2path;
 }
-$cmdfile = __DIR__.'/../Cmd/'.$defcmd.'cmd.php';
+$cmdfile = __DIR__.'/../Cmd/'.$defcmd.'.cmd.php';
+lnxmcp()->debug($cmdfile);
 if (file_exists($cmdfile)) {
     echo '<!-- '.$defcmd." !-->\n";
     include $cmdfile;
