@@ -1,42 +1,55 @@
 <?php 
-/**
- * Check PAth
- */
-function ChkSintax($Pathphp,$bincmd) {
-    $cnt=array(
-        'OK'=>0,
-        'KO'=>0
-    );
-    try {
-        $objects = scandir($Pathphp); 
-        foreach ($objects as $object) { 
-            if ($object != "." && $object != "..") { 
-                if ( is_dir($Pathphp."/".$object)) {
-                    $ncnt=ChkSintax($Pathphp."/".$object,$bincmd);
-                    $cnt['OK']+=$ncnt['OK'];
-                    $cnt['KO']+=$ncnt['KO'];
-                } elseif (strstr($Pathphp."/".$object,'.php')) {
-                    $cmd=$bincmd.' -l '.$Pathphp."/".$object;
-                    $res=shell_exec($cmd);
-                    if (strstr($res,'No syntax errors detected')){
-                        echo "OK for ".$Pathphp."/".$object.PHP_EOL;
-                        $cnt['OK']++;
-                    }else{
-                        $cnt['KO']++;
-                        echo "KO for ".$Pathphp."/".$object.PHP_EOL;
-                        print_r($res);
-                        echo PHP_EOL;
+
+Class lnxAdmChkSintax {
+    public static  $OK=0;
+    public static  $KO=0;
+    public static  $bincmd;
+    /**
+     * chkSintax
+     */
+    public static  function chkSintax($Pathphp) {
+        try {
+            $objects = scandir($Pathphp); 
+            foreach ($objects as $object) { 
+                if ($object != "." && $object != "..") { 
+                    if ( is_dir($Pathphp."/".$object)) {
+                        self::chkSintax($Pathphp."/".$object);
+                    } elseif (strstr($Pathphp."/".$object,'.php')) {
+                        $cmd=self::$bincmd.' -l '.$Pathphp."/".$object;
+                        $res=shell_exec($cmd);
+                        if (strstr($res,'No syntax errors detected')){
+                            echo "OK for ".$Pathphp."/".$object.PHP_EOL;
+                            self::$OK++;
+                        }else{
+                            self::$KO++;
+                            echo "KO for ".$Pathphp."/".$object.PHP_EOL;
+                            print_r($res);
+                            echo PHP_EOL;
+                        }
                     }
                 }
-            }
-        } 
-    } catch (Exception $e)
-    {
-        $this->getMcp()->warning("Can execute check ".$e->getMessage());
+            } 
+        } catch (Exception $e)
+        {
+            $this->getMcp()->warning("Can execute check ".$e->getMessage());
+        }
     }
-    return $cnt;
+    /**
+     * run
+     */
+    public static function run($pathapp,$phpcmd){
+        echo "Run Check Syntax on ${pathapp}".PHP_EOL;
+        self::$bincmd=$phpcmd;
+        self::chkSintax($pathapp);
+        echo "Total OK (".self::$OK.")".PHP_EOL;
+        echo "Total KO (".self::$KO.")".PHP_EOL;
+        if (self::$KO == 0) {
+            echo "CHECK IS GOOD !!!".PHP_EOL;
+            return true;
+        } else {
+            echo  "CHECK IS BAD !!!".PHP_EOL;
+            return false;           
+        }
+    }    
 }
-echo "Run Check Syntax on ${apppath}".PHP_EOL;
-$tot=ChkSintax($apppath,$bincmd);
-echo "Total OK (".$tot['OK'].")".PHP_EOL;
-echo "Total KO (".$tot['KO'].")".PHP_EOL;
+lnxAdmChkSintax::run($apppath,$bincmd);
