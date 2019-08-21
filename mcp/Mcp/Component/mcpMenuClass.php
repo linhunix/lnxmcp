@@ -409,7 +409,7 @@ class mcpMenuClass
             foreach ($largs as $ck => $cv) {
                 if (strpos($cv, '=') !== false) {
                     $cvx = explode('=', $cv);
-                    $scopeCtl[$cvx[0]] = str_replace(array('"', "\'"), '', ($cvx[1]));
+                    $scopeCtl[$cvx[0]] = str_replace(array('"', '\''), '', ($cvx[1]));
                 } else {
                     $scopeCtl[$cv] = true;
                 }

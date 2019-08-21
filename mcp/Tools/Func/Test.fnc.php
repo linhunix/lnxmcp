@@ -22,8 +22,17 @@ function lnxmcpChk($checkmenu = null)
         echo "Check Complete!!\n";
     }
 }
-function lnxmcpAdm($defcmd = null) {
-    $mcpAdminShell = lnxmcp()->getCfg('mcp.path').'/../mcp_modules/Adm/Shell/init.php';
+/**
+ * lnxmcpAdm function.
+ *
+ * @param string $defcmd
+ */
+function lnxmcpAdm($defcmd = null)
+{
+    lnxmcp()->setCommon('LnxAdmCmd', $defcmd);
+    $mcpAdminModPath = lnxmcp()->getCfg('mcp.path').'/../mcp_modules/Adm/';
+    lnxmcp()->setCfg('app.mod.path.LinHUniX.lnxmcp', $mcpAdminModPath);
+    $mcpAdminShell = $mcpAdminModPath.'/Shell/init.php';
     if (file_exists($mcpAdminShell)) {
         include_once $mcpAdminShell;
     }

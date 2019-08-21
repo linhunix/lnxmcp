@@ -1555,7 +1555,7 @@ final class masterControlProgram
         $this->info('MCP>>'.$vendor.'>>page>>'.$page);
         $this->RunEvent('page_start_'.$page);
         $ret = $this->template($page, $pathtpl, true, $scopeIn, $modinit, null, $vendor, 'Page', $hasreturn);
-        $this->RunEvent('page_start_'.$page);
+        $this->RunEvent('page_stop_'.$page);
 
         return $ret;
     }
@@ -1587,7 +1587,7 @@ final class masterControlProgram
         $this->info('MCP>>'.$vendor.'>>Render>>'.$block);
         $this->RunEvent('block_start_'.$block);
         $ret = $this->template($block, $pathsrc, true, $scopeIn, $modinit, null, $vendor, 'Render', $hasreturn);
-        $this->RunEvent('block_start_'.$block);
+        $this->RunEvent('block_stop_'.$block);
 
         return $ret;
     }
@@ -1615,7 +1615,7 @@ final class masterControlProgram
         $this->info('MCP>>'.$vendor.'>>Render>>'.$block);
         $this->RunEvent('block_start_'.$block);
         $ret = $this->template($block, $pathsrc, true, $scopeIn, $modinit, null, $vendor, 'Render', $hasreturn);
-        $this->RunEvent('block_start_'.$block);
+        $this->RunEvent('block_stop_'.$block);
 
         return $ret;
     }
@@ -1643,7 +1643,7 @@ final class masterControlProgram
         $this->info('MCP>>'.$vendor.'>>block>>'.$block);
         $this->RunEvent('block_start_'.$block);
         $ret = $this->template($block, $pathtpl, true, $scopeIn, $modinit, null, $vendor, 'Block', $hasreturn);
-        $this->RunEvent('block_start_'.$block);
+        $this->RunEvent('block_stop_'.$block);
 
         return $ret;
     }

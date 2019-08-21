@@ -1,10 +1,11 @@
 <?php
 /**
- * LinHUniX Web Application Framework
+ * LinHUniX Web Application Framework.
  *
  * @author Andrea Morello <andrea.morello@linhunix.com>
  * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
+ *
  * @version GIT:2018-v2
  */
 
@@ -14,94 +15,108 @@ use LinHUniX\Mcp\masterControlProgram;
 use LinHUniX\Pdo\Model\mcpQueryModelClass;
 
 /**
-     *
-     * 
-     * >>>$scopeInis array 
-     * var ["J"] = name of the json file used to populate the query vars :
-     * var ["M"] = contain the module folder that need to found the query json
-     * var ["V"] = contain the vendor folder that need to found the query json
-     * var ["P"] = contain the path folder that need to found the query json
-     * >>> $this->query
-     * var ["T"]:
-     *  e  = execute : exec query with boolean results  
-     *  ec  = execute : exec query with boolean results  
-     *  f  = firstRow : return only first row 
-     *  q  = retrive array of all results 
-     *  c  = return the count of the results 
-     *  s  = return the sql information 
-     *  r  = return sql and env 
-     *  d  = search on cfg the data form another query
-     *  p  = puth data on the database (using setrow) "Q" is table
-     *  g  = get data on the database (using getrows) 
-     *       "Q" is table "S" is sort , "L" limit and "W" where cause 
-     *  other case return false;
-     * var ["Q"] = query 
-     * var ["E"] = env or instance of specific database 
-     * var ["V"] = contain the values that need to remplace on query scripts 
-     * var ["S"] = stored in Session
-     * var ["G"] = stored in Glboal cfg
-     * @author Andrea Morello <andrea.morello@linhunix.com>
-     * @version GIT:2018-v1
-     * @param Container $cfg Dipendecy injection for Pimple\Container
-     * @param array $this->argIn temproraney array auto cleanable 
-     * @return boolean|array query results 
-     * @see Pdo  module 
-     * @see mcpQueryModelClass 
-     * @see [vendor]/mcp/Head.php caller of the config
+ * >>>$scopeInis array
+ * var ["J"] = name of the json file used to populate the query vars :
+ * var ["M"] = contain the module folder that need to found the query json
+ * var ["V"] = contain the vendor folder that need to found the query json
+ * var ["P"] = contain the path folder that need to found the query json
+ * >>> $this->query
+ * var ["T"]:
+ *  e  = execute : exec query with boolean results
+ *  ec  = execute : exec query with boolean results
+ *  f  = firstRow : return only first row
+ *  q  = retrive array of all results
+ *  c  = return the count of the results
+ *  s  = return the sql information
+ *  r  = return sql and env
+ *  d  = search on cfg the data form another query
+ *  p  = puth data on the database (using setrow) "Q" is table
+ *  g  = get data on the database (using getrows)
+ *       "Q" is table "S" is sort , "L" limit and "W" where cause
+ *  other case return false;
+ * var ["Q"] = query
+ * var ["E"] = env or instance of specific database
+ * var ["V"] = contain the values that need to remplace on query scripts
+ * var ["S"] = stored in Session
+ * var ["G"] = stored in Glboal cfg.
+ *
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ *
+ * @version GIT:2018-v1
+ *
+ * @param Container $cfg         Dipendecy injection for Pimple\Container
+ * @param array     $this->argIn temproraney array auto cleanable
+ *
+ * @return bool|array query results
+ *
+ * @see Pdo  module
+ * @see mcpQueryModelClass
+ * @see [vendor]/mcp/Head.php caller of the config
  */
-class JsonQuery  extends mcpQueryModelClass
+class JsonQuery extends mcpQueryModelClass
 {
     private $querypath;
+
     public function __construct(masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
     {
         parent::__construct($mcp, $scopeCtl, $scopeIn);
-        $this->querypath = $mcp->getResource("path.query");
+        $this->querypath = $mcp->getResource('path.query');
         if (!is_dir($this->querypath)) {
-            $this->querypath = $mcp->getResource("path.module") . "/query/";
+            $this->querypath = $mcp->getResource('path.module').'/query/';
             if (!is_dir($this->querypath)) {
-                $this->querypath = $mcp->getResource("path") . "/cfg/query/";
+                $this->querypath = $mcp->getResource('path').'/cfg/query/';
             }
         }
     }
+
     /**
-     * execute the query, verify the results and store and return 
+     * execute the query, verify the results and store and return.
+     *
      * @return array response of code = like scope out;
      */
     protected function moduleCore()
     {
-        if (isset($this->argIn["J"])) {
-            $jfile = $this->argIn["J"];
-            if (isset($this->argIn["M"])) {
-                $jfile = $this->argIn["M"] . "/Query/" . $jfile;
+        if (isset($this->argIn['J'])) {
+            $modvnd = '';
+            $jfile = $this->argIn['J'];
+            if (isset($this->argIn['M'])) {
+                $jfile = $this->argIn['M'].'/Query/'.$jfile;
+                $modvnd = '.'.$this->argIn['M'].$modvnd;
             }
-            if (isset($this->argIn["V"])) {
-                $jfile = $this->argIn["V"] . "/" . $jfile;
+            if (isset($this->argIn['V'])) {
+                $jfile = $this->argIn['V'].'/'.$jfile;
+                $modvnd = '.'.$this->argIn['V'].$modvnd;
             }
-            if (isset($this->argIn["P"])) {
-                $jfile = $this->argIn["P"] . "/" . $jfile;
+            if (isset($this->argIn['P'])) {
+                $jfile = $this->argIn['P'].'/'.$jfile;
+            }
+            $altpath = $this->getCfg('app.mod.path'.$modvnd);
+            $this->getMcp()->debug('altpath:[app.mod.path'.$modvnd.']'.$altpath);
+            if (($altpath != '') and ($altpath != null)) {
+                $jfile = $altpath.'/Query/'.$this->argIn['J'];
             }
             if (file_exists($jfile)) {
-                $this->getMcp()->debug("load:" . $jfile);
+                $this->getMcp()->debug('load:'.$jfile);
                 $this->query = json_decode(file_get_contents($jfile), 1);
-            } else if (file_exists($jfile . ".json")) {
-                $this->getMcp()->debug("load:" . $jfile . ".json");
-                $this->query = json_decode(file_get_contents($jfile . ".json"), 1);
-            } else if (file_exists($this->querypath . $jfile)) {
-                $this->getMcp()->debug("load:" . $this->querypath . $jfile);
-                $this->query = json_decode(file_get_contents($this->querypath . $jfile), 1);
-            } else if (file_exists($this->querypath . $jfile . ".json")) {
-                $this->getMcp()->debug("load:" . $this->querypath . $jfile . ".json");
-                $this->query = json_decode(file_get_contents($this->querypath . $jfile . ".json"), 1);
+            } elseif (file_exists($jfile.'.json')) {
+                $this->getMcp()->debug('load:'.$jfile.'.json');
+                $this->query = json_decode(file_get_contents($jfile.'.json'), 1);
+            } elseif (file_exists($this->querypath.$jfile)) {
+                $this->getMcp()->debug('load:'.$this->querypath.$jfile);
+                $this->query = json_decode(file_get_contents($this->querypath.$jfile), 1);
+            } elseif (file_exists($this->querypath.$jfile.'.json')) {
+                $this->getMcp()->debug('load:'.$this->querypath.$jfile.'.json');
+                $this->query = json_decode(file_get_contents($this->querypath.$jfile.'.json'), 1);
             } else {
-                $this->getMcp()->warning("Error on load:" . $this->querypath . $jfile . "[.json]");
+                $this->getMcp()->warning('Error on load:'.$this->querypath.$jfile.'[.json]');
+
                 return;
             }
         }
-        $this->query["V"] = $this->argIn;
+        $this->query['V'] = $this->argIn;
         $res = $this->getPdo()->run($this->argCtl, $this->query);
-        if (isset($res["return"])) {
-                $this->argOut = $res["return"];
-            }
+        if (isset($res['return'])) {
+            $this->argOut = $res['return'];
+        }
     }
 }
-

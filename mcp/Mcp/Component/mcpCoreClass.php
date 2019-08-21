@@ -203,8 +203,8 @@ final class mcpCoreClass
     public function statmentModule($path, $callname, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $type = null)
     {
         //// BASE SETTINGS
-        $moduledef = 'mod.path';
-        $moduledns = 'mod.namespace';
+        $moduledef = 'app.mod.path';
+        $moduledns = 'app.mod.namespace';
         if ($this->flagClearVars) {
             ++$this->sub;
             $this->scopeIn[$this->sub] = array();
@@ -221,33 +221,24 @@ final class mcpCoreClass
         $this->scopeCtl[$this->sub]['file'] = $path;
         $this->scopeCtl[$this->sub]['tag'] = 'app';
         $this->scopeCtl[$this->sub]['type'] = $type;
+        $modvnd = '.'.$modinit;
         //// VENDOR SETTINGS
         if ($vendor != null) {
-            $moduledef .= '.'.$vendor.'.'.$modinit;
-            $moduledns .= '.'.$vendor.'.'.$modinit;
-            $modulepath = $this->mcp->getCfg($moduledef);
-            $modulens = $this->mcp->getCfg($moduledns);
-            if (empty($modulens)) {
-                $modulens = $vendor;
-            }
+            $modvnd = '.'.$vendor.'.'.$modinit;
             if ($vendor == 'LinHUniX') {
                 $this->scopeCtl[$this->sub]['module'] = 'LinHUniX\\';
                 $this->scopeCtl[$this->sub]['altmodule'] = 'LinHUniX_';
-                $this->scopeCtl[$this->sub]['file'] = '/';
-                $this->scopeCtl[$this->sub]['auto'] = '/';
+                $this->scopeCtl[$this->sub]['file'] .= '/';
+                $this->scopeCtl[$this->sub]['auto'] .= '/';
             } else {
-                $this->scopeCtl[$this->sub]['auto'] .= '/'.$modulens.'/';
-                $this->scopeCtl[$this->sub]['module'] .= $modulens.'\\';
-                $this->scopeCtl[$this->sub]['altmodule'] .= $modulens.'_';
+                $this->scopeCtl[$this->sub]['auto'] .= '/'.$vendor.'/';
+                $this->scopeCtl[$this->sub]['module'] .= $vendor.'\\';
+                $this->scopeCtl[$this->sub]['altmodule'] .= $vendor.'_';
                 if ($vendor == $this->defapp) {
                     $this->scopeCtl[$this->sub]['file'] .= '/';
                 } else {
                     $this->scopeCtl[$this->sub]['file'] .= '/'.$vendor.'/';
                 }
-            }
-            if (!empty($modulepath)) {
-                $this->scopeCtl[$this->sub]['file'] = $modulepath.'/';
-                $this->scopeCtl[$this->sub]['auto'] = $modulepath.'/';
             }
         }
         //// MODULE SETTINGS
@@ -261,14 +252,26 @@ final class mcpCoreClass
         $this->scopeCtl[$this->sub]['module'] .= $modinit;
         $this->scopeCtl[$this->sub]['defmodule'] .= $modinit;
         $this->scopeCtl[$this->sub]['altmodule'] .= $modinit;
-        $moduledef .= '.'.$modinit;
+        $this->scopeCtl[$this->sub]['auto'] .= $modinit;
+        $this->scopeCtl[$this->sub]['file'] .= $modinit.'/';
+        // if HAVE A PARTICOLAR namespace rewrite
+        $moduledns .= $modvnd;
+        $modulens = $this->mcp->getCfg($moduledns);
+        if (($modulens != '') and ($modulens != null)) {
+            $this->scopeCtl[$this->sub]['auto'] .= '/'.$modulens.'/';
+            $this->scopeCtl[$this->sub]['module'] .= $modulens.'\\';
+            $this->scopeCtl[$this->sub]['altmodule'] .= $modulens.'_';
+        }
+        // if HAVE A PARTICOLAR path rewrite
+        $moduledef .= $modvnd;
         $modulepath = $this->mcp->getCfg($moduledef);
-        $this->scopeCtl[$this->sub]['file'] .= $modinit;
-        if (!empty($modulepath)) {
+        lnxmcp()->debug($moduledef, $modulepath);
+        if (($modulepath != '') and ($modulepath != null)) {
             $this->scopeCtl[$this->sub]['file'] = $modulepath.'/';
             $this->scopeCtl[$this->sub]['auto'] = $modulepath.'/';
         }
-        $this->scopeCtl[$this->sub]['auto'] .= $modinit.'/autoload.php';
+        /// DIR AND AUTOLOAD
+        $this->scopeCtl[$this->sub]['auto'] .= '/autoload.php';
         $this->scopeCtl[$this->sub]['dir'] = $this->scopeCtl[$this->sub]['file'];
         /// TYPE DEFINITIONS
         if ($type != null) {
