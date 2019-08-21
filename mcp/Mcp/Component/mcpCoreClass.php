@@ -224,7 +224,7 @@ final class mcpCoreClass
         //// VENDOR SETTINGS
         if ($vendor != null) {
             $moduledef .= '.'.$vendor.'.'.$modinit;
-            $moduledns .= '.'.$vendor;".".$modinit;
+            $moduledns .= '.'.$vendor.'.'.$modinit;
             $modulepath = $this->mcp->getCfg($moduledef);
             $modulens = $this->mcp->getCfg($moduledns);
             if (empty($modulens)) {
@@ -821,12 +821,12 @@ final class mcpCoreClass
             if (class_exists($this->scopeCtl[$this->sub]['module'])) {
                 $this->setStatus(true, 'load class '.$this->scopeCtl[$this->sub]['module']);
                 $modclass = $this->scopeCtl[$this->sub]['module'];
-                if (!isset($mcp)){
-                    $mcp=$this->getMcp();
+                if (!isset($mcp)) {
+                    $mcp = $this->getMcp();
                 }
                 $retobj = new $modclass(
-                    $mcp, 
-                    $this->scopeCtl[$this->sub], 
+                    $mcp,
+                    $this->scopeCtl[$this->sub],
                     $this->scopeIn[$this->sub]
                 );
             } elseif (function_exists($this->scopeCtl[$this->sub]['module'])) {
