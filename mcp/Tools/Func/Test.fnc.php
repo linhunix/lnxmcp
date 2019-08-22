@@ -27,13 +27,16 @@ function lnxmcpChk($checkmenu = null)
  *
  * @param string $defcmd
  */
-function lnxmcpAdm($defcmd = null)
+function lnxmcpAdm($defcmd = null,$mode='Shell');
 {
     lnxmcp()->setCommon('LnxAdmCmd', $defcmd);
     $mcpAdminModPath = lnxmcp()->getCfg('mcp.path').'/../mcp_modules/Adm/';
-    lnxmcp()->setCfg('app.mod.path.LinHUniX.lnxmcp', $mcpAdminModPath);
-    $mcpAdminShell = $mcpAdminModPath.'/Shell/init.php';
-    if (file_exists($mcpAdminShell)) {
-        include_once $mcpAdminShell;
-    }
+    lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdm', $mcpAdminModPath);
+    lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdmShell', $mcpAdminModPath.'/Shell/');
+    lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdmHttpd', $mcpAdminModPath.'/httpd/');
+    lnxmcp()->Controller('init',false,array('cmd'=>$defcmd,'mode'=>$mode),'LnxMcpAdm',null,'LinHUniX');
+    // $mcpAdminShell = $mcpAdminModPath.'/Shell/init.php';
+    // if (file_exists($mcpAdminShell)) {
+    //     include_once $mcpAdminShell;
+    // }
 }
