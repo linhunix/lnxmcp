@@ -68,14 +68,14 @@ class initController extends mcpBaseModelClass {
             'set.ok'=>$setok,
             'set.path'=>$setpath
         );
-        $cmdfile = __DIR__.'/../Cmd/'.$defcmd.'.cmd.php';
-        lnxmcp()->debug($cmdfile);
+        $cmdfile = __DIR__.'/../'.$defmod.'/'.$defcmd.'Controller.php';
+        $this->getMcp()->debug($cmdfile);
         if (file_exists($cmdfile)) {
             echo '<!-- '.$defcmd." !-->\n";
-            include $cmdfile;
+            $this->getMcp()->controller($defcmd,false,$scopeCmdIn,'LnxMcpAdm'.$defmod,null,'LinHUniX');
         } else {
             echo "<!-- DEFAULT !-->\n";
-            include __DIR__.'/../Cmd/default.cmd.php';
+            $this->getMcp()->controller('default',false,$scopeCmdIn,'LnxMcpAdm'.$defmod,null,'LinHUniX');
         }
 
     }
