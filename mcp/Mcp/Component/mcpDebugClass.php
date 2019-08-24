@@ -101,7 +101,7 @@ class mcpDebugClass
     public function critical($message)
     {
         $this->getLogger()->error($message);
-        $this->supportmail($message);
+        mcpMailClass::supportmail($message);
         $this->header('Location: /500', true, true, 500);
     }
 

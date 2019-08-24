@@ -24,6 +24,8 @@ class defaultController extends mcpBaseModelClass {
         echo '|-> PATH STS:'.$this->argIn['set.path'].'('.$this->argIn['setok'].')'.PHP_EOL;
         echo '|-> PATH MCP:'.$this->argIn['mcp.path'].PHP_EOL;
         echo '|-> PATH ADM:'.$this->argIn['adm.path'].PHP_EOL;
+        echo '|-> PATH ADS:'.$this->argIn['adm.path.shell'].PHP_EOL;
+        echo '|-> PATH ADH:'.$this->argIn['adm.path.httpd'].PHP_EOL;
         echo '|-> PATH PHP:'.$this->argIn['cmd.php'].PHP_EOL;
         echo '|-> VERS PHP:'.PHP_VERSION.PHP_EOL;
         echo '|-> VERS SYS:'.PHP_OS.PHP_EOL;
@@ -35,7 +37,7 @@ class defaultController extends mcpBaseModelClass {
             if (strstr($cfile, 'cmd.txt') != false) {
                 $ctag = explode('.', $cfile);
                 echo '|-> '.$ctag[0];
-                echo ' : '.file_get_contents($cdsc);
+                echo ' : '.file_get_contents(__DIR__.'/'.$cfile);
                 echo PHP_EOL;
             }
         }

@@ -1,0 +1,1 @@
+Check php file sintax

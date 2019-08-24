@@ -1,13 +1,24 @@
 <?php 
-
-Class lnxAdmChkSintax {
+namespace LinHUniX\LnxMcpAdmShell\Controller;
+use LinHUniX\Mcp\Model\mcpBaseModelClass;
+/**
+ * LinHUniX Web Application Framework.
+ *
+ * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @copyright LinHUniX L.t.d., 2018, UK
+ * @license   Proprietary See LICENSE.md
+ *
+ * @version GIT:2018-v2
+ */
+class checksintaxController extends mcpBaseModelClass {
     public static  $OK=0;
     public static  $KO=0;
     public static  $bincmd;
     /**
      * chkSintax
+     * @param string $Pathphp
      */
-    public static  function chkSintax($Pathphp) {
+    public function chkSintax($Pathphp) {
         try {
             $objects = scandir($Pathphp); 
             foreach ($objects as $object) { 
@@ -34,10 +45,14 @@ Class lnxAdmChkSintax {
             $this->getMcp()->warning("Can execute check ".$e->getMessage());
         }
     }
+
     /**
-     * run
+     *  Ideally this method shuld be used to insert the model code and the other are to be used only as normal.
      */
-    public static function run($pathapp,$phpcmd){
+    protected function moduleCore()
+    {
+        $pathapp=$this->argIn['app.path'];
+        $phpcmd=$this->argIn['cmd.php'];
         echo "Run Check Syntax on ${pathapp}".PHP_EOL;
         self::$bincmd=$phpcmd;
         self::chkSintax($pathapp);
@@ -50,6 +65,6 @@ Class lnxAdmChkSintax {
             echo  "CHECK IS BAD !!!".PHP_EOL;
             return false;           
         }
-    }    
+
+    }   
 }
-lnxAdmChkSintax::run($apppath,$bincmd);

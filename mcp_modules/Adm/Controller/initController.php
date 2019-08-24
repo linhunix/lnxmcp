@@ -17,7 +17,7 @@ class initController extends mcpBaseModelClass {
     protected function moduleCore()
     {
         //// DEFINITION OF BINARY CONFIG;
-        $defcmd = $this->argin['cmd'];
+        $defcmd = $this->argIn['cmd'];
         $defmod = $this->argIn['mode'];
         $apppath = lnxmcp()->getCfg('app.path');
         $cfgpath = lnxmcp()->getCfg('app.path.config');
@@ -68,10 +68,10 @@ class initController extends mcpBaseModelClass {
             'set.ok'=>$setok,
             'set.path'=>$setpath
         );
-        $cmdfile = __DIR__.'/../'.$defmod.'/'.$defcmd.'Controller.php';
+        $cmdfile = __DIR__.'/../'.$defmod.'/Controller/'.$defcmd.'Controller.php';
         $this->getMcp()->debug($cmdfile);
         if (file_exists($cmdfile)) {
-            echo '<!-- '.$defcmd." !-->\n";
+            echo '<!-- '.$defcmd."/".$cmdfile." !-->\n";
             $this->getMcp()->controller($defcmd,false,$scopeCmdIn,'LnxMcpAdm'.$defmod,null,'LinHUniX');
         } else {
             echo "<!-- DEFAULT !-->\n";

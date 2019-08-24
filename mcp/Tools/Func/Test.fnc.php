@@ -27,7 +27,7 @@ function lnxmcpChk($checkmenu = null)
  *
  * @param string $defcmd
  */
-function lnxmcpAdm($defcmd = null,$mode='Shell');
+function lnxmcpAdm($defcmd = null,$mode='Shell')
 {
     lnxmcp()->setCommon('LnxAdmCmd', $defcmd);
     $mcpAdminModPath = lnxmcp()->getCfg('mcp.path').'/../mcp_modules/Adm/';
