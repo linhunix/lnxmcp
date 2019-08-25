@@ -1,0 +1,6 @@
+{
+    "/":"Location: /dashboard",
+    "/webadmin/*":"Location: /dashboard",
+    "*/admin/*":"Location: /dashboard",
+    "/app.php":"Location:http://www.linhunix.com/"
+}
