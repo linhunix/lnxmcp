@@ -1,0 +1,16 @@
+{
+    "cat": {
+        "type": "serviceCommon",
+        "name": "gfx",
+        "module": "Gfx",
+        "isPreload": false,
+        "ScopeInRewrite": {
+            "source": "Gfx/Bs386/tpl/admin",
+            "mimetype": "text/html",
+            "T": "DYN"
+        }
+    },
+    "bye": {
+        "type": "exit"
+    }
+}
