@@ -18,6 +18,8 @@
         <div class="span3 nav nav-list" style="padding-left:10px;">
             <div class="text-center" >
                 <?= lnxMcpTag("lnxmcp-logo");?>
+                <h2><?= lnxmcp()->getCfg("app.def");?></h2>
+                <hr>
             </div>
             <?= lnxMcpTag("lnxmcp-leftmenu");?>
         </div>
