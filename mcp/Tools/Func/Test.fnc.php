@@ -33,7 +33,7 @@ function lnxmcpAdm($defcmd = null,$mode='Shell')
     $mcpAdminModPath = lnxmcp()->getCfg('mcp.path').'/../mcp_modules/Adm/';
     lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdm', $mcpAdminModPath);
     lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdmShell', $mcpAdminModPath.'/Shell/');
-    lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdmHttpd', $mcpAdminModPath.'/httpd/');
+    lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdmHttpd', $mcpAdminModPath.'/Httpd/');
     lnxmcp()->Controller('init',false,array('cmd'=>$defcmd,'mode'=>$mode),'LnxMcpAdm',null,'LinHUniX');
     // $mcpAdminShell = $mcpAdminModPath.'/Shell/init.php';
     // if (file_exists($mcpAdminShell)) {

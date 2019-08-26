@@ -1,5 +1,5 @@
 {
-    "app.def":"testadmin",
+    "app.def":"AdmBox",
     "app.level":0,
     "app.debug":true,
     "app.title":"LnxMcp - Test DashBoard",
@@ -18,5 +18,7 @@
         },
         "About":"http://unix.eu.com"
     },
-    "app.gfx.default":["Base","Bs386"]
+    "app.gfx.default":["Base","Bs386"],
+    "mcp.web.api":true,
+    "mcp.web.admin":true
 }

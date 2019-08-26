@@ -102,14 +102,10 @@ class mcpRunHttp
     public function mcpAdmRedirect($urlpth, $urlarr)
     {
         $res = false;
-        if (lnxmcp()->getCfg('mcp.web.page') == true) {
-            if (substr($urlpth, 0, 8) == '/lnxmcp/') {
+        if (lnxmcp()->getCfg('mcp.web.api')== true){
+            if (substr($urlpth, 0, 8) == '/lnxmcpapi/') {
                 $res = true;
-                if (isset($urlarr[3])) {
-                    lnxmcp()->showCommonPage($urlarr[3], $urlarr, $urlarr[2]);
-                } elseif (isset($urlarr[2])) {
-                    lnxmcp()->runTag('lnxmcp.'.$urlarr[2]);
-                }
+                lnxmcp()->runCommand($_REQUEST,$urlarr);
             }
             if (lnxmcp()->getCfg('mcp.web.admin') == true) {
                 if (substr($urlpth, 0, 11) == '/lnxmcpadm/') {
@@ -118,7 +114,7 @@ class mcpRunHttp
                     if (isset($urlarr[2])) {
                         $webarg = $urlarr[2];
                     }
-                    lnxmcpAdm($webarg);
+                    lnxmcpAdm($webarg,'Httpd');
                 }
             }
         }

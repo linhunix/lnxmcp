@@ -1,6 +1,6 @@
 {
     "/":"Location: /dashboard",
-    "/webadmin/*":"Location: /dashboard",
-    "*/admin/*":"Location: /dashboard",
+    "/webadmin/*":"Location: /lnxmcpadm/home",
+    "*/admin/*":"Location: /lnxmcpadm/home",
     "/app.php":"Location:http://www.linhunix.com/"
 }
