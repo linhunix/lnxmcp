@@ -14,13 +14,13 @@ class mainpageController extends mcpBaseModelClass {
 
 
     protected function moduledef() {
-        echo "<h1>SUMMARY</h1>";
+        echo "<h1>SUMMARY:".$this->argIn['adm.cmd']."</h1>";
         echo "<PRE>".PHP_EOL;
         echo '//////////////////////////////////////////////////////////'.PHP_EOL;
-        echo '|-> PATH APP:'.$this->argIn['app.path'].'('.$this->argIn['appok'].')'.PHP_EOL;
-        echo '|-> PATH IDX:'.$this->argIn['idx.path'].'('.$this->argIn['idxok'].')'.PHP_EOL;
-        echo '|-> PATH CFG:'.$this->argIn['cfg.path'].'('.$this->argIn['cfgok'].')'.PHP_EOL;
-        echo '|-> PATH STS:'.$this->argIn['set.path'].'('.$this->argIn['setok'].')'.PHP_EOL;
+        echo '|-> PATH APP:'.$this->argIn['app.path'].'('.$this->argIn['app.ok'].')'.PHP_EOL;
+        echo '|-> PATH IDX:'.$this->argIn['idx.path'].'('.$this->argIn['idx.ok'].')'.PHP_EOL;
+        echo '|-> PATH CFG:'.$this->argIn['cfg.path'].'('.$this->argIn['cfg.ok'].')'.PHP_EOL;
+        echo '|-> PATH STS:'.$this->argIn['set.path'].'('.$this->argIn['set.ok'].')'.PHP_EOL;
         echo '|-> PATH MCP:'.$this->argIn['mcp.path'].PHP_EOL;
         echo '|-> PATH ADM:'.$this->argIn['adm.path'].PHP_EOL;
         echo '|-> PATH ADS:'.$this->argIn['adm.path.shell'].PHP_EOL;
@@ -30,17 +30,6 @@ class mainpageController extends mcpBaseModelClass {
         echo '|-> VERS SYS:'.PHP_OS.PHP_EOL;
         echo '|-> NAME SYS:'.$_SERVER['HOSTNAME'].PHP_EOL;
         echo '//////////////////////////////////////////////////////////'.PHP_EOL;
-        // echo '| Command List'.PHP_EOL;
-        // echo '//////////////////////////////////////////////////////////'.PHP_EOL;
-        // foreach (scandir(__DIR__) as $cfile) {
-        //     if (strstr($cfile, 'cmd.txt') != false) {
-        //         $ctag = explode('.', $cfile);
-        //         echo '|-> '.$ctag[0];
-        //         echo ' : '.file_get_contents(__DIR__.'/'.$cfile);
-        //         echo PHP_EOL;
-        //     }
-        // }
-        // echo '//////////////////////////////////////////////////////////'.PHP_EOL;
         echo "</PRE>".PHP_EOL;
     }
 
@@ -50,11 +39,28 @@ class mainpageController extends mcpBaseModelClass {
      */
         protected function moduleCore()
         {
-            if (isset($this->$argIn['cmd'])) {
+            //  lnxmcp()->Rem($this->argIn);
+            if (! isset($this->argIn['adm.cmd'])) {
                 $this->moduledef();
             }
-            switch ($this->$argIn['cmd']) {
-
+            switch ($this->argIn['adm.cmd']) {
+                case 'Form':
+                case 'form':
+                    $this->callCmd(
+                        array(
+                            "type"=> "serviceCommon",
+                            "name"=>"gfx",
+                            "module"=> "Gfx",
+                            "isPreload"=> false,
+                            "ScopeInRewrite"=> array(
+                                "source"=> "Gfx/Bs386/tpl/form",
+                                "mimetype"=> "text/html",
+                                "T"=> "DYN"
+                            )
+                        ),
+                        $_REQUEST
+                    );
+                    break;;
                 default:
                 $this->moduledef();
                 break;

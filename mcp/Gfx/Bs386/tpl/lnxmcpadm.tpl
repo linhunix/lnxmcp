@@ -23,7 +23,7 @@
             <?= lnxMcpAdm("leftmenu",'Httpd'); ?>
         </div>
     </div>
-    <div class="span10 lead">
+    <div class="span10 lead hero-unit">
         <?= lnxMcpAdm("mainpage",'Httpd'); ?>
     </div>
 </div>

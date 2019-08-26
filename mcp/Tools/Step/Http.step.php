@@ -103,9 +103,12 @@ class mcpRunHttp
     {
         $res = false;
         if (lnxmcp()->getCfg('mcp.web.api')== true){
-            if (substr($urlpth, 0, 8) == '/lnxmcpapi/') {
+            if (substr($urlpth, 0, 10) == '/lnxmcpapi') {
                 $res = true;
-                lnxmcp()->runCommand($_REQUEST,$urlarr);
+                lnxmcp()->Rem($_REQUEST);
+                print_r(
+                    lnxmcp()->runCommand($_REQUEST,$urlarr)
+                );
             }
             if (lnxmcp()->getCfg('mcp.web.admin') == true) {
                 if (substr($urlpth, 0, 11) == '/lnxmcpadm/') {
@@ -114,6 +117,7 @@ class mcpRunHttp
                     if (isset($urlarr[2])) {
                         $webarg = $urlarr[2];
                     }
+                    lnxmcp()->setCommon('web.adm.cmd',$webarg);
                     lnxmcpAdm($webarg,'Httpd');
                 }
             }

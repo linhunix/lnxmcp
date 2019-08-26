@@ -53,6 +53,7 @@ class initController extends mcpBaseModelClass {
         }
         $scopeCmdIn=array(
             'cmd'=>$defcmd,
+            'adm.cmd'=>lnxmcp()->getCommon('web.adm.cmd'),
             'mode'=>$defmod,
             'cmd.php'=>$bincmd,
             'mcp.path'=>$mcpath,

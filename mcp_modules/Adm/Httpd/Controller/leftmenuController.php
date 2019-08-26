@@ -16,7 +16,14 @@ class leftmenuController extends mcpBaseModelClass {
      */
     protected function moduleCore()
     {
-
-
+        echo '<li><a href="/lnxmcpadm/" >Home</a></li>'.PHP_EOL;
+        foreach (scandir(__DIR__) as $cfile) {
+            if (strstr($cfile, 'cmd.txt') != false) {
+                $ctag = explode('.', $cfile);
+                echo '<li><a href="/lnxmcpadm/'.$ctag[0].'" ';
+                echo ' alt="'.file_get_contents(__DIR__.'/'.$cfile).'" ';
+                echo '>'.$ctag[0].'</a></li>'.PHP_EOL;
+            }
+        }
     }
 }
