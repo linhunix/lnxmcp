@@ -197,6 +197,8 @@ class pdoDriver extends mcpBaseModelClass
         }
         foreach ($var as $k => $v) {
             $sql = str_replace('['.$k.']', $this->real_escape_string($v), $sql);
+            $sql = str_replace('[R:'.$k.']', $v, $sql);
+            $sql = str_replace('[S:'.$k.']', \stripslashes($v), $sql);
         }
         $this->getMcp()->debug('queryOut:'.$this->database.'='.$sql);
         if ($this->PDO == null) {
