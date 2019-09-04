@@ -117,6 +117,9 @@ class mcpDebugClass
      */
     public function webRem($message, $var = null)
     {
+        if ($this->getRes('web.rem') == false) {
+            return;
+        }
         echo "\n<!-- ======================================================= ===";
         echo "\n====  ".$this->getRes('def').' :'.print_r($message, 1);
         if (!empty($var)) {
@@ -148,6 +151,9 @@ class mcpDebugClass
      */
     public function webDump($message, $var = null)
     {
+        if ($this->getRes('web.dump') == false) {
+            return;
+        }
         echo "\n<hr>\n";
         echo '<h2> '.$this->getRes('def').' :'.$message."</h2>\n";
         echo "\n<hr>\n";
@@ -235,8 +241,6 @@ class mcpDebugClass
         $this->warning('Header ['.$retcode.']:'.$string.$msg);
         if ($htmljs == false) {
             \header_remove();
-            \ob_end_clean();
-            \flush();
             \header($string, $replace, $retcode);
         } else {
             $he = explode(':', $string);
