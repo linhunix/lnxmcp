@@ -70,27 +70,51 @@ class mcpMailClass
             if (!is_array($scopeIn)) {
                 $scopeIn = array('In' => $scopeIn);
             }
+            if (!isset ($scopeIn['to'])) {
+                lnxmcp()->warning('MailService has empty (1) sender to !!');
+                return false;
+            }
+            if ($scopeIn['to']=='') {
+                lnxmcp()->warning('MailService has empty (2) sender to !!');
+                return false;
+            }
+            if (!isset ($scopeIn['subject'])) {
+                lnxmcp()->warning('MailService has empty (3) sender subject !!');
+                return false;
+            }
+            if ($scopeIn['subject']=='') {
+                lnxmcp()->warning('MailService has empty (4) sender subject !!');
+                return false;
+            }
+            if (($page != null) || ($page = 'sendmail') || ($page != 'none') || ($page != '.')) {
+                $premsg=$scopeIn['message'];
+                $scopeIn['message'] = lnxmcp()->page($page, $scopeIn, $modinit, $vendor, null, true);
+                if ($scopeIn['message']==''){
+                    lnxmcp()->warning('MailService has page '.$page.' generate a empty message  !!');
+                    $scopeIn['message']=$premsg;
+                }
+            }
+            if (!isset ($scopeIn['message'])) {
+                lnxmcp()->warning('MailService has empty (5) sender message !!');
+                return false;
+            }
+            if ($scopeIn['message']=='') {
+                lnxmcp()->warning('MailService has empty (6) sender message !!');
+                return false;
+            }
             if (lnxmcp()->getCfg('app.Service.mail') != null) {
-                if (($page != null) || ($page = 'sendmail') || ($page != 'none') || ($page != '.')) {
-                    $scopeIn['message'] = lnxmcp()->page($page, $scopeIn, $modinit, $vendor, null, true);
-                }
                 lnxmcp()->Service('mail', false, $scopeIn);
-            } else {
-                $to = $scopeIn['to'];
-                $from = $scopeIn['from'];
-                $subject = $scopeIn['subject'];
-                $message = $scopeIn['message'];
-                $files = $scopeIn['files'];
-                if (empty($to)) {
-                    lnxmcp()->warning('Mail Class has empty sender to !!');
-
-                    return false;
-                }
-
-                return mcpMailClass::mailSimple($to, $from, $subject, $message, true, $files);
+                return true;
             }
 
-            return true;
+            $to = $scopeIn['to'];
+            $from = $scopeIn['from'];
+            $subject = $scopeIn['subject'];
+            $message = $scopeIn['message'];
+            $files = $scopeIn['files'];
+            return mcpMailClass::mailSimple($to, $from, $subject, $message, true, $files);
+        
+
         } catch (\Exception $e) {
             return false;
         }

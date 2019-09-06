@@ -106,9 +106,11 @@ class mcpRunHttp
             if (substr($urlpth, 0, 10) == '/lnxmcpapi') {
                 $res = true;
                 lnxmcp()->Rem($_REQUEST);
+                $_REQUEST['urlarr']=$urlarr;
                 print_r(
-                    lnxmcp()->runCommand($_REQUEST,$urlarr)
+                    lnxmcp()->runCommand($_REQUEST,$_REQUEST)
                 );
+                LnxMcpExit('lnxmcpapi');
             }
             if (lnxmcp()->getCfg('mcp.web.admin') == true) {
                 if (substr($urlpth, 0, 11) == '/lnxmcpadm/') {
@@ -119,6 +121,7 @@ class mcpRunHttp
                     }
                     lnxmcp()->setCommon('web.adm.cmd',$webarg);
                     lnxmcpAdm($webarg,'Httpd');
+                    LnxMcpExit('lnxmcpadm');
                 }
             }
         }

@@ -901,9 +901,9 @@ final class masterControlProgram
      * @param bool   $replace remplace header
      * @param int    $retcode html return code if need
      */
-    public function header($string, $end = false, $replace = true, $retcode = null)
+    public function header($string, $end = false, $replace = true, $retcode = null,$htmljs=false)
     {
-        $this->mcpLogging->header($string, $end, $replace, $retcode);
+        $this->mcpLogging->header($string, $end, $replace, $retcode,$htmljs);
     }
 
     /**

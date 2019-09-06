@@ -61,6 +61,23 @@ class mainpageController extends mcpBaseModelClass {
                         $_REQUEST
                     );
                     break;;
+                case 'Mail':
+                case 'mail':
+                    $this->callCmd(
+                        array(
+                            "type"=> "serviceCommon",
+                            "name"=>"gfx",
+                            "module"=> "Gfx",
+                            "isPreload"=> false,
+                            "ScopeInRewrite"=> array(
+                                "source"=> "Gfx/Bs386/tpl/formMail",
+                                "mimetype"=> "text/html",
+                                "T"=> "DYN"
+                            )
+                        ),
+                        $_REQUEST
+                    );
+                    break;;
                 default:
                 $this->moduledef();
                 break;

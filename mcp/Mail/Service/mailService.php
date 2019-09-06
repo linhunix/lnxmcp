@@ -113,7 +113,7 @@ class mailService extends mcpBaseModelClass
      */
     public function stdMail($to, $subject, $message, $additional_headers = null, $additional_parameters = null, $from = null, $attachDoc = array(), $html = false)
     {
-        $this->mcp->info('StdMail: to/subject = '.$to.'/'.$subject);
+        $this->mcp->info('StdMail: from/to/subject = '.$from.'/'.$to.'/'.$subject);
         try {
             $mymail = clone $this->Mailer;
             if ($additional_headers != null) {
@@ -146,11 +146,22 @@ class mailService extends mcpBaseModelClass
             if ($html == true) {
                 $mymail->isHTML(true);
             }
-            $mymail->body = $message;
-            $mymail->send();
-            $this->mcp->info('StdMail: success sent to/subject = '.$to.'/'.$subject);
+            $mymail->Body = $message;
+            lnxmcp()->debugVar('Mail Class','body',$mymail->Body );
+            $stsmail="unsuccess!!";
+            $retmail=false;
+            if ($mymail->send()==true){
+                $stsmail="success done !! ";
+                $retmail=true;
+            }
+            if ($retmail==false){
+                $this->mcp->warning('StdMail: '.$stsmail.' sent from/to/subject = '.$from.'/'.$to.'/'.$subject);
+                $this->mcp->warning('StdMail:'.$mymail->ErrorInfo);
+            } else {
+                $this->mcp->info('StdMail: '.$stsmail.' sent from/to/subject = '.$from.'/'.$to.'/'.$subject);
+            }
 
-            return true;
+            return $retmail;
         } catch (\Exception $e) {
             $this->mcp->error('StdMail:'.$e->get_message());
         }
@@ -161,9 +172,9 @@ class mailService extends mcpBaseModelClass
     /**
      * Register the settings as a provider with a container.
      */
-    public function __construct(masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
+    public function __construct(masterControlProgram &$mcp, array $scopeCtl, array $scopeIn=array())
     {
-        parent::__construct($mcp, $scopeCtl, $scopeIn);
+        parent::__construct($mcp, $scopeCtl, $scopeIn=array());
         /// trace config
         try {
             $this->Smtp = new SMTP();
@@ -184,18 +195,43 @@ class mailService extends mcpBaseModelClass
                 $scopeIn['config'] == 'SOURCE';
             }
             if ($scopeIn['config'] == 'Env') {
-                $this->domine = getenv($scopeIn['mail.domine']);
-                $this->From = getenv($scopeIn['mail.from']);
-                $this->testmail = getenv($scopeIn['mail.test']);
-                $smtphost = getenv($scopeIn['mail.smtp.host']);
-                $smtpport = getenv($scopeIn['mail.smtp.port']);
-                $smtpuser = getenv($scopeIn['mail.smtp.user']);
-                $smtppass = getenv($scopeIn['mail.smtp.pass']);
-                $smtpasec = getenv($scopeIn['mail.smtp.type']);
-                $pop3host = getenv($scopeIn['mail.pop3.host']);
-                $pop3user = getenv($scopeIn['mail.pop3.user']);
-                $pop3pass = getenv($scopeIn['mail.pop3.pass']);
-                $pop3asec = getenv($scopeIn['mail.pop3.type']);
+                $this->domine = $_SERVER['HOSTNAME'];
+                if (isset($scopeIn['mail.domine'])){
+                    $this->domine = getenv($scopeIn['mail.domine']);
+                }
+                if (isset($scopeIn['mail.from'])){
+                    $this->From = getenv($scopeIn['mail.from']);
+                }
+                if (isset($scopeIn['mail.test'])){
+                    $this->testmail = getenv($scopeIn['mail.test']);
+                }
+                if (isset($scopeIn['mail.smtp.host'])){
+                    $smtphost = getenv($scopeIn['mail.smtp.host']);
+                }
+                if (isset($scopeIn['mail.smtp.port'])){
+                    $smtpport = getenv($scopeIn['mail.smtp.port']);
+                } 
+                if (isset($scopeIn['mail.smtp.user'])){
+                    $smtpuser = getenv($scopeIn['mail.smtp.user']);
+                }
+                if (isset($scopeIn['mail.smtp.pass'])){
+                    $smtppass = getenv($scopeIn['mail.smtp.pass']);
+                }
+                if (isset($scopeIn['mail.smtp.type'])){
+                    $smtpasec = getenv($scopeIn['mail.smtp.type']);
+                }
+                if (isset($scopeIn['mail.pop3.host'])){
+                    $pop3host = getenv($scopeIn['mail.pop3.host']);
+                }
+                if (isset($scopeIn['mail.pop3.user'])){
+                    $pop3user = getenv($scopeIn['mail.pop3.user']);
+                }
+                if (isset($scopeIn['mail.pop3.pass'])){
+                    $pop3pass = getenv($scopeIn['mail.pop3.pass']);
+                }
+                if (isset($scopeIn['mail.pop3.type'])){
+                    $pop3asec = getenv($scopeIn['mail.pop3.type']);
+                }
             }
             if ($scopeIn['config'] == 'SOURCE') {
                 $this->domine = $mcp->getResource('mail.domine');
@@ -217,10 +253,10 @@ class mailService extends mcpBaseModelClass
             if ($smtpport == null) {
                 $smtpport = '25';
             }
-            if ($this->domine !== null) {
-                $this->domine = $smtphost;
+            if ( ($this->domine == null) or ($this->domine == '' ) ) {
+                $this->domine = $_SERVER['HOSTNAME'];
             }
-            if ($this->From == null) {
+            if (($this->From == null)  or ($this->From == '')) {
                 $this->From = 'noreply@'.$this->domine;
             }
             ////// init config
@@ -286,7 +322,7 @@ class mailService extends mcpBaseModelClass
         if (isset($this->argIn['message'])) {
             $message = $this->argIn['message'];
         }
-        if (empty($message)) {
+        if ($message=='') {
             $error .= 'message,';
         }
         if ($error != '') {
@@ -309,8 +345,14 @@ class mailService extends mcpBaseModelClass
             $parameters = $this->argIn['parameters'];
         }
         if (isset($this->argIn['template'])) {
+            $premsg=$message;
             $message = $this->loadTemplate($message, $this->argIn['template']);
+            if ($message=='') {
+                lnxmcp()->warning('Mail Class has template '.$this->argIn['template'].' generate a empty message  !!');
+                $message=$premsg;
+            }
         }
+        lnxmcp()->debugVar('Mail Class','message',$message);
         $this->argOut = $this->stdMailWithDoc($to, $subject, $message, $files, $headers, $parameters, $from);
     }
 }

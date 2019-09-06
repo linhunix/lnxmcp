@@ -133,6 +133,10 @@ class mcpMenuClass
                 $header = @$scopectl['header'];
                 lnxmcp()->header($header, true);
                 break;
+            case 'headerHttp':
+                $header = @$scopectl['header'];
+                lnxmcp()->header($header, false,false,null,true);
+                break;
             case 'load':
                 $result = lnxmcp()->moduleLoad($callname, $modinit, $vendor, $scopeIn);
                 break;
@@ -184,7 +188,7 @@ class mcpMenuClass
             case 'apiCommon':
                 $result = lnxmcp()->apiCommon($callname, $ispreload, $scopeIn, $modinit, $subcall);
                 break;
-            case 'apiCommon':
+            case 'apiArrayCommon':
                 $result = lnxmcp()->apiACommon($callname, $ispreload, $scopeIn, $modinit, $subcall);
                 break;
             case 'service':
