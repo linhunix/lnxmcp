@@ -3,7 +3,8 @@ Master Control Program
 Is a simple MCP/MVC framework with out compose or other features an compatible with php 5.3 and more 
 
 ### Download ###
-[Stable Phar Version](https://github.com/linhunix/lnxmcp/blob/3.4.0/dist/lnxmcp.phar)
+*[Stable Phar Version](https://github.com/linhunix/lnxmcp/blob/3.5.0/dist/lnxmcp.phar)
+*[Cheat Sheet](https://github.com/linhunix/lnxmcp/blob/3.5.0/docs/lnxmcp_ChatSheet.pdf)
 
 ### Why MCP? ###
 The big difference of a standard **mvc** and **mvp** is the presence obbligatories of a central code.
@@ -13,8 +14,6 @@ and your functionality is an extension of it :
 
 - Slim 
 - Laravel
-
-
 
 
 
