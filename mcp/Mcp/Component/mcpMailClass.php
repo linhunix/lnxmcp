@@ -86,7 +86,7 @@ class mcpMailClass
                 lnxmcp()->warning('MailService has empty (4) sender subject !!');
                 return false;
             }
-            if (($page != null) || ($page = 'sendmail') || ($page != 'none') || ($page != '.')) {
+            if (($page != null) || ($page == 'sendmail') || ($page != 'none') || ($page != '.')) {
                 $premsg=$scopeIn['message'];
                 $scopeIn['message'] = lnxmcp()->page($page, $scopeIn, $modinit, $vendor, null, true);
                 if ($scopeIn['message']==''){
