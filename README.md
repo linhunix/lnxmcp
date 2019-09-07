@@ -4,6 +4,7 @@ Is a simple MCP/MVC framework with out compose or other features an compatible w
 
 ### Download ###
 *[Stable Phar Version](https://github.com/linhunix/lnxmcp/blob/3.5.0/dist/lnxmcp.phar)
+
 *[Cheat Sheet](https://github.com/linhunix/lnxmcp/blob/3.5.0/docs/lnxmcp_ChatSheet.pdf)
 
 ### Why MCP? ###
