@@ -1,0 +1,21 @@
+{
+    "srv":{
+        "type":"serviceCommon",
+        "module":"Nsql",
+        "name":"nsql",
+        "input":{
+            "T":"doc",
+            "E":"init",
+            "doc_name":"demo"
+        }
+    },
+    "tpl":{
+        "type":"extTemplate",
+        "path":"app.path.module",
+        "name":"nsqltest/tpl/docid",
+        "ext":"html"
+    },
+    "bye":{
+        "type":"exit"
+    }
+}

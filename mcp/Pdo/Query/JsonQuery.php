@@ -79,13 +79,19 @@ class JsonQuery extends mcpQueryModelClass
         if (isset($this->argIn['J'])) {
             $modvnd = '';
             $jfile = $this->argIn['J'];
+            $bfile=$jfile;
             if (isset($this->argIn['M'])) {
                 $jfile = $this->argIn['M'].'/Query/'.$jfile;
+                $bfile = $this->argIn['M'].'/'.$jfile;
                 $modvnd = '.'.$this->argIn['M'].$modvnd;
             }
             if (isset($this->argIn['V'])) {
                 $jfile = $this->argIn['V'].'/'.$jfile;
+                $bfile = $this->argIn['V'].'/'.$bfile;
                 $modvnd = '.'.$this->argIn['V'].$modvnd;
+            }
+            if (($modvnd=='.Nsql') or ($modvnd=='.LinHUniX.Nsql')){
+                $this->argIn['P']=$this->getCfg("mcp.path");
             }
             if (isset($this->argIn['P'])) {
                 $jfile = $this->argIn['P'].'/'.$jfile;
@@ -101,15 +107,14 @@ class JsonQuery extends mcpQueryModelClass
             } elseif (file_exists($jfile.'.json')) {
                 $this->getMcp()->debug('load:'.$jfile.'.json');
                 $this->query = json_decode(file_get_contents($jfile.'.json'), 1);
-            } elseif (file_exists($this->querypath.$jfile)) {
-                $this->getMcp()->debug('load:'.$this->querypath.$jfile);
-                $this->query = json_decode(file_get_contents($this->querypath.$jfile), 1);
-            } elseif (file_exists($this->querypath.$jfile.'.json')) {
-                $this->getMcp()->debug('load:'.$this->querypath.$jfile.'.json');
-                $this->query = json_decode(file_get_contents($this->querypath.$jfile.'.json'), 1);
+            } elseif (file_exists($this->querypath.$bfile)) {
+                $this->getMcp()->debug('load:'.$this->querypath.$bfile);
+                $this->query = json_decode(file_get_contents($this->querypath.$bfile), 1);
+            } elseif (file_exists($this->querypath.$bfile.'.json')) {
+                $this->getMcp()->debug('load:'.$this->querypath.$bfile.'.json');
+                $this->query = json_decode(file_get_contents($this->querypath.$bfile.'.json'), 1);
             } else {
-                $this->getMcp()->warning('Error on load:'.$this->querypath.$jfile.'[.json]');
-
+                $this->getMcp()->warning('Error on load:'.$this->querypath.$bfile.'[.json]');
                 return;
             }
         }

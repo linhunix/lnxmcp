@@ -389,6 +389,8 @@ class mcpMenuClass
     public static function TagConverter($text, $scopeIn = array(), $label = null)
     {
         $lnxmcp_cnt = 0;
+        $text = str_replace('[scope-dump]', print_r($scopeIn,1), $text);
+        $text = str_replace('[common-dump]', print_r(lnxmcp()->getCommon(),1), $text);
         foreach ($scopeIn as $sink => $sinv) {
             $text = str_ireplace('[scope-'.$sink.']', $sinv, $text);
         }
@@ -422,42 +424,43 @@ class mcpMenuClass
             if (isset($scopeCtl['disable-rem'])) {
                 $showrem = false;
             }
-            if (isset($scopeCtl['block-type'])) {
-                lnxmcp()->info('TagConverter:block-type: '.$scopeCtl['block-type']);
-                lnxmcp()->debug($lblcks);
-                switch ($scopeCtl['block-type']) {
-                    case 'json':
-                        try {
-                            $arr = json_decode($lblcks, true);
-                            if (is_array($arr)) {
-                                foreach ($arr as $ak => $av) {
-                                    $scopeInSub[$ak] = $av;
-                                }
+            if (!isset($scopeCtl['block-type'])) {
+                $scopeCtl['block-type']="";
+            }
+            lnxmcp()->info('TagConverter:block-type: '.$scopeCtl['block-type']);
+            lnxmcp()->debug($lblcks);
+            switch ($scopeCtl['block-type']) {
+                case 'json':
+                    try {
+                        $arr = json_decode($lblcks, true);
+                        if (is_array($arr)) {
+                            foreach ($arr as $ak => $av) {
+                                $scopeInSub[$ak] = $av;
                             }
-                        } catch (\Exception $e) {
-                            lnxmcp()->warning('TagConverter:block-type json error '.$e->getMessage());
                         }
+                    } catch (\Exception $e) {
+                        lnxmcp()->warning('TagConverter:block-type json error '.$e->getMessage());
+                    }
+                break;
+                case 'config':
+                    $scopeInSub['blockIn'] = lnxmcp()->getCfg($lblcks);
                     break;
-                    case 'config':
-                        $scopeInSub['blockIn'] = lnxmcp()->getCfg($lblcks);
-                        break;
-                    case 'common':
-                        $scopeInSub['blockIn'] = lnxmcp()->getCommon($lblcks);
-                        break;
-                    case 'scope':
-                        $scopeInSub['blockIn'] = @$scopeIn[$lblcks];
-                        break;
-                    case 'translate':
-                        if (isset($scopeCtl['block-lang'])) {
-                            $lang = $scopeCtl['block-lang'];
-                            $scopeInSub['blockIn'] = lnxmcp()->translateMulti($lang, $lblcks);
-                        } else {
-                            $scopeInSub['blockIn'] = lnxmcp()->translate($lblcks);
-                        }
-                        break;
-                    default:
-                        $scopeInSub['blockIn'] = $lblcks;
-                }
+                case 'common':
+                    $scopeInSub['blockIn'] = lnxmcp()->getCommon($lblcks);
+                    break;
+                case 'scope':
+                    $scopeInSub['blockIn'] = @$scopeIn[$lblcks];
+                    break;
+                case 'translate':
+                    if (isset($scopeCtl['block-lang'])) {
+                        $lang = $scopeCtl['block-lang'];
+                        $scopeInSub['blockIn'] = lnxmcp()->translateMulti($lang, $lblcks);
+                    } else {
+                        $scopeInSub['blockIn'] = lnxmcp()->translate($lblcks);
+                    }
+                    break;
+                default:
+                    $scopeInSub['blockIn'] = $lblcks;
             }
             $lret = '';
             if (isset($scopeCtl['type'])) {
@@ -474,7 +477,24 @@ class mcpMenuClass
             if ($showrem == true) {
                 $lret = "\n<!-- lnxmcp[".$lnxmcp_cnt.'] '.$lcmdx." !-->\n".$lres."\n<!-- /lnxmcp[".$lnxmcp_cnt."] !-->\n";
             }
-            $text = str_ireplace($subblk, $lret, $text);
+            switch ($scopeCtl['block-type']) {
+                case 'javascript':
+                    try {
+                        $jres = json_encode($lret, true);
+                    } catch (\Exception $e) {
+                        lnxmcp()->warning('TagConverter:block-type json error '.$e->getMessage());
+                    }
+                    $lret="<script type='text/javascript' >".PHP_EOL;
+                    $lret.=$lcmdx."_value=".$jres.";".PHP_EOL;
+                    $lret.="</script>";
+                break;
+                case "print_r":
+                    $text = str_ireplace($subblk, print_r($lret,1), $text);
+                break;
+                default:    
+                    $text = str_ireplace($subblk, $lret, $text);
+            }
+
         }
         while (stripos($text, '[lnxmcp-') !== false) {
             $lp1 = stripos($text, '[lnxmcp-');

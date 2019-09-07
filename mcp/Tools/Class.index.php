@@ -10,4 +10,5 @@ $mcp_autoload = new mcpAutoload($mcp_path.'/Pdo');
 $mcp_autoload = new mcpAutoload($mcp_path.'/Mail');
 $mcp_autoload = new mcpAutoload($mcp_path.'/Gfx');
 $mcp_autoload = new mcpAutoload($mcp_path.'/Ln4');
+$mcp_autoload = new mcpAutoload($mcp_path.'/Nsql');
 $mcp_autoload = new mcpAutoload($mcp_path.'/Auth');

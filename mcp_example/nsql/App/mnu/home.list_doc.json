@@ -1,0 +1,20 @@
+{
+    "srv":{
+        "type":"serviceCommon",
+        "module":"Nsql",
+        "name":"nsql",
+        "input":{
+            "T":"doc",
+            "E":"list"
+        }
+    },
+    "tpl":{
+        "type":"extTemplate",
+        "path":"app.path.module",
+        "name":"nsqltest/tpl/doclist",
+        "ext":"html"
+    },
+    "bye":{
+        "type":"exit"
+    }
+}

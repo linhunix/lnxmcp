@@ -274,6 +274,7 @@ if (class_exists("\Composer\Autoload\ClassLoader")) {
         $classLoader->addPsr4('LinHUniX\\Pdo\\', $scopeInit['purl'].'/mcp/Pdo');
         $classLoader->addPsr4('LinHUniX\\Mail\\', $scopeInit['purl'].'/mcp/Mail');
         $classLoader->addPsr4('LinHUniX\\Ln4\\', $scopeInit['purl'].'/mcp/Ln4');
+        $classLoader->addPsr4('LinHUniX\\Nsql\\', $scopeInit['purl'].'/mcp/Nsql');
         $classLoader->addPsr4('LinHUniX\\Auth\\', $scopeInit['purl'].'/mcp/Auth');
         $scopeInit['mcp.loader'] = 'AutoLoadPhar';
     } else {
@@ -282,6 +283,7 @@ if (class_exists("\Composer\Autoload\ClassLoader")) {
         $classLoader->addPsr4('LinHUniX\\Pdo\\', $app_path.'/mcp/Pdo');
         $classLoader->addPsr4('LinHUniX\\Mail\\', $app_path.'/mcp/Mail');
         $classLoader->addPsr4('LinHUniX\\Ln4\\', $app_path.'/mcp/Ln4');
+        $classLoader->addPsr4('LinHUniX\\Nsql\\', $app_path.'/mcp/Nsql');
         $classLoader->addPsr4('LinHUniX\\Auth\\', $app_path.'/mcp/Auth');
         $scopeInit['mcp.loader'] = 'AutoLoadSrc';
     }

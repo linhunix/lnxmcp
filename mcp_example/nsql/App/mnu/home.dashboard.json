@@ -1,0 +1,11 @@
+{
+    "tpl":{
+        "type":"extTemplate",
+        "path":"app.path.module",
+        "name":"nsqltest/tpl/home",
+        "ext":"html"
+    },
+    "bye":{
+        "type":"exit"
+    }
+}

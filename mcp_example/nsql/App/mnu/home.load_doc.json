@@ -1,0 +1,16 @@
+{
+    "srv":{
+        "type":"Controller",
+        "module":"nsqltest",
+        "name":"docload"
+    },
+    "tpl":{
+        "type":"extTemplate",
+        "path":"app.path.module",
+        "name":"nsqltest/tpl/docload",
+        "ext":"html"
+    },
+    "bye":{
+        "type":"exit"
+    }
+}
