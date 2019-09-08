@@ -272,7 +272,41 @@ class nsqlService extends mcpServiceModelClass {
             $this->argIn
         ); 
         $this->getMcp()->setCommon($this->argIn["table"]."_load",$res);
+        lnxmcp()->debugVar("Nsql","doc_load",$res);
+        return $res;
+     }
+    /***
+     * function doc_getdoc(){
+     * [T]= doc
+     * [E]= finddoc
+     */
+    public function doc_finddoc(){
+        if (!isset($this->argIn["doc_var"])){
+            return false;
+        }
+        if ($this->argIn["doc_var"]==""){
+            return false;
+        }
+        if (!isset($this->argIn["doc_val"])){
+            return false;
+        }
+        if ($this->argIn["doc_val"]==""){
+            return false;
+        }
+        if (!isset($this->argIn["table"])){
+            $this->argIn["table"]=$this->dbtable;
+        }
+        $res= $this->callCmd(
+            array(
+                "type"=>"queryJson",
+                "module"=>"Nsql",
+                "name"=>$this->dbtype."_DocFind"
+            ),
+            $this->argIn
+        ); 
+        $this->getMcp()->setCommon($this->argIn["table"]."_list",$res);
         lnxmcp()->debugVar("Nsql","doc_list",$res);
         return $res;
      }
+     
 }

@@ -1,0 +1,24 @@
+<html>
+    <body>
+        <h1>DOCS</h1>
+        <ul>
+            <form action='/find_doc' method='post' >
+                <fieldset>
+                    <label>Name</label>
+                    <input type='text' name='doc_name' >
+                </fieldset>
+                <fieldset>
+                    <label>Find</label>
+                    <input type='text' name='doc_find' >
+                </fieldset>
+                <input type='submit' name='Search' >
+            </form>
+        <lnxmcp type='render' module='nsqltest' name='doclist' disable-rem >
+            <li>
+                <a href="/load_doc?doc_id={{doc_id}}" target="iframe" >{{doc_id}}</a> : {{doc_name}} <br>
+                {{doc_update}}
+            </li>
+        </lnxmcp>
+        </ul>
+    </body>
+</html>

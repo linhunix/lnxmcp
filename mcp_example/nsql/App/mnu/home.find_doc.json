@@ -1,0 +1,16 @@
+{
+    "srv":{
+        "type":"Controller",
+        "module":"nsqltest",
+        "name":"docfind"
+    },
+    "tpl":{
+        "type":"extTemplate",
+        "path":"app.path.module",
+        "name":"nsqltest/tpl/docfind",
+        "ext":"html"
+    },
+    "bye":{
+        "type":"exit"
+    }
+}
