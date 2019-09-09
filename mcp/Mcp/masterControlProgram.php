@@ -1396,9 +1396,9 @@ final class masterControlProgram
      * @param string $modinit   Module name where is present the code and be load and initalized
      * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
      */
-    public function api($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    public function api($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype='Api')
     {
-        mcpApiClass::api($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+        mcpApiClass::api($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, $vendor,$mcptype);
     }
 
     /**
@@ -1410,9 +1410,9 @@ final class masterControlProgram
      * @param string $modinit   Module name where is present the code and be load and initalized
      * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
      */
-    public function apiR($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    public function apiR($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype='Api')
     {
-        mcpApiClass::apiReturn($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+        mcpApiClass::apiReturn($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $mcptype);
     }
 
     /**
@@ -1426,9 +1426,9 @@ final class masterControlProgram
      *
      * @return array $scopeOut;
      */
-    public function apiA($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    public function apiA($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype='Api')
     {
-        mcpApiClass::apiArray($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+        mcpApiClass::apiArray($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $mcptype);
     }
 
     /**
@@ -1440,9 +1440,9 @@ final class masterControlProgram
      * @param string $modinit   Module name where is present the code and be load and initalized
      * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
      */
-    public function apiCommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
+    public function apiCommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $mcptype='Api')
     {
-        mcpApiClass::apiCommon($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall);
+        mcpApiClass::apiCommon($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, null, $mcptype);
     }
 
     /**
@@ -1454,9 +1454,9 @@ final class masterControlProgram
      * @param string $modinit   Module name where is present the code and be load and initalized
      * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
      */
-    public function apiACommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
+    public function apiACommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $mcptype='Api')
     {
-        mcpApiClass::apiCommonArray($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall);
+        mcpApiClass::apiCommonArray($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, null, $mcptype);
     }
 
     /**

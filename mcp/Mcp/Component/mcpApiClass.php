@@ -26,7 +26,7 @@ use LinHUniX\Mcp\masterControlProgram;
       * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
       * @return array $ScopeOut
       */
-     public static function apiBase(masterControlProgram $mcp, $type, $srvprc, $pathsrc,$ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+     public static function apiBase(masterControlProgram $mcp, $type, $srvprc, $pathsrc,$ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype="Api")
      {
          if ($vendor == null) {
              $vendor = $mcp->getDefApp();
@@ -36,7 +36,7 @@ use LinHUniX\Mcp\masterControlProgram;
              $scopeIn=array("In"=>$scopeIn);
          }
          $scopeIn["prev-output"] = ob_get_clean();
-         return $mcp->module($srvprc, $pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, "Api");
+         return $mcp->module($srvprc, $pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $mcptype);
      }
      /**
       * Run Module as ToolApi Components and exit
@@ -47,9 +47,9 @@ use LinHUniX\Mcp\masterControlProgram;
       * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
       * @return array $ScopeOut
       */
-     public static function apiArray(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+     public static function apiArray(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype='Api')
      {
-         return self::apiBase($mcp, "Api(A)",$srvprc, $mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+         return self::apiBase($mcp, "Api(A)",$srvprc, $mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor,$mcptype);
      }
      /**
       * Run Module as ToolApi Components and exit
@@ -60,9 +60,9 @@ use LinHUniX\Mcp\masterControlProgram;
       * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
       * @return void Exit
       */
-     public static function api(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+     public static function api(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype='Api')
      {
-         $res = self::apiBase($mcp, "Api",$srvprc, $mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+         $res = self::apiBase($mcp, "Api",$srvprc, $mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor,$mcptype);
          ob_end_clean();
          header('Content-type: application/json');
          echo json_encode($res);
@@ -77,9 +77,9 @@ use LinHUniX\Mcp\masterControlProgram;
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
      * @return void Exit
      */
-     public static function apiReturn(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+     public static function apiReturn(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype='Api')
      {
-         $res = self::apiBase($mcp, "Api(Return)",$srvprc, $mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+         $res = self::apiBase($mcp, "Api(Return)",$srvprc, $mcp->getPathSrc(), $ispreload, $scopeIn, $modinit, $subcall, $vendor,$mcptype);
          ob_end_clean();
          header('Content-type: application/json');
          if (isset($res["return"])) {
@@ -98,9 +98,9 @@ use LinHUniX\Mcp\masterControlProgram;
      * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
      * @return void Exit
      */
-     public static function apiCommon(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+     public static function apiCommon(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype='Api')
      {
-         $res = self::apiBase($mcp, "Api(C)",$srvprc, $mcp->getPathMcp(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+         $res = self::apiBase($mcp, "Api(C)",$srvprc, $mcp->getPathMcp(), $ispreload, $scopeIn, $modinit, $subcall, $vendor, $mcptype);
          ob_end_clean();
          header('Content-type: application/json');
          echo json_encode($res);
@@ -115,8 +115,8 @@ use LinHUniX\Mcp\masterControlProgram;
       * @param string $subcall used if the name of the functionality ($callname) and the subcall are different
       * @return array $ScopeOut
       */
-     public static function apiCommonArray(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+     public static function apiCommonArray(masterControlProgram $mcp, $srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype='Api')
      {
-         return self::apiBase($mcp, "Api(CA)",$srvprc, $mcp->getPathMcp(), $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+         return self::apiBase($mcp, "Api(CA)",$srvprc, $mcp->getPathMcp(), $ispreload, $scopeIn, $modinit, $subcall, $vendor,$mcptype);
      }
  }
