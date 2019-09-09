@@ -179,6 +179,12 @@ class mcpMenuClass
             case 'api':
                 $result = lnxmcp()->api($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
                 break;
+            case 'apiController':
+                $result = lnxmcp()->api($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor,"Controller");
+                break;
+            case 'apiService':
+                $result = lnxmcp()->api($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor,"Service");
+                break;
             case 'apiReturn':
                 $result = lnxmcp()->apiR($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
                 break;
