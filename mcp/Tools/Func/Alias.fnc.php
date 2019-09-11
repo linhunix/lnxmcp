@@ -31,7 +31,7 @@ function lnxmcp()
  */
 function lnxMcpTag($tagname, array $scopeIn = array())
 {
-    lnxmcp()->runTag($tagname, $scopeIn);
+    return lnxmcp()->runTag($tagname, $scopeIn);
 }
 /**
  * LinHUnix Master Control Program

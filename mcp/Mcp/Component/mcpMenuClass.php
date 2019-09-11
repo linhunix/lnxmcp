@@ -135,7 +135,7 @@ class mcpMenuClass
                 break;
             case 'headerHttp':
                 $header = @$scopectl['header'];
-                lnxmcp()->header($header, false,false,null,true);
+                lnxmcp()->header($header, false, false, null, true);
                 break;
             case 'load':
                 $result = lnxmcp()->moduleLoad($callname, $modinit, $vendor, $scopeIn);
@@ -180,10 +180,10 @@ class mcpMenuClass
                 $result = lnxmcp()->api($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
                 break;
             case 'apiController':
-                $result = lnxmcp()->api($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor,"Controller");
+                $result = lnxmcp()->api($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor, 'Controller');
                 break;
             case 'apiService':
-                $result = lnxmcp()->api($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor,"Service");
+                $result = lnxmcp()->api($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor, 'Service');
                 break;
             case 'apiReturn':
                 $result = lnxmcp()->apiR($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
@@ -272,6 +272,7 @@ class mcpMenuClass
                 }
             }
         }
+        lnxmcp()->debugVar('runCommand', $callname, $result);
 
         return $result;
     }
@@ -313,6 +314,9 @@ class mcpMenuClass
             }
             $scopeIn[$callname] = lnxmcp()->runCommand($scopeCtl, $scopeIn);
         }
+        if (lnxmcp()->getCfg('mcp.debug.internal') == true) {
+            lnxmcp()->debugVar('runSequence', 'res', $scopeIn);
+        }
 
         return $scopeIn;
     }
@@ -335,7 +339,12 @@ class mcpMenuClass
             }
         }
         if (($sequence != null) && ($sequence != false)) {
-            return lnxmcp()->runSequence($sequence, $scopeIn);
+            $ret = lnxmcp()->runSequence($sequence, $scopeIn);
+            if (lnxmcp()->getCfg('mcp.debug.internal') == true) {
+                lnxmcp()->debugVar('runMenu', $action, $ret);
+            }
+
+            return $ret;
         } else {
             return false;
         }
@@ -380,6 +389,9 @@ class mcpMenuClass
                 $ret = $res;
             }
         }
+        if (lnxmcp()->getCfg('mcp.debug.internal') == true) {
+            lnxmcp()->debugVar('runTag', $action, $ret);
+        }
 
         return $ret;
     }
@@ -395,8 +407,8 @@ class mcpMenuClass
     public static function TagConverter($text, $scopeIn = array(), $label = null)
     {
         $lnxmcp_cnt = 0;
-        $text = str_replace('[scope-dump]', print_r($scopeIn,1), $text);
-        $text = str_replace('[common-dump]', print_r(lnxmcp()->getCommon(),1), $text);
+        $text = str_replace('[scope-dump]', print_r($scopeIn, 1), $text);
+        $text = str_replace('[common-dump]', print_r(lnxmcp()->getCommon(), 1), $text);
         foreach ($scopeIn as $sink => $sinv) {
             $text = str_ireplace('[scope-'.$sink.']', $sinv, $text);
         }
@@ -431,7 +443,7 @@ class mcpMenuClass
                 $showrem = false;
             }
             if (!isset($scopeCtl['block-type'])) {
-                $scopeCtl['block-type']="";
+                $scopeCtl['block-type'] = '';
             }
             lnxmcp()->info('TagConverter:block-type: '.$scopeCtl['block-type']);
             lnxmcp()->debug($lblcks);
@@ -490,17 +502,16 @@ class mcpMenuClass
                     } catch (\Exception $e) {
                         lnxmcp()->warning('TagConverter:block-type json error '.$e->getMessage());
                     }
-                    $lret="<script type='text/javascript' >".PHP_EOL;
-                    $lret.=$lcmdx."_value=".$jres.";".PHP_EOL;
-                    $lret.="</script>";
+                    $lret = "<script type='text/javascript' >".PHP_EOL;
+                    $lret .= $lcmdx.'_value='.$jres.';'.PHP_EOL;
+                    $lret .= '</script>';
                 break;
-                case "print_r":
-                    $text = str_ireplace($subblk, print_r($lret,1), $text);
+                case 'print_r':
+                    $text = str_ireplace($subblk, print_r($lret, 1), $text);
                 break;
-                default:    
+                default:
                     $text = str_ireplace($subblk, $lret, $text);
             }
-
         }
         while (stripos($text, '[lnxmcp-') !== false) {
             $lp1 = stripos($text, '[lnxmcp-');
