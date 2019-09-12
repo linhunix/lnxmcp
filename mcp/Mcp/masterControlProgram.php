@@ -901,9 +901,9 @@ final class masterControlProgram
      * @param bool   $replace remplace header
      * @param int    $retcode html return code if need
      */
-    public function header($string, $end = false, $replace = true, $retcode = null,$htmljs=false)
+    public function header($string, $end = false, $replace = true, $retcode = null, $htmljs = false)
     {
-        $this->mcpLogging->header($string, $end, $replace, $retcode,$htmljs);
+        $this->mcpLogging->header($string, $end, $replace, $retcode, $htmljs);
     }
 
     /**
@@ -939,6 +939,18 @@ final class masterControlProgram
     public function Req2Session($arguments, $onlyPost = false)
     {
         return $this->mcpTools->Req2Session($arguments, $onlyPost);
+    }
+
+    /**
+     * Request save to session.
+     *
+     * @param type $object to conver
+     *
+     * @return array of the object
+     */
+    public function Object2Array($object)
+    {
+        return $this->mcpTools->Object2Array($object);
     }
 
     /**
@@ -1396,9 +1408,9 @@ final class masterControlProgram
      * @param string $modinit   Module name where is present the code and be load and initalized
      * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
      */
-    public function api($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype='Api')
+    public function api($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype = 'Api')
     {
-        mcpApiClass::api($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, $vendor,$mcptype);
+        mcpApiClass::api($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $mcptype);
     }
 
     /**
@@ -1410,7 +1422,7 @@ final class masterControlProgram
      * @param string $modinit   Module name where is present the code and be load and initalized
      * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
      */
-    public function apiR($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype='Api')
+    public function apiR($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype = 'Api')
     {
         mcpApiClass::apiReturn($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $mcptype);
     }
@@ -1426,7 +1438,7 @@ final class masterControlProgram
      *
      * @return array $scopeOut;
      */
-    public function apiA($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype='Api')
+    public function apiA($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $mcptype = 'Api')
     {
         mcpApiClass::apiArray($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $mcptype);
     }
@@ -1440,7 +1452,7 @@ final class masterControlProgram
      * @param string $modinit   Module name where is present the code and be load and initalized
      * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
      */
-    public function apiCommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $mcptype='Api')
+    public function apiCommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $mcptype = 'Api')
     {
         mcpApiClass::apiCommon($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, null, $mcptype);
     }
@@ -1454,7 +1466,7 @@ final class masterControlProgram
      * @param string $modinit   Module name where is present the code and be load and initalized
      * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
      */
-    public function apiACommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $mcptype='Api')
+    public function apiACommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $mcptype = 'Api')
     {
         mcpApiClass::apiCommonArray($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, null, $mcptype);
     }
