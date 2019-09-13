@@ -730,6 +730,101 @@ final class mcpCoreClass
 
     /**
      * load the file if is need.
+     * the class or function need to not require arguments on cunstructor.
+     */
+    private function loadLegacy()
+    {
+        $this->setWorkingArea('loadLegacy');
+        $this->mcp->debug('loadLegacy:'.print_r($this->scopeCtl, 1));
+        if ($this->isModuleExists() == true) {
+            return;
+        }
+        // prepare env to have load a new components - for full compatibility;
+        $this->shareModuleVars();
+        try {
+            $tplfile = str_replace('.php', '.class', $this->scopeCtl[$this->sub]['file']);
+            $tplfalt = str_replace('.php', '.class', $this->scopeCtl[$this->sub]['altfile']);
+            if (file_exists($this->scopeCtl[$this->sub]['auto'])) {
+                $this->setStatus(true, 'load auto file '.$this->scopeCtl[$this->sub]['auto']);
+                include_once $this->scopeCtl[$this->sub]['auto'];
+            } else {
+                $this->setStatus(false, $this->scopeCtl[$this->sub]['auto'].' file not exist!');
+                unset($this->scopeCtl[$this->sub]['auto']);
+                if (file_exists($this->scopeCtl[$this->sub]['file'])) {
+                    $this->setStatus(true, 'load std file '.$this->scopeCtl[$this->sub]['file']);
+                    include_once $this->scopeCtl[$this->sub]['file'];
+                } elseif (file_exists($tplfile)) {
+                    $this->setStatus(true, 'load std file '.$tplfile);
+                    include_once $tplfile;
+                } elseif (file_exists($this->scopeCtl[$this->sub]['altfile'])) {
+                    $this->setStatus(true, 'load std file '.$this->scopeCtl[$this->sub]['altfile']);
+                    include_once $this->scopeCtl[$this->sub]['altfile'];
+                } elseif (file_exists($tplfalt)) {
+                    $this->setStatus(true, 'load std file '.$tplfalt);
+                    include_once $tplfalt;
+                } else {
+                    $this->setStatus(false, $this->scopeCtl[$this->sub]['file'].' file not exist!');
+                    unset($this->scopeCtl[$this->sub]['file']);
+                }
+            }
+        } catch (\ErrorException $ee) {
+            $res = 'error in loadMod '.$this->scopeCtl[$this->sub]['tag'].':'.$ee->getMessage();
+            $this->setStatus(false, $res);
+        } catch (\Exception $e) {
+            $res = 'error in loadMod '.$this->scopeCtl[$this->sub]['tag'].':'.$e->getMessage();
+            $this->setStatus(false, $res);
+        }
+        //  load a new components - for full compatibility;
+        if ($this->isModuleExists() == true) {
+            $this->shareModuleVars();
+            try {
+                if (class_exists($this->scopeCtl[$this->sub]['module'])) {
+                    $this->setStatus(true, 'load class '.$this->scopeCtl[$this->sub]['module']);
+                    $modclass = $this->scopeCtl[$this->sub]['module'];
+                    $retobj = new $modclass();
+                } elseif (function_exists($this->scopeCtl[$this->sub]['module'])) {
+                    $this->setStatus(true, 'load function '.$this->scopeCtl[$this->sub]['module']);
+                    $modfunction = $this->scopeCtl[$this->sub]['module'];
+                    $retobj = $modfunction();
+                } else {
+                    $this->setStatus(false, $this->scopeCtl[$this->sub]['module'].' not a class ');
+                }
+                if (isset($this->scopeCtl[$this->sub]['tag'])) {
+                    $tag = $this->scopeCtl[$this->sub]['tag'];
+                }
+                if (isset($retobj)) {
+                    if (is_callable($retobj) || is_object($retobj)) {
+                        if (($tag != null) && ($tag != 'none') && ($tag != '.')) {
+                            $this->setDic($tag, $retobj);
+                        }
+                    }
+                    $this->setScopeOut('return', $retobj);
+                }
+            } catch (ErrorException $ee) {
+                $res = 'error in loadMod '.$tag.':'.$ee->getMessage();
+                $this->getMcp()->warning($res);
+                $this->setStatus(false, $res);
+            } catch (Exception $e) {
+                $res = 'error in loadMod '.$tag.':'.$e->getMessage();
+                $this->getMcp()->warning($res);
+                $this->setStatus(false, $res);
+            }
+            if (!empty($this->scopeOut[$this->sub])) {
+                $this->setStatus(true, $tag.' ScopeOut is set!');
+                $err = false;
+            }
+            if ($err == false) {
+                $this->setStatus(true, $this->scopeCtl[$this->sub]['tag'].' OK DONE');
+            } else {
+                $this->setStatus(false, $this->scopeCtl[$this->sub]['tag'].' ERROR NOT SET');
+            }
+        }
+
+        return $this->getScopeOut();
+    }
+
+    /**
+     * load the file if is need.
      */
     private function loadModule()
     {

@@ -79,10 +79,10 @@ class JsonQuery extends mcpQueryModelClass
         if (isset($this->argIn['J'])) {
             $modvnd = '';
             $jfile = $this->argIn['J'];
-            $bfile=$jfile;
+            $bfile = $jfile;
             if (isset($this->argIn['M'])) {
                 $jfile = $this->argIn['M'].'/Query/'.$jfile;
-                $bfile = $this->argIn['M'].'/'.$jfile;
+                $bfile = $this->argIn['M'].'/'.$bfile;
                 $modvnd = '.'.$this->argIn['M'].$modvnd;
             }
             if (isset($this->argIn['V'])) {
@@ -90,8 +90,8 @@ class JsonQuery extends mcpQueryModelClass
                 $bfile = $this->argIn['V'].'/'.$bfile;
                 $modvnd = '.'.$this->argIn['V'].$modvnd;
             }
-            if (($modvnd=='.Nsql') or ($modvnd=='.LinHUniX.Nsql')){
-                $this->argIn['P']=$this->getCfg("mcp.path");
+            if (($modvnd == '.Nsql') or ($modvnd == '.LinHUniX.Nsql')) {
+                $this->argIn['P'] = $this->getCfg('mcp.path');
             }
             if (isset($this->argIn['P'])) {
                 $jfile = $this->argIn['P'].'/'.$jfile;
@@ -115,6 +115,7 @@ class JsonQuery extends mcpQueryModelClass
                 $this->query = json_decode(file_get_contents($this->querypath.$bfile.'.json'), 1);
             } else {
                 $this->getMcp()->warning('Error on load:'.$this->querypath.$bfile.'[.json]');
+
                 return;
             }
         }

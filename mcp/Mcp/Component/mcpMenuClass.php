@@ -143,6 +143,9 @@ class mcpMenuClass
             case 'run':
                 $result = lnxmcp()->moduleRun($callname, $scopeIn);
                 break;
+            case 'legacy':
+                $result = lnxmcp()->legacyClass($callname, $scopeIn, $modinit, $subcall, $vendor, $path);
+                break;
             case 'driver':
                 $result = lnxmcp()->driver($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $path);
                 break;

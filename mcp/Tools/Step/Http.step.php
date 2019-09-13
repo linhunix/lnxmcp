@@ -89,6 +89,66 @@ class mcpRunHttp
     }
 
     /**
+     * mcpPathConvert
+     * check if present on path list  and if present redirect.
+     *
+     * @param mixed $urlpth
+     */
+    public function mcpPathConvert($urlpth, $urlarr)
+    {
+        lnxmcp()->debug('Check a Redirect Action for '.$urlpth);
+        $cfgpth = lnxmcp()->getResource('path.config');
+        $pathredirect = lnxGetJsonFile('PathConvert', $cfgpth, 'json');
+        if (is_array($pathredirect)) {
+            if (isset($pathredirect[$urlpth])) {
+                lnxmcp()->info('Found a Conver Action for '.$urlpth);
+                $redcmd = $pathredirect[$urlpth];
+                if (is_array($redcmd)) {
+                    lnxmcp()->runCommand($redcmd, $urlarr);
+                } else {
+                    lnxmcp()->runMenu($redcmd, $urlarr);
+                }
+
+                return true;
+            } else {
+                $urlpart = '';
+                foreach (explode('/', strtolower($urlpth)) as $urlseg) {
+                    if ($urlseg != '') {
+                        $urlpart .= '/'.$urlseg;
+                        lnxmcp()->debug('Check a Conver Action for partial '.$urlpart);
+                        $urlcheck = $urlpart.'/*';
+                        if (isset($pathredirect[$urlcheck])) {
+                            lnxmcp()->info('Found a Conver Action for partial '.$urlpart);
+                            $redcmd = $pathredirect[$urlcheck];
+                            if (is_array($redcmd)) {
+                                lnxmcp()->runCommand($redcmd, $urlarr);
+                            } else {
+                                lnxmcp()->runMenu($redcmd, $urlarr);
+                            }
+
+                            return true;
+                        }
+                        $urlcheck = '*/'.$urlseg.'/*';
+                        if (isset($pathredirect[$urlcheck])) {
+                            lnxmcp()->info('Found a Conver Action for partial '.$urlpart);
+                            $redcmd = $pathredirect[$urlcheck];
+                            if (is_array($redcmd)) {
+                                lnxmcp()->runCommand($redcmd, $urlarr);
+                            } else {
+                                lnxmcp()->runMenu($redcmd, $urlarr);
+                            }
+
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * mcpAdmRedirect
      * SPECIAL PAGE AREA
      * if is /lnxmcp/tag -> run tag
@@ -102,13 +162,13 @@ class mcpRunHttp
     public function mcpAdmRedirect($urlpth, $urlarr)
     {
         $res = false;
-        if (lnxmcp()->getCfg('mcp.web.api')== true){
+        if (lnxmcp()->getCfg('mcp.web.api') == true) {
             if (substr($urlpth, 0, 10) == '/lnxmcpapi') {
                 $res = true;
                 lnxmcp()->Rem($_REQUEST);
-                $_REQUEST['urlarr']=$urlarr;
+                $_REQUEST['urlarr'] = $urlarr;
                 print_r(
-                    lnxmcp()->runCommand($_REQUEST,$_REQUEST)
+                    lnxmcp()->runCommand($_REQUEST, $_REQUEST)
                 );
                 LnxMcpExit('lnxmcpapi');
             }
@@ -119,8 +179,8 @@ class mcpRunHttp
                     if (isset($urlarr[2])) {
                         $webarg = $urlarr[2];
                     }
-                    lnxmcp()->setCommon('web.adm.cmd',$webarg);
-                    lnxmcpAdm($webarg,'Httpd');
+                    lnxmcp()->setCommon('web.adm.cmd', $webarg);
+                    lnxmcpAdm($webarg, 'Httpd');
                     LnxMcpExit('lnxmcpadm');
                 }
             }
@@ -161,10 +221,7 @@ class mcpRunHttp
         lnxmcp()->setCommon('ucm.noimage', $noimage);
         $urlpth = strtolower($urlpth);
         $urlarr = explode('/', $urlpth);
-        //// ADM CALL
-        if ($this->mcpAdmRedirect($urlpth, $urlarr) == true) {
-            return;
-        }
+        lnxmcp()->setCommon('CatUrl', $urlarr);
         ////// GET BROWSER TYPE INFO
         $browser = new \LinHUniX\Mcp\Tools\browserData();
         foreach ($browser->getResult() as $bdk => $dbv) {
@@ -176,8 +233,15 @@ class mcpRunHttp
                 lnxmcp()->setCfg('web.'.$bdk, $dbv);
             }
         }
+        //// ADM CALL
+        if ($this->mcpAdmRedirect($urlpth, $urlarr) == true) {
+            return;
+        }
+        //// ADM CALL
+        if ($this->mcpPathConvert($urlpth, $urlarr) == true) {
+            return;
+        }
         ///// MENU CALL
-        lnxmcp()->setCommon('CatUrl', $urlarr);
         $cfgpth = lnxmcp()->getResource('path.config');
         $catlist = $urlarr;
         $catcnt = sizeof($catlist);

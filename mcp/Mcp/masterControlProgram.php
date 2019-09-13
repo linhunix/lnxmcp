@@ -1000,6 +1000,14 @@ final class masterControlProgram
     }
 
     /**
+     * Load a module or a template and clear the vars.
+     */
+    public function loadLegacy()
+    {
+        $this->mcpCore->LegacyLoader();
+    }
+
+    /**
      *  load and execute module and clear the vars after results.
      *
      * @return array results
@@ -1118,6 +1126,30 @@ final class masterControlProgram
         }
 
         return $this->module($libname, $this->pathsrc, false, $scopeIn);
+    }
+
+    /**
+     * legacy class loader
+     * rember the class need to not have required args on constructor.
+     *
+     * @param string $callname name of the functionality
+     * @param array  $scopeIn  Input Array with the value need to work
+     * @param string $modinit  Module name where is present the code and be load and initalized
+     * @param string $subcall  used if the name of the functionality ($callname) and the subcall are different
+     * @param string $vendor   this code is part of specific vendor (ex ft )
+     * @param string $type     is a Page, Block, Controller, Driver
+     * @param string $path     path where present the basedirectory of the data
+     *
+     * @return array $ScopeOut
+     */
+    public function legacyClass($callname, array $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $path = null)
+    {
+        if ($path == null) {
+            $path = $this->pathsrc;
+        }
+        $this->statmentModule($path, $callname, true, $scopeIn, $modinit, $subcall, $vendor, 'Legacy');
+
+        return $this->loadLegacy();
     }
 
     /**
