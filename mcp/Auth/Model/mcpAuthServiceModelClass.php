@@ -133,7 +133,7 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
 
     }
     /**
-     * 
+     * setAuthSession
      */
     protected function setAuthSession($id=0,$user='nobody',$group='nogroup',$isadm=false,$allow=array(),$denied=array(),$gdpr=false,$lock=false,$email='',$phone='',$address='',$extra=array()){
         $this->auth_id=$id;
@@ -205,15 +205,39 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
     public function auth_login(){
             /*** put jour code */
     }
-     /**
+    /**
      * function modulelogin
-     * default login session
+     * default logout session
+     * @return void
+     */
+    public function auth_logout(){
+        $this->setAuthSession();
+    }
+     /**
+     * function auth_register
+     * default create user session
      * @return void
      */
     public function auth_register(){
         /*** put jour code */
     }
-         /**
+     /**
+     * function modulelogin
+     * default delete user session
+     * @return void
+     */
+    public function auth_unregister(){
+        /*** put jour code */
+    }
+     /**
+     * function modulelogin
+     * default update user data session
+     * @return void
+     */
+    public function auth_update(){
+        /*** put jour code */
+    }
+    /**
      * function auth_recover
      * default revove - return password - forgot session
      * @return void
