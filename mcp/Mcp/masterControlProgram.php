@@ -190,12 +190,12 @@ final class masterControlProgram
         if (isset($scopeIn['app.path.module'])) {
             $this->pathsrc = $scopeIn['app.path.module'];
         } else {
-            $this->pathsrc = $this->pathapp.'Module/';
+            $this->pathsrc = $this->pathapp.'mod/';
         }
         if (isset($scopeIn['app.path.template'])) {
             $this->pathtpl = $scopeIn['app.path.template'];
         } else {
-            $this->pathtpl = $this->pathapp.'Template/';
+            $this->pathtpl = $this->pathapp.'tpl/';
         }
         if (isset($scopeIn['mcp.path.module'])) {
             $this->pathmcp = $scopeIn['mcp.path.module'];

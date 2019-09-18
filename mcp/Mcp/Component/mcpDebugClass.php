@@ -255,6 +255,7 @@ class mcpDebugClass
             }
         }
         if ($end) {
+            flush();
             exit(0);
         }
     }

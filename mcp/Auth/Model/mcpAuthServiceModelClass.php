@@ -261,5 +261,19 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
     public function auth_luck(){
         $this->auth_lock=true;
     }
+     /**
+     * function auth_notify
+     * default notify changes
+     * @return void
+     */
+    public function auth_notify(){
+        $url=$this->getArgIn("url");
+        $msg=$this->getArgIn("message");
+        $mod=$this->getArgIn("module");
+        if ($this->getAuthFor($mod."_notify")==true) {
+            /// manage mail 
+        }
+
+    }
 
 }

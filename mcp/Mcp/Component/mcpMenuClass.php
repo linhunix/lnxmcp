@@ -11,6 +11,8 @@
 
 namespace LinHUniX\Mcp\Component;
 
+use LinHUniX\Mcp\Tools\scheduler;
+
 /**
  * Description of mcpDebugClass.
  *
@@ -337,6 +339,21 @@ class mcpMenuClass
         $sequence = lnxmcp()->getResource('menu.'.$action);
         if ($sequence == null) {
             $seqpth = lnxmcp()->getResource('path.menus');
+            if (strstr($action,"\\")!=false){
+                $seqpth = lnxmcp()->getResource('path.module');
+                $arcarr=explode("\\",$action);
+                $action= array_pop($arcarr);
+                $sqalbl = 'mod.path.'.implode('.',$arcarr);
+                $sqapth = lnxmcp()->getResource($sqalbl);
+                if (($sqapth!=null) and ($sqapth != '')) {
+                    $seqpth=$sqapth."/mnu/";
+                } else {
+                    $seqpth .="/".implode('/',$arcarr)."/mnu/";
+                }
+            }
+            if (lnxmcp()->getCfg('mcp.debug.internal') == true) {
+                lnxmcp()->debugVar('runMenu>>path', $action, $seqpth);
+            }
             if ($seqpth != null) {
                 $sequence = lnxGetJsonFile($action, $seqpth, 'json');
             }
@@ -370,6 +387,21 @@ class mcpMenuClass
         $sequence = lnxmcp()->getResource('tag.'.$action);
         if ($sequence == null) {
             $seqpth = lnxmcp()->getResource('path.tags');
+            if (strstr($action,"\\")!=false){
+                $seqpth = lnxmcp()->getResource('path.module');
+                $arcarr=explode("\\",$action);
+                $action= array_pop($arcarr);
+                $sqalbl = 'mod.path.'.implode('.',$arcarr);
+                $sqapth = lnxmcp()->getResource($sqalbl);
+                if (($sqapth!=null) and ($sqapth != '')) {
+                    $seqpth=$sqapth."/tag/";
+                } else {
+                    $seqpth .="/".implode('/',$arcarr)."/tag/";
+                }
+            }
+            if (lnxmcp()->getCfg('mcp.debug.internal') == true) {
+                lnxmcp()->debugVar('runTag>>path', $action, $seqpth);
+            }
             if ($seqpth != null) {
                 $sequence = lnxGetJsonFile($action, $seqpth, 'json');
             }

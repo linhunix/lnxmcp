@@ -162,8 +162,11 @@ class mcpRunHttp
     public function mcpAdmRedirect($urlpth, $urlarr)
     {
         $res = false;
+        lnxmcp()->debug('Check a adm Action for '.$urlpth);
         if (lnxmcp()->getCfg('mcp.web.api') == true) {
+            lnxmcp()->debug('Api Action Enable!.. run check');
             if (substr($urlpth, 0, 10) == '/lnxmcpapi') {
+                lnxmcp()->debug('Run a Api Action for '.$urlpth);
                 $res = true;
                 lnxmcp()->Rem($_REQUEST);
                 $_REQUEST['urlarr'] = $urlarr;
@@ -173,7 +176,9 @@ class mcpRunHttp
                 LnxMcpExit('lnxmcpapi');
             }
             if (lnxmcp()->getCfg('mcp.web.admin') == true) {
+                lnxmcp()->debug('Admin Action Enable!.. run check');
                 if (substr($urlpth, 0, 11) == '/lnxmcpadm/') {
+                    lnxmcp()->debug('Run a Admin Action for '.$urlpth);
                     $res = true;
                     $webarg = 'home';
                     if (isset($urlarr[2])) {
