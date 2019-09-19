@@ -1,253 +1,196 @@
 <?php
-
 /**
- * LinHUniX Web Application Framework
- *
- * @author Andrea Morello <andrea.morello@linhunix.com>
- * @copyright LinHUniX L.t.d., 2018, UK
- * @license   Proprietary See LICENSE.md
- * @version GIT:2018-v2
+ * Created by VSCODE.
+ * User: linhunix
+ * Date: 15/9/2019
+ * Time: 10:11 AM.
  */
 
 namespace LinHUniX\Auth\Service;
 
 use LinHUniX\Mcp\Model\mcpServiceModelClass;
 
-class authService extends mcpServiceModelClass {
-    protected $session_id;
-    protected $session_privacy;
-    protected $session_user;
-    protected $session_groups;
-    protected $session_data;
-    protected $session_authlevel;
+class authService extends mcpServiceModelClass
+{
 
-    protected function moduleInit(){
-        $this->spacename=__NAMESPACE__;
-        $this->classname=__CLASS__;
-    }
+    protected $authservice;
 
-    /**
-     * standard 1 shot user
-     */
+    //////////////////////////////////////////////////////////////////////
+    // SERVICE INTEGRATION FUNCTION 
+    //////////////////////////////////////////////////////////////////////
+
     protected function moduleSingleTon() {
-        $this->session_id=date("U");
-        $this->session_user="guest";
-        $this->session_group="guest";
-        if (isset($_COOKIE["lnxmcp"])) {
-            $this->$session_id=$_COOKIE["lnxmcp"];
+        $sercfg=$this->getCfg("app.auth.service");
+        if (!is_array($sercfg)){
+            $sercfg=array(
+                "type"=>"serviceCommon",
+                "module"=>"Nsql",
+                "ispreload"=>true,
+                "name"=>"authCfg"
+           );
         }
-        $this->getMcp()->setCommon("session.id",$session_id);
-        $cmd=$this->getSvcCfg("command.session");
-        if (empty($cmd)) {
-            $cmd=array(
-                "type"=>"driver",
-                "module"=>"Auth",
-                "name"=>"sqlite",
-                "input"=>array(
-                    "T"=>"user",
-                    "E"=>"session"
-                )
-            );
-        }
-        $this->session_data=$this->callCmd($cmd, $this->getSvcCfg());
-        $this->session_update();
-    }
-
-    /**
-     * session_update
-     * [T]= session
-     * [E]= update
-     */
-    public function session_update(){
-        if (isset($this->session_data["privacy"])){
-            $this->session_privacy=$this->session_data["privacy"];
-        }
-        if (isset($this->session_data["user"])){
-            $this->session_user=$this->session_data["user"];
-        }
-        if (isset($this->session_data["groups"])){
-            $this->session_groups=$this->session_data["groups"];
-        }
-        if (isset($this->session_data["authlevel"])){
-            $this->session_authlevel=$this->session_data["authlevel"];
-        }
-        $this->getMcp()->setCommon("session.user",$this->session_user);
-        $this->getMcp()->setCommon("session.groups",$this->session_groups);
-        $this->getMcp()->setCommon("session.data",$this->session_data);
-        $this->cookie_update();
-    }
-    /**
-     * session_privacy
-     * [T]= session
-     * [E]= privacy
-     */
-    public function session_privacy(){
-        if ($_REQUEST["Privacy"]="accepted"){
-            $this->session_privacy=true;
-            $this->session_data["privacy"]=true;
-        }
-        $this->cookie_update();
+        $this->authservice=$this->callCmd(
+            $sercfg,
+            $this->argIn
+        );
     }
 
 
-
-    /**
-     * cookie_update 
-     * [T]= cookie
-     * [E]= update
-     */
-    public function cookie_update(){
-        if ($this->session_privacy == true) {
-            $expire=$this->getSvcCfg("Session.expire");
-            if (empty($expire)){
-                $expire = time()+60*60;//1hours
-            }
-            setcookie("lnxmcp",$this->session_id,$expire);
-        }
-    }
-    /**
-     * cookie_delete 
-     * [T]= cookie
-     * [E]= delete
-     */
-    public function cookie_delete(){
-        $expire = time()-3600;
-        setcookie("lnxmcp",$this->session_id,$expire);
+    protected function moduleInit()
+    {
+        $this->spacename = __NAMESPACE__;
+        $this->classname = __CLASS__;
+        $this->auth_sload();
     }
 
+
+    //////////////////////////////////////////////////////////////////////
+    // CUSTOM FUNCTION 
+    //////////////////////////////////////////////////////////////////////
+
     /**
-     * user_login 
-     * [T]= user
-     * [E]= login
+     * function modulesetup
+     * default setup module
+     * @return void
      */
-    public function user_login() {
-        $this->cookie_delete();
-        if ($this->session_privacy != true) {
-            return false;
+    protected function auth_setup(){
+        if ($this->authservice==null){
+            $this->warning("authservice is null");
+            return;
         }
-        $cmd=$this->getSvcCfg("command.login");
-        if (empty($cmd)) {
-            $cmd=array(
-                "type"=>"driver",
-                "module"=>"Auth",
-                "name"=>"sqlite",
-                "input"=>array(
-                    "T"=>"user",
-                    "E"=>"login"
-                )
-            );
-        }
-        $this->session_data=$this->callCmd($cmd, $this->getSvcCfg());
-        $this->session_update();
+        $this->authservice->auth_setup();
     }
     /**
-     * user_logout
-     * [T]= user
-     * [E]= logout
+     * function modulelogin
+     * default login session
+     * @return void
      */
-    public function user_logout() {
-        $this->cookie_delete();
-        if ($this->session_privacy != true) {
-            return false;
+    public function auth_login(){
+        if ($this->authservice==null){
+            $this->warning("authservice is null");
+            return;
         }
-        $cmd=$this->getSvcCfg("command.logout");
-        if (! empty($cmd)) {
-            $this->session_data=$this->callCmd($cmd, $this->getSvcCfg());
-        }
+        $this->authservice->auth_login();
     }
     /**
-     * user_register 
-     * [T]= user
-     * [E]= register
+     * function modulelogin
+     * default logout session
+     * @return void
      */
-    public function user_register() {
-        $this->cookie_delete();
-        if ($this->session_privacy != true) {
-            return false;
+    public function auth_logout(){
+        if ($this->authservice==null){
+            $this->warning("authservice is null");
+            return;
         }
-        $cmd=$this->getSvcCfg("command.register");
-        if (empty($cmd)) {
-            $cmd=array(
-                "type"=>"driver",
-                "module"=>"Auth",
-                "name"=>"sqlite",
-                "input"=>array(
-                    "T"=>"user",
-                    "E"=>"register"
-                )
-            );
-        }
-        $this->session_data=$this->callCmd($cmd, $this->getSvcCfg());
-        $this->session_update();
+        $this->authservice->auth_logout();
     }
      /**
-     * user_update 
-     * [T]= user
-     * [E]= update
+     * function auth_register
+     * default create user session
+     * @return void
      */
-    public function user_update() {
-        if ($this->session_privacy != true) {
-            return false;
+    public function auth_register(){
+        if ($this->authservice==null){
+            $this->warning("authservice is null");
+            return;
         }
-        $cmd=$this->getSvcCfg("command.update");
-        if (empty($cmd)) {
-            $cmd=array(
-                "type"=>"driver",
-                "module"=>"Auth",
-                "name"=>"sqlite",
-                "input"=>array(
-                    "T"=>"user",
-                    "E"=>"update"
-                )
-            );
-        }
-        $this->session_data=$this->callCmd($cmd, $this->getSvcCfg());
-        $this->cookie_delete();
+        $this->authservice->auth_register();
     }
      /**
-     * user_update
-     * [T]= user
-     * [E]= delete
+     * function modulelogin
+     * default delete user session
+     * @return void
      */
-    public function user_delete() {
-        if ($this->session_privacy != true) {
-            return false;
+    public function auth_unregister(){
+        if ($this->authservice==null){
+            $this->warning("authservice is null");
+            return;
         }
-        $cmd=$this->getSvcCfg("command.delete");
-        if (empty($cmd)) {
-            $cmd=array(
-                "type"=>"driver",
-                "module"=>"Auth",
-                "name"=>"sqlite",
-                "input"=>array(
-                    "T"=>"user",
-                    "E"=>"delete"
-                )
-            );
-        }
-        $this->session_data=$this->callCmd($cmd, $this->getSvcCfg());
-        $this->session_update();
+        $this->authservice->auth_unregister();
     }
-    /***
-     * user_forgot
-     * [T]= user
-     * [E]= delete
+     /**
+     * function modulelogin
+     * default update user data session
+     * @return void
      */
-     public function user_forgot(){
-        $cmd=$this->getSvcCfg("command.forgot");
-        if (empty($cmd)) {
-            $cmd=array(
-                "type"=>"driver",
-                "module"=>"Auth",
-                "name"=>"sqlite",
-                "input"=>array(
-                    "T"=>"user",
-                    "E"=>"forgot"
-                )
-            );
+    public function auth_update(){
+        if ($this->authservice==null){
+            $this->warning("authservice is null");
+            return;
         }
-        $this->session_data=$this->callCmd($cmd, $this->getSvcCfg());
-        $this->cookie_delete();
-     }
+        $this->authservice->auth_update();
+    }
+    /**
+     * function auth_recover
+     * default revove - return password - forgot session
+     * @return void
+     */
+    public function auth_recover(){
+        if ($this->authservice==null){
+            $this->warning("authservice is null");
+            return;
+        }
+        $this->authservice->auth_recover();
+    }
+     /**
+     * function auth_unluck
+     * default unlock session
+     * @return void
+     */
+    public function auth_unluck(){
+        if ($this->authservice==null){
+            $this->warning("authservice is null");
+            return;
+        }
+        $this->authservice->auth_unluck();
+    }
+     /**
+     * function auth_unluck
+     * default unlock session
+     * @return void
+     */
+    public function auth_luck(){
+        if ($this->authservice==null){
+            $this->warning("authservice is null");
+            return;
+        }
+        $this->authservice->auth_luck();
+    }
+     /**
+     * function auth_notify
+     * default notify changes
+     * @return void
+     */
+    public function auth_notify(){
+        if ($this->authservice==null){
+            $this->warning("authservice is null");
+            return;
+        }
+        $this->authservice->auth_notify();
+    }
+    /**
+     * function auth_sload
+     * load session data 
+     * @return void
+     */
+    public function auth_sload(){
+        if ($this->authservice==null){
+            $this->warning("authservice is null");
+            return;
+        }
+        $this->authservice->auth_sload();
+    }
+    /**
+     * function auth_ssave
+     * save session data 
+     * @return void
+     */
+    public function auth_ssave(){
+        if ($this->authservice==null){
+            $this->warning("authservice is null");
+            return;
+        }
+        $this->authservice->auth_ssave();
+    }
 
 }

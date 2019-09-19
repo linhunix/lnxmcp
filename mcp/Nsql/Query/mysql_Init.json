@@ -1,0 +1,5 @@
+{
+    "E":"lnx.mysql",
+    "T":"e",
+    "Q":"create table if not exists [table] (doc INTEGER not null,name text not null ,date text not null, value blob, extra blob, primary key (doc,name));"
+}

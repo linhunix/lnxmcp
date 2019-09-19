@@ -29,3 +29,31 @@ function lnxmcpDbM($command = null, $element = null)
         echo "DbMigrate Complete!!\n";
     }
 }
+/**
+ * Run Nsql Modul
+ *
+ * @param string $action   Name of the event 
+ * @param array  $scopeIn  Input Array with the value need to work
+ * @param string $table    The name of the table if need
+ *
+ * @return array $ScopeOut 
+ */
+function lnxmcpNsql($action,$scopeIn=null,$table=null){
+    if (!is_array($scopeIn)){
+        $scopeIn=array();
+    }
+    $scopeIn["T"]="doc";
+    $scopeIn["E"]=$action;
+    if ($table!=null){
+        $scopeIn["Table"]=$table;
+    }
+    return $this->callCmd(
+        array(
+            "type"=>"serviceCommon",
+            "module"=>"Nsql",
+            "name"=>"nsql"
+        ),
+        $scopeIn
+    );
+
+}

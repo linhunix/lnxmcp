@@ -49,23 +49,11 @@ class nsqlService extends mcpServiceModelClass {
     }
 
     /***
-     * function table_Init(){
-     * [T]= table
-     * [E]= init
+     * function doc_tableInit(){
+     * [T]= doc
+     * [E]= tableInit
      */
-    public function table_Init(){
-        if (!isset($this->argIn["doc_name"])){
-            return false;
-        }
-        if ($this->argIn["doc_name"]==""){
-            return false;
-        }
-        if (!isset($this->argIn["doc_id"])){
-            $this->argIn["doc_id"]=date('U');
-        }
-        if ($this->argIn["doc_id"]==""){
-            $this->argIn["doc_id"]=date('U');
-        }
+    public function doc_tableInit(){
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
@@ -73,15 +61,7 @@ class nsqlService extends mcpServiceModelClass {
             array(
                 "type"=>"queryJson",
                 "module"=>"Nsql",
-                "name"=>$this->dbtype."_DocInit"
-            ),
-            $this->argIn
-        ); 
-        return $this->callCmd(
-            array(
-                "type"=>"queryJson",
-                "module"=>"Nsql",
-                "name"=>$this->dbtype."_DocId"
+                "name"=>$this->dbtype."_Init"
             ),
             $this->argIn
         ); 

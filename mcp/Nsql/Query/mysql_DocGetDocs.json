@@ -1,0 +1,5 @@
+{
+    "E":"lnx.mysql",
+    "T":"q",
+    "Q":"select * from [table] where name='doc';"
+}

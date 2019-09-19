@@ -182,7 +182,7 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
         $this->spacename = __NAMESPACE__;
         $this->classname = __CLASS__;
         $this->setAuthSession();
-        $this->auth_login();
+        $this->auth_sload();
     }
 
     //////////////////////////////////////////////////////////////////////
@@ -273,6 +273,21 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
         if ($this->getAuthFor($mod."_notify")==true) {
             /// manage mail 
         }
+    }
+    /**
+     * function auth_sload
+     * load session data 
+     * @return void
+     */
+    public function auth_sload(){
+
+    }
+    /**
+     * function auth_ssave
+     * save session data 
+     * @return void
+     */
+    public function auth_ssave(){
 
     }
 
