@@ -106,7 +106,7 @@ class waitprocessService extends mcpServiceModelClass
             ),
             $this->argIn
         );
-        if (is_array($res)) {
+        if (isset($res['name'])) {
             return false;
         }
         $res = $this->callCmd(
@@ -169,7 +169,7 @@ class waitprocessService extends mcpServiceModelClass
             ),
             $this->argIn
         );
-        if (is_array($res)) {
+        if (isset($res['name'])) {
             $res = $this->callCmd(
                 array(
                     'type' => 'queryJson',
@@ -217,7 +217,7 @@ class waitprocessService extends mcpServiceModelClass
             ),
             $this->argIn
         );
-        if (is_array($res)) {
+        if (isset($res['name'])) {
             return false;
         }
         $res = $this->callCmd(

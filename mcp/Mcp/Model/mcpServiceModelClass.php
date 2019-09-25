@@ -95,6 +95,7 @@ class mcpServiceModelClass extends mcpBaseModelClass
                 $this->debug('Not Found>>'.$method);
             }
         }
+        $this->argOut = $out;
 
         return $out;
     }

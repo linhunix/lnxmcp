@@ -62,20 +62,20 @@ if (!isset($scopePdo)) {
     );
 }
 /*
-    'lnx.ctl' => array(
+    'lnx.myctl' => array(
         'config' => 'ENV',
-        'hostname' => 'LNX_DB_HOST',
-        'database' => 'LNX_DB_2_NAME',
-        'username' => 'LNX_DB_UID',
-        'password' => 'LNX_DB_PWD',
+        'hostname' => 'LNX_MYCTL_DB_HOST',
+        'database' => 'LNX_MYCTL_DB_NAME',
+        'username' => 'LNX_MYCTL_DB_UID',
+        'password' => 'LNX_MYCTL_DB_PWD',
         'driver' => 'mysql',
     ),
-    'lnx.data' => array(
+    'lnx.mydata' => array(
         'config' => 'ENV',
-        'hostname' => 'LNX_DB_HOST',
-        'database' => 'LNX_DB_1_NAME',
-        'username' => 'LNX_DB_UID',
-        'password' => 'LNX_DB_PWD',
+        'hostname' => 'LNX_MYDT_DB_HOST',
+        'database' => 'LNX_MYDT_DB_NAME',
+        'username' => 'LNX_MYDT_DB_UID',
+        'password' => 'LNX_MYDT_DB_PWD',
         'driver' => 'mysql',
     ),
  */

@@ -1,5 +1,5 @@
 {
-    "E":"lnx.mysql",
+    "E":"lnx.mydata",
     "T":"f",
     "Q":"select * from [table] where doc=[doc_id] and name='[doc_var]';" 
 }
