@@ -23,6 +23,13 @@ class waitprocessService extends mcpServiceModelClass
     {
         $this->spacename = __NAMESPACE__;
         $this->classname = __CLASS__;
+    }
+
+    /**
+     *  function moduleSingleTon().
+     */
+    protected function moduleSingleTon()
+    {
         $this->callCmd(
             array(
                 'type' => 'queryJson',
