@@ -1,0 +1,34 @@
+{
+    "home.lnxmcp.themecss-material": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/BsMat/css/material.min.css",
+                "mimetype": "text/css",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    },
+    "home.lnxmcp.themejs-material": {
+        "cat": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Bs386/js/material.min.js",
+                "mimetype": "text/javascript",
+                "T": "INT"
+            }
+        },
+        "bye": {
+            "type": "exit"
+        }
+    }
+}
