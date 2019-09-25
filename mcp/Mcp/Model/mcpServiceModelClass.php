@@ -57,11 +57,11 @@ class mcpServiceModelClass extends mcpBaseModelClass
     {
         try {
             //LnxMcpFullDebugOn();
-            $argin = $this->getMcp()->getCommon();
-            $argin['T'] = 'common';
-            $argin['E'] = $name;
-            $this->debug('Common Event:'.print_r($argin, 1));
-            $res = $this->run($this->bootCtl, $argin);
+            $cargin = $this->getMcp()->getCommon();
+            $cargin['T'] = 'common';
+            $cargin['E'] = $name;
+            $this->debug('Common Event:'.print_r($cargin, 1));
+            $res = $this->run($this->bootCtl, $cargin);
             if (isset($res['return'])) {
                 $res = $res['return'];
             }
@@ -97,18 +97,22 @@ class mcpServiceModelClass extends mcpBaseModelClass
     protected function moduleCore()
     {
         $this->debug('moduleCore');
+        $this->debug('argIn=>'.print_r($this->argIn, 1));
         $method = '';
+        $out = array();
         if (!empty($this->argIn['T'])) {
+            $this->debug('T>>'.$this->argIn['T']);
             $method .= $this->argIn['T'];
             $funcx = $this->argIn['T'];
             if (method_exists($this, $funcx)) {
                 $this->debug('moduleCore>>'.$funcx);
-                $this->$funcx();
+                $out[$this->argIn['T']] = $this->$funcx();
             } else {
                 $this->debug('Not Found>>'.$funcx);
             }
         }
         if (!empty($this->argIn['E'])) {
+            $this->debug('E>>'.$this->argIn['E']);
             if (!empty($method)) {
                 $method .= '_';
             }
@@ -116,19 +120,22 @@ class mcpServiceModelClass extends mcpBaseModelClass
             $funcx = $this->argIn['E'];
             if (method_exists($this, $funcx)) {
                 $this->debug('moduleCore>>'.$funcx);
-                $this->$funcx();
+                $out[$this->argIn['E']] = $this->$funcx();
             } else {
                 $this->debug('Not Found>>'.$funcx);
             }
         }
+        $this->debug('method>>'.$method);
         if (!empty($method)) {
             if (method_exists($this, $method)) {
                 $this->debug('found:moduleCore>>'.$method);
-                $this->$method();
+                $out[$method] = $this->$method();
             } else {
                 $this->debug('Not Found>>'.$method);
             }
         }
+
+        return $out;
     }
 
     /**

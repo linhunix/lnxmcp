@@ -1,0 +1,5 @@
+{
+    "E":"lnx.lite",
+    "T":"f",
+    "Q":"select * where name = '[action]' ;"
+}
