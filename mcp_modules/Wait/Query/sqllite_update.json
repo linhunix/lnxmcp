@@ -1,0 +1,5 @@
+{
+    "E":"lnx.lite",
+    "T":"e",
+    "Q":"update wait_process set update = datetime(), expired = strftime('%s','now')+120, status = [sts], denied= [del], value_out='[value_out]' where name = '[action]' ;"
+}

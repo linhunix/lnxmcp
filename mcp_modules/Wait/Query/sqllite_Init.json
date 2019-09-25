@@ -1,0 +1,5 @@
+{
+    "E":"lnx.lite",
+    "T":"e",
+    "Q":"create table if not exists wait_process (name text not null ,date int not null,update int not null, expired int not null, denied int,status int,value_in blob,value_out blob, primary key (name));"
+}

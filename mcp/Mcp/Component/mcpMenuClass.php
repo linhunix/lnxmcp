@@ -11,8 +11,6 @@
 
 namespace LinHUniX\Mcp\Component;
 
-use LinHUniX\Mcp\Tools\scheduler;
-
 /**
  * Description of mcpDebugClass.
  *
@@ -60,6 +58,9 @@ class mcpMenuClass
         $ispreload = false;
         if (isset($scopectl['ispreload'])) {
             $ispreload = $scopectl['ispreload'];
+        }
+        if (isset($scopectl['isPreload'])) {
+            $ispreload = $scopectl['isPreload'];
         }
         $modinit = null;
         if (isset($scopectl['modinit'])) {
@@ -339,16 +340,16 @@ class mcpMenuClass
         $sequence = lnxmcp()->getResource('menu.'.$action);
         if ($sequence == null) {
             $seqpth = lnxmcp()->getResource('path.menus');
-            if (strstr($action,"\\")!=false){
+            if (strstr($action, '\\') != false) {
                 $seqpth = lnxmcp()->getResource('path.module');
-                $arcarr=explode("\\",$action);
-                $action= array_pop($arcarr);
-                $sqalbl = 'mod.path.'.implode('.',$arcarr);
+                $arcarr = explode('\\', $action);
+                $action = array_pop($arcarr);
+                $sqalbl = 'mod.path.'.implode('.', $arcarr);
                 $sqapth = lnxmcp()->getResource($sqalbl);
-                if (($sqapth!=null) and ($sqapth != '')) {
-                    $seqpth=$sqapth."/mnu/";
+                if (($sqapth != null) and ($sqapth != '')) {
+                    $seqpth = $sqapth.'/mnu/';
                 } else {
-                    $seqpth .="/".implode('/',$arcarr)."/mnu/";
+                    $seqpth .= '/'.implode('/', $arcarr).'/mnu/';
                 }
             }
             if (lnxmcp()->getCfg('mcp.debug.internal') == true) {
@@ -387,16 +388,16 @@ class mcpMenuClass
         $sequence = lnxmcp()->getResource('tag.'.$action);
         if ($sequence == null) {
             $seqpth = lnxmcp()->getResource('path.tags');
-            if (strstr($action,"\\")!=false){
+            if (strstr($action, '\\') != false) {
                 $seqpth = lnxmcp()->getResource('path.module');
-                $arcarr=explode("\\",$action);
-                $action= array_pop($arcarr);
-                $sqalbl = 'mod.path.'.implode('.',$arcarr);
+                $arcarr = explode('\\', $action);
+                $action = array_pop($arcarr);
+                $sqalbl = 'mod.path.'.implode('.', $arcarr);
                 $sqapth = lnxmcp()->getResource($sqalbl);
-                if (($sqapth!=null) and ($sqapth != '')) {
-                    $seqpth=$sqapth."/tag/";
+                if (($sqapth != null) and ($sqapth != '')) {
+                    $seqpth = $sqapth.'/tag/';
                 } else {
-                    $seqpth .="/".implode('/',$arcarr)."/tag/";
+                    $seqpth .= '/'.implode('/', $arcarr).'/tag/';
                 }
             }
             if (lnxmcp()->getCfg('mcp.debug.internal') == true) {

@@ -88,3 +88,32 @@ function lnxCacheFlush($filter)
         return false;
     }
 }
+function lnxCacheProcess($event, $action, $scopein = array())
+{
+    $mcpCacheModPath = lnxmcp()->getCfg('mcp.path').'/../mcp_modules/Wait/';
+    lnxmcp()->setCfg('app.mod.path.LinHUniX.Wait', $mcpCacheModPath);
+    $scopein['T'] = 'prc';
+    $scopein['E'] = $event;
+    $scopein['action'] = $action;
+    lnxmcp()->runCommand(
+        array(
+            'type' => 'serviceCommon',
+            'name' => 'waitprocess',
+            'ispreload' => true,
+            'module' => 'Wait',
+            'vendor' => 'LinHUniX',
+        ),
+        array()
+    );
+
+    return lnxmcp()->runCommand(
+        array(
+            'type' => 'serviceCommon',
+            'name' => 'waitprocess',
+            'ispreload' => false,
+            'module' => 'Wait',
+            'vendor' => 'LinHUniX',
+        ),
+        $scopein
+    );
+}

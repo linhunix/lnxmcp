@@ -1,0 +1,5 @@
+{
+    "E":"lnx.lite",
+    "T":"e",
+    "Q":"insert into wait_process ('name','date',update,'expired','status','denied','value_in','value_out') values ('[action]',datetime(),datetime(),strftime('%s','now')+120,[del],[sts],'[value_in]','[value_out]')"
+}

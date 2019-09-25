@@ -1,0 +1,5 @@
+{
+    "E":"lnx.lite",
+    "T":"e",
+    "Q":"delete from  wait_process where expired <= strftime('%s','now') and status=0; "
+}
