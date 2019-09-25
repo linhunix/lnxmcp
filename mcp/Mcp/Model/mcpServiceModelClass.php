@@ -49,45 +49,6 @@ class mcpServiceModelClass extends mcpBaseModelClass
     }
 
     /**
-     * runCommonEvent.
-     *
-     * @param mixed $name
-     */
-    public function runCommonEvent($name)
-    {
-        try {
-            //LnxMcpFullDebugOn();
-            $cargin = $this->getMcp()->getCommon();
-            $cargin['T'] = 'common';
-            $cargin['E'] = $name;
-            $this->debug('Common Event:'.print_r($cargin, 1));
-            $res = $this->run($this->bootCtl, $cargin);
-            if (isset($res['return'])) {
-                $res = $res['return'];
-            }
-            $this->debug('Common '.$name.':'.print_r($res, 1));
-            $this->getMcp()->setCommon($name, $res);
-        } catch (\ErrorException $e) {
-            $this->warning($e->getMessage());
-        }
-    }
-
-    /**
-     * runCommonEvent.
-     *
-     * @param mixed $name
-     *
-     * @return array
-     */
-    public function runEvent($type, $name, $scopeIn)
-    {
-        $scopeIn['T'] = $type;
-        $scopeIn['E'] = $name;
-
-        return $this->run($this->argCtl, $scopeIn);
-    }
-
-    /**
      * In this service class is premanaged the module core as reflection calling
      * so  inf asking an event this call the specific method if is present the order
      *  (T)type method
@@ -155,7 +116,5 @@ class mcpServiceModelClass extends mcpBaseModelClass
                 $this->argCfg[$k] = $v;
             }
         }
-        $this->debug('CommonEventInit');
-        $this->runCommonEvent('Init');
     }
 }

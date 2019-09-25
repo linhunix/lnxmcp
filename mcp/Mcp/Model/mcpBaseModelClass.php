@@ -200,7 +200,15 @@ class mcpBaseModelClass
     {
         return $this->mcp->getCommon($name);
     }
-
+    /**
+     * this a  metod fo call the mcp class functions.
+     *
+     * @return mixed
+     */
+    protected function setCommon($name,$value)
+    {
+        return $this->mcp->setCommon($name,$value);
+    }
     /**
      * Is a confortable method to set data on scope out.
      *
