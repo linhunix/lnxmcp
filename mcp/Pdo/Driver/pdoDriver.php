@@ -124,21 +124,31 @@ class pdoDriver extends mcpBaseModelClass
      *
      * @return any
      */
-    public function intexec($query)
+    public function intexec($query, $noupdate = false)
     {
         try {
             if ($this->PDO == null) {
+                $this->getMcp()->warning($this->database.':is null!!');
+
                 return false;
             }
-            $query = str_replace("'", '"', $query);
 
-            return $this->PDO->exec($query);
+            $res = $this->PDO->exec($query);
+            if ($noupdate == false and $res > 0) {
+                return true;
+            }
+            if ($noupdate == true and $res >= 0) {
+                return true;
+            }
+            $this->getMcp()->warning($this->database.':row='.print_r($res, 1));
+
+            return false;
         } catch (PDOException $pe) {
-            $this->getMcp()->warning($this->database.$pe->getMessage());
+            $this->getMcp()->warning($this->database.':'.$pe->getMessage());
 
             return false;
         } catch (Exception $e) {
-            $this->getMcp()->warning($this->database.$e->getMessage());
+            $this->getMcp()->warning($this->database.':'.$e->getMessage());
 
             return false;
         }
@@ -152,7 +162,7 @@ class pdoDriver extends mcpBaseModelClass
      *
      * @return bool
      */
-    public function execute($sql, $var = array())
+    public function execute($sql, $var = array(), $noupdate = false)
     {
         $this->getMcp()->debug('queryIn:'.$this->database.'='.$sql);
         if (isset($var['WHERE'])) {
@@ -164,8 +174,9 @@ class pdoDriver extends mcpBaseModelClass
             $sql = str_replace('[R:'.$k.']', $v, $sql);
             $sql = str_replace('[S:'.$k.']', \stripslashes($v), $sql);
         }
+        $sql = str_replace("'", '"', $sql);
         $this->getMcp()->debug('queryOut:'.$this->database.'='.$sql);
-        if ($this->intexec($sql) == false) {
+        if ($this->intexec($sql, $noupdate) == false) {
             $this->getMcp()->warning('[KO]'.$this->database.'='.$sql);
             if ($this->PDO != null) {
                 $this->getMcp()->warning('[KO]'.$this->database.': '.print_r($this->PDO->errorInfo(), 1));
