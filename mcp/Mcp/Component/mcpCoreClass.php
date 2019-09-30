@@ -732,7 +732,7 @@ final class mcpCoreClass
      * load the file if is need.
      * the class or function need to not require arguments on cunstructor.
      */
-    private function loadLegacy()
+    public function loadLegacy()
     {
         $this->setWorkingArea('loadLegacy');
         $this->mcp->debug('loadLegacy:'.print_r($this->scopeCtl, 1));

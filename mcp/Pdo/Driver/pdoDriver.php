@@ -134,6 +134,7 @@ class pdoDriver extends mcpBaseModelClass
             }
 
             $res = $this->PDO->exec($query);
+            $this->getMcp()->debug($this->database.':return row update='.print_r($res, 1));
             if ($noupdate == false and $res > 0) {
                 return true;
             }
@@ -144,11 +145,11 @@ class pdoDriver extends mcpBaseModelClass
 
             return false;
         } catch (PDOException $pe) {
-            $this->getMcp()->warning($this->database.':'.$pe->getMessage());
+            $this->getMcp()->warning($this->database.':PDO ERR'.$pe->getMessage());
 
             return false;
         } catch (Exception $e) {
-            $this->getMcp()->warning($this->database.':'.$e->getMessage());
+            $this->getMcp()->warning($this->database.':GEN ERR'.$e->getMessage());
 
             return false;
         }

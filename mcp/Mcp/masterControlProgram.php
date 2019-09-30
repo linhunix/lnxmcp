@@ -1004,7 +1004,7 @@ final class masterControlProgram
      */
     public function loadLegacy()
     {
-        $this->mcpCore->LegacyLoader();
+        $this->mcpCore->loadLegacy();
     }
 
     /**
