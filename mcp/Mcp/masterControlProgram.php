@@ -1004,7 +1004,12 @@ final class masterControlProgram
      */
     public function loadLegacy()
     {
-        $this->mcpCore->loadLegacy();
+        $res = $this->mcpCore->loadLegacy();
+        if (isset($res['return'])) {
+            return $res['return'];
+        }
+
+        return $res;
     }
 
     /**
