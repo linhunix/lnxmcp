@@ -1,5 +1,4 @@
 <?php
-
 namespace LinHUniX\Mail\Service;
 
 /*
@@ -28,6 +27,12 @@ class mailService extends mcpBaseModelClass
     private $trace;
     private $domine;
     private $testmail;
+
+    protected function moduleInit(){
+	$this->spacename=__NAMESPACE__;
+	$this->classname=__CLASS__;
+    }
+
 
     private function loadTemplate($content, $template, $useNL2BR = false)
     {
@@ -92,6 +97,34 @@ class mailService extends mcpBaseModelClass
     {
         return $this->stdMail($to, $subject, $message, $additional_headers, $additional_parameters, $from, $attachDoc);
     }
+    /**
+     * this class split a complex mail to desc and mail address
+     * @param string $mail
+     * @return array list element
+     */
+    public function extractMail($mail,$phpmail){
+    	$pattern = '/[a-z0-9_\-\+\.]+@[a-z0-9\-]+\.([a-z]{2,4})(?:\.[a-z]{2})?/i';
+	preg_match_all($pattern, $mail, $matches);
+	$donemail=array();
+	if (is_array($matches)){
+	    foreach ($matches as $probmails) {
+		if (is_array($probmails)){
+		    foreach ($probmails as $probmail ) {
+			if (!is_array($probmail)){
+			    if ($phpmail->validateAddress($probmail)){
+				$donemail[]=$probmail;
+			    }
+			}
+		    }
+		}else{
+		    if ($phpmail->validateAddress($probmails)){
+			$donemail[]=$probmails;
+		    }
+		}
+	    }
+	}
+	return $donemail;
+    }
 
     /**
      * This class use Zend Mail Frameworks and get informations form $dic and FTConfig class
@@ -125,8 +158,35 @@ class mailService extends mcpBaseModelClass
                 $to = str_replace('>', ')', $to);
                 $to .= '<'.$this->testmail.'>';
             }
+	    if ($mymail->validateAddress($to)!=true) {
+		$emres=$this->extractMail($to,$mymail);
+		if (isset($emres[0])){
+		    $to=$emres[0];
+		}else{
+	    	    $this->warning("INVALID ADDRESS!!:".$to."=".print_r($emres,1));
+    		}	
+	    }
+            
             $mymail->addAddress($to);
-            $mymail->Subject = $subject;
+	    $mymail->Subject = $subject;
+	    if ($from == null) {
+		 if (($this->From != null) or ($this->From != '' )) { 
+	    		$from=$this->From;
+		 }
+	    }
+	    if ($mymail->validateAddress($from)==true) {
+                $mymail->setFrom($from);
+                $mymail->addReplyTo($from);
+	    }else{
+		$emres=$this->extractMail($from,$mymail);
+		if (isset($emres[0])){
+		    $from=$emres[0];
+                    $mymail->setFrom($from);
+	            $mymail->addReplyTo($from);
+		}else{
+	    	    $this->warning("INVALID ADDRESS!!:".$from."=".print_r($emres,1));
+    		}
+            }
             if (!is_array($attachDoc)) {
                 $attachDoc = array($attachDoc);
             }
@@ -192,9 +252,9 @@ class mailService extends mcpBaseModelClass
                 $this->Pop3->do_debug = 1;
             }
             if (!isset($scopeIn['config'])) {
-                $scopeIn['config'] == 'SOURCE';
+                $scopeIn['config'] = 'SOURCE';
             }
-            $this->debug('TYPE'.$scopeIn['config']);
+            $this->debug('TYPE:'.$scopeIn['config']);
             if ($scopeIn['config'] == 'Env') {
                 $this->domine = $_SERVER['HOSTNAME'];
                 if (isset($scopeIn['mail.domine'])) {
@@ -278,7 +338,7 @@ class mailService extends mcpBaseModelClass
                 case 'user':
                     $this->Mailer->SMTPAuth = true;
                     $this->Mailer->Username = $smtpuser;
-                    $this->Mailer->Password = $smptpass;
+                    $this->Mailer->Password = $smtppass;
                     // no break
                 case 'smtp':
                     $this->Mailer->isSMTP();
