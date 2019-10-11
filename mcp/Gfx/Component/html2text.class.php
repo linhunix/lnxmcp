@@ -1,5 +1,7 @@
 <?php
+
 namespace LinHUniX\Gfx\Component;
+
 /*************************************************************************
  *                                                                       *
  * class.html2text.inc                                                   *
@@ -29,7 +31,6 @@ namespace LinHUniX\Gfx\Component;
  * Last modified: 08/08/07                                               *
  *                                                                       *
  *************************************************************************/
-
 
 /**
  *  Takes HTML and converts it to formatted, plain text.
@@ -101,27 +102,26 @@ namespace LinHUniX\Gfx\Component;
  *  *** End of the housecleaning updates. Updated 08/08/07.
  *
  *  @author Jon Abernathy <jon@chuggnutt.com>
+ *
  *  @version 1.0.0
+ *
  *  @since PHP 4.0.2
  */
 class html2text
 {
-
     /**
      *  Contains the HTML content to convert.
      *
-     *  @var string $html
-     *  @access public
+     *  @var string
      */
-    var $html;
+    public $html;
 
     /**
      *  Contains the converted, formatted text.
      *
-     *  @var string $text
-     *  @access public
+     *  @var string
      */
-    var $text;
+    public $text;
 
     /**
      *  Maximum width of the formatted text, in columns.
@@ -129,48 +129,40 @@ class html2text
      *  Set this value to 0 (or less) to ignore word wrapping
      *  and not constrain text to a fixed-width column.
      *
-     *  @var integer $width
-     *  @access public
+     *  @var int
      */
-    var $width = 70;
+    public $width = 70;
 
     /**
      *  List of preg* regular expression patterns to search for,
      *  used in conjunction with $replace.
      *
-     *  @var array $search
-     *  @access public
+     *  @var array
+     *
      *  @see $replace
      */
-    var $search = array(
+    public $search = array(
         "/\r/",                                  // Non-legal carriage return
         "/[\n\t]+/",                             // Newlines and tabs
         '/[ ]{2,}/',                             // Runs of spaces, pre-handling
         '/<script[^>]*>.*?<\/script>/i',         // <script>s -- which strip_tags supposedly has problems with
         '/<style[^>]*>.*?<\/style>/i',           // <style>s -- which strip_tags supposedly has problems with
         //'/<!-- .* -->/',                         // Comments -- which strip_tags might have problem a with
-        '/<h[123][^>]*>(.*?)<\/h[123]>/ie',      // H1 - H3
-        '/<h[456][^>]*>(.*?)<\/h[456]>/ie',      // H4 - H6
         '/<p[^>]*>/i',                           // <P>
         '/<br[^>]*>/i',                          // <br>
-        '/<b[^>]*>(.*?)<\/b>/ie',                // <b>
-        '/<strong[^>]*>(.*?)<\/strong>/ie',      // <strong>
         '/<i[^>]*>(.*?)<\/i>/i',                 // <i>
         '/<em[^>]*>(.*?)<\/em>/i',               // <em>
         '/(<ul[^>]*>|<\/ul>)/i',                 // <ul> and </ul>
         '/(<ol[^>]*>|<\/ol>)/i',                 // <ol> and </ol>
         '/<li[^>]*>(.*?)<\/li>/i',               // <li> and </li>
         '/<li[^>]*>/i',                          // <li>
-        '/<a [^>]*href="([^"]+)"[^>]*>(.*?)<\/a>/ie',
-                                                 // <a href="">
         '/<hr[^>]*>/i',                          // <hr>
         '/(<table[^>]*>|<\/table>)/i',           // <table> and </table>
         '/(<tr[^>]*>|<\/tr>)/i',                 // <tr> and </tr>
         '/<td[^>]*>(.*?)<\/td>/i',               // <td> and </td>
-        '/<th[^>]*>(.*?)<\/th>/ie',              // <th> and </th>
         '/&(nbsp|#160);/i',                      // Non-breaking space
         '/&(quot|rdquo|ldquo|#8220|#8221|#147|#148);/i',
-		                                         // Double quotes
+                                                 // Double quotes
         '/&(apos|rsquo|lsquo|#8216|#8217);/i',   // Single quotes
         '/&gt;/i',                               // Greater-than
         '/&lt;/i',                               // Less-than
@@ -184,42 +176,35 @@ class html2text
         '/&(pound|#163);/i',                     // Pound sign
         '/&(euro|#8364);/i',                     // Euro sign
         '/&[^&;]+;/i',                           // Unknown/unhandled entities
-        '/[ ]{2,}/'                              // Runs of spaces, post-handling
+        '/[ ]{2,}/',                              // Runs of spaces, post-handling
     );
 
     /**
      *  List of pattern replacements corresponding to patterns searched.
      *
-     *  @var array $replace
-     *  @access public
+     *  @var array
+     *
      *  @see $search
      */
-    var $replace = array(
+    public $replace = array(
         '',                                     // Non-legal carriage return
         ' ',                                    // Newlines and tabs
         ' ',                                    // Runs of spaces, pre-handling
         '',                                     // <script>s -- which strip_tags supposedly has problems with
         '',                                     // <style>s -- which strip_tags supposedly has problems with
         //'',                                     // Comments -- which strip_tags might have problem a with
-        "strtoupper(\"\n\n\\1\n\n\")",          // H1 - H3
-        "ucwords(\"\n\n\\1\n\n\")",             // H4 - H6
         "\n\n\t",                               // <P>
         "\n",                                   // <br>
-        'strtoupper("\\1")',                    // <b>
-        'strtoupper("\\1")',                    // <strong>
         '_\\1_',                                // <i>
         '_\\1_',                                // <em>
         "\n\n",                                 // <ul> and </ul>
         "\n\n",                                 // <ol> and </ol>
         "\t* \\1\n",                            // <li> and </li>
         "\n\t* ",                               // <li>
-        '$this->_build_link_list("\\1", "\\2")',
-                                                // <a href="">
         "\n-------------------------\n",        // <hr>
         "\n\n",                                 // <table> and </table>
         "\n",                                   // <tr> and </tr>
         "\t\t\\1\n",                            // <td> and </td>
-        "strtoupper(\"\t\t\\1\n\")",            // <th> and </th>
         ' ',                                    // Non-breaking space
         '"',                                    // Double quotes
         "'",                                    // Single quotes
@@ -235,53 +220,52 @@ class html2text
         '�',
         'EUR',                                  // Euro sign. � ?
         '',                                     // Unknown/unhandled entities
-        ' '                                     // Runs of spaces, post-handling
+        ' ',                                     // Runs of spaces, post-handling
     );
 
     /**
      *  Contains a list of HTML tags to allow in the resulting text.
      *
-     *  @var string $allowed_tags
-     *  @access public
+     *  @var string
+     *
      *  @see set_allowed_tags()
      */
-    var $allowed_tags = '';
+    public $allowed_tags = '';
 
     /**
      *  Contains the base URL that relative links should resolve to.
      *
-     *  @var string $url
-     *  @access public
+     *  @var string
      */
-    var $url;
+    public $url;
 
     /**
      *  Indicates whether content in the $html variable has been converted yet.
      *
-     *  @var boolean $_converted
-     *  @access private
+     *  @var bool
+     *
      *  @see $html, $text
      */
-    var $_converted = false;
+    public $_converted = false;
 
     /**
      *  Contains URL addresses from links to be rendered in plain text.
      *
-     *  @var string $_link_list
-     *  @access private
+     *  @var string
+     *
      *  @see _build_link_list()
      */
-    var $_link_list = '';
-    
+    public $_link_list = '';
+
     /**
      *  Number of valid links detected in the text, used for plain text
      *  display (rendered similar to footnotes).
      *
-     *  @var integer $_link_count
-     *  @access private
+     *  @var int
+     *
      *  @see _build_link_list()
      */
-    var $_link_count = 0;
+    public $_link_count = 0;
 
     /**
      *  Constructor.
@@ -291,31 +275,110 @@ class html2text
      *  to be done it to call get_text().
      *
      *  @param string $source HTML content
-     *  @param boolean $from_file Indicates $source is a file to pull content from
-     *  @access public
-     *  @return void
+     *  @param bool $from_file Indicates $source is a file to pull content from
      */
-    function html2text( $source = '', $from_file = false )
+    public function html2text($source = '', $from_file = false)
     {
-        if ( !empty($source) ) {
+        if (!empty($source)) {
             $this->set_html($source, $from_file);
         }
         $this->set_base_url();
+    }
+
+    /*
+    public $search_replace_cb = array(
+        '/<h[123][^>]*>(.*?)<\/h[123]>/i' => 'function ($src) { return strtoupper("\n\n$src\n\n"); }', // H1 - H3
+        '/<h[456][^>]*>(.*?)<\/h[456]>/i' => 'function ($src) { return ucwords("\n\n$src\n\n"); }', // H4 - H6
+        '/<b[^>]*>(.*?)<\/b>/i' => 'function ($src) { return strtoupper($src); }', // <b>
+        '/<strong[^>]*>(.*?)<\/strong>/i' => 'function ($src) { return strtoupper( $src); }', // <strong>
+        '/<a [^>]*href="([^"]+)"[^>]*>(.*?)<\/a>/i' => 'function ($src, $ref) { return $this->_build_link_list( $src, $ref ); }', // <a href="">
+        '/<th[^>]*>(.*?)<\/th>/i' => 'function ($src) { return strtoupper("\t\t$src\n"); }', // <th> and </th>
+    );
+    */
+
+    /**
+     * search_replace_cb_H1toH3 function.
+     *
+     * @param string $text
+     *
+     * @return string convert
+     */
+    public function search_replace_cb_H1toH3($text)
+    {
+        return preg_replace_callback('/<h[123][^>]*>(.*?)<\/h[123]>/', function ($src) { return strtoupper("\n\n$src\n\n"); }, $text);
+    }
+
+    /**
+     * search_replace_cb_H4toH6 function.
+     *
+     * @param string $text
+     *
+     * @return string convert
+     */
+    public function search_replace_cb_H4toH6($text)
+    {
+        return preg_replace_callback('/<h[456][^>]*>(.*?)<\/h[456]>/i', function ($src) { return ucwords("\n\n$src\n\n"); }, $text);
+    }
+
+    /**
+     * search_replace_cb_B function.
+     *
+     * @param string $text
+     *
+     * @return string convert
+     */
+    public function search_replace_cb_B($text)
+    {
+        return preg_replace_callback('/<b[^>]*>(.*?)<\/b>/i', function ($src) { return strtoupper($src); }, $text);
+    }
+
+    /**
+     * search_replace_cb_STRONG function.
+     *
+     * @param string $text
+     *
+     * @return string convert
+     */
+    public function search_replace_cb_STRONG($text)
+    {
+        return preg_replace_callback('/<strong[^>]*>(.*?)<\/strong>/i', function ($src) { return strtoupper($src); }, $text);
+    }
+
+    /**
+     * search_replace_cb_A_HREF function.
+     *
+     * @param string $text
+     *
+     * @return string convert
+     */
+    public function search_replace_cb_A_HREF($text)
+    {
+        return preg_replace_callback('/<a [^>]*href="([^"]+)"[^>]*>(.*?)<\/a>/i', function ($src, $ref = '') { return $this->_build_link_list($src, $ref); }, $text);
+    }
+
+    /**
+     * search_replace_cb_TH function.
+     *
+     * @param string $text
+     *
+     * @return string convert
+     */
+    public function search_replace_cb_TH($text)
+    {
+        return preg_replace_callback('/<th[^>]*>(.*?)<\/th>/i', function ($src) { return strtoupper("\t\t$src\n"); }, $text);
     }
 
     /**
      *  Loads source HTML into memory, either from $source string or a file.
      *
      *  @param string $source HTML content
-     *  @param boolean $from_file Indicates $source is a file to pull content from
-     *  @access public
-     *  @return void
+     *  @param bool $from_file Indicates $source is a file to pull content from
      */
-    function set_html( $source, $from_file = false )
+    public function set_html($source, $from_file = false)
     {
         $this->html = $source;
 
-        if ( $from_file && file_exists($source) ) {
+        if ($from_file && file_exists($source)) {
             $fp = fopen($source, 'r');
             $this->html = fread($fp, filesize($source));
             fclose($fp);
@@ -327,12 +390,11 @@ class html2text
     /**
      *  Returns the text, converted from HTML.
      *
-     *  @access public
      *  @return string
      */
-    function get_text()
+    public function get_text()
     {
-        if ( !$this->_converted ) {
+        if (!$this->_converted) {
             $this->_convert();
         }
 
@@ -341,60 +403,49 @@ class html2text
 
     /**
      *  Prints the text, converted from HTML.
-     *
-     *  @access public
-     *  @return void
      */
-    function print_text()
+    public function print_text()
     {
-        print $this->get_text();
+        echo $this->get_text();
     }
 
     /**
      *  Alias to print_text(), operates identically.
      *
-     *  @access public
-     *  @return void
      *  @see print_text()
      */
-    function p()
+    public function p()
     {
-        print $this->get_text();
+        echo $this->get_text();
     }
 
     /**
      *  Sets the allowed HTML tags to pass through to the resulting text.
      *
      *  Tags should be in the form "<p>", with no corresponding closing tag.
-     *
-     *  @access public
-     *  @return void
      */
-    function set_allowed_tags( $allowed_tags = '' )
+    public function set_allowed_tags($allowed_tags = '')
     {
-        if ( !empty($allowed_tags) ) {
+        if (!empty($allowed_tags)) {
             $this->allowed_tags = $allowed_tags;
         }
     }
 
     /**
      *  Sets a base URL to handle relative links.
-     *
-     *  @access public
-     *  @return void
      */
-    function set_base_url( $url = '' )
+    public function set_base_url($url = '')
     {
-        if ( empty($url) ) {
-        	if ( !empty($_SERVER['HTTP_HOST']) ) {
-	            $this->url = 'http://' . $_SERVER['HTTP_HOST'];
-        	} else {
-	            $this->url = '';
-	        }
+        if (empty($url)) {
+            if (!empty($_SERVER['HTTP_HOST'])) {
+                $this->url = 'http://'.$_SERVER['HTTP_HOST'];
+            } else {
+                $this->url = '';
+            }
         } else {
             // Strip any trailing slashes for consistency (relative
             // URLs may already start with a slash like "/file.html")
-            if ( substr($url, -1) == '/' ) {
+            if (substr($url, -1) == '/') {
                 $url = substr($url, 0, -1);
             }
             $this->url = $url;
@@ -408,11 +459,8 @@ class html2text
      *  $replace arrays. Then strips any remaining HTML tags, reduces whitespace
      *  and newlines to a readable format, and word wraps the text to
      *  $width characters.
-     *
-     *  @access private
-     *  @return void
      */
-    function _convert()
+    public function _convert()
     {
         // Variables used for building the link list
         $this->_link_count = 0;
@@ -422,6 +470,12 @@ class html2text
 
         // Run our defined search-and-replace
         $text = preg_replace($this->search, $this->replace, $text);
+        $text = $this->search_replace_cb_H1toH3($text);
+        $text = $this->search_replace_cb_H4toH6($text);
+        $text = $this->search_replace_cb_B($text);
+        $text = $this->search_replace_cb_STRONG($text);
+        $text = $this->search_replace_cb_TH($text);
+        //$text = $this->search_replace_cb_A_HREF($text);
 
         // Strip any other HTML tags
         $text = strip_tags($text, $this->allowed_tags);
@@ -431,15 +485,15 @@ class html2text
         $text = preg_replace("/[\n]{3,}/", "\n\n", $text);
 
         // Add link list
-        if ( !empty($this->_link_list) ) {
-            $text .= "\n\nLinks:\n------\n" . $this->_link_list;
+        if (!empty($this->_link_list)) {
+            $text .= "\n\nLinks:\n------\n".$this->_link_list;
         }
 
         // Wrap the text to a readable format
         // for PHP versions >= 4.0.2. Default width is 75
         // If width is 0 or less, don't wrap the text.
-        if ( $this->width > 0 ) {
-        	$text = wordwrap($text, $this->width);
+        if ($this->width > 0) {
+            $text = wordwrap($text, $this->width);
         }
 
         $this->text = $text;
@@ -457,33 +511,30 @@ class html2text
      *
      *  @param string $link URL of the link
      *  @param string $display Part of the text to associate number with
-     *  @access private
+     *
      *  @return string
      */
-    function _build_link_list( $link, $display )
+    public function _build_link_list($link, $display)
     {
-		if ( substr($link, 0, 7) == 'http://' || substr($link, 0, 8) == 'https://' ||
-             substr($link, 0, 7) == 'mailto:' ) {
-            $this->_link_count++;
-            $this->_link_list .= "[" . $this->_link_count . "] $link\n";
-            $additional = ' [' . $this->_link_count . ']';
-		} elseif ( substr($link, 0, 11) == 'javascript:' ) {
-			// Don't count the link; ignore it
-			$additional = '';
-		// what about href="#anchor" ?
+        if (substr($link, 0, 7) == 'http://' || substr($link, 0, 8) == 'https://' ||
+             substr($link, 0, 7) == 'mailto:') {
+            ++$this->_link_count;
+            $this->_link_list .= '['.$this->_link_count."] $link\n";
+            $additional = ' ['.$this->_link_count.']';
+        } elseif (substr($link, 0, 11) == 'javascript:') {
+            // Don't count the link; ignore it
+            $additional = '';
+        // what about href="#anchor" ?
         } else {
-            $this->_link_count++;
-            $this->_link_list .= "[" . $this->_link_count . "] " . $this->url;
-            if ( substr($link, 0, 1) != '/' ) {
+            ++$this->_link_count;
+            $this->_link_list .= '['.$this->_link_count.'] '.$this->url;
+            if (substr($link, 0, 1) != '/') {
                 $this->_link_list .= '/';
             }
             $this->_link_list .= "$link\n";
-            $additional = ' [' . $this->_link_count . ']';
+            $additional = ' ['.$this->_link_count.']';
         }
 
-        return $display . $additional;
+        return $display.$additional;
     }
-
 }
-
-?>
