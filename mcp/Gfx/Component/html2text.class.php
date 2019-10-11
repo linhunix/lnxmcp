@@ -475,7 +475,7 @@ class html2text
         $text = $this->search_replace_cb_B($text);
         $text = $this->search_replace_cb_STRONG($text);
         $text = $this->search_replace_cb_TH($text);
-        //$text = $this->search_replace_cb_A_HREF($text);
+        $text = $this->search_replace_cb_A_HREF($text);
 
         // Strip any other HTML tags
         $text = strip_tags($text, $this->allowed_tags);
