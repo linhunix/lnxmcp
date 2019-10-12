@@ -5,6 +5,8 @@
   "mcp_check_out": {
     "Logger": "mcp_check_isset",
     "app.path": "mcp_check_isset",
-    "app.debug":"mcp_check_isset"
+    "app.debug":"mcp_check_isset",
+    "app.path.config":"mcp_check_isset",
+    "app.path.work":"mcp_check_isset"
   }
 }

@@ -62,15 +62,12 @@ class settingsProviderModel implements mcpServiceProviderModelClass
         if (!isset($_SERVER["HTTP_HOST"])){
             $_SERVER["HTTP_HOST"]="default";
         }
-        $cfgfile = $cfg['app.path'] . '/cfg/config.' . $_SERVER["HTTP_HOST"] . '.json';
-        if (isset($cfg["app.path.config"])){
-            $cfgfile = $cfg['app.path.config'] . '/config.' . $_SERVER["HTTP_HOST"] . '.json';
-        }
+        $cfgfile = $cfg['app.path.config'] . '/config.' . $_SERVER["HTTP_HOST"] . '.json';
         $this->loadCfgArray ($cfgfile);
         //////////////////////////////////////////////////////
         ///  READ CONFIG BY ENV
         //////////////////////////////////////////////////////
-        $cfgfile = $cfg['app.path'] . '/cfg/config.' . $env . '.json';
+        $cfgfile =  $cfg['app.path.config'] . '/config.' . $env . '.json';
         $this->loadCfgArray ($cfgfile);
         $mcp->setCfg ("app.env", $env);
         //////////////////////////////////////////////////////

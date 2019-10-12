@@ -64,7 +64,7 @@ class JsonQuery extends mcpQueryModelClass
         if (!is_dir($this->querypath)) {
             $this->querypath = $mcp->getResource('path.module').'/query/';
             if (!is_dir($this->querypath)) {
-                $this->querypath = $mcp->getResource('path').'/cfg/query/';
+                $this->querypath = $mcp->getResource('path.config').'/query/';
             }
         }
     }

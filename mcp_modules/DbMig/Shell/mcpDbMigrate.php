@@ -58,19 +58,19 @@ class mcpDbMigrate
         echo "mcpDbMigrate is Initalized!!\n";
         $this->MigrateCheck = true;
         /// FIND PATH;
-        $this->MigratePath = lnxmcp()->getCfg("app.path");
-        if (is_dir($this->MigratePath . "/cfg/dbm/")) {
-            $this->MigratePath .= "/cfg/dbm/";
-        } else if (is_dir($this->MigratePath . "/App/dbm/")) {
-            $this->MigratePath .= "/App/dbm/";
-        } else if (is_dir($this->MigratePath . "/work/dbm/")) {
-            $this->MigratePath .= "/work/dbm/";
+        $this->MigratePath = lnxmcp()->getCfg('app.path.config');
+        if (is_dir($this->MigratePath . '/dbm/')) {
+            $this->MigratePath .= '/dbm/';
+        } else if (is_dir(lnxmcp()->getCfg('app.path.core'). "/dbm/")) {
+            $this->MigratePath =lnxmcp()->getCfg('app.path.core'). "/dbm/";
+        } else if (is_dir(lnxmcp()->getCfg('app.path.work'). "/dbm/")) {
+            $this->MigratePath =lnxmcp()->getCfg('app.path.work'). "/dbm/";
         } else {
             $this->MigrateCheck = false;
-            lnxmcp()->debug($this->MigratePath );
-            echo "No Migrate Folder on cfg/dbm or (App/dbm , work/dbm)\n";
+            echo "No Migrate  Folder on cfg/dbm or (App/dbm , work/dbm)\n";
             return;
         }
+        lnxmcp()->debug($this->MigratePath );
         if (is_writable($this->MigratePath) == false) {
             $this->MigrateCheck = false;
             echo "No Writable Migrate Folder " . $this->MigratePath . "\n";

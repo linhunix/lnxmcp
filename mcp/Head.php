@@ -18,7 +18,7 @@ ob_start();
 ////////////////////////////////////////////////////////////////////////////////
 // ENV/CONFIG PATH AND CLASS
 ////////////////////////////////////////////////////////////////////////////////
-global $mcp_path, $app_path, $lnxmcp_phar, $lnxmcp_purl, $scopeInit, $cfg, $mcp;
+global $mcp_path, $app_path, $app_cfg,$app_work,$lnxmcp_phar, $lnxmcp_purl, $scopeInit, $cfg, $mcp;
 // define path config
 if (!isset($mcp_path)) {
     $mcp_path = __DIR__.'/';
@@ -45,7 +45,12 @@ if (empty($app_path)) {
     }
 }
 $app_path = realpath($app_path).'/';
-
+if (!isset($app_cfg)){
+    $app_cfg=$app_path.'/cfg/';
+}
+if (!isset($app_work)){
+    $app_work=$app_path.'/work/';
+}
 ////////////////////////////////////////////////////////////////////////////////
 // SCOPE - INIT
 ////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +59,7 @@ if (!isset($scopePdo)) {
         'ENV' => array(
             'lnx.lite' => array(
                 'config' => 'SCOPE',
-                'path' => $app_path.'/work/sqlite/',
+                'path' => $app_work.'/sqlite/',
                 'database' => 'lnxmcp.work.db',
                 'driver' => 'sqlite',
             ),
@@ -105,7 +110,9 @@ foreach (array(
     'app.path.session' => $app_path.'/work/session/',
     'app.path.exchange' => $app_path.'/work/exchange/',
     'app.path.sqllite' => $app_path.'/work/sqlite/',
-    'app.path.config' => $app_path.'/cfg/',
+    'app.path.work' => $app_work,
+    'app.path.core' => $app_path.'/App/',
+    'app.path.config' => $app_cfg,
     'app.path.language' => $app_path.'/App/lng/',
     'app.path.pbkac' => '/tmp/',
     'app.menu.InitCommon' => array(
@@ -131,20 +138,25 @@ if (isset($lnxmcp_phar)) {
         $scopeInit[$lmpk] = $lmpv;
     }
 }
+/// reload primary vars
+$app_path=$scopeInit["app.path"];
+$app_work=$scopeInit["app.path.work"];
+$app_cfg=$scopeInit["app.path.config"];
+
 ////////////////////////////////////////////////////////////////////////////////
 // ENV/CONFIG JSON CONFIG AND SETTINGS
 ////////////////////////////////////////////////////////////////////////////////
 try {
-    if (file_exists($app_path.'/cfg/mcp.settings.json')) {
-        $loadscope = json_decode(file_get_contents($app_path.'/cfg/mcp.settings.json'), true);
+    if (file_exists($app_cfg.'/mcp.settings.json')) {
+        $loadscope = json_decode(file_get_contents($app_cfg.'/mcp.settings.json'), true);
         if (is_array($loadscope)) {
             foreach ($loadscope as $lsk => $lsv) {
                 $scopeInit[$lsk] = $lsv;
             }
         }
     }
-    if (file_exists($app_path.'/cfg/mcp.default.json')) {
-        $loadscope = json_decode(file_get_contents($app_path.'/cfg/mcp.default.json'), true);
+    if (file_exists($app_cfg.'/mcp.default.json')) {
+        $loadscope = json_decode(file_get_contents($app_cfg.'/mcp.default.json'), true);
         if (is_array($loadscope)) {
             foreach ($loadscope as $lsk => $lsv) {
                 $scopeInit[$lsk] = $lsv;
@@ -152,7 +164,7 @@ try {
         }
     }
     if (isset($_ENV['MCP_MODE'])) {
-        $hostcfg = $app_path.'/cfg/mcp.mode.'.$_ENV['MCP_MODE'].'.json';
+        $hostcfg = $app_cfg.'/mcp.mode.'.$_ENV['MCP_MODE'].'.json';
         if (file_exists($hostcfg)) {
             $loadscope = json_decode(file_get_contents($hostcfg), true);
             if (is_array($loadscope)) {
@@ -163,7 +175,7 @@ try {
         }
     }
     if (isset($_SERVER['HTTP_HOST'])) {
-        $hostcfg = $app_path.'/cfg/mcp.site.'.$_SERVER['HTTP_HOST'].'.json';
+        $hostcfg = $app_cfg.'/mcp.site.'.$_SERVER['HTTP_HOST'].'.json';
         if (file_exists($hostcfg)) {
             $loadscope = json_decode(file_get_contents($hostcfg), true);
             if (is_array($loadscope)) {
@@ -174,7 +186,7 @@ try {
         }
     }
     if (isset($_SERVER['SERVER_NAME'])) {
-        $hostcfg = $app_path.'/cfg/mcp.server.'.$_SERVER['SERVER_NAME'].'.json';
+        $hostcfg = $app_cfg.'/mcp.server.'.$_SERVER['SERVER_NAME'].'.json';
         if (file_exists($hostcfg)) {
             $loadscope = json_decode(file_get_contents($hostcfg), true);
             if (is_array($loadscope)) {
@@ -189,8 +201,8 @@ try {
             include $scopeInit['preload'];
         }
     } else {
-        if (file_exists($app_path.'/cfg/mcp.preload.php')) {
-            include $app_path.'/cfg/mcp.preload.php';
+        if (file_exists($app_cfg.'/mcp.preload.php')) {
+            include $app_cfg.'/mcp.preload.php';
         }
     }
     if (isset($scopeInit['loadenv'])) {
@@ -207,6 +219,9 @@ try {
 } catch (Exception $e) {
     error_log('LNXMCP HEAD CFG ERROR:'.$e->get_message);
 }
+$app_path=$scopeInit["app.path"];
+$app_work=$scopeInit["app.path.work"];
+$app_cfg=$scopeInit["app.path.config"];
 ////////////////////////////////////////////////////////////////////////////////
 // ENVIRONMENT
 ////////////////////////////////////////////////////////////////////////////////
