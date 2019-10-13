@@ -12,6 +12,7 @@ namespace LinHUniX\Pdo\Service;
 
 use LinHUniX\Mcp\Model\mcpBaseModelClass;
 use LinHUniX\Mcp\masterControlProgram;
+use LinHUniX\Pdo\Driver\pdoDriver;
 
 class pdoService extends mcpBaseModelClass
 {
@@ -277,6 +278,13 @@ class pdoService extends mcpBaseModelClass
                 // ON THIS CASE THERE ARE NOTTING TO DO THE DATA IS ALREADY PRESENT ON THE SCOPE 
             //}
             $this->getMcp()->info("LOAD DATABASE " . $env . ":" . $subscope["driver"]);
+            if ($subscope["config"]=="ALIAS"){
+                $drv=$this->getDatabase($subscope['source']);
+                if ($drv instanceof pdoDriver) {
+                    $this->getMcp()->setCfg("app.Driver.".$env,$drv);
+                }
+                continue;
+            }
             $this->getMcp()->driver($env, true, $subscope, "Pdo", $subscope["driver"]);
         }
     }
@@ -290,6 +298,9 @@ class pdoService extends mcpBaseModelClass
         $res = $mcp->getResource("Driver." . $dbname);
         return $res;
     }
+    /**
+     * @return boolean
+     */
     private function GetFromSession()
     {
         if (!isset($_SESSION))
