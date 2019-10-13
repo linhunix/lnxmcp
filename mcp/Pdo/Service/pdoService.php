@@ -279,7 +279,7 @@ class pdoService extends mcpBaseModelClass
             //}
             $this->getMcp()->info("LOAD DATABASE " . $env . ":" . $subscope["driver"]);
             if ($subscope["config"]=="ALIAS"){
-                $drv=$this->getDatabase($subscope['source']);
+                $drv=$this->getDatabase($subscope['database']);
                 if ($drv instanceof pdoDriver) {
                     $this->getMcp()->setCfg("app.Driver.".$env,$drv);
                 }
