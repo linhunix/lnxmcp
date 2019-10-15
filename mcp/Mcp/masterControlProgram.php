@@ -182,7 +182,7 @@ final class masterControlProgram
     public function __construct(array $scopeIn)
     {
         $this->startTime = $this->getFloatTime();
-        $this->pathapp = $scopeIn['app.path'].'/App/';
+        $this->pathapp = $scopeIn['app.path.core'];
         $this->common = array();
 
         $this->event = array();

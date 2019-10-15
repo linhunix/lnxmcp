@@ -18,7 +18,7 @@ ob_start();
 ////////////////////////////////////////////////////////////////////////////////
 // ENV/CONFIG PATH AND CLASS
 ////////////////////////////////////////////////////////////////////////////////
-global $mcp_path, $app_path, $app_cfg,$app_work,$lnxmcp_phar, $lnxmcp_purl, $scopeInit, $cfg, $mcp;
+global $mcp_path, $app_path, $app_cfg, $app_work, $app_core,$app_user ,$lnxmcp_phar, $lnxmcp_purl, $scopeInit, $cfg, $mcp;
 // define path config
 if (!isset($mcp_path)) {
     $mcp_path = __DIR__.'/';
@@ -50,6 +50,12 @@ if (!isset($app_cfg)){
 }
 if (!isset($app_work)){
     $app_work=$app_path.'/work/';
+}
+if (!isset($app_core)){
+    $app_core=$app_path.'/App/';
+}
+if (!isset($app_user)){
+    $app_user=$app_path.'/usr/';
 }
 ////////////////////////////////////////////////////////////////////////////////
 // SCOPE - INIT
@@ -100,20 +106,21 @@ foreach (array(
     'app.support.onerrorsend' => false,
     'app.evnlst' => array('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name'),
     'mcp.path.module' => $app_path.'/mcp_module/',
-    'app.path.query' => $app_path.'/App/dbj/',
-    'app.path.menus' => $app_path.'/App/mnu/',
-    'app.path.tags' => $app_path.'/App/tag/',
-    'app.path.module' => $app_path.'/App/mod/',
-    'app.path.template' => $app_path.'/App/tpl/',
-    'app.path.workjob' => $app_path.'/work/job/',
-    'app.path.cache' => $app_path.'/work/cache/',
-    'app.path.session' => $app_path.'/work/session/',
-    'app.path.exchange' => $app_path.'/work/exchange/',
-    'app.path.sqllite' => $app_path.'/work/sqlite/',
+    'app.path.core' => $app_core,
+    'app.path.query' => $app_core.'/dbj/',
+    'app.path.menus' => $app_core.'/mnu/',
+    'app.path.tags' => $app_core.'/tag/',
+    'app.path.module' => $app_core.'/mod/',
+    'app.path.template' => $app_core.'/tpl/',
+    'app.path.language' => $app_core.'/lng/',
+    'app.path.userfile' => $app_user,
     'app.path.work' => $app_work,
-    'app.path.core' => $app_path.'/App/',
+    'app.path.workjob' => $app_work.'/job/',
+    'app.path.cache' => $app_work.'/cache/',
+    'app.path.session' => $app_work.'/session/',
+    'app.path.exchange' => $app_work.'/exchange/',
+    'app.path.sqllite' => $app_work.'/sqlite/',
     'app.path.config' => $app_cfg,
-    'app.path.language' => $app_path.'/App/lng/',
     'app.path.pbkac' => '/tmp/',
     'app.menu.InitCommon' => array(
         'pdo' => array('module' => 'Pdo', 'type' => 'serviceCommon', 'input' => $scopePdo),
@@ -142,6 +149,8 @@ if (isset($lnxmcp_phar)) {
 $app_path=$scopeInit["app.path"];
 $app_work=$scopeInit["app.path.work"];
 $app_cfg=$scopeInit["app.path.config"];
+$app_core=$scopeInit["app.path.core"];
+$app_user=$scopeInit["app.path.userfile"];
 
 ////////////////////////////////////////////////////////////////////////////////
 // ENV/CONFIG JSON CONFIG AND SETTINGS
@@ -222,6 +231,8 @@ try {
 $app_path=$scopeInit["app.path"];
 $app_work=$scopeInit["app.path.work"];
 $app_cfg=$scopeInit["app.path.config"];
+$app_user=$scopeInit["app.path.userfile"];
+$app_core=$scopeInit["app.path.core"];
 ////////////////////////////////////////////////////////////////////////////////
 // ENVIRONMENT
 ////////////////////////////////////////////////////////////////////////////////
