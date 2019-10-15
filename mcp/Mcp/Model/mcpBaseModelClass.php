@@ -163,7 +163,7 @@ class mcpBaseModelClass
 
     /**
      * this a  metod fo call the mcp class functions.
-     *
+     * @param string $resname
      * @return lnxmcp class
      */
     protected function getRes($resname)
