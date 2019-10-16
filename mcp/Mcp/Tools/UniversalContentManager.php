@@ -602,9 +602,12 @@ final class UniversalContentManager
             $mime = lnxMcpMimeFile($filename, $this->mimetype);
             $size = filesize($filename);
             lnxmcp()->debug('file:'.$filename.' - mime:'.$mime.' - size:'.$size);
+            ob_clean();
+            ob_end_clean();
             lnxmcp()->header('Content-Type: '.$mime, false);
             lnxmcp()->header('Cache-Control: max-age='.$this->head_expire_cache, false);
             echo file_get_contents($filename);
+            flush();
 
             return;
         }
