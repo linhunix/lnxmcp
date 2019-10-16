@@ -44,6 +44,23 @@ class mainpageController extends mcpBaseModelClass {
                 $this->moduledef();
             }
             switch ($this->argIn['adm.cmd']) {
+                case 'Csv':
+                case 'csv':
+                    $this->callCmd(
+                        array(
+                            "type"=> "serviceCommon",
+                            "name"=>"gfx",
+                            "module"=> "Gfx",
+                            "isPreload"=> false,
+                            "ScopeInRewrite"=> array(
+                                "source"=> '/../mcp_modules/Csv/Render/main',
+                                "mimetype"=> "text/html",
+                                "T"=> "DYN"
+                            )
+                        ),
+                        $_REQUEST
+                    );
+                    break;;
                 case 'Form':
                 case 'form':
                     $this->callCmd(
