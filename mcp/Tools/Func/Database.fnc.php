@@ -47,7 +47,7 @@ function lnxmcpNsql($action,$scopeIn=null,$table=null){
     if ($table!=null){
         $scopeIn["Table"]=$table;
     }
-    return $this->callCmd(
+    return lnxmcp()->RunCommand(
         array(
             "type"=>"serviceCommonReturn",
             "module"=>"Nsql",

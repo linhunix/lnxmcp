@@ -55,6 +55,7 @@ class mainpageController extends mcpBaseModelClass {
                             "ScopeInRewrite"=> array(
                                 "source"=> '/../mcp_modules/Nsql/ViewAdm/main',
                                 "mimetype"=> "text/html",
+                                "tag"=>true,
                                 "T"=> "DYN"
                             )
                         ),

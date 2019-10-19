@@ -18,6 +18,7 @@ class nsqlService extends mcpServiceModelClass {
 
     private $dbtype;
     private $dbtable;
+    private $tmptable;
     /**
      *  function moduleInit() 
      */
@@ -38,6 +39,7 @@ class nsqlService extends mcpServiceModelClass {
         if ($this->dbtable==''){
             $this->dbtable="lnxnsqldata";
         }
+        $this->tmptable=$this->dbtable;
         $this->callCmd(
             array(
                 "type"=>"queryJson",
@@ -58,6 +60,7 @@ class nsqlService extends mcpServiceModelClass {
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
+        $this->tmptable=$this->argIn["table"];
         $this->callCmd(
             array(
                 "type"=>"queryJson",
@@ -91,6 +94,7 @@ class nsqlService extends mcpServiceModelClass {
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
+        $this->tmptable=$this->argIn["table"];
         $this->callCmd(
             array(
                 "type"=>"queryJson",
@@ -130,6 +134,7 @@ class nsqlService extends mcpServiceModelClass {
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
+        $this->tmptable=$this->argIn["table"];
         $this->callCmd(
             array(
                 "type"=>"queryJson",
@@ -150,6 +155,7 @@ class nsqlService extends mcpServiceModelClass {
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
+        $this->tmptable=$this->argIn["table"];
         $res= $this->callCmd(
             array(
                 "type"=>"queryJson",
@@ -193,6 +199,7 @@ class nsqlService extends mcpServiceModelClass {
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
+        $this->tmptable=$this->argIn["table"];
         $this->callCmd(
             array(
                 "type"=>"queryJson",
@@ -225,6 +232,7 @@ class nsqlService extends mcpServiceModelClass {
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
+        $this->tmptable=$this->argIn["table"];
         return $this->callCmd(
             array(
                 "type"=>"queryJson",
@@ -251,6 +259,7 @@ class nsqlService extends mcpServiceModelClass {
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
+        $this->tmptable=$this->argIn["table"];
         $res= $this->callCmd(
             array(
                 "type"=>"queryJson",
@@ -285,6 +294,7 @@ class nsqlService extends mcpServiceModelClass {
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
+        $this->tmptable=$this->argIn["table"];
         $res= $this->callCmd(
             array(
                 "type"=>"queryJson",
@@ -298,5 +308,15 @@ class nsqlService extends mcpServiceModelClass {
         lnxmcp()->debugVar("Nsql","doc_list",$res);
         return $res;
      }
-     
+    /***
+     * function doc_status
+     * [T]= doc
+     * [E]= status
+     */
+    public function doc_status(){
+        return array(
+            "dbtype"=>$this->dbtype,
+            "dbtable"=>$this->tmptable
+        );
+    }
 }

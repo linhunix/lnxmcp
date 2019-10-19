@@ -246,7 +246,7 @@ class gfxService extends mcpBaseModelClass
             $res = ob_get_clean();
             \header('Content-type: '.$MimeType);
             if ($ConverTag == true) {
-                echo $this->getMcp()->covertTag($res, $arg);
+                echo $this->getMcp()->converTag($res, $arg);
             } else {
                 echo $res;
             }

@@ -49,6 +49,12 @@ function lnxMcpExtLoad($file, $path = '', $ext = null, $scopeIn = array(), $conv
     case 'app.path.template':
         $path = lnxmcp()->getResource('path.template');
         break;
+    case 'mcp.path.root':
+        $path = lnxmcp()->getCfg('mcp.path.root');
+        break;
+    case 'mcp.path':
+        $path = lnxmcp()->getCfg('mcp.path');
+        break;
     case 'app.path.workjob':
         $path = lnxmcp()->getResource('path.workjob');
         break;
