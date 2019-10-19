@@ -30,15 +30,17 @@ class mcpAutoload
     private function getDirContents($dir)
     {
         $files = scandir($dir);
-        foreach ($files as $key => $value) {
-            $path = $dir.DIRECTORY_SEPARATOR.$value;
-            if (is_dir($path) == false) {
-                $this->setres($path);
-            } elseif ($value != '.' && $value != '..') {
-                if (file_exists($path.DIRECTORY_SEPARATOR.'mcp.autoload.php')) {
-                    $this->setres($path.DIRECTORY_SEPARATOR.'mcp.autoload.php');
-                } else {
-                    $this->getDirContents($path);
+        if(is_array($files)) {
+            foreach ($files as $key => $value) {
+                $path = $dir.DIRECTORY_SEPARATOR.$value;
+                if (is_dir($path) == false) {
+                    $this->setres($path);
+                } elseif ($value != '.' && $value != '..') {
+                    if (file_exists($path.DIRECTORY_SEPARATOR.'mcp.autoload.php')) {
+                        $this->setres($path.DIRECTORY_SEPARATOR.'mcp.autoload.php');
+                    } else {
+                        $this->getDirContents($path);
+                    }
                 }
             }
         }

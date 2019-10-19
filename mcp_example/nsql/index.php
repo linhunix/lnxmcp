@@ -24,5 +24,5 @@ $lnxmcp_phar=array(
         "mail" => array("module" => "Mail", "type" => "serviceCommon")
     )
 );
-require __DIR__ . "/../../mcp/Head.php";
-#require __DIR__ . "/../../dist/lnxmcp.phar";
+#require __DIR__ . "/../../mcp/Head.php";
+require __DIR__ . "/../../dist/lnxmcp.phar";

@@ -22,8 +22,5 @@ function LnxUcm($scopein = null)
  */
 function lnxmcpUpload($scopein)
 {
-    $mcpAdminModPath = lnxmcp()->getCfg('mcp.path').'/../mcp_modules/Upload/';
-    lnxmcp()->setCfg('app.mod.path.LinHUniX.Upload', $mcpAdminModPath);
-
     return lnxmcp()->Controller('init', false, $scopein, 'Upload', null, 'LinHUniX');
 }

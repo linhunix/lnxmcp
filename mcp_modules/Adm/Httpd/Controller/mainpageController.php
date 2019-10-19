@@ -44,6 +44,23 @@ class mainpageController extends mcpBaseModelClass {
                 $this->moduledef();
             }
             switch ($this->argIn['adm.cmd']) {
+                case 'Nsql':
+                case 'nsql':
+                    $this->callCmd(
+                        array(
+                            "type"=> "serviceCommon",
+                            "name"=>"gfx",
+                            "module"=> "Gfx",
+                            "isPreload"=> false,
+                            "ScopeInRewrite"=> array(
+                                "source"=> '/../mcp_modules/Nsql/ViewAdm/main',
+                                "mimetype"=> "text/html",
+                                "T"=> "DYN"
+                            )
+                        ),
+                        $_REQUEST
+                    );
+                    break;;
                 case 'Csv':
                 case 'csv':
                     $this->callCmd(
@@ -53,7 +70,7 @@ class mainpageController extends mcpBaseModelClass {
                             "module"=> "Gfx",
                             "isPreload"=> false,
                             "ScopeInRewrite"=> array(
-                                "source"=> '/../mcp_modules/Csv/Render/main',
+                                "source"=> '/../mcp_modules/Csv/ViewAdm/main',
                                 "mimetype"=> "text/html",
                                 "T"=> "DYN"
                             )
@@ -61,8 +78,8 @@ class mainpageController extends mcpBaseModelClass {
                         $_REQUEST
                     );
                     break;;
-                case 'Form':
-                case 'form':
+                case 'Cmd':
+                case 'cmd':
                     $this->callCmd(
                         array(
                             "type"=> "serviceCommon",

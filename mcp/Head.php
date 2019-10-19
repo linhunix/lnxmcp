@@ -23,6 +23,7 @@ global $mcp_path, $app_path, $app_cfg, $app_work, $app_core,$app_user ,$lnxmcp_p
 if (!isset($mcp_path)) {
     $mcp_path = __DIR__.'/';
 }
+$mcp_mpath=realpath($mcp_path.'/../');
 ////////////////////////////////////////////////////////////////////////////////
 // APP PATH AND CLASS
 ////////////////////////////////////////////////////////////////////////////////
@@ -105,7 +106,7 @@ foreach (array(
     'app.support.mail' => 'support@linhunix.com',
     'app.support.onerrorsend' => false,
     'app.evnlst' => array('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name'),
-    'mcp.path.module' => $app_path.'/mcp_module/',
+    'mcp.path.module' => $mcp_mpath.'/mcp_module/',
     'app.path.core' => $app_core,
     'app.path.query' => $app_core.'/dbj/',
     'app.path.menus' => $app_core.'/mnu/',
@@ -256,6 +257,7 @@ if (!isset($scopeInit['app.timezone'])) {
     $scopeInit['app.timezone'] = 'Europe/London';
 }
 $scopeInit['mcp.path'] = $mcp_path;
+$scopeInit['mcp.path.root'] = $mcp_mpath;
 $scopeInit['mcp.ver'] = file_get_contents($mcp_path.'/mcp_version');
 ////////////////////////////////////////////////////////////////////////////////
 // DATABASE
@@ -267,52 +269,50 @@ if (!isset($scopeInit['app.mysqli'])) {
     $scopeInit['app.mysqli'] = false;
 }
 ////////////////////////////////////////////////////////////////////////////////
-// CLASS LOADER
+// CLASS LOADER - FUNCTION 
 ////////////////////////////////////////////////////////////////////////////////
-$alrf = true;
-$funpath = $mcp_path.'/Tools/Func.index.php';
-$aldpath = $mcp_path.'/Tools/Class.index.php';
-$stppath = $mcp_path.'/Tools/Step.index.php';
+$common_path=$mcp_path;
+$common_xpath=$mcp_mpath.'/mcp_modules/';
+$common_apath=$mcp_mpath;
+
 if (isset($scopeInit['phar']) == false) {
+    $scopeInit['mcp.loader'] = 'AutoLoadSrc';
     $scopeInit['phar'] = false;
 }
 if ($scopeInit['phar'] == true) {
-    if (file_exists($scopeInit['purl'].'/vendor/autoload.php')) {
-        require $scopeInit['purl'].'/vendor/autoload.php';
-        $alrf = false;
-    }
-    $funpath = $scopeInit['purl'].'/mcp/Tools/Func.index.php';
-    $aldpath = $scopeInit['purl'].'/mcp/Tools/Class.index.php';
-    $stppath = $scopeInit['purl'].'/mcp/Tools/Step.index.php';
+    $scopeInit['mcp.loader'] = 'AutoLoadPhar';
+    $common_path=$scopeInit['purl'].'/mcp/';
+    $common_xpath=$scopeInit['purl'].'/mcp_modules/';
+    $common_apath=$scopeInit['purl'];
+
 }
-if ($alrf) {
+$funpath = $common_path.'/Tools/Func.index.php';
+$aldpath = $common_path.'/Tools/Class.index.php';
+$stppath = $common_path.'/Tools/Step.index.php';
+////////////////////////////////////////////////////////////////////////////////
+// CLASS LOADER - AUTOLOAD 
+////////////////////////////////////////////////////////////////////////////////
+if (file_exists($common_apath.'/vendor/autoload.php')) {
+    require $common_apath.'/vendor/autoload.php';
+}
+else
+{
     if (file_exists($app_path.'/vendor/autoload.php')) {
         require $app_path.'/vendor/autoload.php';
     }
 }
+////////////////////////////////////////////////////////////////////////////////
+// CLASS LOADER - AUTOLOAD 
+////////////////////////////////////////////////////////////////////////////////
 include_once $funpath;
 if (class_exists("\Composer\Autoload\ClassLoader")) {
     $classLoader = new \Composer\Autoload\ClassLoader();
     $psr = array();
-    if ($scopeInit['phar'] == true) {
-        $classLoader->addPsr4('LinHUniX\\Mcp\\', $scopeInit['purl'].'/mcp/Mcp');
-        $classLoader->addPsr4('LinHUniX\\Gfx\\', $scopeInit['purl'].'/mcp/Gfx');
-        $classLoader->addPsr4('LinHUniX\\Pdo\\', $scopeInit['purl'].'/mcp/Pdo');
-        $classLoader->addPsr4('LinHUniX\\Mail\\', $scopeInit['purl'].'/mcp/Mail');
-        $classLoader->addPsr4('LinHUniX\\Ln4\\', $scopeInit['purl'].'/mcp/Ln4');
-        $classLoader->addPsr4('LinHUniX\\Nsql\\', $scopeInit['purl'].'/mcp/Nsql');
-        $classLoader->addPsr4('LinHUniX\\Auth\\', $scopeInit['purl'].'/mcp/Auth');
-        $scopeInit['mcp.loader'] = 'AutoLoadPhar';
-    } else {
-        $classLoader->addPsr4('LinHUniX\\Mcp\\', $app_path.'/mcp/Mcp');
-        $classLoader->addPsr4('LinHUniX\\Gfx\\', $app_path.'/mcp/Gfx');
-        $classLoader->addPsr4('LinHUniX\\Pdo\\', $app_path.'/mcp/Pdo');
-        $classLoader->addPsr4('LinHUniX\\Mail\\', $app_path.'/mcp/Mail');
-        $classLoader->addPsr4('LinHUniX\\Ln4\\', $app_path.'/mcp/Ln4');
-        $classLoader->addPsr4('LinHUniX\\Nsql\\', $app_path.'/mcp/Nsql');
-        $classLoader->addPsr4('LinHUniX\\Auth\\', $app_path.'/mcp/Auth');
-        $scopeInit['mcp.loader'] = 'AutoLoadSrc';
-    }
+    $classLoader->addPsr4('LinHUniX\\Mcp\\', $common_path.'/Mcp');
+    $classLoader->addPsr4('LinHUniX\\Gfx\\', $common_path.'/Gfx');
+    $classLoader->addPsr4('LinHUniX\\Pdo\\', $common_path.'/Pdo');
+    $classLoader->addPsr4('LinHUniX\\Mail\\', $common_path.'/Mail');
+    $classLoader->addPsr4('LinHUniX\\Auth\\', $common_path.'/Auth');
     $classLoader->register();
     $classLoader->setUseIncludePath(true);
 } else {
@@ -324,17 +324,9 @@ if (class_exists("\Composer\Autoload\ClassLoader")) {
         selfAutoLoad($app_path.DIRECTORY_SEPARATOR.'mcp');
     }
 }
-if (isset($scopeInit['app.debug'])) {
-    if ($scopeInit['app.debug'] == true) {
-        if (isset($scopeInit['purl'])) {
-            error_log('Load Mcp by '.$scopeInit['mcp.loader'].' ['.$scopeInit['phar'].']');
-            error_log('PURL:'.$scopeInit['purl']);
-            error_log('FILE:'.$aldpath);
-        } else {
-            error_log('Load Mcp by '.$scopeInit['mcp.loader'].' ['.$scopeInit['mcp.path'].']');
-        }
-    }
-}
+////////////////////////////////////////////////////////////////////////////////
+// CLASS LOADER - MCP CORE 
+////////////////////////////////////////////////////////////////////////////////
 if (class_exists("\LinHUniX\Mcp\masterControlProgram")) {
     $mcp = new \LinHUniX\Mcp\masterControlProgram($scopeInit);
 } else {
@@ -342,6 +334,23 @@ if (class_exists("\LinHUniX\Mcp\masterControlProgram")) {
 }
 mcpErrorHandlerInit();
 mcpShutDownInit();
+////////////////////////////////////////////////////////////////////////////////
+// CLASS LOADER - MCP_MODULED 
+////////////////////////////////////////////////////////////////////////////////
+lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdm', $common_xpath.'/Adm/');
+lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdmShell', $common_xpath.'/Adm/Shell/');
+lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdmHttpd', $common_xpath.'/Adm/Httpd/');
+lnxmcp()->setCfg('app.mod.path.LinHUniX.Ln4', $common_xpath.'/Ln4/');
+lnxmcp()->setCfg('app.mod.path.LinHUniX.Nsql', $common_xpath.'/Nsql/');
+lnxmcp()->setCfg('app.mod.path.LinHUniX.Upload', $common_xpath.'/Upload/');
+////////////////////////////////////////////////////////////////////////////////
+// CLASS LOADER - SUMMARY 
+////////////////////////////////////////////////////////////////////////////////
+if (isset($scopeInit['app.debug'])) {
+    if ($scopeInit['app.debug'] == true) {
+        error_log('Load Mcp by '.$scopeInit['mcp.loader'].' ['.$common_path.']');
+    }
+}
 ////////////////////////////////////////////////////////////////////////////////
 // Menu Calling
 ////////////////////////////////////////////////////////////////////////////////

@@ -1486,16 +1486,16 @@ final class masterControlProgram
      * @param string $srvprc    name of the driver
      * @param bool   $ispreload is only a preload (ex page) or need to be execute (ex controller)
      * @param array  $scopeIn   Input Array with the value need to work
-     * @param string $modinit   Module name where is present the code and be load and initalized
-     * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
+     * @param streturnng $modinit   Module name where is present the code and be load and initalized
+     * @param streturnng $subcall   used if the name of the functionality ($callname) and the subcall are different
      */
     public function apiCommon($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $mcptype = 'Api')
     {
-        mcpApiClass::apiCommon($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, null, $mcptype);
+        mcpApiClreturns::apiCommon($this, $srvprc, $ispreload, $scopeIn, $modinit, $subcall, null, $mcptype);
     }
 
     /**
-     * Run Module as ToolApi Components.
+     * Run Modulreturnas ToolApi Components.
      *
      * @param string $srvprc    name of the driver
      * @param bool   $ispreload is only a preload (ex page) or need to be execute (ex controller)
@@ -1533,6 +1533,33 @@ final class masterControlProgram
     }
 
     /**
+     * Run Module as service Return.
+     *
+     * @param string $srvprc    name of the driver
+     * @param bool   $ispreload is only a preload (ex page) or need to be execute (ex controller)
+     * @param array  $scopeIn   Input Array with the value need to work
+     * @param string $modinit   Module name where is present the code and be load and initalized
+     * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
+     *
+     * @return array $ScopeOut
+     */
+    public function serviceR($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null)
+    {
+        if ($vendor == null) {
+            $vendor = $this->defapp;
+        }
+        if (!is_array($scopeIn)) {
+            $scopeIn = array('In' => $scopeIn);
+        }
+        $this->info('MCP>>'.$vendor.'>>service(R)>>'.$srvprc);
+        $res= $this->module($srvprc, $this->pathsrc, $ispreload, $scopeIn, $modinit, $subcall, $vendor, 'Service');
+        if (isset($res["return"])) {
+            return $res["return"];
+        }
+        return false;
+    }
+
+    /**
      * Run Module as service.
      *
      * @param string $srvprc    name of the driver
@@ -1551,6 +1578,30 @@ final class masterControlProgram
         }
 
         return $this->module($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, 'Service');
+    }
+
+   /**
+     * Run Module as service Return
+     *
+     * @param string $srvprc    name of the driver
+     * @param bool   $ispreload is only a preload (ex page) or need to be execute (ex controller)
+     * @param array  $scopeIn   Input Array with the value need to work
+     * @param string $modinit   Module name where is present the code and be load and initalized
+     * @param string $subcall   used if the name of the functionality ($callname) and the subcall are different
+     *
+     * @return array $ScopeOut
+     */
+    public function serviceCommonR($srvprc, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null)
+    {
+        $this->info('MCP>>service(C)>>'.$srvprc);
+        if (!is_array($scopeIn)) {
+            $scopeIn = array('In' => $scopeIn);
+        }
+        $res= $this->module($srvprc, $this->pathmcp, $ispreload, $scopeIn, $modinit, $subcall, $this->defvnd, 'Service');
+        if (isset($res["return"])) {
+            return $res["return"];
+        }
+        return false;
     }
 
     /**

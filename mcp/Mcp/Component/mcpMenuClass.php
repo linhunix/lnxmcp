@@ -62,6 +62,12 @@ class mcpMenuClass
         if (isset($scopectl['isPreload'])) {
             $ispreload = $scopectl['isPreload'];
         }
+        if ($ispreload=='true'){
+            $ispreload=true;
+        }
+        if ($ispreload!=true){
+            $ispreload=false;
+        }
         $modinit = null;
         if (isset($scopectl['modinit'])) {
             $modinit = $scopectl['modinit'];
@@ -208,6 +214,12 @@ class mcpMenuClass
                 break;
             case 'serviceCommon':
                 $result = lnxmcp()->serviceCommon($callname, $ispreload, $scopeIn, $modinit, $subcall);
+                break;
+            case 'serviceReturn':
+                $result = lnxmcp()->serviceR($callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor);
+                break;
+            case 'serviceCommonReturn':
+                $result = lnxmcp()->serviceCommonR($callname, $ispreload, $scopeIn, $modinit, $subcall);
                 break;
             case 'page':
                 $result = lnxmcp()->page($callname, $scopeIn, $modinit, $vendor);

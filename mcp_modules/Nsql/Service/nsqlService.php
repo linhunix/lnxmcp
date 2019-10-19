@@ -42,6 +42,7 @@ class nsqlService extends mcpServiceModelClass {
             array(
                 "type"=>"queryJson",
                 "module"=>"Nsql",
+                "vendor"=>"LinHUniX",
                 "name"=>$this->dbtype."_Init"
             ),
             array("table"=>$this->dbtable)
@@ -61,6 +62,7 @@ class nsqlService extends mcpServiceModelClass {
             array(
                 "type"=>"queryJson",
                 "module"=>"Nsql",
+                "vendor"=>"LinHUniX",
                 "name"=>$this->dbtype."_Init"
             ),
             $this->argIn
@@ -93,6 +95,7 @@ class nsqlService extends mcpServiceModelClass {
             array(
                 "type"=>"queryJson",
                 "module"=>"Nsql",
+                "vendor"=>"LinHUniX",
                 "name"=>$this->dbtype."_DocInit"
             ),
             $this->argIn
@@ -101,6 +104,7 @@ class nsqlService extends mcpServiceModelClass {
             array(
                 "type"=>"queryJson",
                 "module"=>"Nsql",
+                "vendor"=>"LinHUniX",
                 "name"=>$this->dbtype."_DocGetId"
             ),
             $this->argIn
@@ -130,6 +134,7 @@ class nsqlService extends mcpServiceModelClass {
             array(
                 "type"=>"queryJson",
                 "module"=>"Nsql",
+                "vendor"=>"LinHUniX",
                 "name"=>$this->dbtype."_DocDelete"
             ),
             $this->argIn
@@ -149,6 +154,7 @@ class nsqlService extends mcpServiceModelClass {
             array(
                 "type"=>"queryJson",
                 "module"=>"Nsql",
+                "vendor"=>"LinHUniX",
                 "name"=>$this->dbtype."_DocGetDocs"
             ),
             $this->argIn
@@ -191,6 +197,7 @@ class nsqlService extends mcpServiceModelClass {
             array(
                 "type"=>"queryJson",
                 "module"=>"Nsql",
+                "vendor"=>"LinHUniX",
                 "name"=>$this->dbtype."_".$mode
             ),
             $this->argIn
@@ -222,6 +229,7 @@ class nsqlService extends mcpServiceModelClass {
             array(
                 "type"=>"queryJson",
                 "module"=>"Nsql",
+                "vendor"=>"LinHUniX",
                 "name"=>$this->dbtype."_GetVal"
             ),
             $this->argIn
@@ -247,6 +255,7 @@ class nsqlService extends mcpServiceModelClass {
             array(
                 "type"=>"queryJson",
                 "module"=>"Nsql",
+                "vendor"=>"LinHUniX",
                 "name"=>$this->dbtype."_DocGetAll"
             ),
             $this->argIn
@@ -280,6 +289,7 @@ class nsqlService extends mcpServiceModelClass {
             array(
                 "type"=>"queryJson",
                 "module"=>"Nsql",
+                "vendor"=>"LinHUniX",
                 "name"=>$this->dbtype."_DocFind"
             ),
             $this->argIn

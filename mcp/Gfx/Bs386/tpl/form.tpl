@@ -1,14 +1,15 @@
     <form action='/lnxmcpapi' method='post' target='result' >
+      <input name='ispreload' type="hidden" value="false" >
       <fieldset>
         <legend>Test Api</legend>
+        <label>Type of Command</label>
+        <input name='type' type="text" placeholder="Type type api">
         <label>Name</label>
         <input name='name' type="text" placeholder="Type name api">
-        <label>Vendor</label>
-        <input name='vendor' type="text" placeholder="Type vendor api">
         <label>Module</label>
         <input name='module' type="text" placeholder="Type module api">
-        <label>type</label>
-        <input name='type' type="text" placeholder="Type type api">
+        <label>Vendor</label>
+        <input name='vendor' type="text" placeholder="Type vendor api">
         <button type="submit" class="btn">Submit</button>
       </fieldset>
     </form>

@@ -49,11 +49,11 @@ function lnxmcpNsql($action,$scopeIn=null,$table=null){
     }
     return $this->callCmd(
         array(
-            "type"=>"serviceCommon",
+            "type"=>"serviceCommonReturn",
             "module"=>"Nsql",
+            "vendor"=>"LinHUniX",
             "name"=>"nsql"
         ),
         $scopeIn
     );
-
 }
