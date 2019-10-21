@@ -45,7 +45,7 @@ function lnxmcpNsql($action,$scopeIn=null,$table=null){
     $scopeIn["T"]="doc";
     $scopeIn["E"]=$action;
     if ($table!=null){
-        $scopeIn["Table"]=$table;
+        $scopeIn["table"]=$table;
     }
     return lnxmcp()->RunCommand(
         array(

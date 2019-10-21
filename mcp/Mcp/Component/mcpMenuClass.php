@@ -290,7 +290,7 @@ class mcpMenuClass
                 }
             }
         }
-        lnxmcp()->debugVar('runCommand', $callname, $result);
+        lnxmcp()->debugVar('runCommand:result>', $callname, $result);
 
         return $result;
     }

@@ -3,11 +3,17 @@
  if (isset($scopeIn["table"])){
      $table=$scopeIn["table"];
  }
- $resn=lnxmcpNsql("list",array(),$table);
- if (isset($resn['doc_list'])) {
-    $data=$resn['doc_list'];
+$scopeNIn=array(
+    "doc_var"=>$scopeIn['doc_name'],
+    "doc_val"=>$scopeIn['doc_find'],
+    "doc_idx"=>$scopeIn['doc_idx']
+);
+$resn=lnxmcpNsql("finddoc",$scopeNIn,$table);
+ if (isset($resn['doc_finddoc'])) {
+    $data=$resn['doc_finddoc'];
  }
- if (!isset($scopeIn["blockIn"])) {
+
+if (!isset($scopeIn["blockIn"])) {
      $scopeIn["blockIn"]=file_get_contents(__DIR__.'/../ViewAdm/listdoc.tpl');
  }
  foreach ($data as $row) {

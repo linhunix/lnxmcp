@@ -46,7 +46,7 @@
         <li><a href="#tabS" data-toggle="tab">Show</a></li>
         <li><a href="#tabC" data-toggle="tab">Create</a></li>
         <li><a href="#tabRV" data-toggle="tab">Read value</a></li>
-        <li><a href="#tabEV" data-toggle="tab">Edit value</a></li>
+        <li><a href="#tabEV" data-toggle="tab">Make value</a></li>
         <li><a href="#tabD" data-toggle="tab">Delete</a></li>
         <li><a href="#tabCT" data-toggle="tab">Create Table</a></li>
       </ul>
@@ -57,7 +57,7 @@
         </div>
         <div class="tab-pane" id="tabL">
           <h1>List Document</h1>
-              <form id='listdoc' action='/lnxmcpapi' method='post' target='result' >
+            <form id='listdoc' action='/lnxmcpapi' method='post' target='result' >
                 <input name='type' type="hidden" value="Render" >
                 <input name='ispreload' type="hidden" value="false" >
                 <input name='name' type="hidden" value="admList" >
@@ -75,24 +75,159 @@
         </div>
         <div class="tab-pane" id="tabF">
           <h1>Find Documents</h1>
+            <form id='finddoc' action='/lnxmcpapi' method='post' target='result' >
+                <input name='type' type="hidden" value="Render" >
+                <input name='ispreload' type="hidden" value="false" >
+                <input name='name' type="hidden" value="admFind" >
+                <input name='module' type="hidden" value="Nsql" >
+                <input name='vendor' type="hidden" value="LinHUniX" >
+                <fieldset>
+                    <legend>Request</legend>
+                    <hr>
+                    <label>Table</label>
+                    <input name='table' type="text" placeholder="name of the table or null">
+                    <hr>
+                    <label>Name</label>
+                    <input type='text' name='doc_name' >
+                    <label>Find</label>
+                    <input type='text' name='doc_find' >
+                    <label>docidlist</label>
+                    <input type='text' name='doc_idx' >
+                    <hr>
+                    <button type="submit" class="btn">Submit</button>
+                </fieldset>
+            </form>
         </div>
         <div class="tab-pane" id="tabS">
           <h1>Show Document</h1>
+            <form id='showdoc' action='/lnxmcpapi' method='post' target='result' >
+                <input name='type' type="hidden" value="Render" >
+                <input name='ispreload' type="hidden" value="false" >
+                <input name='name' type="hidden" value="admShow" >
+                <input name='module' type="hidden" value="Nsql" >
+                <input name='vendor' type="hidden" value="LinHUniX" >
+                <fieldset>
+                    <legend>Request</legend>
+                    <hr>
+                    <label>Table</label>
+                    <input name='table' type="text" placeholder="name of the table or null">
+                    <hr>
+                    <label>Doc Id</label>
+                    <input type='text' name='doc_id' >
+                    <hr>
+                    <button type="submit" class="btn">Submit</button>
+                </fieldset>
+            </form>
         </div>
         <div class="tab-pane" id="tabC">
           <h1>Create Document</h1>
+            <form id='makedoc' action='/lnxmcpapi' method='post' target='result' >
+                <input name='type' type="hidden" value="Render" >
+                <input name='ispreload' type="hidden" value="false" >
+                <input name='name' type="hidden" value="admCreate" >
+                <input name='module' type="hidden" value="Nsql" >
+                <input name='vendor' type="hidden" value="LinHUniX" >
+                <fieldset>
+                    <legend>Request</legend>
+                    <hr>
+                    <label>Table</label>
+                    <input name='table' type="text" placeholder="name of the table or null">
+                    <hr>
+                    <label>Doc Id</label>
+                    <input type='text' name='doc_id' >
+                    <label>Doc Name</label>
+                    <input type='text' name='doc_name' >
+                    <hr>
+                    <button type="submit" class="btn">Submit</button>
+                </fieldset>
+            </form>
         </div>
         <div class="tab-pane" id="tabRV">
           <h1>Read Value</h1>
+            <form id='readval' action='/lnxmcpapi' method='post' target='result' >
+                <input name='type' type="hidden" value="Render" >
+                <input name='ispreload' type="hidden" value="false" >
+                <input name='name' type="hidden" value="admGetVal" >
+                <input name='module' type="hidden" value="Nsql" >
+                <input name='vendor' type="hidden" value="LinHUniX" >
+                <fieldset>
+                    <legend>Request</legend>
+                    <hr>
+                    <label>Table</label>
+                    <input name='table' type="text" placeholder="name of the table or null">
+                    <hr>
+                    <label>Doc Id</label>
+                    <input type='text' name='doc_id' >
+                    <label>Doc Name</label>
+                    <input type='text' name='doc_name' >
+                    <hr>
+                    <button type="submit" class="btn">Submit</button>
+                </fieldset>
+            </form>
         </div>
         <div class="tab-pane" id="tabEV">
-          <h1>Edit Value</h1>
+          <h1>Make Value</h1>
+                <form id='makedoc' action='/lnxmcpapi' method='post' target='result' >
+                <input name='type' type="hidden" value="Render" >
+                <input name='ispreload' type="hidden" value="false" >
+                <input name='name' type="hidden" value="admSetVal" >
+                <input name='module' type="hidden" value="Nsql" >
+                <input name='vendor' type="hidden" value="LinHUniX" >
+                <fieldset>
+                    <legend>Request</legend>
+                    <hr>
+                    <label>Table</label>
+                    <input name='table' type="text" placeholder="name of the table or null">
+                    <hr>
+                    <label>Doc Id</label>
+                    <input type='text' name='doc_id' >
+                    <label>Doc Name</label>
+                    <input type='text' name='doc_name' >
+                    <label>Doc Value</label>
+                    <input type='text' name='doc_value' >
+                    <hr>
+                    <button type="submit" class="btn">Submit</button>
+                </fieldset>
+            </form>
         </div>
         <div class="tab-pane" id="tabD">
-          <h1>Delte Documnent</h1>
+          <h1>Delete Documnent</h1>
+            <form id='deldoc' action='/lnxmcpapi' method='post' target='result' >
+                <input name='type' type="hidden" value="Render" >
+                <input name='ispreload' type="hidden" value="false" >
+                <input name='name' type="hidden" value="admDelete" >
+                <input name='module' type="hidden" value="Nsql" >
+                <input name='vendor' type="hidden" value="LinHUniX" >
+                <fieldset>
+                    <legend>Request</legend>
+                    <hr>
+                    <label>Table</label>
+                    <input name='table' type="text" placeholder="name of the table or null">
+                    <hr>
+                    <label>Doc Id</label>
+                    <input type='text' name='doc_id' >
+                    <hr>
+                    <button type="submit" class="btn">Submit</button>
+                </fieldset>
+            </form>
         </div>
         <div class="tab-pane" id="tabCT">
           <h1>Create Table</h1>
+          <form id='newtabledoc' action='/lnxmcpapi' method='post' target='result' >
+                <input name='type' type="hidden" value="Render" >
+                <input name='ispreload' type="hidden" value="false" >
+                <input name='name' type="hidden" value="admCreateTable" >
+                <input name='module' type="hidden" value="Nsql" >
+                <input name='vendor' type="hidden" value="LinHUniX" >
+                <fieldset>
+                    <legend>Request</legend>
+                    <hr>
+                    <label>Table</label>
+                    <input name='table' type="text" placeholder="name of the table or null">
+                    <hr>
+                    <button type="submit" class="btn">Submit</button>
+                </fieldset>
+            </form>
         </div>
       </div>
       </div>

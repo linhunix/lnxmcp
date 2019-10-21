@@ -52,7 +52,7 @@ class nsqlService extends mcpServiceModelClass {
     }
 
     /***
-     * function doc_tableInit(){
+     * function doc_tableInit
      * [T]= doc
      * [E]= tableInit
      */
@@ -91,9 +91,34 @@ class nsqlService extends mcpServiceModelClass {
         if ($this->argIn["doc_id"]==""){
             $this->argIn["doc_id"]=date('U');
         }
+        $this->argIn['doc_id']=intval($this->argIn['doc_id']);
+        if (($this->argIn["doc_id"]==0) or($this->argIn["doc_id"]=="")){
+            $this->argIn['doc_id']=intval(date('U'));
+        }
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
+        ///////////////////// verified if this id is already present
+        $nid=false;
+        while ($nid==false){
+            lnxmcp()->debugVar("Nsql", "doc_init", 'Check '.$this->argIn['doc_id'] );
+            $res= $this->callCmd(
+                array(
+                    "type"=>"queryJson",
+                    "module"=>"Nsql",
+                    "vendor"=>"LinHUniX",
+                    "name"=>$this->dbtype."_DocChkId"
+                ),
+                $this->argIn
+            ); 
+            lnxmcp()->debugVar("Nsql", "doc_init", 'Check '.$this->argIn['doc_id'].'='.print_r($res,1) );
+            if (!isset($res['doc'])){
+                $nid=true;
+                continue;
+            }
+            $this->argIn['doc_id']=intval($this->argIn['doc_id']+1);
+        }
+        ////  Store the new id
         $this->tmptable=$this->argIn["table"];
         $this->callCmd(
             array(
@@ -104,6 +129,7 @@ class nsqlService extends mcpServiceModelClass {
             ),
             $this->argIn
         ); 
+        ////  get the new id
         $res= $this->callCmd(
             array(
                 "type"=>"queryJson",
@@ -114,7 +140,7 @@ class nsqlService extends mcpServiceModelClass {
             $this->argIn
         ); 
         if (isset($res['doc'])){
-            $this->getMcp()->setCommon("doc_id",$res['doc']);
+            $this->getMcp()->setCommon($this->argIn["table"]."_doc_id",$res['doc']);
         }
         lnxmcp()->debugVar("Nsql","doc_init",$res);
         return $res;
@@ -165,8 +191,9 @@ class nsqlService extends mcpServiceModelClass {
             ),
             $this->argIn
         ); 
-        $this->getMcp()->setCommon($this->argIn["table"]."_list",$res);
         lnxmcp()->debugVar("Nsql","doc_list",$res);
+        $this->getMcp()->setCommon($this->argIn["table"]."_list",$res);
+        return $res;
      }
      /***
      * function doc_setval(){
@@ -192,14 +219,28 @@ class nsqlService extends mcpServiceModelClass {
         if ($this->argIn["doc_val"]==""){
             return false;
         }
-        $mode="SetVal";
+        $mode="DocSetVal";
         if ($this->argIn["doc_val"]=="."){
-            $mode='DelVal';
+            $mode='DocDelVal';
         }
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
         $this->tmptable=$this->argIn["table"];
+        lnxmcp()->debugVar("Nsql", "doc_setval", 'Check '.$this->argIn['doc_id'] );
+        $res= $this->callCmd(
+            array(
+                "type"=>"queryJson",
+                "module"=>"Nsql",
+                "vendor"=>"LinHUniX",
+                "name"=>$this->dbtype."_DocChkId"
+            ),
+            $this->argIn
+        ); 
+        lnxmcp()->debugVar("Nsql", "doc_setval", 'Check '.$this->argIn['doc_id'].'='.print_r($res,1) );
+        if (!isset($res['doc'])){
+            return  false;
+        }
         $this->callCmd(
             array(
                 "type"=>"queryJson",
@@ -233,19 +274,21 @@ class nsqlService extends mcpServiceModelClass {
             $this->argIn["table"]=$this->dbtable;
         }
         $this->tmptable=$this->argIn["table"];
-        return $this->callCmd(
+        $res=$this->callCmd(
             array(
                 "type"=>"queryJson",
                 "module"=>"Nsql",
                 "vendor"=>"LinHUniX",
-                "name"=>$this->dbtype."_GetVal"
+                "name"=>$this->dbtype."_DocGetVal"
             ),
             $this->argIn
         ); 
-        return true;
-     }
+        $this->getMcp()->setCommon($this->argIn["table"]."_load",array($res));
+        lnxmcp()->debugVar("Nsql","doc_getval",$res);
+        return $res;     
+    }
     /***
-     * function doc_getdoc(){
+     * function doc_getdoc
      * [T]= doc
      * [E]= getdoc
      */
@@ -274,7 +317,7 @@ class nsqlService extends mcpServiceModelClass {
         return $res;
      }
     /***
-     * function doc_getdoc(){
+     * function doc_finddoc
      * [T]= doc
      * [E]= finddoc
      */
@@ -291,6 +334,10 @@ class nsqlService extends mcpServiceModelClass {
         if ($this->argIn["doc_val"]==""){
             return false;
         }
+        $qrytype="_DocFind";
+        if ($this->argIn["doc_idx"]!=""){
+            $qrytype="_DocFind_Extra";
+        }
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
@@ -300,7 +347,7 @@ class nsqlService extends mcpServiceModelClass {
                 "type"=>"queryJson",
                 "module"=>"Nsql",
                 "vendor"=>"LinHUniX",
-                "name"=>$this->dbtype."_DocFind"
+                "name"=>$this->dbtype.$qrytype
             ),
             $this->argIn
         ); 
