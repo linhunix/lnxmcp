@@ -330,6 +330,27 @@ class pdoDriver extends mcpBaseModelClass
 
         return $result_set;
     }
+    /**
+     * indexed query function
+     * @param string $sql
+     * @param string $idfield  default = 'id'
+     * @param boolean $sort default = true
+     * @return array dataresult with index as $idfield
+     * 
+     */
+    public function indexQuery($sql,$idfield='id',$sort=true){
+        $getData=$this->simpleQuery($sql);
+        $resData=array();
+        if (is_array($getData)) {
+            foreach ($getData as $row ) {
+                $resData[$row[$idfield]] = $row;
+            }
+        }
+        if ($sort==true){
+        ksort($resData);
+        }
+        return $resData;
+    }   
 
     /**
      * simpleCount.
@@ -416,6 +437,22 @@ class pdoDriver extends mcpBaseModelClass
 
         return $rs[0];
     }
+
+    /** 
+     * function firstRowField
+     * reorder the result by the id 
+     * @param string $sql
+     * @param string $idfield default='id'
+     * @return string/null
+    */
+    public function firstRowField($sql,$idfield='id'){
+        $getData=$this->firstRow($sql);
+        if (isset($getData[$idfield])) {
+            return $getData[$idfield];
+        }
+        return null;
+    }
+
 
     /**
      * data_row (alias)
@@ -620,6 +657,25 @@ class pdoDriver extends mcpBaseModelClass
 
         return $_stmt;
     }
+
+/** 
+ * function getNames
+ * reorder the result by the id 
+ * create 21/10/2019 - Andrea M. as ft compatibilty logic
+ * @param string $dstname
+ * @param string $table
+ * @param string $srcname
+ * @param string $srcvalue
+ * @return string/boolean
+*/
+public function getNames($dstname, $table, $srcname, $srcvalue){
+    $row=$this->firstRow('SELECT '.$dstname.' FROM '.$table.' WHERE '.$srcname.' = \' '.$srcvalue . ' \' ');
+    if (isset($row[$dstname])){
+        return $row[$dstname];
+    }
+    return false;
+}
+
 
     /**
      * $scope array is
