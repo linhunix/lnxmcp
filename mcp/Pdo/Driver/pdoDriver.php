@@ -312,7 +312,7 @@ class pdoDriver extends mcpBaseModelClass
 
                 return false;
             } else {
-                while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
+                while ($row = $statement->fetch(PDO::FETCH_BOTH)) {
                     $result_set[] = $row;
                 }
             }
