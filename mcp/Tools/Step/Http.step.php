@@ -96,7 +96,7 @@ class mcpRunHttp
      */
     public function mcpPathConvert($urlpth, $urlarr)
     {
-        lnxmcp()->debug('Check a Redirect Action for '.$urlpth);
+        lnxmcp()->debug('Check a Convert Action for '.$urlpth);
         $cfgpth = lnxmcp()->getResource('path.config');
         $pathredirect = lnxGetJsonFile('PathConvert', $cfgpth, 'json');
         if (is_array($pathredirect)) {
