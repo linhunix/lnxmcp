@@ -54,7 +54,6 @@ class pdoDriver extends mcpBaseModelClass
                 $this->PDO = new PDO($this->dburlcon, $username, $password, $options);
             } catch (Exception $e) {
                 $mcp->warning('DBCONN: ERR='.$e->getMessage());
-
                 return null;
             }
             $data = $this->listTable();
@@ -80,7 +79,16 @@ class pdoDriver extends mcpBaseModelClass
     {
         return $this->getTable('SHOW TABLES');
     }
-
+    /**
+     * Check if pdo is live 
+     * @return bool status 
+     */
+    public function isLive(){
+        if ($this->PDO!=null){
+            return true;
+        }
+        return false;
+    }
     /*
      * real_escape_string
      * remplace the mysqlLegacyRealEscapeString

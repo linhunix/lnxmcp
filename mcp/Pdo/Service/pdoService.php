@@ -263,6 +263,7 @@ class pdoService extends mcpBaseModelClass
      */
     private function preload()
     {
+        $dblist=array();
         foreach ($this->preloadEnv as $env => $subscope)
         {
             if (!isset($subscope["config"])){
@@ -283,10 +284,13 @@ class pdoService extends mcpBaseModelClass
                 if ($drv instanceof pdoDriver) {
                     $this->getMcp()->setCfg("app.Driver.".$env,$drv);
                 }
+                $dblist["app.Driver.".$env]="Alias:".$subscope['database'];
                 continue;
             }
             $this->getMcp()->driver($env, true, $subscope, "Pdo", $subscope["driver"]);
+            $dblist["app.Driver.".$env]=$subscope["driver"];
         }
+        $this->getMcp()->setCommon("PDO_DATABASES",$dblist);
     }
     /**
      *  @param string $dbname database name 

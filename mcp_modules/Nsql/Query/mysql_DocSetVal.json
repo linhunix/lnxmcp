@@ -1,5 +1,5 @@
 {
     "E":"lnx.mydata",
     "T":"e",
-    "Q":"INSERT OR REPLACE INTO [table] (doc, name, date, value,extra) VALUES ('[doc_id]','[doc_var]',datetime('now'),'[doc_val]','[doc_extra]');"
+    "Q":"REPLACE INTO [table] (doc, name, date, value,extra) VALUES ('[doc_id]','[doc_var]',DATE_FORMAT(now(),'%Y-%m-%d %H:%i:%s'),'[doc_val]','[doc_extra]');"
 }

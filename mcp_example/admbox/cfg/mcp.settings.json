@@ -20,5 +20,6 @@
     },
     "app.gfx.default":["Base","Bs386"],
     "mcp.web.api":true,
-    "mcp.web.admin":true
+    "mcp.web.admin":true,
+    "app.nsql.dbtype":"mysql"
 }

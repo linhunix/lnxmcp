@@ -79,6 +79,19 @@ class mainpageController extends mcpBaseModelClass {
                         $_REQUEST
                     );
                     break;;
+                case 'Pdo':
+                case 'pdo':
+                    $this->callCmd(
+                        array(
+                            "type"=> "renderCommon",
+                            "name"=>"Pdo",
+                            "module"=> "LnxMcpAdmHttpd",
+                            "vendor"=>"LinHUniX",
+                            "isPreload"=> false,
+                        ),
+                        $_REQUEST
+                    );
+                    break;;
                 case 'Cmd':
                 case 'cmd':
                     $this->callCmd(
