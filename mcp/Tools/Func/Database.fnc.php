@@ -30,7 +30,7 @@ function lnxmcpDbM($command = null, $element = null)
     }
 }
 /**
- * Run Nsql Modul
+ * Run Nsql Module
  *
  * @param string $action   Name of the event 
  * @param array  $scopeIn  Input Array with the value need to work
@@ -53,6 +53,35 @@ function lnxmcpNsql($action,$scopeIn=null,$table=null){
             "module"=>"Nsql",
             "vendor"=>"LinHUniX",
             "name"=>"nsql"
+        ),
+        $scopeIn
+    );
+}
+/**
+ * Run Csv Module
+ *
+ * @param string $action   Name of the event 
+ * @param array  $scopeIn  Input Array with the value need to work
+ * @param string $table    The name of the table if need
+ *
+ * @return array $ScopeOut 
+ */
+function lnxmcpCsv($action,$scopeIn=null,$csv='default',$table=null){
+    if (!is_array($scopeIn)){
+        $scopeIn=array();
+    }
+    $scopeIn["T"]="csv";
+    $scopeIn["E"]=$action;
+    $scopeIn["csv"]=$csv;
+    if ($table!=null){
+        $scopeIn["table"]=$table;
+    }
+    return lnxmcp()->RunCommand(
+        array(
+            "type"=>"serviceCommonReturn",
+            "module"=>"Csv",
+            "vendor"=>"LinHUniX",
+            "name"=>"csv"
         ),
         $scopeIn
     );
