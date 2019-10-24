@@ -3,6 +3,8 @@
 read 
 ./step2-chk.sh
 read 
+./step2-chk.sh mcp/test_common
+read 
 ./step3-gereatephar.sh
 read 
 ./step4-generatedoc.sh

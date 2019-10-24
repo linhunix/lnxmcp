@@ -54,6 +54,9 @@ class mcpCheckModel
             case "env":
                 $this->res = getenv($this->test[mcpCheckModel_CheckName]);
                 break;
+            case "common":
+                $this->res = $mcp->getCommon();
+                break;
             case "command":
                 $this->checkArgIn();
                 $this->res = $mcp->runCommand($this->test[mcpCheckModel_CheckArgCtl], $this->test[mcpCheckModel_CheckArgIn]);

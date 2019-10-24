@@ -1,5 +1,5 @@
 {
     "E":"lnx.lite",
     "T":"e",
-    "Q":"INSERT OR REPLACE INTO [table] (doc, name, date, value) VALUES ('[doc_id]','doc',datetime('now'),'[doc_name]');"
+    "Q":"INSERT OR REPLACE INTO [table] (doc, name, date, value, extra ) VALUES ('[doc_id]','doc',datetime('now'),'[doc_name]','[doc_extra]');"
 }

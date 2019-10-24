@@ -40,6 +40,7 @@ class authService extends mcpServiceModelClass
     {
         $this->spacename = __NAMESPACE__;
         $this->classname = __CLASS__;
+        $this->setCommon("user","guest");
         $this->auth_sload();
     }
 

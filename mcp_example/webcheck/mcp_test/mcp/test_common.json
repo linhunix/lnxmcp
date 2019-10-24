@@ -1,0 +1,8 @@
+{
+  "mcp_check_type": "common",
+  "mcp_check_name": "common",
+  "mcp_check_ctl": {},
+  "mcp_check_out": {
+    "user": "mcp_check_isset"
+  }
+}

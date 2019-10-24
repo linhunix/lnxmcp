@@ -95,6 +95,20 @@ class nsqlService extends mcpServiceModelClass {
         if (($this->argIn["doc_id"]==0) or($this->argIn["doc_id"]=="")){
             $this->argIn['doc_id']=intval(date('U'));
         }
+        if (!isset($this->argIn["doc_extra"])){
+            $this->argIn["doc_extra"]=array();
+        }
+        if (!is_array($this->argIn["doc_extra"])){
+            $tmpedata=$this->argIn["doc_extra"];
+            $this->argIn["doc_extra"]=array($tmpedata);
+        }
+        $tmpedata=$this->argIn["doc_extra"];
+        try{
+            $this->argIn["doc_extra"]= json_encode($tmpedata, JSON_PRETTY_PRINT);
+        }catch(\Exception $e) {
+            $this->warning('doc_init>>doc_extra:Err:'.$e->get_message());
+            return false;
+        }
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
@@ -223,6 +237,20 @@ class nsqlService extends mcpServiceModelClass {
         if ($this->argIn["doc_val"]=="."){
             $mode='DocDelVal';
         }
+        if (!isset($this->argIn["doc_extra"])){
+            $this->argIn["doc_extra"]=array();
+        }
+        if (!is_array($this->argIn["doc_extra"])){
+            $tmpedata=$this->argIn["doc_extra"];
+            $this->argIn["doc_extra"]=array($tmpedata);
+        }
+        $tmpedata=$this->argIn["doc_extra"];
+        try{
+            $this->argIn["doc_extra"]= json_encode($tmpedata, JSON_PRETTY_PRINT);
+        }catch(\Exception $e) {
+            $this->warning('doc_setval>>doc_extra:Err:'.$e->get_message());
+            return false;
+        }
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
@@ -285,6 +313,14 @@ class nsqlService extends mcpServiceModelClass {
         ); 
         $this->getMcp()->setCommon($this->argIn["table"]."_load",array($res));
         lnxmcp()->debugVar("Nsql","doc_getval",$res);
+        if (isset($res["extra"])){
+            $tmpedata=$res["extra"];
+            try {
+                $res["extra"]=json_decode($tmpedata, true);
+            }catch(\Exception $e ){
+                $this->warning('doc_getval>>extra:Err:'.$e->get_message());
+            }
+        }
         return $res;     
     }
     /***

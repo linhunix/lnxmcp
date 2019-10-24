@@ -1,5 +1,5 @@
 {
     "E":"lnx.mydata",
     "T":"e",
-    "Q":"REPLACE INTO [table] (doc, name, date, value) VALUES ('[doc_id]','doc',DATE_FORMAT(now(),'%Y-%m-%d %H:%i:%s'),'[doc_name]');"
+    "Q":"REPLACE INTO [table] (doc, name, date, value, extra) VALUES ('[doc_id]','doc',DATE_FORMAT(now(),'%Y-%m-%d %H:%i:%s'),'[doc_name]','[doc_extra]');"
 }
