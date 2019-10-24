@@ -17,6 +17,7 @@ function LnxUcm($scopein = null)
  *                       --[category]
  *                       --- all scopein field
  *                       -required [allowlist] ext in the list is allowred
+ *                      -required [allowfields] 
  *
  * @return array result
  */

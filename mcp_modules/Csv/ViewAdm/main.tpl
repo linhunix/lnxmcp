@@ -1,5 +1,6 @@
-    <?php lnxmcpUpload(array("category"=>"csv","allowlist"=>array("csv"))); ?>
-    <form id='csvupload' action='/lnxmcpadm/Csv' method='post' target='result'   enctype="multipart/form-data" >
+    <?php $resU=lnxmcpUpload(array("category"=>"csv","allowlist"=>array("csv"))); ?>
+    <?php $resL=lnxmcpFileList(array("category"=>"csv","allowlist"=>array("csv"))); ?>
+    <form id='csvupload' action='/lnxmcpadm/Csv' method='post' enctype="multipart/form-data" >
       <fieldset>
         <legend>Test Csv</legend>
         <label>Table</label>
@@ -9,7 +10,9 @@
         <input type="submit" value="Upload">
         <HR>
         <pre>
-        <?php print_r(lnxmcpFileList(array("category"=>"csv","allowlist"=>array("csv")))); ?>
+        <?php print_r($resU); ?>
+        <HR>
+        <?php print_r($resL); ?>
         </pre>
         <HR>
       </fieldset>

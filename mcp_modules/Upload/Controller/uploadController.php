@@ -106,31 +106,39 @@ class uploadController extends mcpBaseModelClass
             $allowall = false;
             $allowlist = $this->argIn['allowlist'];
         }
+        $allowAllFields = true;
+        $allowFields = array();
+        if (isset($this->argIn['allowfields'])) {
+            $allowAllFields = false;
+            $allowFields = $this->argIn['allowfields'];
+        }
         $meta = array();
         if (\is_array($_FILES)){
             $mdie=false;
             foreach ($_FILES as $tag => $value) {
                 $mdie=true;
                 $meta[$tag] = $value;
-                $meta[$tag]['date_std'] = date();
+                $meta[$tag]['date_std'] = date("Y-m-d H:i:s");
                 $meta[$tag]['date_unx'] = date('U');
                 $meta[$tag]['category'] = $cat;
                 $meta[$tag]['field'] = $tag;
+                $meta[$tag]['original_name'] = $_FILES[$tag]['name'];
                 $file_load = $_FILES[$tag]['tmp_name'];
                 if (empty($file_load)) {
                     $meta[$tag]['error'] = 'Error on load '.$tag;
                     $this->warning('Error on load '.$tag);
                     continue;
                 }
-                $imageup = '';
                 $file_arr = explode('.', $_FILES[$tag]['name']);
                 $file_type = array_pop($file_arr);
                 $file_name = implode('.', $file_arr);
-                $file_name = preg_replace('/[^A-Za-z0-9\-]/', '', $file_name);
+                $file_name = preg_replace('/[^A-Za-z0-9\-\_]/', '', $file_name);
+                if ($file_name==""){
+                    $file_name=$tag;
+                } 
+                $meta[$tag]['original_name'] = $_FILES[$tag]['name'];
                 $meta[$tag]['type'] = $file_type;
                 $meta[$tag]['basename'] = $file_name;
-                $meta[$tag]['data'] = date();
-                $meta[$tag]['dataUnix'] = date('U');
                 $meta[$tag]['user']=$this->getCommon("user");
                 if ($allowall == false) {
                     if (!in_array($file_type, $allowlist)) {
@@ -139,7 +147,15 @@ class uploadController extends mcpBaseModelClass
                         continue;
                     }
                 }
+                if ($allowAllFields == false) {
+                    if (!in_array($tag, $allowFields)) {
+                        $meta[$tag]['error'] = $tag.' field is denied !!';
+                        $this->warning($tag.' field is denied !!');
+                        continue;
+                    }
+                }
                 $meta[$tag]['newname'] = $file_name;
+                $newfile = $file_name;
                 if ($convertname == true) {
                     $newfile = $fileconvert;
                     $rand = rand(0, 100000);
@@ -155,17 +171,16 @@ class uploadController extends mcpBaseModelClass
                 $meta[$tag]['metaname'] = $meta[$tag]['newname'];
                 $meta[$tag]['newname'] .= '.'.$file_type;
                 $file_load = $_FILES[$tag]['tmp_name'];
-                $file_save = $dir_save.DIRECTORY_SEPARATOR.$newfile.'.'.$file_type;
+                $file_save = $dir_save.DIRECTORY_SEPARATOR.$meta[$tag]['newname'];
                 if (!copy($file_load, $file_save)) {
                     $meta[$tag]['error'] = $file_save.' can be generate !!';
                     $this->warning($file_save.' can be generate !!');
                     continue;
                 }
-                lnxPutJsonFile($meta[$tag], $dir_save, $meta[$tag]['metaname'], 'json');
-            }
-            if ($mdie){
-                die();
+                lnxPutJsonFile($meta[$tag],$meta[$tag]['metaname'], $dir_save, 'json');
             }
         }
+        $this->argOut=$meta;
+        return $meta;
     }
 }

@@ -95,6 +95,7 @@ class listController extends mcpBaseModelClass
         }
         $result=array();
         foreach ($list as $dirfile) {
+            $err='none';
             if (($dirfile=='.') or ($dirfile == '..')){
                 continue;
             }
@@ -106,13 +107,15 @@ class listController extends mcpBaseModelClass
             }
             if ($allowall == false) {
                 if (!in_array($file_type, $allowlist)) {
-                    $meta[$tag]['error'] = $file_type.' is denied !!';
+                    $err = $file_type.' is denied !!';
                     $this->warning($file_type.' is denied !!');
                     continue;
                 }
             }
             $result[$dirfile]=lnxGetJsonFile($file_name,$dir_save,'json');
+            $result[$dirfile]["error"]=$err;
         }
+        $this->argOut=$result;
         return $result;
     }
 }
