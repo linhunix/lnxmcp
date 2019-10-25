@@ -54,6 +54,7 @@ class pdoDriver extends mcpBaseModelClass
                 $this->PDO = new PDO($this->dburlcon, $username, $password, $options);
             } catch (Exception $e) {
                 $mcp->warning('DBCONN: ERR='.$e->getMessage());
+
                 return null;
             }
             $data = $this->listTable();
@@ -79,16 +80,21 @@ class pdoDriver extends mcpBaseModelClass
     {
         return $this->getTable('SHOW TABLES');
     }
+
     /**
-     * Check if pdo is live 
-     * @return bool status 
+     * Check if pdo is live.
+     *
+     * @return bool status
      */
-    public function isLive(){
-        if ($this->PDO!=null){
+    public function isLive()
+    {
+        if ($this->PDO != null) {
             return true;
         }
+
         return false;
     }
+
     /*
      * real_escape_string
      * remplace the mysqlLegacyRealEscapeString
@@ -330,27 +336,31 @@ class pdoDriver extends mcpBaseModelClass
 
         return $result_set;
     }
+
     /**
-     * indexed query function
+     * indexed query function.
+     *
      * @param string $sql
-     * @param string $idfield  default = 'id'
-     * @param boolean $sort default = true
+     * @param string $idfield default = 'id'
+     * @param bool   $sort    default = true
+     *
      * @return array dataresult with index as $idfield
-     * 
      */
-    public function indexQuery($sql,$idfield='id',$sort=true){
-        $getData=$this->simpleQuery($sql);
-        $resData=array();
+    public function indexQuery($sql, $idfield = 'id', $sort = true)
+    {
+        $getData = $this->simpleQuery($sql);
+        $resData = array();
         if (is_array($getData)) {
-            foreach ($getData as $row ) {
+            foreach ($getData as $row) {
                 $resData[$row[$idfield]] = $row;
             }
         }
-        if ($sort==true){
-        ksort($resData);
+        if ($sort == true) {
+            ksort($resData);
         }
+
         return $resData;
-    }   
+    }
 
     /**
      * simpleCount.
@@ -410,7 +420,7 @@ class pdoDriver extends mcpBaseModelClass
     public function dataWalk($sql, $callback, $var = array(), &$funarr = array(), $err = true)
     {
         $res = $this->data_table($sql, $var, $err);
-        if (count($res) > 0) {
+        if (is_array($res)) {
             return array_walk($res, $callback, $funarr);
         }
 
@@ -438,21 +448,24 @@ class pdoDriver extends mcpBaseModelClass
         return $rs[0];
     }
 
-    /** 
+    /**
      * function firstRowField
-     * reorder the result by the id 
+     * reorder the result by the id.
+     *
      * @param string $sql
      * @param string $idfield default='id'
+     *
      * @return string/null
-    */
-    public function firstRowField($sql,$idfield='id'){
-        $getData=$this->firstRow($sql);
+     */
+    public function firstRowField($sql, $idfield = 'id')
+    {
+        $getData = $this->firstRow($sql);
         if (isset($getData[$idfield])) {
             return $getData[$idfield];
         }
+
         return null;
     }
-
 
     /**
      * data_row (alias)
@@ -469,7 +482,7 @@ class pdoDriver extends mcpBaseModelClass
         return $this->firstRow($sql);
     }
 
-    //Delete Row from table
+    //Delete Row from table @need review
     public function delRow($_table, $_id)
     {
         if (($_table != '') && ($_id > 0)) {
@@ -486,6 +499,8 @@ class pdoDriver extends mcpBaseModelClass
      * getRow.
      *
      * Get Row from table
+     *
+     * @todo need review
      *
      * @param mixed  $_fields
      * @param string $_table
@@ -522,6 +537,8 @@ class pdoDriver extends mcpBaseModelClass
 
     /**
      * getRows.
+     *
+     * @todo need review
      *
      * @param mixed $_fields
      * @param mixed $_table
@@ -623,7 +640,7 @@ class pdoDriver extends mcpBaseModelClass
         return true;
     }
 
-    //GET SetRow SQL
+    //GET SetRow SQL//todo need review
     public function getSql($_fields, $_table, $emptyval = false)
     {
         $_stmt = '';
@@ -658,24 +675,29 @@ class pdoDriver extends mcpBaseModelClass
         return $_stmt;
     }
 
-/** 
- * function getNames
- * reorder the result by the id 
- * create 21/10/2019 - Andrea M. as ft compatibilty logic
- * @param string $dstname
- * @param string $table
- * @param string $srcname
- * @param string $srcvalue
- * @return string/boolean
-*/
-public function getNames($dstname, $table, $srcname, $srcvalue){
-    $row=$this->firstRow('SELECT '.$dstname.' FROM '.$table.' WHERE '.$srcname.' = \' '.$srcvalue . ' \' ');
-    if (isset($row[$dstname])){
-        return $row[$dstname];
-    }
-    return false;
-}
+    /**
+     * function getNames
+     * reorder the result by the id
+     * create 21/10/2019 - Andrea M. as ft compatibilty logic.
+     *
+     * @todo need review
+     *
+     * @param string $dstname
+     * @param string $table
+     * @param string $srcname
+     * @param string $srcvalue
+     *
+     * @return string/boolean
+     */
+    public function getNames($dstname, $table, $srcname, $srcvalue)
+    {
+        $row = $this->firstRow('SELECT '.$dstname.' FROM '.$table.' WHERE '.$srcname.' = \' '.$srcvalue.' \' ');
+        if (isset($row[$dstname])) {
+            return $row[$dstname];
+        }
 
+        return false;
+    }
 
     /**
      * $scope array is
