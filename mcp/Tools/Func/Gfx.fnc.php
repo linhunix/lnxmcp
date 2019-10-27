@@ -23,7 +23,7 @@ function LnxUcm($scopein = null)
  */
 function lnxmcpUpload($scopein)
 {
-    return lnxmcp()->Controller('upload', false, $scopein, 'Upload', null, 'LinHUniX');
+    return lnxmcp()->controllerR('upload', false, $scopein, 'Upload', null, 'LinHUniX');
 }
 
 /**
@@ -39,5 +39,5 @@ function lnxmcpUpload($scopein)
  */
 function lnxmcpFileList($scopein)
 {
-    return lnxmcp()->Controller('list', false, $scopein, 'Upload', null, 'LinHUniX');
+    return lnxmcp()->controllerR('list', false, $scopein, 'Upload', null, 'LinHUniX');
 }
