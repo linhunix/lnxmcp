@@ -1,0 +1,5 @@
+{
+    "E":"lnx.lite",
+    "T":"q",
+    "Q":"select * from [table] where name='[doc_var]' and value [doc_srcopt] '[doc_val]' and doc in ([doc_idx]);" 
+}

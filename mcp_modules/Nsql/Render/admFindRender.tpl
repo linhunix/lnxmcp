@@ -8,6 +8,9 @@ $scopeNIn=array(
     "doc_val"=>$scopeIn['doc_find'],
     "doc_idx"=>$scopeIn['doc_idx']
 );
+if (isset($scopeIn['doc_srcopt'])){
+    $scopeNIn['doc_srcopt']=$scopeIn['doc_srcopt'];
+}
 $resn=lnxmcpNsql("finddoc",$scopeNIn,$table);
  if (isset($resn['doc_finddoc'])) {
     $data=$resn['doc_finddoc'];

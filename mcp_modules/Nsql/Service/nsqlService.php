@@ -358,6 +358,7 @@ class nsqlService extends mcpServiceModelClass {
      * [E]= finddoc
      */
     public function doc_finddoc(){
+        lnxmcp()->debugVar("Nsql","doc_srcdata",$this->argIn);
         if (!isset($this->argIn["doc_var"])){
             return false;
         }
@@ -371,8 +372,13 @@ class nsqlService extends mcpServiceModelClass {
             return false;
         }
         $qrytype="_DocFind";
+        if (isset($this->argIn["doc_srcopt"])){
+            if ($this->argIn["doc_srcopt"]!=""){
+                $qrytype="_DocSrcOp";
+            }
+        }
         if ($this->argIn["doc_idx"]!=""){
-            $qrytype="_DocFind_Extra";
+            $qrytype.="_Extra";
         }
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;

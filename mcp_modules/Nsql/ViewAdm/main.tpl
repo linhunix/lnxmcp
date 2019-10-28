@@ -43,6 +43,7 @@
         <li class="active"><a href="#tab0" data-toggle="tab">Select-></a></li>
         <li><a href="#tabL" data-toggle="tab">List</a></li>
         <li><a href="#tabF" data-toggle="tab">Find</a></li>
+        <li><a href="#tabFO" data-toggle="tab">Find Oper.</a></li>
         <li><a href="#tabS" data-toggle="tab">Show</a></li>
         <li><a href="#tabC" data-toggle="tab">Create</a></li>
         <li><a href="#tabRV" data-toggle="tab">Read value</a></li>
@@ -87,6 +88,38 @@
                     <label>Table</label>
                     <input name='table' type="text" placeholder="name of the table or null">
                     <hr>
+                    <label>Name</label>
+                    <input type='text' name='doc_name' >
+                    <label>Find</label>
+                    <input type='text' name='doc_find' >
+                    <label>docidlist</label>
+                    <input type='text' name='doc_idx' >
+                    <hr>
+                    <button type="submit" class="btn">Submit</button>
+                </fieldset>
+            </form>
+        </div>
+        <div class="tab-pane" id="tabFO">
+          <h1>Find Documents</h1>
+            <form id='finddoc' action='/lnxmcpapi' method='post' target='result' >
+                <input name='type' type="hidden" value="Render" >
+                <input name='ispreload' type="hidden" value="false" >
+                <input name='name' type="hidden" value="admFind" >
+                <input name='module' type="hidden" value="Nsql" >
+                <input name='vendor' type="hidden" value="LinHUniX" >
+                <fieldset>
+                    <legend>Request</legend>
+                    <hr>
+                    <label>Table</label>
+                    <input name='table' type="text" placeholder="name of the table or null">
+                    <hr>
+                    <label>Operator</label>
+                    <select name='doc_srcopt'>
+                    <option value='='> Equal </option>
+                    <option value='<>'> Not Equal </option>
+                    <option value='>'> Upper </option>
+                    <option value='<'> Lower </option>
+                    </select>
                     <label>Name</label>
                     <input type='text' name='doc_name' >
                     <label>Find</label>
