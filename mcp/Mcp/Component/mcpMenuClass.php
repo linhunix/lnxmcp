@@ -268,6 +268,9 @@ class mcpMenuClass
                 $ext = @$scopectl['ext'];
                 echo lnxMcpExtLoad($callname, $path, $ext, $scopeIn, false);
                 break;
+            case 'ucm':
+                lnxmcp()->ucm();
+                break;
             case 'move':
                 $ext = @$scopectl['ext'];
                 $default = @$scopectl['default'];

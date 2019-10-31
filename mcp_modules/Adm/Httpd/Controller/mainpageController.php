@@ -53,7 +53,25 @@ class mainpageController extends mcpBaseModelClass {
                             "module"=> "Gfx",
                             "isPreload"=> false,
                             "ScopeInRewrite"=> array(
-                                "source"=> '/../mcp_modules/Nsql/ViewAdm/main',
+                                "source"=> '/../mcp_modules/Nsql/ViewAdm/mainNsql',
+                                "mimetype"=> "text/html",
+                                "tag"=>true,
+                                "T"=> "DYN"
+                            )
+                        ),
+                        $_REQUEST
+                    );
+                    break;;
+                case 'RDb':
+                case 'rdb':
+                    $this->callCmd(
+                        array(
+                            "type"=> "serviceCommon",
+                            "name"=>"gfx",
+                            "module"=> "Gfx",
+                            "isPreload"=> false,
+                            "ScopeInRewrite"=> array(
+                                "source"=> '/../mcp_modules/Nsql/ViewAdm/mainRamDb',
                                 "mimetype"=> "text/html",
                                 "tag"=>true,
                                 "T"=> "DYN"
