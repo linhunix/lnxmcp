@@ -340,3 +340,4 @@ Releases:
 3.5.0.20191025 -  ADM_BOX - linhunix@andream - Fri 25 Oct 10:32:24 BST 2019 
 3.5.0.20191027 -  ADM_BOX - linhunix@linXeonHome - Sun 27 Oct 09:42:14 GMT 2019 
 3.5.0.20191028 -  ADM_BOX - linhunix@linXeonHome - Mon 28 Oct 07:43:01 GMT 2019 
+3.5.0.20191031 -  ADM_BOX - linhunix@linXeonHome - Thu 31 Oct 06:46:25 GMT 2019 

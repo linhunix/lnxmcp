@@ -214,8 +214,12 @@ class mcpDebugClass
         }
         if (file_exists($path.$string.$ext)) {
             include $path.$string.$ext;
+        } elseif (file_exists($path.DIRECTORY_SEPARATOR.$string.'.'.$ext)) {
+            include $path.DIRECTORY_SEPARATOR.$string.'.'.$ext;   
         } elseif (file_exists($path.$default.$ext)) {
             include $path.$default.$ext;
+        } elseif (file_exists($path.DIRECTORY_SEPARATOR.$default.'.'.$ext)) {
+            include $path.DIRECTORY_SEPARATOR.$default.'.'.$ext;
         } else {
             $this->critical('Moving to '.$path.$string.' Error file not found');
         }
