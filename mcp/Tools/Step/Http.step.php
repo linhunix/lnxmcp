@@ -100,9 +100,11 @@ class mcpRunHttp
         $cfgpth = lnxmcp()->getResource('path.config');
         $pathredirect = lnxGetJsonFile('PathConvert', $cfgpth, 'json');
         if (is_array($pathredirect)) {
+            lnxmcp()->debug('Conver Action has '.count($pathredirect).' record');
             if (isset($pathredirect[$urlpth])) {
                 lnxmcp()->info('Found a Conver Action for '.$urlpth);
                 $redcmd = $pathredirect[$urlpth];
+                lnxmcp()->debug('Conver Action for '.$urlpth.' is '.print_r($redcmd, 1));
                 if (is_array($redcmd)) {
                     lnxmcp()->runCommand($redcmd, $urlarr);
                 } else {
@@ -118,8 +120,9 @@ class mcpRunHttp
                         lnxmcp()->debug('Check a Conver Action for partial '.$urlpart);
                         $urlcheck = $urlpart.'/*';
                         if (isset($pathredirect[$urlcheck])) {
-                            lnxmcp()->info('Found a Conver Action for partial '.$urlpart);
+                            lnxmcp()->info('Found a Conver Action for partial '.$urlcheck);
                             $redcmd = $pathredirect[$urlcheck];
+                            lnxmcp()->debug('Conver Action for '.$urlcheck.' is '.print_r($redcmd, 1));
                             if (is_array($redcmd)) {
                                 lnxmcp()->runCommand($redcmd, $urlarr);
                             } else {
@@ -130,8 +133,9 @@ class mcpRunHttp
                         }
                         $urlcheck = '*/'.$urlseg.'/*';
                         if (isset($pathredirect[$urlcheck])) {
-                            lnxmcp()->info('Found a Conver Action for partial '.$urlpart);
+                            lnxmcp()->info('Found a Conver Action for partial '.$urlcheck);
                             $redcmd = $pathredirect[$urlcheck];
+                            lnxmcp()->debug('Conver Action for '.$urlcheck.' is '.print_r($redcmd, 1));
                             if (is_array($redcmd)) {
                                 lnxmcp()->runCommand($redcmd, $urlarr);
                             } else {
@@ -143,6 +147,8 @@ class mcpRunHttp
                     }
                 }
             }
+        } else {
+            lnxmcp()->warning('PathConver is not array!!!');
         }
 
         return false;
