@@ -58,6 +58,35 @@ function lnxmcpNsql($action,$scopeIn=null,$table=null){
     );
 }
 /**
+ * Run Nsql Ram Module
+ *
+ * @param string $table   The name of the table if need
+ * @param string $mode    The mode level
+ * @param string $action   Name of the event 
+ * @param array  $scopeIn  Input Array with the value need to work
+ *
+ * @return array $ScopeOut 
+ */
+function lnxmcpRamDb($table,$mode,$action,$scopeIn=array()){
+    if (!is_array($scopeIn)){
+        $scopeIn=array();
+    }
+    $scopeIn["T"]=$mode;
+    $scopeIn["E"]=$action;
+    if ($table!=null){
+        $scopeIn["table"]=$table;
+    }
+    return lnxmcp()->RunCommand(
+        array(
+            "type"=>"serviceCommonReturn",
+            "module"=>"Nsql",
+            "vendor"=>"LinHUniX",
+            "name"=>"nsqlRam"
+        ),
+        $scopeIn
+    );
+}
+/**
  * Run Csv Module
  *
  * @param string $action   Name of the event 

@@ -17,7 +17,7 @@ class csvService extends mcpServiceModelClass {
 
 
     private $csvtable;
-    private $csvfolder;
+    private $csvcategory;
     /**
      *  function moduleInit() 
      */
@@ -35,9 +35,9 @@ class csvService extends mcpServiceModelClass {
         if ($this->csvtable==''){
             $this->csvtable="lnxcsvdata";
         }
-        $this->csvfolder=$this->getCfg("app.csv.folder");
-        if ($this->csvtable==''){
-            $this->csvtable="csv";
+        $this->csvcategory=$this->getCfg("app.csv.category");
+        if ($this->csvcategory==''){
+            $this->csvcategory="csv";
         }
         $this->nsql("tableInit");
     }
@@ -62,7 +62,62 @@ class csvService extends mcpServiceModelClass {
         if (!is_array($scopein)) {
             $scopein=array();
         }
-        $scopein['category']=$this->csvfolder;
+        $scopein['category']=$this->csvcategory;
         return \lnxmcpUpload($scopein);
+    }
+
+    public function csv_load() {
+        if (!isset($this->argIn['file'])){
+            $this->warning("No csv file selected!!! ");
+            return false;
+        }
+        $data=array();
+        $user_path = $this->getRes('path.userfile');
+        $user_path .= DIRECTORY_SEPARATOR.$this->csvcategory;
+        if (isset($this->argIn['path'])){
+            $user_path=$this->argIn['path'];
+        }
+        $csvfile=$user_path.DIRECTORY_SEPARATOR.$this->argIn['file'];
+        if (!file_exists($csvfile)){
+            $this->warning(" csv file not found [".$csvfile."]!!! ");
+            return false;
+        }
+        $headerload=false;
+        $headerlist=null;
+        if (isset($this->argIn["isHeader"])){
+            $headerload=$this->argIn["isHeader"];
+        }
+        if (isset($this->argIn["headerList"])){
+            $headerlist=$this->argIn["headerList"];
+        }
+        $rowc=0;
+        if (($handle = fopen($csvfile, "r")) !== FALSE) {
+            while (($row = fgetcsv($handle, 1000, ",")) !== FALSE) {
+                if ($headerload==true){
+                    $headerlist=$row;
+                    $headerload=false;
+                    continue;
+                }
+                if (!is_array($headerlist)){
+                    $data[$rowc]=$row;
+                    $rowc++;
+                    continue;
+                }
+                $rown=array();
+                $rowx=0;
+                foreach($row as $field){
+                    $fkey=$rowx;
+                    if (isset($headerlist[$rowx])){
+                        $fkey=$headerlist[$rowx];
+                    }
+                    $rown[$fkey]=$field;
+                    $rowx++;
+                }
+                $data[$rowc]=$rown;
+                $rowc++;
+            }
+            fclose($handle);
+        }
+        return $data;
     }
 }
