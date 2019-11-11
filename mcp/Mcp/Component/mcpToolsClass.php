@@ -106,12 +106,13 @@ class mcpToolsClass
      */
     public function move($string, $default = null, $ext = '', $path = null, $andEnd = true)
     {
+        $ismoved=true;
         if (empty($string)) {
             lnxmcp()->critical('Moving to Null Error');
         }
         lnxmcp()->info('moving to '.$string);
         if ($path == null) {
-            $path = $this->getRes('path');
+            $path = lnxmcp()->getResource('path');
         }
         if ($default == null) {
             $default = $string;
@@ -125,11 +126,13 @@ class mcpToolsClass
         } elseif (file_exists($path.DIRECTORY_SEPARATOR.$default.'.'.$ext)) {
             include $path.DIRECTORY_SEPARATOR.$default.'.'.$ext;
         } else {
-            lnxmcp()->critical('Moving to '.$path.$string.' Error file not found');
+            lnxmcp()->error('Moving to '.$path.$string.' Error file not found');
+            $ismoved=false;
         }
         if ($andEnd == true) {
             exit(0);
         }
+        return $ismoved;
     }
 
     /**
