@@ -107,9 +107,9 @@ class mcpToolsClass
     public function move($string, $default = null, $ext = '', $path = null, $andEnd = true)
     {
         if (empty($string)) {
-            $this->critical('Moving to Null Error');
+            lnxmcp()->critical('Moving to Null Error');
         }
-        $this->info('moving to '.$string);
+        lnxmcp()->info('moving to '.$string);
         if ($path == null) {
             $path = $this->getRes('path');
         }
@@ -125,7 +125,7 @@ class mcpToolsClass
         } elseif (file_exists($path.DIRECTORY_SEPARATOR.$default.'.'.$ext)) {
             include $path.DIRECTORY_SEPARATOR.$default.'.'.$ext;
         } else {
-            $this->critical('Moving to '.$path.$string.' Error file not found');
+            lnxmcp()->critical('Moving to '.$path.$string.' Error file not found');
         }
         if ($andEnd == true) {
             exit(0);
@@ -146,7 +146,7 @@ class mcpToolsClass
         if ($end) {
             $msg = ' With End';
         }
-        $this->warning('Header ['.$retcode.']:'.$string.$msg);
+        lnxmcp()->warning('Header ['.$retcode.']:'.$string.$msg);
         if ($htmljs == false) {
             \header_remove();
             \header($string, $replace, $retcode);
