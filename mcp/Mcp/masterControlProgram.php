@@ -890,7 +890,7 @@ final class masterControlProgram
      */
     public function move($dest, $default = null, $ext = '', $path = null, $andEnd = true)
     {
-        $this->mcpLogging->move($dest, $default, $ext, $path, $andEnd);
+        $this->mcpTools->move($dest, $default, $ext, $path, $andEnd);
     }
 
     /**
@@ -903,7 +903,7 @@ final class masterControlProgram
      */
     public function header($string, $end = false, $replace = true, $retcode = null, $htmljs = false)
     {
-        $this->mcpLogging->header($string, $end, $replace, $retcode, $htmljs);
+        $this->mcpTools->header($string, $end, $replace, $retcode, $htmljs);
     }
 
     /**

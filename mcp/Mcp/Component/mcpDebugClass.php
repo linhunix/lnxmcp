@@ -195,74 +195,7 @@ class mcpDebugClass
         $this->header('Location:/404', true); //, true, 404);
     }
 
-    /**
-     * move.
-     *
-     * @param mixed $string
-     */
-    public function move($string, $default = null, $ext = '', $path = null, $andEnd = true)
-    {
-        if (empty($string)) {
-            $this->critical('Moving to Null Error');
-        }
-        $this->info('moving to '.$string);
-        if ($path == null) {
-            $path = $this->getRes('path');
-        }
-        if ($default == null) {
-            $default = $string;
-        }
-        if (file_exists($path.$string.$ext)) {
-            include $path.$string.$ext;
-        } elseif (file_exists($path.DIRECTORY_SEPARATOR.$string.'.'.$ext)) {
-            include $path.DIRECTORY_SEPARATOR.$string.'.'.$ext;   
-        } elseif (file_exists($path.$default.$ext)) {
-            include $path.$default.$ext;
-        } elseif (file_exists($path.DIRECTORY_SEPARATOR.$default.'.'.$ext)) {
-            include $path.DIRECTORY_SEPARATOR.$default.'.'.$ext;
-        } else {
-            $this->critical('Moving to '.$path.$string.' Error file not found');
-        }
-        if ($andEnd == true) {
-            exit(0);
-        }
-    }
 
-    /**
-     * header.
-     *
-     * @param mixed $string
-     * @param mixed $end
-     * @param mixed $replace
-     * @param mixed $retcode
-     */
-    public function header($string, $end = false, $replace = false, $retcode = null, $htmljs = false)
-    {
-        $msg = ' Not End';
-        if ($end) {
-            $msg = ' With End';
-        }
-        $this->warning('Header ['.$retcode.']:'.$string.$msg);
-        if ($htmljs == false) {
-            \header_remove();
-            \header($string, $replace, $retcode);
-        } else {
-            $he = explode(':', $string);
-            $heval = array_shift($he);
-            $heres = implode(':', $he);
-            if (stristr($heval, 'location') != false) {
-                echo '<script type="text/javascript">';
-                echo ' window.location="'.$heres.'";';
-                echo '</script>';
-            } else {
-                echo '<meta http-equiv="'.$heval.'" content="'.$heres.'" >';
-            }
-        }
-        if ($end) {
-            flush();
-            exit(0);
-        }
-    }
 
     /**
      * getMCP.
