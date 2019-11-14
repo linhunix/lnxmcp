@@ -28,7 +28,8 @@ class pdoDriver extends mcpBaseModelClass
     public $debug;
     public $database;
     public $dburlcon;
-
+    public $lasterror;
+    public $lastrows;
     /**
      * __construct.
      *
@@ -160,11 +161,11 @@ class pdoDriver extends mcpBaseModelClass
             return false;
         } catch (PDOException $pe) {
             $this->getMcp()->warning($this->database.':PDO ERR'.$pe->getMessage());
-
+            $this->lasterror=$this->PDO->errorInfo();
             return false;
         } catch (Exception $e) {
             $this->getMcp()->warning($this->database.':GEN ERR'.$e->getMessage());
-
+            $this->lasterror=$e->getMessage();
             return false;
         }
     }
@@ -194,7 +195,8 @@ class pdoDriver extends mcpBaseModelClass
         if ($this->intexec($sql, $noupdate) == false) {
             $this->getMcp()->warning('[KO]'.$this->database.'='.$sql);
             if ($this->PDO != null) {
-                $this->getMcp()->warning('[KO]'.$this->database.': '.print_r($this->PDO->errorInfo(), 1));
+                $this->lasterror=$this->PDO->errorInfo();
+                $this->getMcp()->warning('[KO]'.$this->database.': '.print_r($this->lasterror, 1));
             } else {
                 $this->getMcp()->warning('[KO]'.$this->database.': PDO IS NULL!!!');
             }
@@ -240,7 +242,8 @@ class pdoDriver extends mcpBaseModelClass
         } catch (Exception $e) {
             $this->PDO->rollback();
             $this->getMcp()->warning('[KO]'.$this->database.'='.$sql.':'.$e->getMessage());
-
+            $this->lasterror=$this->PDO->errorInfo();
+            $this->getMcp()->warning('[KO]'.$this->database.'='.$sql.':'.\print_r($this->lasterror,1));
             return false;
         }
 
@@ -268,11 +271,11 @@ class pdoDriver extends mcpBaseModelClass
             $statement = $this->PDO->query($sql);
         } catch (PDOException $pe) {
             $this->getMcp()->warning($this->database.$pe->getMessage());
-
+            $this->lasterror=$this->PDO->errorInfo();
             return null;
         } catch (Exception $e) {
             $this->getMcp()->warning($this->database.$e->getMessage());
-
+            $this->lasterror=$e->getMessage();
             return null;
         }
         if ($this->debug) {
@@ -566,6 +569,13 @@ class pdoDriver extends mcpBaseModelClass
         }
 
         return $_result;
+    }
+    /**
+     * return the last error on pdo
+     * @return mixed array/string
+     */
+    public function getLastError(){
+        return $this->lasterror;
     }
 
     //Get Last Run id from PDO
