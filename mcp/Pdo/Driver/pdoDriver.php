@@ -136,7 +136,7 @@ class pdoDriver extends mcpBaseModelClass
      * intexec  Direct PDO execution.
      *
      * @param mixed $query
-     *
+     * @param mixed $noupdate error 
      * @return any
      */
     public function intexec($query, $noupdate = false)
@@ -157,7 +157,6 @@ class pdoDriver extends mcpBaseModelClass
                 return true;
             }
             $this->getMcp()->warning($this->database.':row='.print_r($res, 1));
-
             return false;
         } catch (PDOException $pe) {
             $this->getMcp()->warning($this->database.':PDO ERR'.$pe->getMessage());
@@ -175,10 +174,12 @@ class pdoDriver extends mcpBaseModelClass
      *
      * @param mixed $sql
      * @param mixed $var
+     * @param mixed $noupdate error 
+     * @param mixed $nopqute issue mssql
      *
      * @return bool
      */
-    public function execute($sql, $var = array(), $noupdate = false)
+    public function execute($sql, $var = array(), $noupdate = false,$noquot=true)
     {
         $this->getMcp()->debug('queryIn:'.$this->database.'='.$sql);
         if (isset($var['WHERE'])) {
@@ -190,7 +191,9 @@ class pdoDriver extends mcpBaseModelClass
             $sql = str_replace('[R:'.$k.']', $v, $sql);
             $sql = str_replace('[S:'.$k.']', \stripslashes($v), $sql);
         }
-        $sql = str_replace("'", '"', $sql);
+        if ($noquot){
+            $sql = str_replace("'", '"', $sql);
+        }
         $this->getMcp()->debug('queryOut:'.$this->database.'='.$sql);
         if ($this->intexec($sql, $noupdate) == false) {
             $this->getMcp()->warning('[KO]'.$this->database.'='.$sql);
