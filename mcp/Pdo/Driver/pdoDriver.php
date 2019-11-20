@@ -296,12 +296,16 @@ class pdoDriver extends mcpBaseModelClass
      * @param mixed $sql
      * @param mixed $var
      * @param mixed $err
+     * @param mixed $fetchmode
      *
      * @return array
      */
-    public function simpleQuery($sql, $var = array(), $err = true)
+    public function simpleQuery($sql, $var = array(), $err = true, $fetchmode=null)
     {
         $result_set = array();
+        if ($fetchmode==null){
+            $fetchmode=PDO::FETCH_BOTH;
+        }
         $this->getMcp()->debug('queryIn:'.$this->database.'='.$sql);
         if (isset($var['WHERE'])) {
             $sql = str_replace('[WHERE]', $var['WHERE'], $sql);
@@ -324,7 +328,7 @@ class pdoDriver extends mcpBaseModelClass
 
                 return false;
             } else {
-                while ($row = $statement->fetch(PDO::FETCH_BOTH)) {
+                while ($row = $statement->fetch($fetchmode)) {
                     $result_set[] = $row;
                 }
             }
