@@ -168,7 +168,18 @@ class pdoDriver extends mcpBaseModelClass
             return false;
         }
     }
-
+  /**
+     * intexec  Direct PDO execution.
+     *
+     * @param mixed $query
+     *
+     * @return any
+     */
+    public function rawexec($sql,$noupdate=false){
+        $this->getMcp()->debug('queryIn:'.$this->database.'='.$sql);
+        return $this->intexec($sql,$noupdate);
+    }
+  
     /**
      * execute.
      *
@@ -345,6 +356,30 @@ class pdoDriver extends mcpBaseModelClass
         }
 
         return $result_set;
+    }
+    /**
+     * simpleQuery.
+     *
+     * @param mixed $sql
+     * @param mixed $var
+     * @param mixed $err
+     *
+     * @return array
+     */
+    public function queryLabel($sql, $var = array(), $err = true){
+        $this->simpleQuery($sql,$var,$err,PDO::FETCH_ASSOC);
+    }
+    /**
+     * simpleQuery.
+     *
+     * @param mixed $sql
+     * @param mixed $var
+     * @param mixed $err
+     *
+     * @return array
+     */
+    public function queryNoLabel($sql, $var = array(), $err = true){
+        $this->simpleQuery($sql,$var,$err,PDO::FETCH_NUM);
     }
 
     /**
