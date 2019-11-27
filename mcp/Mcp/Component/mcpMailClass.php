@@ -28,7 +28,7 @@ class mcpMailClass
         }
         try {
             $headers = 'From: '.strip_tags($from)."\r\n";
-            $headers .= 'Reply-To: '.strip_tags($form)."\r\n";
+            $headers .= 'Reply-To: '.strip_tags($from)."\r\n";
             $semi_rand = md5(time());
             $mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
             $headers .= "\nMIME-Version: 1.0\n"."Content-Type: multipart/mixed;\n"." boundary=\"{$mime_boundary}\"";
@@ -144,7 +144,7 @@ class mcpMailClass
                         mcpMailClass::mailService($scopeIn);
                     } else {
                         lnxmcp()->debug('Prepare Mail Support (classic) to '.$mailto);
-                        mcpMailClass::mailSimple($mailto, $form, $subject, $message, false);
+                        mcpMailClass::mailSimple($mailto, $from, $subject, $message, false);
                     }
                 } catch (\Exception $e) {
                     lnxmcp()->warning('Support Mail Error:'.$e->getMessage());
