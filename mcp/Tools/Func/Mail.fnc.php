@@ -39,3 +39,30 @@ function lnxStdMail($to, $subject, $message, $additional_headers = null, $additi
     }
     lnxmcp()->mail('sendmail', $scopeIn);
 }
+/**
+ * lnxStdMail function.
+ *
+ * @param string $to
+ * @param string $subject
+ * @param string $message
+ * @param string $additional_headers
+ * @param string $additional_parameters
+ * @param string $from
+ * @param array  $attachDoc
+ * @param string $template
+ */
+function lnxSimpleMail($to, $subject, $message, $from = null, $attachDoc = array())
+{
+    $scopeIn = array(
+        'to' => $to,
+        'subject' => $subject,
+        'message' => $message,
+    );
+    if ($from != null) {
+        $scopeIn['from'] = $from;
+    }
+    if ($attachDoc != null) {
+        $scopeIn['files'] = $attachDoc;
+    }
+    lnxmcp()->mail('sendmail', $scopeIn);
+}

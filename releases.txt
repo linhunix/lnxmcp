@@ -355,3 +355,4 @@ Releases:
 3.5.0.20191120 -  ADM_BOX - linhunix@linXeonHome - Wed 20 Nov 13:21:31 GMT 2019 
 3.5.0.20191120 -  ADM_BOX - linhunix@linXeonHome - Wed 20 Nov 17:01:50 GMT 2019 
 3.5.0.20191120 -  ADM_BOX - @vmi302139 - Wed Nov 20 22:43:25 GMT 2019 
+3.5.0.20191127 -  ADM_BOX - linhunix@linfreetimers - Wed 27 Nov 16:47:03 GMT 2019 
