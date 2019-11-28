@@ -150,6 +150,10 @@ class mcpMailClass
                     }
                 } catch (\Exception $e) {
                     lnxmcp()->warning('Support Mail Error:'.$e->getMessage());
+                    lnxmcp()->debug("mailto:".$mailto);
+                    lnxmcp()->debug("from:".$from);
+                    lnxmcp()->debug("subject:".$subject);
+                    lnxmcp()->debug("message:".$message);
                 }
             } else {
                 lnxmcp()->warning('No Support Mail Error!!');
