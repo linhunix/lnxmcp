@@ -1,6 +1,6 @@
 #!/bin/bash
 clear;
-echo "LNX STEP 4 - GENERATE PHAR FILE "
+echo "LNX STEP 3 - GENERATE PHAR FILE "
 export MCP_HOME="$(dirname $0)";
 export MCP_VERSION="$(grep 'Actual Version' $MCP_HOME/releases.txt| cut -f 2 -d ':' )";
 export MCP_TOPIC="$(grep 'Actual Topic' $MCP_HOME/releases.txt| cut -f 2 -d ':' )";

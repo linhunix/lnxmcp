@@ -40,7 +40,9 @@ class mcpMailClass
                     "Content-Transfer-Encoding: 7bit\n\n".$body."\n\n";
             }
             if (!is_array($attachment)) {
-                $attachment = array($attachment);
+                if ($attachment!='' && $attachment!=null){
+                    $attachment = array($attachment);
+                }
             }
             foreach ($attachment as $file) {
                 if (file_exists($file)) {
