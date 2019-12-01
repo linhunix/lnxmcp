@@ -93,7 +93,7 @@ class mcpOutput {
      * @param string $file
      * @return string $path
      */
-    public function getRealExt($ext,$file){
+    public function getRealExt($ext,$file=null){
         switch ($ext){
             case 'fromFile':
                 if (empty($file)){
@@ -121,7 +121,7 @@ class mcpOutput {
      * @param string $file
      * @return string $path
      */
-    public function getRealFile($file,$scopeIn){
+    public function getRealFile($file,$scopeIn=null){
         switch ($file){
             case 'fromPathUrl':
                 return lnxmcp()->getCommon("PathUrl");
@@ -207,6 +207,13 @@ class mcpOutput {
         lnxmcp()->debugvar('lnxMcpExtLoad', 'path', $path);
         // CHECK FILE
         $file=$this->getRealFile($file);
+        if (isset($scopeIn['replace'])){
+            if (is_array($scopeIn['replace'])){
+                foreach($scopeIn['replace'] as $kr=>$rv){
+                    $file=str_replace($kr,$rv,$file);
+                }
+            }
+        }
         // ADD FILE 
         if ($hfile != '') {
             $hfile .= DIRECTORY_SEPARATOR.$file;
@@ -215,7 +222,9 @@ class mcpOutput {
         $ext=$this->getRealExt($ext,$file);
         // ADD EXT 
         if (!empty($ext)) {
-            $hfile .= '.'.$ext;
+            if (file_exists($hfile.'.'.$ext)){
+                $hfile .= '.'.$ext;
+            }
         }
         lnxmcp()->info('lnxMcpExtLoad try to load and convert :'.$hfile);
         /// SEARCH MIME 

@@ -251,11 +251,11 @@ class mcpRunHttp
         }
         //// ADM CALL
         if ($this->mcpAdmRedirect($urlpth, $urlarr) == true) {
-            return;
+            LnxMcpExit('mcpAdmRedirect=>done');
         }
         //// ADM CALL
         if ($this->mcpPathConvert($urlpth, $urlarr) == true) {
-            return;
+            LnxMcpExit('mcpPathConvert=>done');
         }
         ///// MENU CALL
         $cfgpth = lnxmcp()->getResource('path.config');

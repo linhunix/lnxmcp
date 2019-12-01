@@ -1,5 +1,8 @@
 <?php
 
+function lnxMcpOutput(){
+    return mcpOutput::getInstance();
+}
 /**
  * lnxMcpMimeFile replace the mime_content_type.
  *
@@ -10,7 +13,7 @@
  */
 function lnxMcpMimeFile($filename, $defaultmime = null)
 {
-   return  \mcpOutput::getInstance()->mimeFile($filename,$defaultmime);
+   return  lnxMcpOutput()->mimeFile($filename,$defaultmime);
 }
 
 /**
@@ -27,7 +30,7 @@ function lnxMcpMimeFile($filename, $defaultmime = null)
  */
 function lnxMcpExtLoad( $file, $path = '', $ext = null, $scopeIn = array(), $convert = true, $runphp=false)
 {
-    return \mcpOutput::getInstance()->loadExtFile($file,$path,$ext,$scopeIn,$convert,$runphp);
+    return lnxMcpOutput()->loadExtFile($file,$path,$ext,$scopeIn,$convert,$runphp);
 }
 
 /**

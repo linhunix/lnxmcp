@@ -3,11 +3,5 @@
  * CLASS AREA INDEX.
  */
 // AUTO LOAD BASIC FUNCTION
-require_once __DIR__.'/Class/Load.class.php';
-require_once __DIR__.'/Class/Output.class.php';
-/// AUTO RUN
-$mcp_autoload = new mcpAutoload($mcp_path.'/Mcp');
-$mcp_autoload = new mcpAutoload($mcp_path.'/Pdo');
-$mcp_autoload = new mcpAutoload($mcp_path.'/Mail');
-$mcp_autoload = new mcpAutoload($mcp_path.'/Gfx');
-$mcp_autoload = new mcpAutoload($mcp_path.'/Auth');
+require __DIR__.'/Class/Output.class.php';
+require __DIR__.'/Class/Load.class.php';

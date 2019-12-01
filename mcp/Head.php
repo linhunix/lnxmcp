@@ -287,7 +287,8 @@ if ($scopeInit['phar'] == true) {
 
 }
 $funpath = $common_path.'/Tools/Func.index.php';
-$aldpath = $common_path.'/Tools/Class.index.php';
+$clspath = $common_path.'/Tools/Class.index.php';
+$aldpath = $common_path.'/Tools/Alt.index.php';
 $stppath = $common_path.'/Tools/Step.index.php';
 ////////////////////////////////////////////////////////////////////////////////
 // CLASS LOADER - AUTOLOAD 
@@ -305,6 +306,7 @@ else
 // CLASS LOADER - AUTOLOAD 
 ////////////////////////////////////////////////////////////////////////////////
 include_once $funpath;
+include_once $clspath;
 if (class_exists("\Composer\Autoload\ClassLoader")) {
     $classLoader = new \Composer\Autoload\ClassLoader();
     $psr = array();
