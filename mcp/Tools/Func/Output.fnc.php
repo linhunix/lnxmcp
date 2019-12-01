@@ -10,7 +10,7 @@
  */
 function lnxMcpMimeFile($filename, $defaultmime = null)
 {
-   return  mcpOutput::getInstance()->mimeFile($filename,$defaultmime);
+   return  \mcpOutput::getInstance()->mimeFile($filename,$defaultmime);
 }
 
 /**
@@ -27,7 +27,7 @@ function lnxMcpMimeFile($filename, $defaultmime = null)
  */
 function lnxMcpExtLoad( $file, $path = '', $ext = null, $scopeIn = array(), $convert = true, $runphp=false)
 {
-    return mcpOutput::getInstance()->loadExtFile($file,$path,$ext,$scopeIn,$convert,$runphp);
+    return \mcpOutput::getInstance()->loadExtFile($file,$path,$ext,$scopeIn,$convert,$runphp);
 }
 
 /**
