@@ -4,6 +4,7 @@
  */
 // AUTO LOAD BASIC FUNCTION
 require_once __DIR__.'/Class/Load.class.php';
+require_once __DIR__.'/Class/Output.class.php';
 /// AUTO RUN
 $mcp_autoload = new mcpAutoload($mcp_path.'/Mcp');
 $mcp_autoload = new mcpAutoload($mcp_path.'/Pdo');

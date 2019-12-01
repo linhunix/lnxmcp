@@ -262,11 +262,15 @@ class mcpMenuClass
                 break;
             case 'extTemplate':
                 $ext = @$scopectl['ext'];
-                echo lnxMcpExtLoad($callname, $path, $ext, $scopeIn, true);
+                echo lnxMcpExtLoad($callname, $path, $ext, $scopeIn, true,false);
                 break;
             case 'extFile':
                 $ext = @$scopectl['ext'];
-                echo lnxMcpExtLoad($callname, $path, $ext, $scopeIn, false);
+                echo lnxMcpExtLoad($callname, $path, $ext, $scopeIn, false,false);
+                break;
+            case 'virtFs':
+                $ext = @$scopectl['ext'];
+                echo lnxMcpExtLoad($callname, $path, $ext, $scopeIn, false,true);
                 break;
             case 'ucm':
                 lnxmcp()->ucm();

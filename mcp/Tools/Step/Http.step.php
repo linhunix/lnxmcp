@@ -99,58 +99,53 @@ class mcpRunHttp
         lnxmcp()->debug('Check a Convert Action for '.$urlpth);
         $cfgpth = lnxmcp()->getResource('path.config');
         $pathredirect = lnxGetJsonFile('PathConvert', $cfgpth, 'json');
-        if (is_array($pathredirect)) {
-            lnxmcp()->debug('Conver Action has '.count($pathredirect).' record');
-            if (isset($pathredirect[$urlpth])) {
-                lnxmcp()->info('Found a Conver Action for '.$urlpth);
-                $redcmd = $pathredirect[$urlpth];
-                lnxmcp()->debug('Conver Action for '.$urlpth.' is '.print_r($redcmd, 1));
-                if (is_array($redcmd)) {
-                    lnxmcp()->runCommand($redcmd, $urlarr);
-                } else {
-                    lnxmcp()->runMenu($redcmd, $urlarr);
-                }
-
+        if (!is_array($pathredirect)) {
+            lnxmcp()->warning('PathConver is not array!!!');
+            return false;
+        }
+        lnxmcp()->debug('Conver Action has '.count($pathredirect).' record');
+        if (isset($pathredirect[$urlpth])) {
+            lnxmcp()->info('Found a Conver Action for '.$urlpth);
+            $redcmd = $pathredirect[$urlpth];
+            lnxmcp()->debug('Conver Action for '.$urlpth.' is '.print_r($redcmd, 1));
+            if (is_array($redcmd)) {
+                lnxmcp()->runCommand($redcmd, $urlarr);
                 return true;
-            } else {
-                $urlpart = '';
-                foreach (explode('/', strtolower($urlpth)) as $urlseg) {
-                    if ($urlseg != '') {
-                        $urlpart .= '/'.$urlseg;
-                        lnxmcp()->debug('Check a Conver Action for partial '.$urlpart);
-                        $urlcheck = $urlpart.'/*';
-                        if (isset($pathredirect[$urlcheck])) {
-                            lnxmcp()->info('Found a Conver Action for partial '.$urlcheck);
-                            $redcmd = $pathredirect[$urlcheck];
-                            lnxmcp()->debug('Conver Action for '.$urlcheck.' is '.print_r($redcmd, 1));
-                            if (is_array($redcmd)) {
-                                lnxmcp()->runCommand($redcmd, $urlarr);
-                            } else {
-                                lnxmcp()->runMenu($redcmd, $urlarr);
-                            }
-
-                            return true;
-                        }
-                        $urlcheck = '*/'.$urlseg.'/*';
-                        if (isset($pathredirect[$urlcheck])) {
-                            lnxmcp()->info('Found a Conver Action for partial '.$urlcheck);
-                            $redcmd = $pathredirect[$urlcheck];
-                            lnxmcp()->debug('Conver Action for '.$urlcheck.' is '.print_r($redcmd, 1));
-                            if (is_array($redcmd)) {
-                                lnxmcp()->runCommand($redcmd, $urlarr);
-                            } else {
-                                lnxmcp()->runMenu($redcmd, $urlarr);
-                            }
-
-                            return true;
-                        }
+            }
+            lnxmcp()->runMenu($redcmd, $urlarr);
+            return true;
+        } 
+        $urlpart = '';
+        foreach (explode('/', strtolower($urlpth)) as $urlseg) {
+            if ($urlseg != '') {
+                $urlpart .= '/'.$urlseg;
+                lnxmcp()->debug('Check a Conver Action for partial '.$urlpart);
+                $urlcheck = $urlpart.'/*';
+                if (isset($pathredirect[$urlcheck])) {
+                    lnxmcp()->info('Found a Conver Action for partial '.$urlcheck);
+                    $redcmd = $pathredirect[$urlcheck];
+                    lnxmcp()->debug('Conver Action for '.$urlcheck.' is '.print_r($redcmd, 1));
+                    if (is_array($redcmd)) {
+                        lnxmcp()->runCommand($redcmd, $urlarr);
+                        return true;
                     }
+                    lnxmcp()->runMenu($redcmd, $urlarr);
+                    return true;
+                }
+                $urlcheck = '*/'.$urlseg.'/*';
+                if (isset($pathredirect[$urlcheck])) {
+                    lnxmcp()->info('Found a Conver Action for partial '.$urlcheck);
+                    $redcmd = $pathredirect[$urlcheck];
+                    lnxmcp()->debug('Conver Action for '.$urlcheck.' is '.print_r($redcmd, 1));
+                    if (is_array($redcmd)) {
+                        lnxmcp()->runCommand($redcmd, $urlarr);
+                        return true;
+                    }
+                    lnxmcp()->runMenu($redcmd, $urlarr);
+                    return true;
                 }
             }
-        } else {
-            lnxmcp()->warning('PathConver is not array!!!');
         }
-
         return false;
     }
 
@@ -232,7 +227,17 @@ class mcpRunHttp
         lnxmcp()->setCommon('ucm.noimage', $noimage);
         $urlpth = strtolower($urlpth);
         $urlarr = explode('/', $urlpth);
+        $urlend = end($urlarr);
+        $urlext = '';
+        if (!empty($urlend)){
+            $arrend = explode('.',$urlend);
+            if (end($arrend)!=$arrend[0]){
+                $urlext=end($arrend);
+            }
+        }
         lnxmcp()->setCommon('CatUrl', $urlarr);
+        lnxmcp()->setCommon('EndUrl', $urlend);
+        lnxmcp()->setCommon('ExtUrl', $urlext);
         ////// GET BROWSER TYPE INFO
         $browser = new \LinHUniX\Mcp\Tools\browserData();
         foreach ($browser->getResult() as $bdk => $dbv) {
