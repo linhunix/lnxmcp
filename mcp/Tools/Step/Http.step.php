@@ -228,6 +228,10 @@ class mcpRunHttp
         $urlpth = strtolower($urlpth);
         $urlarr = explode('/', $urlpth);
         $urlend = end($urlarr);
+        if (empty($urlend) or $urlend=="home") 
+        {
+            $urlend=lnxmcp()->getResource("http.defindex");
+        }
         $urlext = '';
         if (!empty($urlend)){
             $arrend = explode('.',$urlend);
