@@ -27,18 +27,18 @@ class mcpMailClass
             return false;
         }
         try {
-            $headers = 'From: '.strip_tags($from)."\r\n";
-            $headers .= 'Reply-To: '.strip_tags($from)."\r\n";
+            $headers = 'From: '.strip_tags($from)."\n";
+            $headers .= 'Reply-To: '.strip_tags($from)."\n";
             $semi_rand = md5(time());
             $mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
-            $headers .= "\nMIME-Version: 1.0\n"."Content-Type: multipart/mixed;\n"." boundary=\"{$mime_boundary}\"";
+            $headers .= "\nMIME-Version: 1.0\n"."Content-Type: multipart/mixed; boundary=\"{$mime_boundary}\"";
+            $message = "${headers}\n";
             if ($html == true) {
-                $message = "--{$mime_boundary}\n"."Content-Type: text/html; charset=\"UTF-8\"\n".
-                    "Content-Transfer-Encoding: 7bit\n\n".$body."\n\n";
+                $message .= "--${mime_boundary}\n"."Content-Type: text/html; charset=\"UTF-8\"\n";
             } else {
-                $message = "--{$mime_boundary}\n"."Content-Type: text/plain; charset=\"UTF-8\"\n".
-                    "Content-Transfer-Encoding: 7bit\n\n".$body."\n\n";
+                $message .= "--${mime_boundary}\n"."Content-Type: text/plain; charset=\"UTF-8\"\n";                    
             }
+            $message .= "Content-Transfer-Encoding: 7bit\n\n".$body."\n\n";
             if (!is_array($attachment)) {
                 if ($attachment!='' && $attachment!=null){
                     $attachment = array($attachment);
@@ -57,10 +57,15 @@ class mcpMailClass
                         "Content-Transfer-Encoding: base64\n\n".$data."\n\n";
                 }
             }
+            lnxmcp()->debug("mailSimple>mailto:".$to);
+            lnxmcp()->debug("mailSimple>from:".$from);
+            lnxmcp()->debug("mailSimple>subject:".$subject);
+            lnxmcp()->debug("mailSimple>message:".$message);
             \mail($to, $subject, $message, $headers);
 
             return true;
         } catch (\Exception $e) {
+            lnxmcp()->warning('mailSimple>Error:'.$e->getMessage());
             return false;
         }
     }
@@ -68,6 +73,11 @@ class mcpMailClass
     public static function mailService($page = null, $scopeIn = array(), $modinit = null, $vendor = null)
     {
         lnxmcp()->info('MCP>>mail>>'.$page);
+        lnxmcp()->debug("mailService>mailto:".$scopeIn['from']);
+        lnxmcp()->debug("mailService>from:".$scopeIn['to']);
+        lnxmcp()->debug("mailService>subject:".$scopeIn['subject']);
+        lnxmcp()->debug("mailService>message:".$scopeIn['message']);
+        lnxmcp()->debug("mailService>files:".print_r($scopeIn['files'],1));
         try {
             if (!is_array($scopeIn)) {
                 $scopeIn = array('In' => $scopeIn);
@@ -88,7 +98,7 @@ class mcpMailClass
                 lnxmcp()->warning('MailService has empty (4) sender subject !!');
                 return false;
             }
-            if (($page != null) || ($page == 'sendmail') || ($page != 'none') || ($page != '.')) {
+            if (($page != null) && ($page != 'sendmail') && ($page != 'none') && ($page != '.')&& ($page != '')) {
                 $premsg=$scopeIn['message'];
                 $scopeIn['message'] = lnxmcp()->page($page, $scopeIn, $modinit, $vendor, null, true);
                 if ($scopeIn['message']==''){
@@ -115,9 +125,8 @@ class mcpMailClass
             $message = $scopeIn['message'];
             $files = $scopeIn['files'];
             return mcpMailClass::mailSimple($to, $from, $subject, $message, true, $files);
-        
-
         } catch (\Exception $e) {
+            lnxmcp()->warning('mailService>Error:'.$e->getMessage());
             return false;
         }
     }
