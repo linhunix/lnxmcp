@@ -89,7 +89,7 @@ class mcpDebugClass
     {
         $this->getLogger()->error($message);
         mcpMailClass::supportmail($message);
-        $this->header('Location: /500', true, true, 500);
+        $this->mcp->header('Location: /500', true, true, 500);
     }
 
     /**
@@ -98,10 +98,9 @@ class mcpDebugClass
     public function imhere()
     {
         if ($this->getRes('debug') == true) {
+            $arr = array(1 => array('file' => 'none', 'line' => 0));
             if (function_exists('debug_backtrace')) {
                 $arr = debug_backtrace();
-            } else {
-                array(1 => array('file' => 'none', 'line' => 0));
             }
             $this->debug('[I am here]:'.$arr[1]['file'].':'.$arr[1]['line']);
             $path = $this->getRes('path.pbkac');
@@ -191,8 +190,8 @@ class mcpDebugClass
     public function notFound($message)
     {
         $this->error($message);
-        $this->header('HTTP/1.1 301 Moved Permanently');
-        $this->header('Location:/404', true); //, true, 404);
+        $this->mcp->header('HTTP/1.1 301 Moved Permanently');
+        $this->mcp->header('Location:/404', true); //, true, 404);
     }
 
 

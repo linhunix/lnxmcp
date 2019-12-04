@@ -6,5 +6,8 @@
             "dialect": "SQLite",
             "name": "example"
         }
-    ]
+    ],
+    "phpmd.rules": "cleancode,codesize,design,unusedcode,naming",
+    "phpmd.verbose": true,
+    "phpmd.validate.rulesets": "cleancode,codesize,design,naming,unusedcode"
 }
