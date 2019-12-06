@@ -366,3 +366,10 @@ ob_start();
 if (lnxmcp()->getCfg('PreloadOnly') != true) {
     include_once $stppath;
 }
+////////////////////////////////////////////////////////////////////////////////
+// CHECK POSTLOAD STEP
+////////////////////////////////////////////////////////////////////////////////
+$postload=lnxmcp()->getCfg("app.postload.cmd");
+if (is_array($postload)){
+    lnxmcp()->runCommand($postload,array());
+}
