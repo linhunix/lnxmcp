@@ -315,6 +315,7 @@ if (class_exists("\Composer\Autoload\ClassLoader")) {
     $classLoader->addPsr4('LinHUniX\\Pdo\\', $common_path.'/Pdo');
     $classLoader->addPsr4('LinHUniX\\Mail\\', $common_path.'/Mail');
     $classLoader->addPsr4('LinHUniX\\Auth\\', $common_path.'/Auth');
+    $classLoader->addPsr4('LinHUniX\\Cron\\', $common_path.'/Cron');
     $classLoader->register();
     $classLoader->setUseIncludePath(true);
 } else {

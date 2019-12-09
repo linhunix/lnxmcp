@@ -21,9 +21,10 @@
             "LinHUniX\\Mcp\\": "mcp/Mcp/",
             "LinHUniX\\Mail\\": "mcp/Mail/",
             "LinHUniX\\Pdo\\": "mcp/Pdo/",
-            "LinHUniX\\Mcp\\": "mcp/Gfx/",
+            "LinHUniX\\Gfx\\": "mcp/Gfx/",
             "LinHUniX\\Nsql\\": "mcp/Nsql/",
             "LinHUniX\\Auth\\": "mcp/Auth/",
+            "LinHUniX\\Cron\\": "mcp/Cron/",
             "LinHUniX\\Ln4\\": "mcp/Ln4/"
         }
     }
