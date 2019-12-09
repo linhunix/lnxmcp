@@ -1987,6 +1987,24 @@ final class masterControlProgram
     }
 
     /////////////////////////////////////////////////////////////////////////////
+    // PROMISE CALLER MODULE
+    /////////////////////////////////////////////////////////////////////////////
+
+    public function promise($promisename,$scopeIn=array(),$reqcmd=null,$waitcmd=null,$donecmd=null){
+        $scopeIn['promise']=$promisename;
+        if ($reqcmd!=null){
+            $scopeIn["promisecmd"]=$reqcmd;
+        }
+        if ($waitcmd!=null){
+            $scopeIn["waitcmd"]=$waitcmd;
+        }
+        if ($donecmd!=null){
+            $scopeIn["donecmd"]=$donecmd;
+        }
+        return $this->controllerCommon("promise",false,$scopeIn,"Cron");
+    }
+
+    /////////////////////////////////////////////////////////////////////////////
     // ARRAY CALLER MODULE
     /////////////////////////////////////////////////////////////////////////////
 
