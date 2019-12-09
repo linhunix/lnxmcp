@@ -151,23 +151,48 @@ class mcpToolsClass
         }
         lnxmcp()->warning('Header ['.$retcode.']:'.$string.$msg);
         if ($htmljs == false) {
-            \header_remove();
             \header($string, $replace, $retcode);
         } else {
             $he = explode(':', $string);
             $heval = array_shift($he);
             $heres = implode(':', $he);
-            if (stristr($heval, 'location') != false) {
-                echo '<script type="text/javascript">';
-                echo ' window.location="'.$heres.'";';
-                echo '</script>';
-            } else {
-                echo '<meta http-equiv="'.$heval.'" content="'.$heres.'" >';
-            }
+            echo '<meta http-equiv="'.$heval.'" content="'.$heres.'" >';
         }
         if ($end) {
             flush();
             exit(0);
         }
     }
+    /**
+     * httpRedirect.
+     *
+     * @param mixed $string
+     * @param mixed $end
+     * @param mixed $replace
+     * @param mixed $retcode
+     */
+    public function httpRedirect($string, $end = false, $replace = false, $retcode = 301, $htmljs = false)
+    {
+        $msg = ' Not End';
+        if ($end) {
+            $msg = ' With End';
+        }
+        lnxmcp()->warning('Header ['.$retcode.']:'.$string.$msg);
+        if ($htmljs == false) {
+            \header_remove();
+            \header($string, $replace, $retcode);
+        } else {
+            echo '<script type="text/javascript">';
+            echo ' window.location="'.$string.'";';
+            echo '</script>';
+        }
+        if ($end) {
+            if ($htmljs != false) {
+                echo '</head></body></html>';
+            }
+            flush();
+            exit(0);
+        }
+    }
 }
+

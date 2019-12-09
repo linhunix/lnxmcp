@@ -146,6 +146,14 @@ class mcpMenuClass
                 $header = @$scopectl['header'];
                 lnxmcp()->header($header, false, false, null, true);
                 break;
+            case 'redirect':
+                $header = @$scopectl['header'];
+                lnxmcp()->redirect($header, true);
+                break;
+            case 'redirectHttp':
+                $header = @$scopectl['header'];
+                lnxmcp()->redirect($header, true, false, null, true);
+                break;
             case 'load':
                 $result = lnxmcp()->moduleLoad($callname, $modinit, $vendor, $scopeIn);
                 break;

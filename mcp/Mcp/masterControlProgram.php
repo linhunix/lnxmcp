@@ -905,6 +905,18 @@ final class masterControlProgram
     {
         $this->mcpTools->header($string, $end, $replace, $retcode, $htmljs);
     }
+    /**
+     * header redirect and more.
+     *
+     * @param string $string  rules
+     * @param bool   $end     die after change
+     * @param bool   $replace remplace header
+     * @param int    $retcode html return code if need
+     */
+    public function redirect($string, $end = false, $replace = true, $retcode = null, $htmljs = false)
+    {
+        $this->mcpTools->httpRedirect($string, $end, $replace, $retcode, $htmljs);
+    }
 
     /**
      * Clear String from Escape chars (mcpTools).
