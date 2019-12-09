@@ -260,6 +260,11 @@ class mcpMenuClass
             case 'showFullCommonBlock':
                 $result = lnxmcp()->showFullCommonBlock($callname, $scopeIn, $controllerModule, $blockModule);
                 break;
+            case 'promise':
+                $procmd = @$scopectl['promisecmd'];
+                $waitcmd = @$scopectl['waitcmd'];
+                $donecmd = @$scopectl['donecmd'];
+                $result = lnxmcp()->promise($callname,$scopeIn,$procmd,$waitcmd,$donecmd);
             case 'extTemplate':
                 $ext = @$scopectl['ext'];
                 echo \lnxMcpExtLoad($callname, $path, $ext, $scopeIn, true,false);
