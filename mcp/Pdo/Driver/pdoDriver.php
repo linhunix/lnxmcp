@@ -107,7 +107,7 @@ class pdoDriver extends mcpBaseModelClass
      *
      * @return string
      */
-    public function real_escape_string($value,$oldmethod=false)
+    public function real_escape_string($value,$oldmethod=true)
     {
         if ($oldmethod==true){
             $search = array('\\',  "\x00", "\n",  "\r",  "'",  '"', "\x1a");
