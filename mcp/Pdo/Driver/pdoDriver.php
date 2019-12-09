@@ -107,12 +107,14 @@ class pdoDriver extends mcpBaseModelClass
      *
      * @return string
      */
-    public function real_escape_string($value)
+    public function real_escape_string($value,$oldmethod=false)
     {
-        $search = array('\\',  "\x00", "\n",  "\r",  "'",  '"', "\x1a");
-        $replace = array('\\\\', '\\0', '\\n', '\\r', "\'", '\"', '\\Z');
-
-        return str_replace($search, $replace, $value);
+        if ($oldmethod==true){
+            $search = array('\\',  "\x00", "\n",  "\r",  "'",  '"', "\x1a");
+            $replace = array('\\\\', '\\0', '\\n', '\\r', "\'", '\"', '\\Z');
+            return str_replace($search, $replace, $value);
+        }
+        return $this->PDO->quote($value);
     }
 
     /**
