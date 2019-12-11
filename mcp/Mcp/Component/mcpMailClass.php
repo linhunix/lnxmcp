@@ -27,12 +27,14 @@ class mcpMailClass
             return false;
         }
         try {
-            $headers = 'From: '.strip_tags($from)."\n";
-            $headers .= 'Reply-To: '.strip_tags($from)."\n";
+            $headers= array();
+            $headers['From'] = strip_tags($from);
+            $headers['Reply-To']= strip_tags($from);
             $semi_rand = md5(time());
             $mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
-            $headers .= "\nMIME-Version: 1.0\n"."Content-Type: multipart/mixed; boundary=\"{$mime_boundary}\"";
-            $message = "${headers}\n";
+            $headers ['MIME-Version']= "1.0";
+            $headers ['Content-Type']= "multipart/mixed; boundary=\"{$mime_boundary}\"";
+            $message = '';//"${headers}\n";
             if ($html == true) {
                 $message .= "--${mime_boundary}\n"."Content-Type: text/html; charset=\"UTF-8\"\n";
             } else {
@@ -61,6 +63,7 @@ class mcpMailClass
             lnxmcp()->debug("mailSimple>from:".$from);
             lnxmcp()->debug("mailSimple>subject:".$subject);
             lnxmcp()->debug("mailSimple>message:".$message);
+            lnxmcp()->debug("mailSimple>headers:".print_r($headers,1));
             \mail($to, $subject, $message, $headers);
 
             return true;
