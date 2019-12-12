@@ -71,78 +71,109 @@ class nsqlService extends mcpServiceModelClass {
             $this->argIn
         ); 
      }
-
     /***
      * function doc_Init(){
      * [T]= doc
      * [E]= init
      */
-     public function doc_init(){
-         $this->debug("doc_init");
+    public function doc_init(){
+        $this->debug("doc_init");
+       if (!isset($this->argIn["doc_name"])){
+           return false;
+       }
+       if ($this->argIn["doc_name"]==""){
+           return false;
+       }
+       if (!isset($this->argIn["doc_id"])){
+           $this->argIn["doc_id"]=date('U');
+       }
+       if ($this->argIn["doc_id"]==""){
+           $this->argIn["doc_id"]=date('U');
+       }
+       $this->argIn['doc_id']=intval($this->argIn['doc_id']);
+       if (($this->argIn["doc_id"]==0) or($this->argIn["doc_id"]=="")){
+           $this->argIn['doc_id']=intval(date('U'));
+       }
+       if (!isset($this->argIn["doc_extra"])){
+           $this->argIn["doc_extra"]=array();
+       }
+       if (!is_array($this->argIn["doc_extra"])){
+           $tmpedata=$this->argIn["doc_extra"];
+           $this->argIn["doc_extra"]=array($tmpedata);
+       }
+       $tmpedata=$this->argIn["doc_extra"];
+       try{
+           $this->argIn["doc_extra"]= json_encode($tmpedata, JSON_PRETTY_PRINT);
+       }catch(\Exception $e) {
+           $this->warning('doc_init>>doc_extra:Err:'.$e->get_message());
+           return false;
+       }
+       if (!isset($this->argIn["table"])){
+           $this->argIn["table"]=$this->dbtable;
+       }
+       ///////////////////// verified if this id is already present
+       $nid=false;
+       while ($nid==false){
+           lnxmcp()->debugVar("Nsql", "doc_init", 'Check '.$this->argIn['doc_id'] );
+           $res= $this->callCmd(
+               array(
+                   "type"=>"queryJson",
+                   "module"=>"Nsql",
+                   "vendor"=>"LinHUniX",
+                   "name"=>$this->dbtype."_DocChkId"
+               ),
+               $this->argIn
+           ); 
+           lnxmcp()->debugVar("Nsql", "doc_init", 'Check '.$this->argIn['doc_id'].'='.print_r($res,1) );
+           if (!isset($res['doc'])){
+               $nid=true;
+               continue;
+           }
+           $this->argIn['doc_id']=intval($this->argIn['doc_id']+1);
+       }
+       ////  Store the new id
+       $this->tmptable=$this->argIn["table"];
+       $this->callCmd(
+           array(
+               "type"=>"queryJson",
+               "module"=>"Nsql",
+               "vendor"=>"LinHUniX",
+               "name"=>$this->dbtype."_DocInit"
+           ),
+           $this->argIn
+       ); 
+       ////  get the new id
+       $res= $this->callCmd(
+           array(
+               "type"=>"queryJson",
+               "module"=>"Nsql",
+               "vendor"=>"LinHUniX",
+               "name"=>$this->dbtype."_DocGetId"
+           ),
+           $this->argIn
+       ); 
+       if (isset($res['doc'])){
+           $this->getMcp()->setCommon($this->argIn["table"]."_doc_id",$res['doc']);
+       }
+       lnxmcp()->debugVar("Nsql","doc_init",$res);
+       return $res;
+    }
+    /***
+     * function doc_getDocByName(){
+     * [T]= doc
+     * [E]= getDocByName
+     */
+     public function doc_getDocByName(){
+         $this->debug("doc_getDocByName");
         if (!isset($this->argIn["doc_name"])){
             return false;
         }
         if ($this->argIn["doc_name"]==""){
             return false;
         }
-        if (!isset($this->argIn["doc_id"])){
-            $this->argIn["doc_id"]=date('U');
-        }
-        if ($this->argIn["doc_id"]==""){
-            $this->argIn["doc_id"]=date('U');
-        }
-        $this->argIn['doc_id']=intval($this->argIn['doc_id']);
-        if (($this->argIn["doc_id"]==0) or($this->argIn["doc_id"]=="")){
-            $this->argIn['doc_id']=intval(date('U'));
-        }
-        if (!isset($this->argIn["doc_extra"])){
-            $this->argIn["doc_extra"]=array();
-        }
-        if (!is_array($this->argIn["doc_extra"])){
-            $tmpedata=$this->argIn["doc_extra"];
-            $this->argIn["doc_extra"]=array($tmpedata);
-        }
-        $tmpedata=$this->argIn["doc_extra"];
-        try{
-            $this->argIn["doc_extra"]= json_encode($tmpedata, JSON_PRETTY_PRINT);
-        }catch(\Exception $e) {
-            $this->warning('doc_init>>doc_extra:Err:'.$e->get_message());
-            return false;
-        }
         if (!isset($this->argIn["table"])){
             $this->argIn["table"]=$this->dbtable;
         }
-        ///////////////////// verified if this id is already present
-        $nid=false;
-        while ($nid==false){
-            lnxmcp()->debugVar("Nsql", "doc_init", 'Check '.$this->argIn['doc_id'] );
-            $res= $this->callCmd(
-                array(
-                    "type"=>"queryJson",
-                    "module"=>"Nsql",
-                    "vendor"=>"LinHUniX",
-                    "name"=>$this->dbtype."_DocChkId"
-                ),
-                $this->argIn
-            ); 
-            lnxmcp()->debugVar("Nsql", "doc_init", 'Check '.$this->argIn['doc_id'].'='.print_r($res,1) );
-            if (!isset($res['doc'])){
-                $nid=true;
-                continue;
-            }
-            $this->argIn['doc_id']=intval($this->argIn['doc_id']+1);
-        }
-        ////  Store the new id
-        $this->tmptable=$this->argIn["table"];
-        $this->callCmd(
-            array(
-                "type"=>"queryJson",
-                "module"=>"Nsql",
-                "vendor"=>"LinHUniX",
-                "name"=>$this->dbtype."_DocInit"
-            ),
-            $this->argIn
-        ); 
         ////  get the new id
         $res= $this->callCmd(
             array(
@@ -156,9 +187,42 @@ class nsqlService extends mcpServiceModelClass {
         if (isset($res['doc'])){
             $this->getMcp()->setCommon($this->argIn["table"]."_doc_id",$res['doc']);
         }
-        lnxmcp()->debugVar("Nsql","doc_init",$res);
+        lnxmcp()->debugVar("Nsql","doc_getDocByName",$res);
         return $res;
      }
+         /***
+     * function doc_initByName(){
+     * [T]= doc
+     * [E]= initByName
+     */
+    public function doc_initByName(){
+        $this->debug("doc_initByName");
+        if (!isset($this->argIn["doc_name"])){
+            return false;
+        }
+        if ($this->argIn["doc_name"]==""){
+            return false;
+        }
+        if (!isset($this->argIn["table"])){
+            $this->argIn["table"]=$this->dbtable;
+        }
+         ////  get the new id
+         $res= $this->callCmd(
+            array(
+                "type"=>"queryJson",
+                "module"=>"Nsql",
+                "vendor"=>"LinHUniX",
+                "name"=>$this->dbtype."_DocGetId"
+            ),
+            $this->argIn
+        ); 
+        if (isset($res['doc'])){
+            $this->getMcp()->setCommon($this->argIn["table"]."_doc_id",$res['doc']);
+            lnxmcp()->debugVar("Nsql","doc_initByName",$res);
+            return $res;
+        }
+        return $this->doc_init();
+    }
     /***
      * function doc_delete(){
      * [T]= doc
