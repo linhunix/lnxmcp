@@ -285,6 +285,12 @@ class nsqlService extends mcpServiceModelClass {
         if ($this->argIn["doc_id"]==""){
             return false;
         }
+        if (!isset($this->argIn["doc_name"])){
+            $this->argIn['doc_name']=$this->argIn["doc_id"];
+        }
+        if ($this->argIn["doc_name"]==""){
+            $this->argIn['doc_name']=$this->argIn["doc_id"];
+        }
         if (!isset($this->argIn["doc_var"])){
             return false;
         }
@@ -319,7 +325,7 @@ class nsqlService extends mcpServiceModelClass {
             $this->argIn["table"]=$this->dbtable;
         }
         $this->tmptable=$this->argIn["table"];
-        lnxmcp()->debugVar("Nsql", "doc_setval", 'Check '.$this->argIn['doc_id'] );
+        lnxmcp()->debugVar("Nsql", "doc_setval", 'Check '.$this->argIn['doc_name'] );
         $res= $this->callCmd(
             array(
                 "type"=>"queryJson",
