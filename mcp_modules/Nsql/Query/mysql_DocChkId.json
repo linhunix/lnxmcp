@@ -1,5 +1,5 @@
 {
     "E":"lnx.mydata",
     "T":"f",
-    "Q":"select doc  from [table] where name='doc' and doc='[doc_id]';"
+    "Q":"select doc  from [table] where name='doc' and doc='[doc_name]';"
 }
