@@ -9,6 +9,6 @@
     "app.path.config":"mcp_check_isset",
     "app.path.work":"mcp_check_isset",
     "app.path.core":"mcp_check_isset",
-    "app.path.userfile":"mcp_check_isset"
+    "app.path.userfiles":"mcp_check_isset"
   }
 }

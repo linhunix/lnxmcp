@@ -114,7 +114,7 @@ foreach (array(
     'app.path.module' => $app_core.'/mod/',
     'app.path.template' => $app_core.'/tpl/',
     'app.path.language' => $app_core.'/lng/',
-    'app.path.userfile' => $app_user,
+    'app.path.userfiles' => $app_user,
     'app.path.work' => $app_work,
     'app.path.workjob' => $app_work.'/job/',
     'app.path.cache' => $app_work.'/cache/',
@@ -151,7 +151,7 @@ $app_path=$scopeInit["app.path"];
 $app_work=$scopeInit["app.path.work"];
 $app_cfg=$scopeInit["app.path.config"];
 $app_core=$scopeInit["app.path.core"];
-$app_user=$scopeInit["app.path.userfile"];
+$app_user=$scopeInit["app.path.userfiles"];
 
 ////////////////////////////////////////////////////////////////////////////////
 // ENV/CONFIG JSON CONFIG AND SETTINGS
@@ -232,8 +232,15 @@ try {
 $app_path=$scopeInit["app.path"];
 $app_work=$scopeInit["app.path.work"];
 $app_cfg=$scopeInit["app.path.config"];
-$app_user=$scopeInit["app.path.userfile"];
 $app_core=$scopeInit["app.path.core"];
+
+$app_user=$scopeInit["app.path.userfiles"];
+if (!is_dir($app_user)){
+    if (is_dir($app_path.DIRECTORY_SEPARATOR.$app_user)){
+	$app_user=$app_path.DIRECTORY_SEPARATOR.$app_user;
+	$scopeInit["app.path.userfiles"]=$app_user;
+    }
+}
 ////////////////////////////////////////////////////////////////////////////////
 // ENVIRONMENT
 ////////////////////////////////////////////////////////////////////////////////

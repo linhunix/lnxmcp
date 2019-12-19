@@ -72,7 +72,7 @@ class csvService extends mcpServiceModelClass {
             return false;
         }
         $data=array();
-        $user_path = $this->getRes('path.userfile');
+        $user_path = $this->getRes('path.userfiles');
         $user_path .= DIRECTORY_SEPARATOR.$this->csvcategory;
         if (isset($this->argIn['path'])){
             $user_path=$this->argIn['path'];

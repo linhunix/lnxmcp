@@ -85,7 +85,7 @@ class uploadController extends mcpBaseModelClass
             return false;
         }
         // GET PARAMETERS;
-        $app_user = $this->getRes('path.userfile');
+        $app_user = $this->getRes('path.userfiles');
         $cat = $this->argIn['category'];
         $dir_save = $app_user.DIRECTORY_SEPARATOR.$cat;
         if ($this->check_folder($app_user, $dir_save) == false) {
