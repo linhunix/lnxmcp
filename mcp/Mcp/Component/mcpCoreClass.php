@@ -569,7 +569,7 @@ final class mcpCoreClass
             $res = 'executeModule:error >>'.$this->scopeCtl[$this->sub]['tag'].':'.$e->getMessage();
             $this->setStatus(false, $res);
         }
-        if (in_array($this->scopeCtl[$this->sub]['type'], array('Controller', 'Page', 'Block'))) {
+        if (in_array($this->scopeCtl[$this->sub]['type'], array('Controller', 'Page', 'Block','Render'))) {
             $this->setDic($$this->scopeCtl[$this->sub]['tag'], '.');
         }
 
@@ -868,13 +868,13 @@ final class mcpCoreClass
                         include_once $this->scopeCtl[$this->sub]['file'];
                     } elseif (file_exists($tplfile)) {
                         $this->setStatus(true, 'load std file '.$tplfile);
-                        include_once $tplfile;
+                        include $tplfile;
                     } elseif (file_exists($this->scopeCtl[$this->sub]['altfile'])) {
                         $this->setStatus(true, 'load std file '.$this->scopeCtl[$this->sub]['altfile']);
                         include_once $this->scopeCtl[$this->sub]['altfile'];
                     } elseif (file_exists($tplfalt)) {
                         $this->setStatus(true, 'load std file '.$tplfalt);
-                        include_once $tplfalt;
+                        include $tplfalt;
                     } else {
                         $this->setStatus(false, $this->scopeCtl[$this->sub]['file'].' file not exist!');
                         unset($this->scopeCtl[$this->sub]['file']);

@@ -33,20 +33,16 @@ class uploadController extends mcpBaseModelClass
         //// CHECK IF CAN WORK
         if (!isset($_FILES)) {
             $this->warning('_FILES IS NOT ENABLE');
-
             return false;
         }
         if (!is_array($_FILES)) {
             $this->warning('_FILES IS NOT VALID');
-
             return false;
         }
         if (!isset($this->argIn['category'])) {
             $this->warning('category is not present');
-
             return false;
         }
-
         return true;
     }
 
@@ -63,16 +59,13 @@ class uploadController extends mcpBaseModelClass
                 mkdir($dir_save);
             } else {
                 $this->warning($dir_save.' is not present');
-
                 return false;
             }
         }
         if (!is_writable($dir_save)) {
             $this->warning($dir_save.' is not writable');
-
             return false;
         }
-
         return true;
     }
 
@@ -81,6 +74,7 @@ class uploadController extends mcpBaseModelClass
      */
     protected function moduleCore()
     {
+	$this->debug('argIn:'.print_r($this->argIn,1));
         if ($this->check_args() == false) {
             return false;
         }
@@ -163,7 +157,7 @@ class uploadController extends mcpBaseModelClass
                     $newfile = str_replace('[basename]', $file_name, $newfile);
                     $newfile = str_replace('[filetype]', $file_type, $newfile);
                     $newfile = str_replace('[field]', $tag, $newfile);
-                    foreach ($this->$argIn as $ksrc => $vsrc) {
+                    foreach ($this->argIn as $ksrc => $vsrc) {
                         $newfile = str_replace('['.$ksrc.']', $vsrc, $newfile);
                     }
                     $meta[$tag]['newname'] = $newfile;
