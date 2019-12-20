@@ -743,6 +743,7 @@ final class mcpCoreClass
         $this->shareModuleVars();
         try {
             $tplfile = str_replace('.php', '.class', $this->scopeCtl[$this->sub]['file']);
+            $tplfold = str_replace('Legacy.php', '.class.php', $this->scopeCtl[$this->sub]['file']);
             $tplfalt = str_replace('.php', '.class', $this->scopeCtl[$this->sub]['altfile']);
             if (file_exists($this->scopeCtl[$this->sub]['auto'])) {
                 $this->setStatus(true, 'load auto file '.$this->scopeCtl[$this->sub]['auto']);
@@ -759,6 +760,9 @@ final class mcpCoreClass
                 } elseif (file_exists($this->scopeCtl[$this->sub]['altfile'])) {
                     $this->setStatus(true, 'load std file '.$this->scopeCtl[$this->sub]['altfile']);
                     include_once $this->scopeCtl[$this->sub]['altfile'];
+                } elseif (file_exists($tplfold)) {
+                    $this->setStatus(true, 'load std file '.$tplfold);
+                    include_once $tplfold;
                 } elseif (file_exists($tplfalt)) {
                     $this->setStatus(true, 'load std file '.$tplfalt);
                     include_once $tplfalt;
