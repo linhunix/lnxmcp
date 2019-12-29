@@ -51,9 +51,9 @@ function selfAutoLoad($srcPath)
  * Load on config the data of a specific module folder
  * @param string $path
  */
-function mcpLoadModPath($path) {
-    if (!is_dir($path)) {
-        lnxmcp()->warning($path." is not a directory");
+function mcpLoadModPath($srcPath) {
+    if (!is_dir($srcPath)) {
+        lnxmcp()->warning($srcPath." is not a directory");
     }
     $scannedItems = scandir($srcPath);
     foreach ($scannedItems as $item) {
@@ -88,3 +88,6 @@ function mcpLoadModPath($path) {
                     }
                 }
             }        
+        }
+    }
+}
