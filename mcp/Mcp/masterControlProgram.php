@@ -15,6 +15,7 @@ use LinHUniX\Mcp\Provider\settingsProviderModel;
 use LinHUniX\Mcp\Model\mcpServiceProviderModelClass;
 use LinHUniX\Mcp\Model\mcpConfigArrayModelClass;
 use LinHUniX\Mcp\Component\mcpMenuClass;
+use LinHUniX\Mcp\Component\mcpModuleClass;
 use LinHUniX\Mcp\Component\mcpProxyClass;
 use LinHUniX\Mcp\Component\mcpTemplateClass;
 use LinHUniX\Mcp\Component\mcpLanguageClass;
@@ -187,21 +188,18 @@ final class masterControlProgram
 
         $this->event = array();
         $this->defapp = ucwords($scopeIn['app.def']);
-        if (isset($scopeIn['app.path.module'])) {
-            $this->pathsrc = $scopeIn['app.path.module'];
-        } else {
-            $this->pathsrc = $this->pathapp.'mod/';
+        if (!isset($scopeIn['app.path.module'])) {
+            $scopeIn['app.path.module']=$this->pathapp.'mod/';
         }
-        if (isset($scopeIn['app.path.template'])) {
-            $this->pathtpl = $scopeIn['app.path.template'];
-        } else {
-            $this->pathtpl = $this->pathapp.'tpl/';
+        $this->pathsrc = $scopeIn['app.path.module'];
+        if (!isset($scopeIn['app.path.template'])) {
+            $scopeIn['app.path.template']= $this->pathapp.'tpl/';
         }
-        if (isset($scopeIn['mcp.path.module'])) {
-            $this->pathmcp = $scopeIn['mcp.path.module'];
-        } else {
-            $this->pathmcp = $scopeIn['app.path'].'mcp_module/';
+        $this->pathtpl = $scopeIn['app.path.template'];
+        if (!isset($scopeIn['mcp.path.module'])) {
+            $scopeIn['mcp.path.module']= $scopeIn['app.path'].'mcp_module/';
         }
+        $this->pathmcp = $scopeIn['mcp.path.module'];
         $this->cfg = new mcpConfigArrayModelClass();
         $this->cfg['php'] = PHP_VERSION;
         $this->cfg['app.debug'] = false;
@@ -1001,6 +999,25 @@ final class masterControlProgram
     public function statmentModule($path, $callname, $ispreload = false, $scopeIn = array(), $modinit = null, $subcall = null, $vendor = null, $type = null)
     {
         $this->mcpCore->statmentModule($path, $callname, $ispreload, $scopeIn, $modinit, $subcall, $vendor, $type);
+    }
+
+    /**
+     * This function add module and namespace on the list of loadable module
+     * @param string $modpath;
+     * @param array $modcfg;
+     * @param boolean $modinit;
+     */
+    public function addModule($modpath,$modcfg=null,$modinit=false){
+        mcpModuleClass::addModule($modpath,$modcfg,$modinit);
+    }
+
+    /**
+     * useClass function is an  implementatiation of autoload
+     * @param string $classname;
+     * @return boolean;
+     */
+    public function use($callname){
+       return mcpModuleClass::useClass($classname);
     }
 
     /**

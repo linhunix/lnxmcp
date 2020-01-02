@@ -10,7 +10,7 @@ use LinHUniX\Mcp\Model\mcpBaseModelClass;
  *
  * @version GIT:2018-v2
  */
-class pharizeController extends mcpBaseModelClass {
+class pharizeMcpController extends mcpBaseModelClass {
  
     /**
      * Add a directory in phar removing whitespaces from PHP source code

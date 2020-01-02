@@ -342,17 +342,21 @@ if (class_exists("\LinHUniX\Mcp\masterControlProgram")) {
 } else {
     $mcp = new masterControlProgram($scopeInit);
 }
+define('LNXMCP_APP_PATH',$app_path);
+define('LNXMCP_CFG_PATH',$app_cfg);
+define('LNXMCP_USR_PATH',$app_user);
+define('LNXMCP_WRK_PATH',$app_work);
 mcpErrorHandlerInit();
 mcpShutDownInit();
 ////////////////////////////////////////////////////////////////////////////////
 // CLASS LOADER - MCP_MODULED 
 ////////////////////////////////////////////////////////////////////////////////
-lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdm', $common_xpath.'/Adm/');
-lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdmShell', $common_xpath.'/Adm/Shell/');
-lnxmcp()->setCfg('app.mod.path.LinHUniX.LnxMcpAdmHttpd', $common_xpath.'/Adm/Httpd/');
-lnxmcp()->setCfg('app.mod.path.LinHUniX.Ln4', $common_xpath.'/Ln4/');
-lnxmcp()->setCfg('app.mod.path.LinHUniX.Nsql', $common_xpath.'/Nsql/');
-lnxmcp()->setCfg('app.mod.path.LinHUniX.Upload', $common_xpath.'/Upload/');
+lnxmcp()->addModule($common_xpath.'/Adm/',array('vendor'=>'LinHUniX','module'=>'LnxMcpAdm','version'=>$scopeInit['mcp.ver']));
+lnxmcp()->addModule($common_xpath.'/Adm/Shell/',array('vendor'=>'LinHUniX','module'=>'LnxMcpAdmShell','version'=>$scopeInit['mcp.ver']));
+lnxmcp()->addModule($common_xpath.'/Adm/Httpd/',array('vendor'=>'LinHUniX','module'=>'LnxMcpAdmHttpd','version'=>$scopeInit['mcp.ver']));
+lnxmcp()->addModule($common_xpath.'/Ln4/',array('vendor'=>'LinHUniX','module'=>'Ln4','version'=>$scopeInit['mcp.ver']));
+lnxmcp()->addModule($common_xpath.'/Nsql/',array('vendor'=>'LinHUniX','module'=>'Nsql','version'=>$scopeInit['mcp.ver']));
+lnxmcp()->addModule($common_xpath.'/Upload/',array('vendor'=>'LinHUniX','module'=>'Upload','version'=>$scopeInit['mcp.ver']));
 ////////////////////////////////////////////////////////////////////////////////
 // CLASS LOADER - SUMMARY 
 ////////////////////////////////////////////////////////////////////////////////

@@ -16,8 +16,9 @@ function lnxGetJsonFile($file, $path = '', $ext = '')
 {
     $jfile = $path;
     if ($jfile != '') {
-        $jfile .= DIRECTORY_SEPARATOR.$file;
+        $jfile .= DIRECTORY_SEPARATOR;
     }
+    $jfile.=$file;
     if ($ext != '') {
         $jfile .= '.'.$ext;
     }
@@ -55,8 +56,9 @@ function lnxDelJsonFile($file, $path = '', $ext = '', $expire = null)
 {
     $jfile = $path;
     if ($jfile != '') {
-        $jfile .= DIRECTORY_SEPARATOR.$file;
+        $jfile .= DIRECTORY_SEPARATOR;
     }
+    $jfile.=$file;
     if ($ext != '') {
         $jfile .= '.'.$ext;
     }
@@ -92,8 +94,9 @@ function lnxPutJsonFile($content, $file, $path = '', $ext = '')
 {
     $jfile = $path;
     if ($jfile != '') {
-        $jfile .= DIRECTORY_SEPARATOR.$file;
+        $jfile .= DIRECTORY_SEPARATOR;
     }
+    $jfile.=$file;
     if ($ext != '') {
         $jfile .= '.'.$ext;
     }

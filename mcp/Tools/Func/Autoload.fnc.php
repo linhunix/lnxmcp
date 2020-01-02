@@ -51,7 +51,7 @@ function selfAutoLoad($srcPath)
  * Load on config the data of a specific module folder
  * @param string $path
  */
-function mcpLoadModPath($srcPath) {
+function mcpLoadModPath($srcPath,$pharmok=false,$initmok=false) {
     if (!is_dir($srcPath)) {
         lnxmcp()->warning($srcPath." is not a directory");
     }
@@ -60,34 +60,19 @@ function mcpLoadModPath($srcPath) {
         if ($item === '.' || $item === '..') {
             continue;
         }
+        $mpok=false;
         $modfolder=$srcPath.DIRECTORY_SEPARATOR.$item;
         if (is_dir($modfolder)) {
-            $modcfg=array();
-            if (file_exists($modfolder.DIRECTORY_SEPARATOR.'mcp.modules.json')){
-                $modcfg=lnxGetJsonFile($modfolder.DIRECTORY_SEPARATOR.'mcp.modules.json');
+            $mpok=true;
+        }
+        if ($mpok==false and $pharmok==true){
+            if (strtolower(substr($item,-5,5))=='.phar'){
+                $modfolder='phar://'.$modfolder;
+                $mpok=true;
             }
-            if(!isset($modcfg['vendor'])){
-                $modcfg['vendor']=lnxmcp()->getResource('def');
-            }
-            if(!isset($modcfg['module'])){
-                $modcfg['module']=$item;
-            }
-            $modset='app.mod.path.'.$modcfg['vendor'].'.'.$modcfg['module'];
-            lnxmcp()->setCfg($modset,$modfolder.DIRECTORY_SEPARATOR);
-            if(isset($modcfg['config'])){
-                if(is_array($modcfg['config'])){
-                    foreach ($modcfg['config'] as $ck=>$cv){
-                        lnxmcp()->setCfg($ck,$cv);
-                    }
-                }
-            }        
-            if(isset($modcfg['common'])){
-                if(is_array($modcfg['common'])){
-                    foreach ($modcfg['common'] as $ck=>$cv){
-                        lnxmcp()->setCommon($ck,$cv);
-                    }
-                }
-            }        
+        }
+        if ($mpok==true){
+            lnxmcp()->addModule($modfolder,null,$initmok);
         }
     }
 }
