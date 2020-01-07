@@ -51,7 +51,7 @@ function selfAutoLoad($srcPath)
  * @param string $className 
  */
 function LnxMcpUse($className){
-    lnxmcp()->use($className);
+    lnxmcp()->useModule($className);
 }
 
 /**

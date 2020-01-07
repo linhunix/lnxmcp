@@ -1016,7 +1016,7 @@ final class masterControlProgram
      * @param string $classname;
      * @return boolean;
      */
-    public function use($classname){
+    public function useModule($classname){
        return mcpModuleClass::useClass($classname);
     }
 
