@@ -46,6 +46,13 @@ function selfAutoLoad($srcPath)
     spl_autoload_register('legacyAutoload', true);
 }
 
+/**
+ * LnxMcpUse is a exntension to integrate the autoloader functionality
+ * @param string $className 
+ */
+function LnxMcpUse($className){
+    lnxmcp()->use($className);
+}
 
 /**
  * Load on config the data of a specific module folder
