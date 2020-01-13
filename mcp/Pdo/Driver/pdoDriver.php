@@ -159,6 +159,7 @@ class pdoDriver extends mcpBaseModelClass
                 return true;
             }
             $this->getMcp()->warning($this->database.':row='.print_r($res, 1));
+            $this->getMcp()->warning($this->database.':wrn='.$this->PDO->errorInfo());
             return false;
         } catch (PDOException $pe) {
             $this->getMcp()->warning($this->database.':PDO ERR'.$pe->getMessage());

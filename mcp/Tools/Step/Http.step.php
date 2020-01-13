@@ -203,6 +203,9 @@ class mcpRunHttp
         lnxmcp()->setCfg('app.type', 'web');
         $urlpth = $_SERVER['REQUEST_URI'];
         $urlpth = str_replace('//', '/', $urlpth);
+        if (isset($_REQUEST['debugtag'])){
+            lnxmcp()->setCommon('debugtag',$_REQUEST['debugtag']);
+        }
         ////// HEADER CALL
         $this->mcpPathRedirect($urlpth);
         ////// REMOVE THE ARGUMENT BLOCK
