@@ -21,14 +21,12 @@ class mcpDebugModelClass
     private $setting;
     private $mcp;
     private $procesid;
-    private $tag;
     public function __construct(masterControlProgram &$mcp, $level, array $setting = array())
     {
         $this->mcp = $mcp;
         $this->level = intval($level);
         $this->setting = $setting;
         $this->procesid= date("U");
-        $this->tag=$mcp->getCommon('debugtag');
     }
 
     public function GetLevel()
@@ -106,6 +104,6 @@ class mcpDebugModelClass
     {
         $app = $this->mcp->getCfg("app.def");
         $time = date("Y-m-d H:i:s");
-        error_log("[" . $app . "][".$this->procesid."][".$this->tag."][" . $time . "][" . $level . "]:" . $message);
+        error_log("[" . $app . "][".$this->procesid."][".$this->mcp->getCommon('debugtag')."][" . $time . "][" . $level . "]:" . $message);
     }
 }
