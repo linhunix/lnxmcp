@@ -496,6 +496,103 @@ class mcpMenuClass
         foreach ($_SERVER as $srvnk => $srvv) {
             $text = str_ireplace('[server-'.$srvnk.']', $srvv, $text);
         }
+        while (stripos($text, '<lnxmcp-x-') !== false) {
+            ++$lnxmcp_cnt;
+            $lp1 = stripos($text, '<lnxmcp-x-');
+            $lp2 = stripos($text, ' ', $lp1);
+            $lp3 = stripos($text, '>', $lp2);
+            $ltagx = substr($text, ($lp1 + 1), ($lp2 - $lp1 -1));
+            $lp4 = stripos($text, '</'.$ltagx.'>', $lp2);
+            $lcmdx = substr($text, ($lp2 + 1 ), ($lp3 - $lp2 -1 ));
+            $lblcks = substr($text, ($lp3 + 1), ($lp4 - $lp3 -1));
+            $subblk = substr($text, ($lp1 ), ($lp4 - $lp1+strlen($ltagx)+3));
+            $scopeCtl = array();
+            $scopeInSub = $scopeIn;
+            $scopeInSub['blockIn'] = $lblcks;
+            $largs = explode(' ', $lcmdx);
+            foreach ($largs as $ck => $cv) {
+                if (strpos($cv, '=') !== false) {
+                    $cvx = explode('=', $cv);
+                    $scopeCtl[$cvx[0]] = str_replace(array('"', '\''), '', ($cvx[1]));
+                } else {
+                    $scopeCtl[$cv] = true;
+                }
+            }
+            $showrem = true;
+            if (isset($scopeCtl['disable-rem'])) {
+                $showrem = false;
+            }
+            if (!isset($scopeCtl['block-type'])) {
+                $scopeCtl['block-type'] = '';
+            }
+            lnxmcp()->info('TagConverter:block-type: '.$scopeCtl['block-type']);
+            lnxmcp()->debug($lblcks);
+            switch ($scopeCtl['block-type']) {
+                case 'json':
+                    try {
+                        $arr = json_decode($lblcks, true);
+                        if (is_array($arr)) {
+                            foreach ($arr as $ak => $av) {
+                                $scopeInSub[$ak] = $av;
+                            }
+                        }
+                    } catch (\Exception $e) {
+                        lnxmcp()->warning('TagConverter:block-type json error '.$e->getMessage());
+                    }
+                break;
+                case 'config':
+                    $scopeInSub['blockIn'] = lnxmcp()->getCfg($lblcks);
+                    break;
+                case 'common':
+                    $scopeInSub['blockIn'] = lnxmcp()->getCommon($lblcks);
+                    break;
+                case 'scope':
+                    $scopeInSub['blockIn'] = @$scopeIn[$lblcks];
+                    break;
+                case 'translate':
+                    if (isset($scopeCtl['block-lang'])) {
+                        $lang = $scopeCtl['block-lang'];
+                        $scopeInSub['blockIn'] = lnxmcp()->translateMulti($lang, $lblcks);
+                    } else {
+                        $scopeInSub['blockIn'] = lnxmcp()->translate($lblcks);
+                    }
+                    break;
+                default:
+                    $scopeInSub['blockIn'] = $lblcks;
+            }
+            $lret = '';
+            if (isset($scopeCtl['type'])) {
+                lnxmcp()->info('TagConverter:runcommand by type: '.$scopeCtl['type']);
+                ob_start();
+                self::runcommand($scopeCtl, $scopeInSub);
+                $lres = ob_get_contents();
+                ob_end_clean();
+            } else {
+                lnxmcp()->info('TagConverter:passive ');
+                $lres = $scopeInSub['blockIn'];
+            }
+            $lret = $lres;
+            if ($showrem == true) {
+                $lret = "\n<!-- lnxmcp[".$lnxmcp_cnt.'] '.$lcmdx." !-->\n".$lres."\n<!-- /lnxmcp[".$lnxmcp_cnt."] !-->\n";
+            }
+            switch ($scopeCtl['block-type']) {
+                case 'javascript':
+                    try {
+                        $jres = json_encode($lret, true);
+                    } catch (\Exception $e) {
+                        lnxmcp()->warning('TagConverter:block-type json error '.$e->getMessage());
+                    }
+                    $lret = "<script type='text/javascript' >".PHP_EOL;
+                    $lret .= $lcmdx.'_value='.$jres.';'.PHP_EOL;
+                    $lret .= '</script>';
+                break;
+                case 'print_r':
+                    $text = str_ireplace($subblk, print_r($lret, 1), $text);
+                break;
+                default:
+                    $text = str_ireplace($subblk, $lret, $text);
+            }
+        }
         while (stripos($text, '<lnxmcp ') !== false) {
             ++$lnxmcp_cnt;
             $lp1 = stripos($text, '<lnxmcp');
