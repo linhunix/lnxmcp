@@ -38,6 +38,12 @@ final class masterControlProgram
     const CLASS_LOGGER = 'logClass';
 
     /**
+     * @var masterControlProgram path of the Applications locations
+     */
+    private static  $mcpcls;
+  
+
+    /**
      * @var string path of the Applications locations
      */
     private $pathapp;
@@ -174,6 +180,13 @@ final class masterControlProgram
     /////////////////////////////////////////////////////////////////////////////
     // CONSTRUCTOR AND INIT  - LEGACY SETTING
     /////////////////////////////////////////////////////////////////////////////
+    /**
+     *  return the static class 
+     * @return masterControlProgram
+     */
+    public static function GetMcp(){
+        return self::$mcpcls;
+    }
 
     /**
      * Create a slim app integration, add container and set the log as.
@@ -182,6 +195,7 @@ final class masterControlProgram
      */
     public function __construct(array $scopeIn)
     {
+        self::$mcpcls = $this;
         $this->startTime = $this->getFloatTime();
         $this->pathapp = $scopeIn['app.path.core'];
         $this->common = array();
@@ -264,7 +278,9 @@ final class masterControlProgram
 
             return $this->cfg[$resname];
         }
-
+        if ($this->mcpLogging != null) {
+            $this->mcpLogging->warning('getCfg:Null is '.$resname);
+        }
         return null;
     }
 

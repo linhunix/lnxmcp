@@ -10,16 +10,7 @@
  */
 function lnxmcp()
 {
-    if (isset($GLOBALS['mcp'])) {
-        return $GLOBALS['mcp'];
-    } else {
-        error_log("FATAL ERROR - lnxmcp is NOT SETTED!!! \n");
-        foreach (debug_backtrace() as $errarr) {
-            error_log('-> '.$errarr['file'].' : '.$errarr['line'].' <br>');
-        }
-
-        return null;
-    }
+    return LinHUniX\Mcp\masterControlProgram::GetMcp();
 }
 
 /**

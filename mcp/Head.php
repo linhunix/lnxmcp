@@ -342,13 +342,15 @@ if (class_exists("\LinHUniX\Mcp\masterControlProgram")) {
 } else {
     $mcp = new masterControlProgram($scopeInit);
 }
+define('LNXMCP_APP_DEF',lnxmcp()->getCfg('app.def'));
 define('LNXMCP_APP_PATH',$app_path);
 define('LNXMCP_CFG_PATH',$app_cfg);
 define('LNXMCP_USR_PATH',$app_user);
 define('LNXMCP_WRK_PATH',$app_work);
+define('LNXMCP_MCP_PATH',$mcp_path);
+define('LNXMCP_MCP_VER',lnxmcp()->getCfg('mcp.ver'));
 mcpErrorHandlerInit();
 mcpShutDownInit();
-
 ////////////////////////////////////////////////////////////////////////////////
 // CLASS LOADER - MCP_MODULED 
 ////////////////////////////////////////////////////////////////////////////////
