@@ -144,10 +144,16 @@ class mcpBaseModelClass
             $this->debug('SingleTon');
             $this->moduleSingleTon();
         }
-        $this->moduleCore();
+        $retx=$this->moduleCore();
         $this->getMcp()->rstScopeOut();
         $this->setReturn($this->argOut);
-
+        if ($retx!=null){
+            if ($this->getArgOut('return')==null){
+                $this->setArgOut('return',$retx);
+            }else{
+                $this->setArgOut('output',$retx);
+            }
+        }
         return $this->getMcp()->getScopeOut();
     }
 

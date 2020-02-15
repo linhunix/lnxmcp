@@ -1,0 +1,10 @@
+{
+    "forum":{
+        "type":"block",
+        "module":"demo",
+        "name":"home"
+    },
+    "bye":{
+        "type":"exit"
+    }
+}

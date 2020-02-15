@@ -559,7 +559,7 @@ final class mcpCoreClass
             if (method_exists($this->getCfg($this->scopeCtl[$this->sub]['tag']), $this->scopeCtl[$this->sub]['run'])) {
                 $this->scopeOut[$this->sub] = $this->getCfg($this->scopeCtl[$this->sub]['tag'])->{$this->scopeCtl[$this->sub]['run']}($this->scopeCtl[$this->sub], $this->scopeIn[$this->sub]);
                 $this->shareModuleVars();
-
+                $this->getMcp()->debug('setScopeOut for '.$this->sub);
                 return true;
             }
         } catch (ErrorException $ee) {
