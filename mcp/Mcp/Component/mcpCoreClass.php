@@ -648,15 +648,20 @@ final class mcpCoreClass
         $fheadt = $sdir.'/global.'.$tplt.'.head.inc.tpl';
         $fmain = $sdir.'/global.'.$tplt.'.main.inc.php';
         $fmaint = $sdir.'/global.'.$tplt.'.main.inc.tpl';
+        $fmainh = $sdir.'/global.'.$tplt.'.main.inc.html';
         $fcss = $sdir.$this->scopeCtl[$ssub]['content'].'.css';
         $xmain = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$type.'.'.$lang.'.php';
         $xmaint = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$type.'.'.$lang.'.tpl';
+        $xmainh = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$type.'.'.$lang.'.html';
         $lmain = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$lang.'.php';
         $lmaint = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$lang.'.tpl';
+        $lmainh = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$lang.'.html';
         $tmain = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$type.'.php';
         $tmaint = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$type.'.tpl';
+        $tmainh = $sdir.$this->scopeCtl[$ssub]['content'].'.'.$type.'.html';
         $smain = $this->scopeCtl[$ssub]['file'];
         $smaint = $sdir.$this->scopeCtl[$ssub]['content'].'.tpl';
+        $smainh = $sdir.$this->scopeCtl[$ssub]['content'].'.html';
         $fjs = $sdir.$this->scopeCtl[$ssub]['content'].'.js';
         $ffoot = $sdir.'/global.'.$tplt.'.foot.inc.php';
         $ffoott = $sdir.'/global.'.$tplt.'.foot.inc.tpl';
@@ -682,6 +687,9 @@ final class mcpCoreClass
         } elseif (file_exists($fmaint)) {
             $this->setStatus(true, 'load std global.main.tpl file '.$smain);
             include $fmaint;
+        } elseif (file_exists($fmainh)) {
+            $this->setStatus(true, 'load std global.main.html file '.$smain);
+            echo $this->getMcp()->converTag(file_get_contents($fmainh),$scopeIn);
         }
         /// load core
         if (file_exists($xmain)) {
@@ -690,24 +698,36 @@ final class mcpCoreClass
         } elseif (file_exists($xmaint)) {
             $this->setStatus(true, 'load std special file '.$xmaint);
             include $xmaint;
+        } elseif (file_exists($xmainh)) {
+            $this->setStatus(true, 'load std special file '.$xmainh);
+            echo $this->getMcp()->converTag(file_get_contents($xmainh),$scopeIn);
         } elseif (file_exists($tmain)) {
             $this->setStatus(true, 'load std special file '.$tmain);
             include $tmain;
         } elseif (file_exists($tmaint)) {
             $this->setStatus(true, 'load std special file '.$tmaint);
             include $tmaint;
+        } elseif (file_exists($tmainh)) {
+            $this->setStatus(true, 'load std special file '.$tmainh);
+            echo $this->getMcp()->converTag(file_get_contents($tmainh),$scopeIn);
         } elseif (file_exists($lmain)) {
             $this->setStatus(true, 'load std special file '.$lmain);
             include $lmain;
         } elseif (file_exists($lmaint)) {
             $this->setStatus(true, 'load std special file '.$lmaint);
             include $lmaint;
+        } elseif (file_exists($lmainh)) {
+            $this->setStatus(true, 'load std special file '.$lmainh);
+            echo $this->getMcp()->converTag(file_get_contents($lmainh),$scopeIn);
         } elseif (file_exists($smain)) {
             $this->setStatus(true, 'load std inc file '.$smain);
             include $smain;
         } elseif (file_exists($smaint)) {
             $this->setStatus(true, 'load std inc file '.$smaint);
             include $smaint;
+        } elseif (file_exists($smainh)) {
+            $this->setStatus(true, 'load std inc file '.$smainh);
+            echo $this->getMcp()->converTag(file_get_contents($smainh),$scopeIn);            
         } else {
             $this->setStatus(false, 'unable load std inc file '.$smain);
         }
