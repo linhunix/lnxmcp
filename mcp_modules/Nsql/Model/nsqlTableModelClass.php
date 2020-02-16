@@ -10,9 +10,9 @@ namespace LinHUniX\Nsql\Model;
 use LinHUniX\Mcp\masterControlProgram;
 
 class nsqlTableModelClass {
-    private $table='mytablename';
-    private $folder='myfoldername';
-    private $classdesc;
+    protected $table='mytablename';
+    protected $folder='myfoldername';
+    protected $classdesc;
     /**
      * reload evere case use this class
      */
