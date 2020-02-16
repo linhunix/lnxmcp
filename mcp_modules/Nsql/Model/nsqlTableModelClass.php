@@ -9,7 +9,7 @@ namespace LinHUniX\Nsql\Model;
 
 use LinHUniX\Mcp\masterControlProgram;
 
-class nsqlFeaturesFilter {
+class nsqlTableModelClass {
     private $table='mytablename';
     private $folder='myfoldername';
     private $classdesc;
