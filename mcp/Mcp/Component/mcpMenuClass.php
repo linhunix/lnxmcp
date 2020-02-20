@@ -522,7 +522,7 @@ class mcpMenuClass
                     if ($cvx[0]!='scope-json-in'){
                         $scopeCtl[$cvx[0]] = str_replace(array('"', '\''), '', ($cvx[1]));
                     }else{
-                        $scopeCtl[$cvx[0]] = $cvx[1];
+                        $scopeCtl[$cvx[0]] = str_replace('\'', '', ($cvx[1]));
                     }
                 } else {
                     $scopeCtl[$cv] = true;
@@ -543,7 +543,7 @@ class mcpMenuClass
                             $scopeInSub[$ak] = $av;
                         }
                     }else{
-                        $scopeInSub['json-in']=$arr;
+                        $scopeInSub['json-in']=$scopeCtl['scope-json-in'];
                         lnxmcp()->warning('TagConverter:scope-json-in json wrong conversion!! ');
                     }
                 } catch (\Exception $e) {
@@ -640,7 +640,7 @@ class mcpMenuClass
                     if ($cvx[0]!='scope-json-in'){
                         $scopeCtl[$cvx[0]] = str_replace(array('"', '\''), '', ($cvx[1]));
                     }else{
-                        $scopeCtl[$cvx[0]] = $cvx[1];
+                        $scopeCtl[$cvx[0]] = str_replace('\'', '', ($cvx[1]));
                     }
                 } else {
                     $scopeCtl[$cv] = true;
@@ -661,7 +661,7 @@ class mcpMenuClass
                             $scopeInSub[$ak] = $av;
                         }
                     }else{
-                        $scopeInSub['json-in']=$arr;
+                        $scopeInSub['json-in']=$scopeCtl['scope-json-in'];
                         lnxmcp()->warning('TagConverter:scope-json-in json wrong conversion!! ');
                     }
                 } catch (\Exception $e) {
