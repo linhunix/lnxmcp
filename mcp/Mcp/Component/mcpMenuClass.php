@@ -531,7 +531,7 @@ class mcpMenuClass
             if (!isset($scopeCtl['block-type'])) {
                 $scopeCtl['block-type'] = '';
             }
-            if (isset($scopeCtl['Scope-json-in'])) {
+            if (isset($scopeCtl['scope-json-in'])) {
                 try {
                     $arr = json_decode($scopeCtl['scope-json-in'], true);
                     if (is_array($arr)) {
@@ -641,7 +641,7 @@ class mcpMenuClass
             if (!isset($scopeCtl['block-type'])) {
                 $scopeCtl['block-type'] = '';
             }
-            if (isset($scopeCtl['Scope-json-in'])) {
+            if (isset($scopeCtl['scope-json-in'])) {
                 try {
                     $arr = json_decode($scopeCtl['scope-json-in'], true);
                     if (is_array($arr)) {
