@@ -519,7 +519,11 @@ class mcpMenuClass
             foreach ($largs as $ck => $cv) {
                 if (strpos($cv, '=') !== false) {
                     $cvx = explode('=', $cv);
-                    $scopeCtl[$cvx[0]] = str_replace(array('"', '\''), '', ($cvx[1]));
+                    if ($cvx[0]!='scope-json-in'){
+                        $scopeCtl[$cvx[0]] = str_replace(array('"', '\''), '', ($cvx[1]));
+                    }else{
+                        $scopeCtl[$cvx[0]] = $cvx[1];
+                    }
                 } else {
                     $scopeCtl[$cv] = true;
                 }
@@ -538,9 +542,13 @@ class mcpMenuClass
                         foreach ($arr as $ak => $av) {
                             $scopeInSub[$ak] = $av;
                         }
+                    }else{
+                        $scopeIn['json-in']=$arr;
+                        lnxmcp()->warning('TagConverter:scope-json-in json wrong conversion!! ');
                     }
                 } catch (\Exception $e) {
-                    lnxmcp()->warning('TagConverter:block-type json error '.$e->getMessage());
+                    $scopeIn['json-in']=$scopeCtl['scope-json-in'];
+                    lnxmcp()->warning('TagConverter:block-type scope-json-in '.$e->getMessage());
                 }
             }
             lnxmcp()->info('TagConverter:block-type: '.$scopeCtl['block-type']);
@@ -629,7 +637,11 @@ class mcpMenuClass
             foreach ($largs as $ck => $cv) {
                 if (strpos($cv, '=') !== false) {
                     $cvx = explode('=', $cv);
-                    $scopeCtl[$cvx[0]] = str_replace(array('"', '\''), '', ($cvx[1]));
+                    if ($cvx[0]!='scope-json-in'){
+                        $scopeCtl[$cvx[0]] = str_replace(array('"', '\''), '', ($cvx[1]));
+                    }else{
+                        $scopeCtl[$cvx[0]] = $cvx[1];
+                    }
                 } else {
                     $scopeCtl[$cv] = true;
                 }
@@ -648,9 +660,13 @@ class mcpMenuClass
                         foreach ($arr as $ak => $av) {
                             $scopeInSub[$ak] = $av;
                         }
+                    }else{
+                        $scopeIn['json-in']=$arr;
+                        lnxmcp()->warning('TagConverter:scope-json-in json wrong conversion!! ');
                     }
                 } catch (\Exception $e) {
-                    lnxmcp()->warning('TagConverter:block-type json error '.$e->getMessage());
+                    $scopeIn['json-in']=$scopeCtl['scope-json-in'];
+                    lnxmcp()->warning('TagConverter:block-type scope-json-in '.$e->getMessage());
                 }
             }
             lnxmcp()->info('TagConverter:block-type: '.$scopeCtl['block-type']);
