@@ -485,6 +485,9 @@ class mcpMenuClass
     public static function TagConverter($text, $scopeIn = array(), $label = null)
     {
         $lnxmcp_cnt = 0;
+        /////////////////////////////////////////////////////////////////////////
+        /// lnxmcp simple [tag] common scope and server (with relative dump) 
+        /////////////////////////////////////////////////////////////////////////
         $text = str_replace('[scope-dump]', print_r($scopeIn, 1), $text);
         $text = str_replace('[common-dump]', print_r(lnxmcp()->getCommon(), 1), $text);
         foreach ($scopeIn as $sink => $sinv) {
@@ -496,6 +499,9 @@ class mcpMenuClass
         foreach ($_SERVER as $srvnk => $srvv) {
             $text = str_ireplace('[server-'.$srvnk.']', $srvv, $text);
         }
+        /////////////////////////////////////////////////////////////////////////
+        /// lnxmcp-x tag
+        /////////////////////////////////////////////////////////////////////////
         while (stripos($text, '<lnxmcp-x-') !== false) {
             ++$lnxmcp_cnt;
             $lp1 = stripos($text, '<lnxmcp-x-');
@@ -525,6 +531,18 @@ class mcpMenuClass
             if (!isset($scopeCtl['block-type'])) {
                 $scopeCtl['block-type'] = '';
             }
+            if (isset($scopeCtl['Scope-json-in'])) {
+                try {
+                    $arr = json_decode($scopeCtl['scope-json-in'], true);
+                    if (is_array($arr)) {
+                        foreach ($arr as $ak => $av) {
+                            $scopeInSub[$ak] = $av;
+                        }
+                    }
+                } catch (\Exception $e) {
+                    lnxmcp()->warning('TagConverter:block-type json error '.$e->getMessage());
+                }
+            }
             lnxmcp()->info('TagConverter:block-type: '.$scopeCtl['block-type']);
             lnxmcp()->debug($lblcks);
             switch ($scopeCtl['block-type']) {
@@ -573,7 +591,7 @@ class mcpMenuClass
             }
             $lret = $lres;
             if ($showrem == true) {
-                $lret = "\n<!-- lnxmcp[".$lnxmcp_cnt.'] '.$lcmdx." !-->\n".$lres."\n<!-- /lnxmcp[".$lnxmcp_cnt."] !-->\n";
+                $lret = "\n<!-- lnxmcp[".$lnxmcp_cnt.']['.$ltagx.'] '.$lcmdx." !-->\n".$lres."\n<!-- /lnxmcp[".$lnxmcp_cnt.']['.$ltagx."] !-->\n";
             }
             switch ($scopeCtl['block-type']) {
                 case 'javascript':
@@ -593,6 +611,9 @@ class mcpMenuClass
                     $text = str_ireplace($subblk, $lret, $text);
             }
         }
+        /////////////////////////////////////////////////////////////////////////
+        /// lnxmcp simple tag
+        /////////////////////////////////////////////////////////////////////////
         while (stripos($text, '<lnxmcp ') !== false) {
             ++$lnxmcp_cnt;
             $lp1 = stripos($text, '<lnxmcp');
@@ -620,6 +641,18 @@ class mcpMenuClass
             if (!isset($scopeCtl['block-type'])) {
                 $scopeCtl['block-type'] = '';
             }
+            if (isset($scopeCtl['Scope-json-in'])) {
+                try {
+                    $arr = json_decode($scopeCtl['scope-json-in'], true);
+                    if (is_array($arr)) {
+                        foreach ($arr as $ak => $av) {
+                            $scopeInSub[$ak] = $av;
+                        }
+                    }
+                } catch (\Exception $e) {
+                    lnxmcp()->warning('TagConverter:block-type json error '.$e->getMessage());
+                }
+            }
             lnxmcp()->info('TagConverter:block-type: '.$scopeCtl['block-type']);
             lnxmcp()->debug($lblcks);
             switch ($scopeCtl['block-type']) {
@@ -688,6 +721,9 @@ class mcpMenuClass
                     $text = str_ireplace($subblk, $lret, $text);
             }
         }
+        /////////////////////////////////////////////////////////////////////////
+        /// lnxmcp old style tag (compaiblity mode)
+        /////////////////////////////////////////////////////////////////////////
         while (stripos($text, '[lnxmcp-') !== false) {
             $lp1 = stripos($text, '[lnxmcp-');
             $lp2 = stripos($text, ']', $lp1);
