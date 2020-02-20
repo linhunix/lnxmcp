@@ -543,11 +543,11 @@ class mcpMenuClass
                             $scopeInSub[$ak] = $av;
                         }
                     }else{
-                        $scopeIn['json-in']=$arr;
+                        $scopeInSub['json-in']=$arr;
                         lnxmcp()->warning('TagConverter:scope-json-in json wrong conversion!! ');
                     }
                 } catch (\Exception $e) {
-                    $scopeIn['json-in']=$scopeCtl['scope-json-in'];
+                    $scopeInSub['json-in']=$scopeCtl['scope-json-in'];
                     lnxmcp()->warning('TagConverter:block-type scope-json-in '.$e->getMessage());
                 }
             }
@@ -661,11 +661,11 @@ class mcpMenuClass
                             $scopeInSub[$ak] = $av;
                         }
                     }else{
-                        $scopeIn['json-in']=$arr;
+                        $scopeInSub['json-in']=$arr;
                         lnxmcp()->warning('TagConverter:scope-json-in json wrong conversion!! ');
                     }
                 } catch (\Exception $e) {
-                    $scopeIn['json-in']=$scopeCtl['scope-json-in'];
+                    $scopeInSub['json-in']=$scopeCtl['scope-json-in'];
                     lnxmcp()->warning('TagConverter:block-type scope-json-in '.$e->getMessage());
                 }
             }
