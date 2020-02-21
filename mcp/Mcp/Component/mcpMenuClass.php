@@ -615,7 +615,7 @@ class mcpMenuClass
                     $lret=$lretx;
                 break;
                 case 'div-extend':
-                    $lretx="\n<div id='"$ltagx."' $lcmdx >\n".$lret."\n</div>\n";
+                    $lretx="\n<div id='".$ltagx."' ".$lcmdx." >\n".$lret."\n</div>\n";
                     $lret=$lretx;
                 break;
                 case 'style':
