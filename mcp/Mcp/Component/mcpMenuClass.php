@@ -551,6 +551,7 @@ class mcpMenuClass
                     lnxmcp()->warning('TagConverter:block-type scope-json-in '.$e->getMessage());
                 }
             }
+            $scopeInSub['x-tag']=$ltagx;
             lnxmcp()->info('TagConverter:block-type: '.$scopeCtl['block-type']);
             lnxmcp()->debug($lblcks);
             switch ($scopeCtl['block-type']) {
@@ -598,13 +599,10 @@ class mcpMenuClass
                 $lres = $scopeInSub['blockIn'];
             }
             $lret = $lres;
-            if ($showrem == true) {
-                $lret = "\n<!-- lnxmcp[".$lnxmcp_cnt.']['.$ltagx.'] '.$lcmdx." !-->\n".$lres."\n<!-- /lnxmcp[".$lnxmcp_cnt.']['.$ltagx."] !-->\n";
-            }
             switch ($scopeCtl['block-type']) {
                 case 'javascript':
                     try {
-                        $jres = json_encode($lret, true);
+                        $jres = json_encode($lres, true);
                     } catch (\Exception $e) {
                         lnxmcp()->warning('TagConverter:block-type json error '.$e->getMessage());
                     }
@@ -613,11 +611,23 @@ class mcpMenuClass
                     $lret .= '</script>';
                 break;
                 case 'print_r':
-                    $text = str_ireplace($subblk, print_r($lret, 1), $text);
+                    $lretx = print_r($lret, 1);
+                    $lret=$lretx;
                 break;
-                default:
-                    $text = str_ireplace($subblk, $lret, $text);
+                case 'div-extend':
+                    $lretx="\n<div id='"$ltagx."' $lcmdx >\n".$lret."\n</div>\n";
+                    $lret=$lretx;
+                break;
+                case 'style':
+                    $lretx="\n<style>\n".$lret."\n</style>\n";
+                    $lret=$lretx;
+                break;
             }
+            if ($showrem == true) {
+                $lretx = "\n<!-- lnxmcp-x[".$lnxmcp_cnt.']['.$ltagx.'] '.$lcmdx." !-->\n".$lret."\n<!-- /lnxmcp-x[".$lnxmcp_cnt.']['.$ltagx."] !-->\n";
+                $lret=$lretx;
+            }
+            $text = str_ireplace($subblk, $lret, $text);
         }
         /////////////////////////////////////////////////////////////////////////
         /// lnxmcp simple tag
