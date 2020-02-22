@@ -153,7 +153,7 @@ final class mcpCoreClass
     {
         $this->shareModuleVars();
 
-        return $GLOBALS['scopeIn'];
+        return  $this->scopeIn[$this->sub];
     }
 
     /**
@@ -163,7 +163,7 @@ final class mcpCoreClass
     {
         $this->shareModuleVars();
 
-        return $GLOBALS['scopeOut'];
+        return  $this->scopeOut[$this->sub];
     }
 
     /**
@@ -173,7 +173,7 @@ final class mcpCoreClass
     {
         $this->shareModuleVars();
 
-        return $GLOBALS['scopeCtl'];
+        return  $this->scopeCtl[$this->sub];
     }
 
     /**
@@ -471,7 +471,16 @@ final class mcpCoreClass
         $GLOBALS['scopeCtl'] = &$this->scopeCtl[$this->sub];
         $GLOBALS['scopeOut'] = &$this->scopeOut[$this->sub];
     }
-
+    /**
+     * compatibility with older code and set on session this informations l.
+     */
+    public function captureScope($scopeSubCtl,$scopeSubIn,$scopeSubOut)
+    {
+        $this->scopeIn[$this->sub]=$scopeSubIn;
+        $this->scopeCtl[$this->sub]=$scopeSubCtl;
+        $this->scopeOut[$this->sub]=$scopeSubOut;
+        $this->shareModuleVars();
+    }
     /**
      * Auto clear ScopeIn variables  with compatbility.
      */

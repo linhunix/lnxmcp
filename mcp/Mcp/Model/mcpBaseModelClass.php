@@ -80,6 +80,12 @@ class mcpBaseModelClass
     protected $argOut;
 
     /**
+     * use this to set the error info on the sistem
+     * @var array
+     */
+    protected $argErr;
+
+    /**
      * need for the call back.
      *
      * @var masterControlProgram
@@ -88,9 +94,12 @@ class mcpBaseModelClass
 
     /**
      *  Pre init is a method to use on the new version.
+     *  If is possible recopy to allow to use the corret info
      */
     protected function moduleInit()
     {
+        $this->spacename = __NAMESPACE__;
+        $this->clssname = __CLASS__;
     }
 
     /**
@@ -104,6 +113,7 @@ class mcpBaseModelClass
         $this->bootCtl = $scopeCtl;
         $this->bootData = $scopeIn;
         $this->require = array();
+        $this->argErr =array();
         $this->moduleInit();
         $this->singleTon = false;
         if (isset($scopeIn['public'])) {
@@ -124,6 +134,15 @@ class mcpBaseModelClass
     public function getDependency()
     {
         return $this->require;
+    }
+    /**
+     * Return a list of error logged .
+     *
+     * @return array
+     */
+    public function getErrorLog()
+    {
+        return $this->argErr;
     }
 
     /**
@@ -154,6 +173,8 @@ class mcpBaseModelClass
                 $this->setArgOut('output',$retx);
             }
         }
+        $this->setArgOut('Error',$this->argErr);
+        $this->getMcp()->captureScope($this->argCtl,$this->argIn,$this->argOut);
         return $this->getMcp()->getScopeOut();
     }
 
@@ -335,6 +356,7 @@ class mcpBaseModelClass
      */
     protected function debug($messge)
     {
+        $this->argErr[]='[debug]'.$this->classname.':'.$messge;
         $this->getMcp()->debug($this->classname.':'.$messge);
     }
 
@@ -345,6 +367,7 @@ class mcpBaseModelClass
      */
     protected function info($messge)
     {
+        $this->argErr[]='[info]'.$this->classname.':'.$messge;
         $this->getMcp()->info($this->classname.':'.$messge);
     }
 
@@ -355,6 +378,7 @@ class mcpBaseModelClass
      */
     protected function warning($messge)
     {
+        $this->argErr[]='[warning]'.$this->classname.':'.$messge;
         $this->getMcp()->warning($this->classname.':'.$messge);
     }
 
@@ -365,6 +389,7 @@ class mcpBaseModelClass
      */
     protected function error($messge)
     {
+        $this->argErr[]='[error]'.$this->classname.':'.$messge;
         $this->getMcp()->error($this->classname.':'.$messge);
     }
 }

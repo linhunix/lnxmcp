@@ -616,6 +616,16 @@ final class masterControlProgram
     }
 
     /**
+     * return the array array.
+     *
+     * @return array ()
+     */
+    public function captureScope($sCtl,$sIn,$sOut)
+    {
+        $this->mcpCore->captureScope($sCtl,$sIn,$sOut);
+    }
+
+    /**
      * return the array of result (empty array if is null).
      *
      * @return array ()
