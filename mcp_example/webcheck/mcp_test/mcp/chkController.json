@@ -1,0 +1,23 @@
+{
+    "mcp_check_type": "command",
+    "mcp_check_name": "CheckController",
+    "mcp_check_ctl": {
+        "name":"test",
+        "module":"Test",
+        "vendor":"lnxtest",
+        "type":"controller"
+    },
+    "mcp_check_in": {},
+    "mcp_check_out_std": {
+        "return": "mcp_check_isset",
+        "log": "mcp_check_array",
+        "output":"mcp_check_isset"
+      },
+    "mcp_check_out": {
+      "return": {
+          "test":"ok"
+      },
+      "log": "mcp_check_array",
+      "output":"OK"
+    }
+  }

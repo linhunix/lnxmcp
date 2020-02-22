@@ -165,15 +165,11 @@ class mcpBaseModelClass
         }
         $retx=$this->moduleCore();
         $this->getMcp()->rstScopeOut();
-        $this->setReturn($this->argOut);
-        if ($retx!=null){
-            if ($this->getArgOut('return')==null){
-                $this->setArgOut('return',$retx);
-            }else{
-                $this->setArgOut('output',$retx);
-            }
-        }
-        $this->setArgOut('Error',$this->argErr);
+        $outdata=$this->argOut;
+        $this->argOut=array();
+        $this->setReturn($outdata);
+        $this->setOutput($retx);
+        $this->setOutLog($this->argErr);
         $this->getMcp()->captureScope($this->argCtl,$this->argIn,$this->argOut);
         return $this->getMcp()->getScopeOut();
     }
@@ -244,6 +240,7 @@ class mcpBaseModelClass
      */
     protected function setScopeOut($name, $value)
     {
+        $this->setArgOut($name,$value);
         $this->getMcp()->setScopeOut($name, $value);
     }
 
@@ -272,7 +269,23 @@ class mcpBaseModelClass
     {
         $this->setScopeOut('return', $return);
     }
-
+    /**
+     * is a confortable method to set the return values.
+     *
+     * @param type $return
+     */
+    protected function setOutput($return)
+    {
+        $this->setScopeOut('output', $return);
+    }    /**
+    * is a confortable method to set the return values.
+    *
+    * @param type $return
+    */
+    protected function setOutLog($return)
+    {
+        $this->setScopeOut('log', $return);
+    }
     /**
      *  Ideally this method shuld be used to insert the model code and the other are to be used only as normal.
      */
