@@ -902,7 +902,18 @@ final class masterControlProgram
     /////////////////////////////////////////////////////////////////////////////
     // SPECIAL FUNCTION
     /////////////////////////////////////////////////////////////////////////////
-
+    /**
+     * array recursive 
+     * @param array $argIn /input array 
+     * @param function $funcForArray function need to have ($arrayOut,$key,$value) and return $arrayOut;
+     * @param function $funcForValue function need to have ($arrayOut,$key,$value) and return $arrayOut;
+     * @return array $arrayOut
+     */
+    public function array_recursive($argIn,$funcForArray,$funcForValue){
+        $recarr=new  \LinHUniX\Mcp\Component\mcpArrayRecClass();
+        return $recarr->run($argIn,$funcForArray,$funcForValue);
+    }
+    
     /**
      * move to php file and close if need.
      *
