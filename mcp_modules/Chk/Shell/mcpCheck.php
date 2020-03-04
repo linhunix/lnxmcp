@@ -17,6 +17,7 @@ const mcpCheckModel_CheckName = "mcp_check_name";
 const mcpCheckModel_CheckArgCtl = "mcp_check_ctl";
 const mcpCheckModel_CheckArgIn = "mcp_check_in";
 const mcpCheckModel_CheckArgOut = "mcp_check_out";
+const mcpCheckModel_CheckOutput = "mcp_check_outdump";
 const mcpCheckModel_Out_type_array = "mcp_check_array";
 const mcpCheckModel_Out_type_isset = "mcp_check_isset";
 const mcpCheckModel_Out_type_class = "mcp_check_class";
@@ -35,7 +36,7 @@ class mcpCheckModel
 {
     private $test;
     private $res;
-
+    private $output;
     function __construct()
     {
         echo "mcpCheckModel is Initalized!!\n";
@@ -47,6 +48,7 @@ class mcpCheckModel
         echo "Inside Run Text..\n";
         $this->test = $testrequest;
         $this->checkArgBase();
+        ob_start();
         switch ($this->test[mcpCheckModel_CheckFunction]) {
             case "cfg":
                 $this->res = $mcp->getCfg();
@@ -74,6 +76,7 @@ class mcpCheckModel
                 $this->res = $mcp->runTag($this->test[mcpCheckModel_CheckName], $this->test[mcpCheckModel_CheckArgIn]);
                 break;
         }
+        $this->output=ob_get_clean();
         $this->checkArgOut();
         return true;
     }
@@ -103,6 +106,12 @@ class mcpCheckModel
             DumpCheckAndExit(mcpCheckModel_CheckArgCtl . " is not Array!");
         }
         echo ".." . mcpCheckModel_CheckArgCtl . " is " . print_r($this->test[mcpCheckModel_CheckArgCtl], 1) . "\n";
+        if (isset($this->test[mcpCheckModel_CheckOutput])){
+            if (!is_array($this->test[mcpCheckModel_CheckOutput])) {
+                DumpCheckAndExit(mcpCheckModel_CheckOutput . " is not Array!");
+            }
+        }
+        echo ".." . mcpCheckModel_CheckOutput . " is " . print_r($this->test[mcpCheckModel_CheckOutput], 1) . "\n";
         if (!isset($this->test[mcpCheckModel_CheckName])) {
             DumpCheckAndExit(mcpCheckModel_CheckName . " is Empty!");
         }
@@ -177,6 +186,15 @@ class mcpCheckModel
             }
         }
     }
+    public function assertOutput($output,$search,$desc){
+        echo "Check IsSet...[" . $desc . "]\n";
+        echo "verify is ".print_r($search,1)."...";
+        foreach ($search as $string){
+            if (stristr($output,$string)==false){
+                DumpCheckAndExit("Output do not have: " . $string);
+            }
+        }
+    }
     public function checkArgOut()
     {
         echo "check arg out ...:\n";
@@ -186,6 +204,9 @@ class mcpCheckModel
         echo ".." . mcpCheckModel_CheckArgOut . " is " . print_r($this->test[mcpCheckModel_CheckArgOut], 1) . "\n";
         echo "--------------------------- OUT START ------------------------------------\n";
         $this->assetarg($this->res, $this->test[mcpCheckModel_CheckArgOut], "Result");
+        if (isset($this->test[mcpCheckModel_CheckOutput])){
+            $this->assertOutput($this->output,$this->test[mcpCheckModel_CheckOutput],"Output");            
+        }
         echo "--------------------------- OUT END --------------------------------------\n";
         return true;
     }
