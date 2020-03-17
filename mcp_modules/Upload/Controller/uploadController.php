@@ -166,6 +166,7 @@ class uploadController extends mcpBaseModelClass
                 $meta[$tag]['newname'] .= '.'.$file_type;
                 $file_load = $_FILES[$tag]['tmp_name'];
                 $file_save = $dir_save.DIRECTORY_SEPARATOR.$meta[$tag]['newname'];
+                $meta[$tag]['fullfilepath']=$file_save;
                 if (!copy($file_load, $file_save)) {
                     $meta[$tag]['error'] = $file_save.' can be generate !!';
                     $this->warning($file_save.' can be generate !!');
