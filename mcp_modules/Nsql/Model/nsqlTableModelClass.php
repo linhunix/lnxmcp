@@ -40,6 +40,20 @@ class nsqlTableModelClass {
         $other['fileconvert']='[idx]_[basename]';
         return lnxmcpUpload($other);
     }
+    /** 
+     * load a list of image on specific folder 
+    */
+    public function imageFolderList($allowlist=null,$subfolder=null){
+        $scopein=array();
+        $scopein['category']=$this->folder;
+        if ($subfolder!=null){
+            $scopein['category'].='/'.$subfolder;
+        }
+        if ($allowlist!=null){
+            $scopein['allowlist']=$allowlist;
+        }
+        return lnxmcpFileList($scopein);
+    }
     /**
      * return the list of doc are presente as array
      * @return array
