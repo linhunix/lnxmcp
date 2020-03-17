@@ -57,6 +57,17 @@ class nsqlTableModelClass {
         }
         return lnxmcpFileList($other);
     }
+    /** 
+     * delete a list of image on specific folder 
+    */
+    public function deleteimage($filelist,$other=array()){
+        if (!is_array($other)){
+    	    $other=array();
+        }
+        $other['category']=$this->folder;
+        $other['files']=$filelist;
+        return lnxmcpFileDelete($other);
+    }
     /**
      * return the list of doc are presente as array
      * @return array

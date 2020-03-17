@@ -27,7 +27,7 @@ function lnxmcpUpload($scopein)
 }
 
 /**
- * lnxmcpUpload function.
+ * lnxmcpFileList function.
  *
  * @param array $scopein
  *                       -required category (for upload file )
@@ -40,4 +40,18 @@ function lnxmcpUpload($scopein)
 function lnxmcpFileList($scopein)
 {
     return lnxmcp()->controllerR('list', false, $scopein, 'Upload', null, 'LinHUniX');
+}
+
+/**
+ * lnxmcpFileDelete function.
+ *
+ * @param array $scopein
+ *                       -required category (for upload file )
+ *                       -required files ias array
+ *
+ * @return array result
+ */
+function lnxmcpFileDelete($scopein)
+{
+    return lnxmcp()->controllerR('delete', false, $scopein, 'Upload', null, 'LinHUniX');
 }
