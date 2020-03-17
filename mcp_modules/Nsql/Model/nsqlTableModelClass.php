@@ -31,7 +31,7 @@ class nsqlTableModelClass {
     /**
      * upload image if are necessare on specified folder 
      */
-    public function uploadimage($id,$fieldname,$others=array()){
+    public function uploadimage($id,$fieldname,$other=array()){
         if (!is_array($other)){
     	    $other=array();
         }
@@ -44,16 +44,18 @@ class nsqlTableModelClass {
     /** 
      * load a list of image on specific folder 
     */
-    public function imageFolderList($allowlist=null,$subfolder=null){
-        $scopein=array();
-        $scopein['category']=$this->folder;
+    public function imageFolderList($allowlist=null,$subfolder=null,$other=array()){
+        if (!is_array($other)){
+    	    $other=array();
+        }
+        $other['category']=$this->folder;
         if ($subfolder!=null){
-            $scopein['category'].='/'.$subfolder;
+            $other['category'].='/'.$subfolder;
         }
         if ($allowlist!=null){
-            $scopein['allowlist']=$allowlist;
+            $other['allowlist']=$allowlist;
         }
-        return lnxmcpFileList($scopein);
+        return lnxmcpFileList($other);
     }
     /**
      * return the list of doc are presente as array
