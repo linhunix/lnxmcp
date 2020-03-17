@@ -35,6 +35,7 @@ class nsqlTableModelClass {
         if (!is_array($other)){
     	    $other=array();
         }
+        $other['allowfields']=array($fieldname);
         $other['category']=$this->folder;
         $other['idx']=$id;
         $other['fileconvert']='[idx]_[basename]';
