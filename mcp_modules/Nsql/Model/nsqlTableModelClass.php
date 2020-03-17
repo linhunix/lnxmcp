@@ -53,6 +53,26 @@ class nsqlTableModelClass {
         return null;
     }
     /**
+     * 
+     */
+    public function loadById($id,$list=null){
+        $data=array("doc_id"=>$id);
+        if (!is_array($list)){
+            return $data;
+        }
+        foreach($list as $var){
+            $scopeNIn=array(
+                "doc_id"=>$data['doc_id'],
+                "doc_var"=>$var
+            );
+            $resn=lnxmcpNsql("getval",$scopeNIn,$this->table); 
+            if (isset($resn['doc_getval']['value'])){
+                $data[$var]=$resn['doc_getval']['value'];
+            }
+        }
+        return $data;
+    }
+    /**
      * load a specific document with if need a list of the elemente is required
      */
     public function load($name,$list=null){
