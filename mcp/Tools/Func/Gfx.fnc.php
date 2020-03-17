@@ -55,3 +55,15 @@ function lnxmcpFileDelete($scopein)
 {
     return lnxmcp()->controllerR('delete', false, $scopein, 'Upload', null, 'LinHUniX');
 }
+
+/**
+ *  lnxmcpHtmlConvert() function 
+ *  load a html text and convert the lnxmcp tag 
+ *  @param string $htmltext
+ *  @param array $scopein
+ *  @param array $label 
+ *  @return void/array result
+ */
+function lnxmcpHtmlConvert($htmltext,$scopein,$label=null) {
+    return lnxmcp()->TagConvert($htmltext,$scopein,$label);
+}
