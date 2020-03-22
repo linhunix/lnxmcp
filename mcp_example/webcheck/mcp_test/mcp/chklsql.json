@@ -1,0 +1,24 @@
+{
+    "mcp_check_type": "command",
+    "mcp_check_name": "checkLSql",
+    "mcp_check_ctl": {
+        "name":"lsql",
+        "module":"Lsql",
+        "vendor":"LinHUniX",
+        "type":"serviceCommonReturn"
+    },
+    "mcp_check_in": {
+      "T":"log",
+      "E":"init"
+    },
+    "mcp_check_out_std": {
+        "return": "mcp_check_isset",
+        "log": "mcp_check_array",
+        "output":"mcp_check_isset"
+      },
+    "mcp_check_out": {
+      "return": "mcp_check_isset",
+      "log": "mcp_check_array",
+      "output":"OK"
+    }
+  }
