@@ -106,7 +106,7 @@ foreach (array(
     'app.support.mail' => 'support@linhunix.com',
     'app.support.onerrorsend' => false,
     'app.evnlst' => array('db_uid', 'db_pwd', 'db_host', 'db_1_name', 'db_2_name'),
-    'mcp.path.module' => $mcp_mpath.'/mcp_module/',
+    'mcp.path.module' => $mcp_mpath.'/mcp_modules/',
     'app.path.core' => $app_core,
     'app.path.query' => $app_core.'/dbj/',
     'app.path.menus' => $app_core.'/mnu/',

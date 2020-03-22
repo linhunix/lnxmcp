@@ -211,7 +211,7 @@ final class masterControlProgram
         }
         $this->pathtpl = $scopeIn['app.path.template'];
         if (!isset($scopeIn['mcp.path.module'])) {
-            $scopeIn['mcp.path.module']= $scopeIn['app.path'].'mcp_module/';
+            $scopeIn['mcp.path.module']= $scopeIn['app.path'].'mcp_modules/';
         }
         $this->pathmcp = $scopeIn['mcp.path.module'];
         $this->cfg = new mcpConfigArrayModelClass();
