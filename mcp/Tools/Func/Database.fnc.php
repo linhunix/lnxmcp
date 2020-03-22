@@ -115,3 +115,66 @@ function lnxmcpCsv($action,$scopeIn=null,$csv='default',$table=null){
         $scopeIn
     );
 }
+
+/**
+ * Run Lsql Module
+ *
+ * @param string $action   Name of the event 
+ * @param array  $scopeIn  Input Array with the value need to work
+ * @param string $table    The name of the table if need
+ *
+ * @return array $ScopeOut 
+ */
+function lnxmcpLsql($action,$scopeIn=null,$table=null){
+    if (!is_array($scopeIn)){
+        $scopeIn=array();
+    }
+    $scopeIn["T"]="log";
+    $scopeIn["E"]=$action;
+    if ($table!=null){
+        $scopeIn["table"]=$table;
+    }
+    return lnxmcp()->RunCommand(
+        array(
+            "type"=>"serviceCommonReturn",
+            "module"=>"Lsql",
+            "vendor"=>"LinHUniX",
+            "name"=>"nsql"
+        ),
+        $scopeIn
+    );
+}
+
+/**
+ * Run Lsql Module
+ *
+ * @param string $app   Name of the app that be tracked
+ * @param string $user   Name ot the user make action
+ * @param int $level   level of tracking log  0 low debug 50 normal 100 fatal
+ * @param array  $data  Input Array with the value need to work
+ * @param string $table    The name of the table if need
+ *
+ * @return array $ScopeOut 
+ */
+function lnxmcpTrace($app,$user,$data,$level=50,$table=null){
+    $scopeIn=array();
+    $scopeIn["T"]="log";
+    $scopeIn["E"]='write';
+    $scopeIn['app']=$app;
+    $scopeIn['user']=$user;
+    $scopeIn['logdata']=$data;
+    $scopeIn['level']=$level;
+    if ($table!=null){
+        $scopeIn["table"]=$table;
+    }
+    return lnxmcp()->RunCommand(
+        array(
+            "type"=>"serviceCommonReturn",
+            "module"=>"Lsql",
+            "vendor"=>"LinHUniX",
+            "name"=>"nsql"
+        ),
+        $scopeIn
+    );
+
+}

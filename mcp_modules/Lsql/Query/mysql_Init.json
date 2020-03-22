@@ -1,0 +1,5 @@
+{
+    "E":"lnx.mydata",
+    "T":"e",
+    "Q":"create table if not exists [table] (unixtime INTEGER not null,app varchar(128) not null,user varchar(64) not null ,level INTEGER not null, logdata blob, primary key (unixtime,app));"
+}

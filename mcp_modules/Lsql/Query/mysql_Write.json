@@ -1,0 +1,5 @@
+{
+    "E":"lnx.mydata",
+    "T":"e",
+    "Q":"insert into [table] ( unixtime,app,user,level,logdata ) values ( [unixtime],'[app]','[user]',[level],'[logdata]' );"
+}

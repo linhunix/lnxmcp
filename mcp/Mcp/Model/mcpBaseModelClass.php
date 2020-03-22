@@ -405,4 +405,39 @@ class mcpBaseModelClass
         $this->argErr[]='[error]'.$this->classname.':'.$messge;
         $this->getMcp()->error($this->classname.':'.$messge);
     }
+
+    /**
+     * function checkArgIn: check argument on $this->argIn 
+     * @param string $argname the argument in argin to be tested
+     * @param string $type (optional) type of the argument: 's'/'string' , 'a'/'array','n'/'number'
+     * @return bool if is correct or not 
+     */
+    protected function checkArgIn($argname,$type='string'){
+        if (isset($this->argIn[$argname])){
+            switch($type) {
+                case 'string':
+                case 's':
+                    if ($this->argIn[$argname]!=''){
+                        return true;
+                    }
+                break;
+                case 'array':
+                case 's':
+                    if (is_array($this->argIn[$argname])){
+                        return true;
+                    }
+                break;
+                case 'number':
+                case 'n':
+                    if (is_numeric($this->argIn[$argname])){
+                        return true;
+                    }
+                break;
+                default:
+                    return true;
+                break;                
+            }
+        }
+        return false;
+    }
 }

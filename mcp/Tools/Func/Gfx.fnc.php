@@ -65,5 +65,5 @@ function lnxmcpFileDelete($scopein)
  *  @return void/array result
  */
 function lnxmcpHtmlConvert($htmltext,$scopein,$label=null) {
-    return lnxmcp()->TagConvert($htmltext,$scopein,$label);
+    return lnxmcp()->converTag($htmltext,$scopein,$label);
 }

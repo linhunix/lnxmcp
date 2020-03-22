@@ -1,0 +1,5 @@
+{
+    "E":"lnx.mydata",
+    "T":"e",
+    "Q":"create table [tableA] as select from [table] where unixtime <= [from] and unixtime >= [to] and app='[app]'; "
+}
