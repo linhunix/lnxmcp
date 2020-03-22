@@ -159,7 +159,7 @@ class lsqlService extends mcpServiceModelClass {
                 $this->argIn['to']=999999999999999999;
             }
         }
-        if ($this->checkArgIn(self::field_user,'s')){
+        if ($this->checkArgIn(self::field_usr,'s')){
             $query='ReadUser';
         }
         lnxmcp()->debugVar("Lsql", "log_read", $this->argIn );
