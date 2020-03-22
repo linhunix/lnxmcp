@@ -139,7 +139,7 @@ function lnxmcpLsql($action,$scopeIn=null,$table=null){
             "type"=>"serviceCommonReturn",
             "module"=>"Lsql",
             "vendor"=>"LinHUniX",
-            "name"=>"nsql"
+            "name"=>"lsql"
         ),
         $scopeIn
     );
@@ -172,7 +172,7 @@ function lnxmcpTrace($app,$user,$data,$level=50,$table=null){
             "type"=>"serviceCommonReturn",
             "module"=>"Lsql",
             "vendor"=>"LinHUniX",
-            "name"=>"nsql"
+            "name"=>"lsql"
         ),
         $scopeIn
     );
