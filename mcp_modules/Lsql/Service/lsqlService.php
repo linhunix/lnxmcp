@@ -167,7 +167,7 @@ class lsqlService extends mcpServiceModelClass {
         $res= $this->callCmd(
             array(
                 "type"=>"queryJson",
-                "module"=>"Nsql",
+                "module"=>"Lsql",
                 "vendor"=>"LinHUniX",
                 "name"=>$this->dbtype."_".$query
             ),
@@ -200,7 +200,7 @@ class lsqlService extends mcpServiceModelClass {
         $res= $this->callCmd(
             array(
                 "type"=>"queryJson",
-                "module"=>"Nsql",
+                "module"=>"Lsql",
                 "vendor"=>"LinHUniX",
                 "name"=>$this->dbtype."_ArchiveStep1"
             ),
@@ -210,7 +210,7 @@ class lsqlService extends mcpServiceModelClass {
             $res= $this->callCmd(
                 array(
                     "type"=>"queryJson",
-                    "module"=>"Nsql",
+                    "module"=>"Lsql",
                     "vendor"=>"LinHUniX",
                     "name"=>$this->dbtype."_ArchiveStep2"
                 ),
