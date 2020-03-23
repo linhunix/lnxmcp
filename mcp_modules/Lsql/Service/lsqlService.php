@@ -173,6 +173,23 @@ class lsqlService extends mcpServiceModelClass {
             ),
             $this->argIn
         ); 
+        if (is_array($res)){
+            $result=array();
+            foreach($res as $k=>$v){
+                $result[$k]=$v;
+                try{
+                    $vx=json_decode($v[self::field_log],true);
+                    if (is_array($vx)){
+                        foreach($vx as $xk=>$xv){
+                            $result[$k]['log_'.$xk]=$xv;
+                        }
+                    }
+                }catch( Exception $e) {
+                    $result[$k]['log_error']=$e->getMessage();
+                }
+            }
+            $res=$result;
+        }
         return $res;
      }
     /***
