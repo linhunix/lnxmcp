@@ -1,5 +1,5 @@
 {
     "E":"lnx.mydata",
     "T":"q",
-    "Q":"select * from [table] where unixtime <= [from] and unixtime >= [to] and app='[app]' and level<=[level] order by unixtime desc ;"
+    "Q":"select * from [table] where unixtime >= [from] and unixtime <= [to] and app='[app]' and level<=[level] order by unixtime desc ;"
 }

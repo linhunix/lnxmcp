@@ -1,5 +1,5 @@
 {
     "E":"lnx.mydata",
     "T":"e",
-    "Q":"delete from [table] where unixtime <= [from] and unixtime >= [to] and app='[app]'; "
+    "Q":"delete from [table] where unixtime >= [from] and unixtime <= [to] and app='[app]'; "
 }
