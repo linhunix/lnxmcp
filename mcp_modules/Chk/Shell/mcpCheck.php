@@ -8,8 +8,8 @@ namespace LinHUniX\McpModules\Chk\Shell;
 use LinHUniX\Mcp\masterControlProgram;
 use LinHUniX\Mcp\Model\mcpBaseModelClass;
 
-echo "Im In LinHUniX\McpModule\Chk.. \n";
-echo "..Loading  mcpCheckModel Constant\n";
+lnxmcp()->debug("Im In LinHUniX\McpModule\Chk..");
+lnxmcp()->debug( "..Loading  mcpCheckModel Constant");
 const mcpCheckModel_SpecialCheckLibs = "mcp_include_libs";
 const mcpCheckModel_SpecialCheckClass = "mcp_include_class";
 const mcpCheckModel_CheckFunction = "mcp_check_type";
@@ -30,22 +30,27 @@ const mcpCheckModel_Out_type_number = "mcp_check_num";
 ///////////////////////////////////////////////////////////////////////////////////////
 ///  CLASS  mcpCheckModel
 ///////////////////////////////////////////////////////////////////////////////////////
-echo "..Loading  mcpCheckModel Class\n";
+lnxmcp()->debug( "..Loading  mcpCheckModel Class");
 
 class mcpCheckModel
 {
     private $test;
     private $res;
     private $output;
+    /**
+     * 
+     */
     function __construct()
     {
-        echo "mcpCheckModel is Initalized!!\n";
+        lnxmcp()->debug( "mcpCheckModel is Initalized!!");
     }
 
-
+    /**
+     * 
+     */
     public function RunTest(\LinHUniX\Mcp\masterControlProgram $mcp, array $testrequest)
     {
-        echo "Inside Run Text..\n";
+        lnxmcp()->debug("Inside Run Text..");
         $this->test = $testrequest;
         $this->checkArgBase();
         ob_start();
@@ -80,52 +85,54 @@ class mcpCheckModel
         $this->checkArgOut();
         return true;
     }
-
+    /**
+     * 
+     */
     public function checkArgIn()
     {
-        echo "check arg in ...:\n";
+        lnxmcp()->debug( "check arg in ...:");
         if (!isset($this->test[mcpCheckModel_CheckArgIn])) {
             DumpCheckAndExit(mcpCheckModel_CheckArgIn . " is Empty!");
         }
         if (!is_array($this->test[mcpCheckModel_CheckArgIn])) {
             DumpCheckAndExit(mcpCheckModel_CheckArgIn . " is not Array!");
         }
-        echo ".." . mcpCheckModel_CheckArgIn . " is " . print_r($this->test[mcpCheckModel_CheckArgIn], 1) . "\n";
+        lnxmcp()->debug(".." . mcpCheckModel_CheckArgIn . " is " . print_r($this->test[mcpCheckModel_CheckArgIn], 1));
     }
     public function checkArgBase()
     {
-        echo "check arg base ...:\n";
+        lnxmcp()->debug( "check arg base ...:");
         if (!isset($this->test[mcpCheckModel_CheckFunction])) {
             DumpCheckAndExit(mcpCheckModel_CheckFunction . " is Empty!");
         }
-        echo ".." . mcpCheckModel_CheckFunction . " is " . $this->test[mcpCheckModel_CheckFunction] . "\n";
+        lnxmcp()->debug( ".." . mcpCheckModel_CheckFunction . " is " . $this->test[mcpCheckModel_CheckFunction]);
         if (!isset($this->test[mcpCheckModel_CheckArgCtl])) {
             DumpCheckAndExit(mcpCheckModel_CheckArgCtl . " is Empty!");
         }
         if (!is_array($this->test[mcpCheckModel_CheckArgCtl])) {
             DumpCheckAndExit(mcpCheckModel_CheckArgCtl . " is not Array!");
         }
-        echo ".." . mcpCheckModel_CheckArgCtl . " is " . print_r($this->test[mcpCheckModel_CheckArgCtl], 1) . "\n";
+        lnxmcp()->debug( ".." . mcpCheckModel_CheckArgCtl . " is " . print_r($this->test[mcpCheckModel_CheckArgCtl], 1));
         if (isset($this->test[mcpCheckModel_CheckOutput])){
             if (!is_array($this->test[mcpCheckModel_CheckOutput])) {
                 DumpCheckAndExit(mcpCheckModel_CheckOutput . " is not Array!");
             }
         }
-        echo ".." . mcpCheckModel_CheckOutput . " is " . print_r($this->test[mcpCheckModel_CheckOutput], 1) . "\n";
+        lnxmcp()->debug( ".." . mcpCheckModel_CheckOutput . " is " . print_r($this->test[mcpCheckModel_CheckOutput], 1));
         if (!isset($this->test[mcpCheckModel_CheckName])) {
             DumpCheckAndExit(mcpCheckModel_CheckName . " is Empty!");
         }
-        echo ".." . mcpCheckModel_CheckName . " is " . $this->test[mcpCheckModel_CheckName] . "\n";
+        lnxmcp()->debug( ".." . mcpCheckModel_CheckName . " is " . $this->test[mcpCheckModel_CheckName]);
     }
 
 
     public function assetarg($arg, $type, $desc)
     {
-        echo "Check IsSet...[" . $desc . "]\n";
-        echo "verify is ".print_r($type,1)."...";
+        lnxmcp()->debug( "Check IsSet...[" . $desc . "]");
+        lnxmcp()->debug( "verify is ".print_r($type,1)."...");
         if (isset($arg)) {
             if (is_array($type)) {
-                echo "OK\n";
+                lnxmcp()->debug( "OK");
                 $this->searcharg($arg, $type, $desc);// $subdesc . "[" . $ck . "]");
             } else {
                 switch ($type) {
@@ -172,7 +179,7 @@ class mcpCheckModel
                         }
                         break;
                 }
-                echo "OK\n";
+                lnxmcp()->debug("OK");
             }
         } else {
             DumpCheckAndExit("Not Set!!");
@@ -187,8 +194,8 @@ class mcpCheckModel
         }
     }
     public function assertOutput($output,$search,$desc){
-        echo "Check IsSet...[" . $desc . "]\n";
-        echo "verify is ".print_r($search,1)."...";
+        lnxmcp()->debug( "Check IsSet...[" . $desc . "]");
+        lnxmcp()->debug( "verify is ".print_r($search,1)."...");
         foreach ($search as $string){
             if (stristr($output,$string)==false){
                 DumpCheckAndExit("Output do not have: " . $string);
@@ -197,17 +204,17 @@ class mcpCheckModel
     }
     public function checkArgOut()
     {
-        echo "check arg out ...:\n";
+        lnxmcp()->info( "check arg out ...:");
         if (!isset($this->test[mcpCheckModel_CheckArgOut])) {
             DumpCheckAndExit(mcpCheckModel_CheckArgOut . " is Empty!");
         }
-        echo ".." . mcpCheckModel_CheckArgOut . " is " . print_r($this->test[mcpCheckModel_CheckArgOut], 1) . "\n";
-        echo "--------------------------- OUT START ------------------------------------\n";
+        lnxmcp()->info( ".." . mcpCheckModel_CheckArgOut . " is " . print_r($this->test[mcpCheckModel_CheckArgOut], 1));
+        lnxmcp()->info( "--------------------------- OUT START ------------------------------------");
         $this->assetarg($this->res, $this->test[mcpCheckModel_CheckArgOut], "Result");
         if (isset($this->test[mcpCheckModel_CheckOutput])){
             $this->assertOutput($this->output,$this->test[mcpCheckModel_CheckOutput],"Output");            
         }
-        echo "--------------------------- OUT END --------------------------------------\n";
+        lnxmcp()->info( "--------------------------- OUT END --------------------------------------");
         return true;
     }
 }
@@ -215,50 +222,54 @@ class mcpCheckModel
 ///////////////////////////////////////////////////////////////////////////////////////
 ///  FUNCTION DumpCheckAndExit
 ///////////////////////////////////////////////////////////////////////////////////////
-echo "..Loading  DumpCheckAndExit Function\n";
+lnxmcp()->debug( "..Loading  DumpCheckAndExit Function");
 function DumpCheckAndExit($message = "")
 {
-    echo "ERROR!!:" . $message . "\n";
+    echo '#LNXMCPCHK# SUMMARY START'.PHP_EOL;
+    echo '#LNXMCPCHK# TEST IS '.$chkmenu.PHP_EOL;
+    echo '#LNXMCPCHK# GO FAILED'.PHP_EOL;
+    echo "#LNXMCPCHK# ERROR IS:" . $message . PHP_EOL;
+    echo '#LNXMCPCHK# SUMMARY END'.PHP_EOL;
     LnxMcpExit($message);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
 ///  FUNCTION mcpCheck
 ///////////////////////////////////////////////////////////////////////////////////////
-echo "..Loading  mcpCheck Function\n";
+lnxmcp()->debug("..Loading  mcpCheck Function");
 function mcpCheck($chkmenu = null)
 {
-    echo "Function mcpCheck....\n";
+    lnxmcp()->debug( "Function mcpCheck....");
     if ($chkmenu == null) {
         global $argv;
         $chkmenu = $argv[2];
     }
     $chkarg = array();
     $chkcls = null;
-    echo ".. Verify the Mcp Init :\n";
+    lnxmcp()->debug( ".. Verify the Mcp Init :");
     if (lnxmcp() instanceof masterControlProgram) {
-        echo "Mcp is ready\n";
+        lnxmcp()->debug( "Mcp is ready");
     } else {
         DumpCheckAndExit("Mcp is Not READY!!!!");
     }
-    echo "... Legacy Cfg\n";
+    lnxmcp()->debug( "... Legacy Cfg");
     if (!isset($GLOBALS["cfg"])) {
         DumpCheckAndExit("Global cfg is Not READY!!!!");
     }
-    echo "... Legacy lnxmcp\n";
+    lnxmcp()->debug( "... Legacy lnxmcp");
     if (!isset($GLOBALS["mcp"])) {
         DumpCheckAndExit("Global lnxmcp is Not READY!!!!");
     }
-    echo "OK\n";
-    echo ".. Verify internal api\n";
+    lnxmcp()->debug( "OK");
+    lnxmcp()->debug( ".. Verify internal api");
     if (!isset($GLOBALS["cfg"]["Logger"])) {
-        print_r($GLOBALS["cfg"]);
+        lnxmcp()->debug(print_r($GLOBALS["cfg"],1));
         DumpCheckAndExit("Logger Provider is Not READY!!!!");
     }
     if (!isset($GLOBALS["cfg"]["app.ver"])) {
         DumpCheckAndExit("Setting Provider is Not READY!!!!");
     }
-    echo "... SetDebug true\n";
+    lnxmcp()->debug( "... SetDebug true");
     if ($GLOBALS["mcp"]->setCfg("app.debug", "true") != true) {
         DumpCheckAndExit("Setting Debug is Not READY!!!!");
     }
@@ -269,11 +280,11 @@ function mcpCheck($chkmenu = null)
     lnxmcp()->info("test info message");
     lnxmcp()->warning("test warning message");
     lnxmcp()->error("test error message");
-    echo "OK\n";
-    echo ".. Check File Arg\n";
+    lnxmcp()->debug( "OK");
+    lnxmcp()->debug( ".. Check File Arg");
     if ($chkmenu != null) {
         $chkfile = lnxmcp()->getResource("path") . "/mcp_test/" . $chkmenu . ".json";
-        echo ".. Check File json $chkfile \n";
+        lnxmcp()->debug( ".. Check File json $chkfile ");
         if (file_exists($chkfile)) {
             $chkarg = json_decode(file_get_contents($chkfile), 1);
         } else {
@@ -285,9 +296,9 @@ function mcpCheck($chkmenu = null)
     if (!is_array($chkarg)) {
         DumpCheckAndExit("Args Is not an Array!!!");
     }
-    echo "Arg is :";
-    print_r($chkarg);
-    echo ".. Check Php Libs\n";
+    lnxmcp()->debug( "Arg is :");
+    lnxmcp()->debug(print_r($chkarg,1));
+    lnxmcp()->debug( ".. Check Php Libs");
     if (isset($chkarg[mcpCheckModel_SpecialCheckLibs])) {
         if (!is_array($chkarg[mcpCheckModel_SpecialCheckLibs])) {
             $ar = array(
@@ -297,7 +308,7 @@ function mcpCheck($chkmenu = null)
         }
         foreach ($chkarg[mcpCheckModel_SpecialCheckLibs] as $libload) {
             $incres = lnxmcp()->getResource("path") . "/" . $libload;
-            echo "... Try to load $incres \n";
+            lnxmcp()->debug( "... Try to load $incres ");
             if (file_exists($incres)) {
                 include_once $incres;
             } else {
@@ -305,9 +316,9 @@ function mcpCheck($chkmenu = null)
             }
         }
     }
-    echo ".. Check Class \n";
+    lnxmcp()->debug( ".. Check Class ");
     if (isset($chkarg[mcpCheckModel_SpecialCheckClass])) {
-        echo "... Try to Call " . $chkarg[mcpCheckModel_SpecialCheckClass] . " \n";
+        lnxmcp()->debug( "... Try to Call " . $chkarg[mcpCheckModel_SpecialCheckClass] );
         if (class_exists($chkarg[mcpCheckModel_SpecialCheckClass])) {
             $chkcls = new $chkarg[mcpCheckModel_SpecialCheckClass]();
         } else {
@@ -316,23 +327,26 @@ function mcpCheck($chkmenu = null)
     } else {
         $chkcls = new mcpCheckModel();
     }
-    echo ".. Verify Class is mcpCheckModel \n";
+    lnxmcp()->debug( ".. Verify Class is mcpCheckModel ");
     $resmsg="";
     if ($chkcls instanceof mcpCheckModel) {
         if ($chkcls->RunTest(lnxmcp(), $chkarg)) {
-            $resmsg="TEST SUCCESS!!!\n";
+            $resmsg="TEST GO SUCCESS";
         } else {
-            $resmsg="TEST FAILED!!";
+            $resmsg="TEST GO FAILED";
         }
     } else {
         $resmsg="BAD CLASS is not mcpCheckModel";
     }
+    echo '#LNXMCPCHK# SUMMARY START'.PHP_EOL;
+    echo '#LNXMCPCHK# TEST IS '.$chkmenu.PHP_EOL;
+    echo '#LNXMCPCHK# '.$resmsg.PHP_EOL;
+    echo '#LNXMCPCHK# SUMMARY END'.PHP_EOL;
+    lnxmcp()->mail(null,array(
+        "to"=>"andrea.morello@linhunix.com",
+        "from"=>"test@localhost",
+        "subject"=>"lnxmcp - Run Text",
+        "message"=>"Arg<hr>\n<pre>".print_r($chkarg,1)."</pre><hr>\n".$resmsg
+    ));
+    lnxmcp()->debug( "Check Env Loaded!!");
 }
-echo $resmsg;
-lnxmcp()->mail(null,array(
-    "to"=>"andrea.morello@linhunix.com",
-    "from"=>"test@localhost",
-    "subject"=>"lnxmcp - Run Text",
-    "message"=>"Arg<hr>\n<pre>".print_r($chkarg,1)."</pre><hr>\n".$resmsg
-));
-echo "Check Env Loaded!!\n";

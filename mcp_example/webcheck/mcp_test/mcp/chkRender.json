@@ -1,0 +1,20 @@
+{
+    "mcp_check_type": "command",
+    "mcp_check_name": "CheckRender",
+    "mcp_check_ctl": {
+        "name":"test",
+        "module":"Test",
+        "vendor":"lnxtest",
+        "type":"Render"
+    },
+    "mcp_check_in": {},
+    "mcp_check_out": {},
+    "mcp_check_out_std": {
+        "return": "mcp_check_isset",
+        "log": "mcp_check_array",
+        "output":"mcp_check_isset"
+      },
+    "mcp_check_outdump": [
+      "ciao"
+    ]
+  }
