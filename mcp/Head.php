@@ -361,6 +361,9 @@ lnxmcp()->addModule($common_xpath.'/Ln4/',array('vendor'=>'LinHUniX','module'=>'
 lnxmcp()->addModule($common_xpath.'/Nsql/',array('vendor'=>'LinHUniX','module'=>'Nsql','version'=>$scopeInit['mcp.ver']));
 lnxmcp()->addModule($common_xpath.'/Lsql/',array('vendor'=>'LinHUniX','module'=>'Lsql','version'=>$scopeInit['mcp.ver']));
 lnxmcp()->addModule($common_xpath.'/Upload/',array('vendor'=>'LinHUniX','module'=>'Upload','version'=>$scopeInit['mcp.ver']));
+lnxmcp()->addModule($common_xpath.'/Wait/',array('vendor'=>'LinHUniX','module'=>'Wait','version'=>$scopeInit['mcp.ver']));
+lnxmcp()->addModule($common_xpath.'/Web/',array('vendor'=>'LinHUniX','module'=>'Web','version'=>$scopeInit['mcp.ver']));
+lnxmcp()->addModule($common_xpath.'/Setup/',array('vendor'=>'LinHUniX','module'=>'Setup','version'=>$scopeInit['mcp.ver']));
 ////////////////////////////////////////////////////////////////////////////////
 // CLASS LOADER - SUMMARY 
 ////////////////////////////////////////////////////////////////////////////////

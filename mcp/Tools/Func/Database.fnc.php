@@ -29,6 +29,32 @@ function lnxmcpDbM($command = null, $element = null)
         echo "DbMigrate Complete!!\n";
     }
 }
+
+/**
+ * Run Setup Module
+ *
+ * @param string $action   Name of the event 
+ * @param array  $scopeIn  Input Array with the value need to work
+ * @return array $ScopeOut 
+ */
+function lnxmcpSetup($action,$scopeIn){
+    if (!is_array($scopeIn)){
+        $scopeIn=array();
+    }
+    $scopeIn["T"]="setup";
+    $scopeIn["E"]=$action;
+    return lnxmcp()->RunCommand(
+        array(
+            "type"=>"serviceCommonReturn",
+            "module"=>"Setup",
+            "vendor"=>"LinHUniX",
+            "name"=>"setup"
+        ),
+        $scopeIn
+    );
+}
+
+
 /**
  * Run Nsql Module
  *

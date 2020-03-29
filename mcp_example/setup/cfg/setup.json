@@ -1,0 +1,39 @@
+{
+    "setup_init": "1585508335",
+    "setup_config": [],
+    "setup_list": {
+        "testctl": {
+            "name": "testctl",
+            "require_add": [],
+            "require_del": [],
+            "remove": {
+                "type": "controller",
+                "name": "test",
+                "module": "Test",
+                "vendor": "lnxtest"
+            },
+            "install": {
+                "type": "controller",
+                "name": "test",
+                "module": "Test",
+                "vendor": "lnxtest"
+            },
+            "T": "setup",
+            "E": "add"
+        }
+    },
+    "setup_require": [],
+    "setup_done": [],
+    "last_action": "1585513274",
+    "logs_action": {
+        "1585508435": "add features:testctl",
+        "1585512474": "install features:testctl",
+        "1585512969": "install features:testctl",
+        "1585513069": "install features:testctl",
+        "1585513221": "remove features:testctl",
+        "1585513259": "install features:testctl",
+        "1585513263": "remove features:testctl",
+        "1585513269": "install features:testctl",
+        "1585513274": "remove features:testctl"
+    }
+}

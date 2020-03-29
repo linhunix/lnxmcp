@@ -25,6 +25,7 @@ function mcpRunShell()
     $help['lnxmcp-snd'] = "Run a sendmail\n  req arg: jsonarr '{\"name\":\"value\"}' or name=value element";
     $help['lnxmcp-din'] = "Run a dump scopeIn \n  req arg: jsonarr '{\"name\":\"value\"}' or name=value element";
     $help['lnxmcp-dbm'] = "Run a db migrate \n  req arg: < command name> <element name>";
+    $help['lnxmcp-stp'] = "Run a Setup \n  req arg: < command name> <element name>";
     $help['lnxmcp-phr'] = "Generate a phar file of the progam\n req arg <type |shell>";
     $scopein = array();
     $argtmp = $argv;
@@ -72,6 +73,11 @@ function mcpRunShell()
                 echo "Esecute Administrator: $name ".PHP_EOL;
                 lnxmcpAdm($name);
                 break;
+            case 'lnxmcp-stp':
+                echo "Esecute Setup: $name ".PHP_EOL;
+                $scopein['action']=$name;
+                lnxmcp()->render('shell', $scopein, 'Setup', 'LinHUniX');
+            break;
             case 'lnxmcp-dbm':
                 echo "Esecute Database Migration: $name ".PHP_EOL;
                 lnxmcpDbM($name, $argtmp[3]);
