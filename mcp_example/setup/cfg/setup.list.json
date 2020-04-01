@@ -1,0 +1,21 @@
+{
+    "testctl": {
+        "name": "testctl",
+        "require_add": [],
+        "require_del": [],
+        "remove": {
+            "type": "controller",
+            "name": "test",
+            "module": "Test",
+            "vendor": "lnxtest"
+        },
+        "install": {
+            "type": "controller",
+            "name": "test",
+            "module": "Test",
+            "vendor": "lnxtest"
+        },
+        "T": "setup",
+        "E": "add"
+    }
+}

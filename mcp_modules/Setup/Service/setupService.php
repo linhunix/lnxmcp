@@ -17,6 +17,7 @@ class setupService extends mcpServiceModelClass {
 
 
     private $setupdb;
+    private $setuplstdb;
     /**
      *  function moduleInit() 
      */
@@ -42,7 +43,6 @@ class setupService extends mcpServiceModelClass {
                     array(
                         'setup_init'=>date('U'),
                         'setup_config'=>array(),
-                        'setup_list'=>array(),
                         'setup_require'=>array(),
                         'setup_done'=>array(),
                         'last_action'=>date('U'),
@@ -51,10 +51,18 @@ class setupService extends mcpServiceModelClass {
                     $cfgdir.'/setup.json'
                 );
             }
+            if (!file_exists($cfgdir.'/setup.list.json')){
+                lnxPutJsonFile(
+                    array(
+                    ),
+                    $cfgdir.'/setup.list.json'
+                );
+            }
             if (!file_exists($cfgdir.'/setup.json')){
                 LnxMcpExit($cfgdir.'/setup.json is not ready!!!');
             }
             $this->setupdb=lnxGetJsonFile($cfgdir.'/setup.json');
+            $this->setuplstdb=lnxGetJsonFile($cfgdir.'/setup.list.json');
         }catch( Exception $e){
             LnxMcpExit("Setup Error:".$e->getMessage());
         }
@@ -70,6 +78,10 @@ class setupService extends mcpServiceModelClass {
         lnxPutJsonFile(
             $this->setupdb,
             $cfgdir.'/setup.json'
+        );
+        lnxPutJsonFile(
+            $this->setuplstdb,
+            $cfgdir.'/setup.list.json'
         );
     }
     /**
@@ -166,11 +178,11 @@ class setupService extends mcpServiceModelClass {
                 return false;
             }
         }
-        if (isset($this->setupdb['setup_list'][$this->argIn['name']])){
+        if (isset($this->setuplstdb[$this->argIn['name']])){
             $this->warning('the request '.$this->argIn['name']. "is already present!!");
             return true;
         }
-        $this->setupdb['setup_list'][$this->argIn['name']]=$this->argIn;
+        $this->setuplstdb[$this->argIn['name']]=$this->argIn;
         $this->writecfg('add features:'.$this->argIn['name']);
         return true;
     }
@@ -213,7 +225,7 @@ class setupService extends mcpServiceModelClass {
                 return false;
             }
         }
-        if (!isset($this->setupdb['setup_list'][$this->argIn['name']])){
+        if (!isset($this->setuplstdb[$this->argIn['name']])){
             $this->warning('the feature '.$this->argIn['name'].'is not presnet in config_list');
             return false;
         }
@@ -221,12 +233,12 @@ class setupService extends mcpServiceModelClass {
             $this->warning('the feature '.$this->argIn['name'].'is already installed');
             return false;
         }
-        $reqres=$this->chkreq($this->setupdb['setup_list'][$this->argIn['name']]['require_add'] );
+        $reqres=$this->chkreq($this->setuplstdb[$this->argIn['name']]['require_add'] );
         if ($reqres['sts']==false){
             $this->warning('the feature '.$this->argIn['name'].'has solve the requirement list');
             return false;
         }
-        $res=lnxmcp()->runCommand($this->setupdb['setup_list'][$this->argIn['name']]['install'],$this->setupdb['setup_config']);
+        $res=lnxmcp()->runCommand($this->setuplstdb[$this->argIn['name']]['install'],$this->setupdb['setup_config']);
         if ($res['output']==false){
             $this->warning('the feature '.$this->argIn['name'].' return with error');
             return false;
@@ -256,7 +268,7 @@ class setupService extends mcpServiceModelClass {
                 return false;
             }
         }
-        if (!isset($this->setupdb['setup_list'][$this->argIn['name']])){
+        if (!isset($this->setuplstdb[$this->argIn['name']])){
             $this->warning('the feature '.$this->argIn['name'].'is not presnet in config_list');
             return false;
         }
@@ -264,12 +276,12 @@ class setupService extends mcpServiceModelClass {
             $this->warning('the feature '.$this->argIn['name'].'is not installed');
             return false;
         }
-        $reqres=$this->chkreq($this->setupdb['setup_list'][$this->argIn['name']]['require_del'] );
+        $reqres=$this->chkreq($this->setuplstdb[$this->argIn['name']]['require_del'] );
         if ($reqres['sts']==false){
             $this->warning('the feature '.$this->argIn['name'].'has solve the requirement list');
             return false;
         }
-        $res=lnxmcp()->runCommand($this->setupdb['setup_list'][$this->argIn['name']]['remove'],$this->setupdb['setup_config']);
+        $res=lnxmcp()->runCommand($this->setuplstdb[$this->argIn['name']]['remove'],$this->setupdb['setup_config']);
         if ($res['output']==false){
             $this->warning('the feature '.$this->argIn['name'].' return with error');
             return false;
@@ -291,7 +303,7 @@ class setupService extends mcpServiceModelClass {
      */
     public function setup_list(){
         $result=array();
-        foreach($this->setupdb['setup_list'] as $k=>$v){
+        foreach($this->setuplstdb as $k=>$v){
             $result[$k]='Todo';
             if (isset($this->setupdb['setup_done'][$k])){
                 $result[$k]=date('d/m/Y H:i:s',$this->setupdb['setup_done'][$k]);
