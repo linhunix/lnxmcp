@@ -18,6 +18,7 @@ const mcpCheckModel_CheckArgCtl = "mcp_check_ctl";
 const mcpCheckModel_CheckArgIn = "mcp_check_in";
 const mcpCheckModel_CheckArgOut = "mcp_check_out";
 const mcpCheckModel_CheckOutput = "mcp_check_outdump";
+const mcpCheckModel_CheckNotOutput = "mcp_check_outnotdump";
 const mcpCheckModel_Out_type_array = "mcp_check_array";
 const mcpCheckModel_Out_type_isset = "mcp_check_isset";
 const mcpCheckModel_Out_type_class = "mcp_check_class";
@@ -202,6 +203,15 @@ class mcpCheckModel
             }
         }
     }
+    public function assertNotOutput($output,$search,$desc){
+        lnxmcp()->debug( "Check IsSet...[" . $desc . "]");
+        lnxmcp()->debug( "verify is ".print_r($search,1)."...");
+        foreach ($search as $string){
+            if (stristr($output,$string)!=false){
+                DumpCheckAndExit("Output do have: " . $string);
+            }
+        }
+    }
     public function checkArgOut()
     {
         lnxmcp()->info( "check arg out ...:");
@@ -213,6 +223,9 @@ class mcpCheckModel
         $this->assetarg($this->res, $this->test[mcpCheckModel_CheckArgOut], "Result");
         if (isset($this->test[mcpCheckModel_CheckOutput])){
             $this->assertOutput($this->output,$this->test[mcpCheckModel_CheckOutput],"Output");            
+        }
+        if (isset($this->test[mcpCheckModel_CheckNotOutput])){
+            $this->assertNotOutput($this->output,$this->test[mcpCheckModel_CheckNotOutput],"Not Output");            
         }
         lnxmcp()->info( "--------------------------- OUT END --------------------------------------");
         return true;
