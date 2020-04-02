@@ -298,6 +298,42 @@ class setupService extends mcpServiceModelClass {
         $this->writecfg('remove features:'.$this->argIn['name']);
         return true;
     }
+
+    /**
+     * 
+     */
+    public function setup_check(){
+        foreach(
+            array(
+                'name'=>'string'
+            ) as $k=>$v
+        ){
+            if (! $this->checkArgIn($k,$v)){
+                $this->warning('the args '.$k.'is not presnet in ArgIn');
+                return false;
+            }
+        }
+        if (!isset($this->setuplstdb[$this->argIn['name']])){
+            $this->warning('the feature '.$this->argIn['name'].'is not presnet in config_list');
+            return false;
+        }
+        if (!isset($this->setuplstdb[$this->argIn['name']]['check'])){
+            $this->warning('the feature '.$this->argIn['name'].'has not  check function');
+            return false;
+        }
+        if (!isset($this->setupdb['setup_done'][$this->argIn['name']])){
+            $this->warning('the feature '.$this->argIn['name'].'is not installed');
+            return false;
+        }
+        lnxmcp()->setCommon('chk:'.$this->argIn['name'],$this->setuplstdb[$this->argIn['name']]['check']);
+        
+        $res=lnxmcpChk($this->setuplstdb[$this->argIn['name']]['remove']);
+        if ($res==false){
+            $this->warning('the check feature '.$this->argIn['name'].' return with error');
+            return false;
+        }
+        return true;
+    }
     /**
      * 
      */

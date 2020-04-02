@@ -283,12 +283,17 @@ function mcpCheck($chkmenu = null)
     lnxmcp()->debug( "OK");
     lnxmcp()->debug( ".. Check File Arg");
     if ($chkmenu != null) {
-        $chkfile = lnxmcp()->getResource("path") . "/mcp_test/" . $chkmenu . ".json";
-        lnxmcp()->debug( ".. Check File json $chkfile ");
-        if (file_exists($chkfile)) {
-            $chkarg = json_decode(file_get_contents($chkfile), 1);
-        } else {
-            DumpCheckAndExit("File Not Found " . $chkfile);
+        if (lnxmcp()->getCommon('chk:'.$chkmenu)!=null){
+            $chkarg=lnxmcp()->getCommon('chk:'.$chkmenu);
+            $chkfile='chk:'.$chkmenu;
+        }else{
+            $chkfile = lnxmcp()->getResource("path") . "/mcp_test/" . $chkmenu . ".json";
+            lnxmcp()->debug( ".. Check File json $chkfile ");
+            if (file_exists($chkfile)) {
+                $chkarg = json_decode(file_get_contents($chkfile), 1);
+            } else {
+                DumpCheckAndExit("File Not Found " . $chkfile);
+            }
         }
     } else {
         DumpCheckAndExit("No Test Specified!");
@@ -329,9 +334,11 @@ function mcpCheck($chkmenu = null)
     }
     lnxmcp()->debug( ".. Verify Class is mcpCheckModel ");
     $resmsg="";
+    $reschk=false;
     if ($chkcls instanceof mcpCheckModel) {
         if ($chkcls->RunTest(lnxmcp(), $chkarg)) {
             $resmsg="TEST GO SUCCESS";
+            $recchk=true;
         } else {
             $resmsg="TEST GO FAILED";
         }
@@ -349,4 +356,5 @@ function mcpCheck($chkmenu = null)
         "message"=>"Arg<hr>\n<pre>".print_r($chkarg,1)."</pre><hr>\n".$resmsg
     ));
     lnxmcp()->debug( "Check Env Loaded!!");
+    return $recchk;
 }

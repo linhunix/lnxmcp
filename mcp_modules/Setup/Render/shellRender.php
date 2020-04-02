@@ -72,12 +72,24 @@ switch($scopeIn['action']){
         }
         echo "$msg\n";
     break;
+    case 'check':
+        echo "try to check\n";
+        $res=lnxmcp()->RunCommand($scpctl,$scopeIn);
+        $msg='Check Error!!!';
+        if (isset($res['setup_check'])){
+            if ($res['setup_check']==true){
+                $msg='Check Success';
+            }
+        }
+        echo "$msg\n";
+    break;
     case 'help':
         echo "cfgupd : add or remove a value (only string) from setup config.\n";
         echo "list   : show the list of the actual feature to install or installed.\n";
         echo "logs   : show the logs of the actual activites.\n";
         echo "install: install a specific features.\n";
         echo "remove : remove a specific feaurtes.\n";
+        echo "check  : check a specific feaurtes.\n";
         echo "help   : Show this help.\n";
 }
 echo "\n\n";

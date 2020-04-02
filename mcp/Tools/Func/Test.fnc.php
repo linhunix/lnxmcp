@@ -18,9 +18,11 @@ function lnxmcpChk($checkmenu = null)
         echo "load Check Env on $mcpCheckFile..\n";
         include_once $mcpCheckFile;
         echo "Run mcpCheck:\n";
-        LinHUniX\McpModules\Chk\Shell\mcpCheck($checkmenu);
+        $res=LinHUniX\McpModules\Chk\Shell\mcpCheck($checkmenu);
         echo "Check Complete!!\n";
+        return $res;
     }
+    return false;
 }
 /**
  * lnxmcpAdm function.
