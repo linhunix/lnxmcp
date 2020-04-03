@@ -5,7 +5,7 @@ $app_path=realpath(__DIR__);
 //$lnxmcp_phar is an array can be used here to set the init config 
 require __DIR__ . "/../../mcp/Head.php";
 #require __DIR__ . "/../../dist/lnxmcp.phar";
-var_dump(lnxmcpSetup(
+lnxmcpSetup(
     'add',#
     array(
         'name'=>'testctl',
@@ -24,4 +24,4 @@ var_dump(lnxmcpSetup(
             "vendor"=>"lnxtest"
         )
     )
-));
+);

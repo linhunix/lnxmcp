@@ -23,7 +23,7 @@ echo "--------------------------------------------------------------------------
 switch($scopeIn['action']){
     case 'cfgupd':
         echo "Setting cfg upgrade\n";
-        var_dump(lnxmcp()->RunCommand($scpctl,$scopeIn));
+        lnxmcp()->RunCommand($scpctl,$scopeIn);
     break;
     case 'list':
         echo "show list of installation \n";
@@ -60,7 +60,9 @@ switch($scopeIn['action']){
             }
         }
         echo "$msg\n";
-    break;
+       $msg=lnxmcpSetup('message',array());
+        echo $msg['setup_message']."\n";
+     break;
     case 'remove':
         echo "try to remove\n";
         $res=lnxmcp()->RunCommand($scpctl,$scopeIn);
@@ -71,6 +73,8 @@ switch($scopeIn['action']){
             }
         }
         echo "$msg\n";
+        $msg=lnxmcpSetup('message',array());
+        echo $msg['setup_message']."\n";
     break;
     case 'check':
         echo "try to check\n";
@@ -82,7 +86,22 @@ switch($scopeIn['action']){
             }
         }
         echo "$msg\n";
-    break;
+        $msg=lnxmcpSetup('message',array());
+        echo $msg['setup_message']."\n";
+     break;
+    case 'batch':
+        echo "try to batch\n";
+        $res=lnxmcp()->RunCommand($scpctl,$scopeIn);
+        $msg='batch Error!!!';
+        if (isset($res['setup_batch'])){
+            if ($res['setup_batch']==true){
+                $msg='batch Success';
+            }
+        }
+        echo "$msg\n";
+        $msg=lnxmcpSetup('message',array());
+        echo $msg['setup_message']."\n";
+     break;
     case 'help':
         echo "cfgupd : add or remove a value (only string) from setup config.\n";
         echo "list   : show the list of the actual feature to install or installed.\n";
@@ -90,6 +109,7 @@ switch($scopeIn['action']){
         echo "install: install a specific features.\n";
         echo "remove : remove a specific feaurtes.\n";
         echo "check  : check a specific feaurtes.\n";
+        echo "batch  : run a batch for a specific feaurtes.\n";
         echo "help   : Show this help.\n";
 }
 echo "\n\n";

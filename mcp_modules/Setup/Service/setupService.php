@@ -18,12 +18,14 @@ class setupService extends mcpServiceModelClass {
 
     private $setupdb;
     private $setuplstdb;
+    private $msg;
     /**
      *  function moduleInit() 
      */
     protected function moduleInit(){
         $this->spacename=__NAMESPACE__;
         $this->classname=__CLASS__;
+        $this->msg='';
     }
 
     /**
@@ -158,8 +160,24 @@ class setupService extends mcpServiceModelClass {
         );
 
     }
+    private function xwarning($msg){
+        $this->msg.='[Warn]'.$msg."\n";
+        $this->warning($msg);
+    }
 
+    /**
+     * 
+     */
+    public function setup_message(){
+        return $this->msg;
+    }
 
+    /**
+     * 
+     */
+    public function setup_message_reset(){
+        $this->msg='';
+    }
     /**
      * 
      */
@@ -174,12 +192,12 @@ class setupService extends mcpServiceModelClass {
             ) as $k=>$v
         ){
             if (! $this->checkArgIn($k,$v)){
-                $this->warning('the args '.$k.'is not presnet in ArgIn');
+                $this->xwarning('the args '.$k.'is not presnet in ArgIn');
                 return false;
             }
         }
         if (isset($this->setuplstdb[$this->argIn['name']])){
-            $this->warning('the request '.$this->argIn['name']. "is already present!!");
+            $this->xwarning('the request '.$this->argIn['name']. "is already present!!");
             return true;
         }
         $this->setuplstdb[$this->argIn['name']]=$this->argIn;
@@ -198,7 +216,7 @@ class setupService extends mcpServiceModelClass {
             ) as $k=>$v
         ){
             if (! $this->checkArgIn($k,$v)){
-                $this->warning('the args '.$k.'is not presnet in ArgIn');
+                $this->xwarning('the args '.$k.'is not presnet in ArgIn');
                 return false;
             }
         }
@@ -221,26 +239,26 @@ class setupService extends mcpServiceModelClass {
             ) as $k=>$v
         ){
             if (! $this->checkArgIn($k,$v)){
-                $this->warning('the args '.$k.'is not presnet in ArgIn');
+                $this->xwarning('the args '.$k.'is not presnet in ArgIn');
                 return false;
             }
         }
         if (!isset($this->setuplstdb[$this->argIn['name']])){
-            $this->warning('the feature '.$this->argIn['name'].'is not presnet in config_list');
+            $this->xwarning('the feature '.$this->argIn['name'].'is not presnet in config_list');
             return false;
         }
         if (isset($this->setupdb['setup_done'][$this->argIn['name']])){
-            $this->warning('the feature '.$this->argIn['name'].'is already installed');
+            $this->xwarning('the feature '.$this->argIn['name'].'is already installed');
             return false;
         }
         $reqres=$this->chkreq($this->setuplstdb[$this->argIn['name']]['require_add'] );
         if ($reqres['sts']==false){
-            $this->warning('the feature '.$this->argIn['name'].'has solve the requirement list');
+            $this->xwarning('the feature '.$this->argIn['name'].'has solve the requirement list');
             return false;
         }
         $res=lnxmcp()->runCommand($this->setuplstdb[$this->argIn['name']]['install'],$this->setupdb['setup_config']);
         if ($res['output']==false){
-            $this->warning('the feature '.$this->argIn['name'].' return with error');
+            $this->xwarning('the feature '.$this->argIn['name'].' return with error');
             return false;
         }
         $this->setupdb['setup_done'][$this->argIn['name']]=date('U');
@@ -264,26 +282,26 @@ class setupService extends mcpServiceModelClass {
             ) as $k=>$v
         ){
             if (! $this->checkArgIn($k,$v)){
-                $this->warning('the args '.$k.'is not presnet in ArgIn');
+                $this->xwarning('the args '.$k.'is not presnet in ArgIn');
                 return false;
             }
         }
         if (!isset($this->setuplstdb[$this->argIn['name']])){
-            $this->warning('the feature '.$this->argIn['name'].'is not presnet in config_list');
+            $this->xwarning('the feature '.$this->argIn['name'].'is not presnet in config_list');
             return false;
         }
         if (!isset($this->setupdb['setup_done'][$this->argIn['name']])){
-            $this->warning('the feature '.$this->argIn['name'].'is not installed');
+            $this->xwarning('the feature '.$this->argIn['name'].'is not installed');
             return false;
         }
         $reqres=$this->chkreq($this->setuplstdb[$this->argIn['name']]['require_del'] );
         if ($reqres['sts']==false){
-            $this->warning('the feature '.$this->argIn['name'].'has solve the requirement list');
+            $this->xwarning('the feature '.$this->argIn['name'].'has solve the requirement list');
             return false;
         }
         $res=lnxmcp()->runCommand($this->setuplstdb[$this->argIn['name']]['remove'],$this->setupdb['setup_config']);
         if ($res['output']==false){
-            $this->warning('the feature '.$this->argIn['name'].' return with error');
+            $this->xwarning('the feature '.$this->argIn['name'].' return with error');
             return false;
         }
         unset($this->setupdb['setup_done'][$this->argIn['name']]);
@@ -309,29 +327,62 @@ class setupService extends mcpServiceModelClass {
             ) as $k=>$v
         ){
             if (! $this->checkArgIn($k,$v)){
-                $this->warning('the args '.$k.'is not presnet in ArgIn');
+                $this->xwarning('the args '.$k.'is not presnet in ArgIn');
                 return false;
             }
         }
         if (!isset($this->setuplstdb[$this->argIn['name']])){
-            $this->warning('the feature '.$this->argIn['name'].'is not presnet in config_list');
+            $this->xwarning('the feature '.$this->argIn['name'].'is not presnet in config_list');
             return false;
         }
         if (!isset($this->setuplstdb[$this->argIn['name']]['check'])){
-            $this->warning('the feature '.$this->argIn['name'].'has not  check function');
+            $this->xwarning('the feature '.$this->argIn['name'].'has not  check function');
             return false;
         }
         if (!isset($this->setupdb['setup_done'][$this->argIn['name']])){
-            $this->warning('the feature '.$this->argIn['name'].'is not installed');
+            $this->xwarning('the feature '.$this->argIn['name'].'is not installed');
             return false;
         }
         lnxmcp()->setCommon('chk:'.$this->argIn['name'],$this->setuplstdb[$this->argIn['name']]['check']);
         
         $res=lnxmcpChk($this->setuplstdb[$this->argIn['name']]['remove']);
         if ($res==false){
-            $this->warning('the check feature '.$this->argIn['name'].' return with error');
+            $this->xwarning('the check feature '.$this->argIn['name'].' return with error');
             return false;
         }
+        return true;
+    }
+    /**
+     * 
+     */
+    public function setup_batch(){
+        foreach(
+            array(
+                'name'=>'string'
+            ) as $k=>$v
+        ){
+            if (! $this->checkArgIn($k,$v)){
+                $this->xwarning('the args '.$k.'is not presnet in ArgIn');
+                return false;
+            }
+        }
+        if (!isset($this->setuplstdb[$this->argIn['name']])){
+            $this->xwarning('the feature '.$this->argIn['name'].'is not presnet in config_list');
+            return false;
+        }
+        if (!isset($this->setuplstdb[$this->argIn['name']]['batch'])){
+            $this->xwarning('the feature '.$this->argIn['name'].'has not  check function');
+            return false;
+        }
+        if (!isset($this->setupdb['setup_done'][$this->argIn['name']])){
+            $this->xwarning('the feature '.$this->argIn['name'].'is not installed');
+            return false;
+        }
+        $res=lnxmcp()->runCommand($this->setuplstdb[$this->argIn['name']]['batch'],$this->setupdb['setup_config']);
+        if ($res['output']==false){
+            $this->xwarning('the Batch '.$this->argIn['name'].' return with error');
+            return false;
+        }        
         return true;
     }
     /**
