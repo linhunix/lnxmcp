@@ -257,7 +257,7 @@ class setupService extends mcpServiceModelClass {
             return false;
         }
         $res=lnxmcp()->runCommand($this->setuplstdb[$this->argIn['name']]['install'],$this->setupdb['setup_config']);
-        if ($res['output']==false){
+        if ($res['return']==false){
             $this->xwarning('the feature '.$this->argIn['name'].' return with error');
             return false;
         }
@@ -300,7 +300,7 @@ class setupService extends mcpServiceModelClass {
             return false;
         }
         $res=lnxmcp()->runCommand($this->setuplstdb[$this->argIn['name']]['remove'],$this->setupdb['setup_config']);
-        if ($res['output']==false){
+        if ($res['return']==false){
             $this->xwarning('the feature '.$this->argIn['name'].' return with error');
             return false;
         }
@@ -379,7 +379,7 @@ class setupService extends mcpServiceModelClass {
             return false;
         }
         $res=lnxmcp()->runCommand($this->setuplstdb[$this->argIn['name']]['batch'],$this->setupdb['setup_config']);
-        if ($res['output']==false){
+        if ($res['return']==false){
             $this->xwarning('the Batch '.$this->argIn['name'].' return with error');
             return false;
         }        

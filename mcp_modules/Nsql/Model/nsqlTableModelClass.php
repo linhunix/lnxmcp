@@ -39,6 +39,7 @@ class nsqlTableModelClass {
         $other['category']=$this->folder;
         $other['idx']=$id;
         $other['fileconvert']='[idx]_[basename]';
+        lnxmcp()->debug('uploadimage:'.print_r($other,1));
         return lnxmcpUpload($other);
     }
     /** 

@@ -3,7 +3,7 @@
     "setup_config": [],
     "setup_require": [],
     "setup_done": [],
-    "last_action": "1585896331",
+    "last_action": "1585898088",
     "logs_action": {
         "1585508435": "add features:testctl",
         "1585512474": "install features:testctl",
@@ -21,6 +21,8 @@
         "1585896075": "install features:testctl",
         "1585896217": "remove features:testctl",
         "1585896328": "install features:testctl",
-        "1585896331": "remove features:testctl"
+        "1585896331": "remove features:testctl",
+        "1585898078": "install features:testctl",
+        "1585898088": "remove features:testctl"
     }
 }
