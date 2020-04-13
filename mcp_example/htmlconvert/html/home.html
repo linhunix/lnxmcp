@@ -1,6 +1,25 @@
 <html>
     <body>
-        <lnxmcp-x-a type="block" name="block" module="amiga" > HELLO WORD</lnxmcp-x-a>
-        hello world
+        <lnxmcp-x-a type="render" name="home" module="demo" >
+             HELLO WORD
+        </lnxmcp-x-a>
+        <hr>
+        exempio foreach:
+        <hr>
+        <lnxmcp name="foreach" type="render" module="Web" vendor="LinHUniX" scope-json-in='{"foreachvar":"myvar","myvar":{"ka":"va","kb":"vb"}}' >
+            {{fe_key}} : {{fe_value}} <BR>
+        </lnxmcp>
+        <hr>
+        exempio true:
+        <hr>
+        <lnxmcp name="true" type="render" module="Web" vendor="LinHUniX" scope-json-in='{"truevar":"myvar","myvar":true}' >
+            myvar is true!!
+        </lnxmcp>
+        <hr>
+        exempio false:
+        <hr>
+        <lnxmcp name="false" type="render" module="Web" vendor="LinHUniX" scope-json-in='{"falsevar":"myvar","myvar":false}' >
+            myvar is false!!
+        </lnxmcp>
     </body>
 </html>
