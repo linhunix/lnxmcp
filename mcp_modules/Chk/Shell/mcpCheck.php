@@ -294,6 +294,79 @@ function mcpCheck($chkmenu = null)
     lnxmcp()->warning("test warning message");
     lnxmcp()->error("test error message");
     lnxmcp()->debug( "OK");
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    lnxmcp()->debug( "CHECK SYSTEM");
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    $apppath = lnxmcp()->getCfg('app.path');
+    $cfgpath = lnxmcp()->getCfg('app.path.config');
+    $mcpath = lnxmcp()->getCfg('mcp.path');
+    $admpath =lnxmcp()->getCfg('app.mod.path.LinHUniX.LnxMcpAdm');
+    $admpathS =lnxmcp()->getCfg('app.mod.path.LinHUniX.LnxMcpAdmShell');
+    $admpathH =lnxmcp()->getCfg('app.mod.path.LinHUniX.LnxMcpAdmHttpd');
+    $bincmd = PHP_BINARY;
+    $setpath = $cfgpath.'/mcp.settings.json';
+    $idxpath = $apppath.'/index.php';
+    $id2path = $apppath.'/app.php';
+    $cfgok = 'KO';
+    $appok = 'KO';
+    $idxok = 'KO';
+    $setok = 'KO';
+    if (is_dir($apppath)) {
+        $appok = 'OK';
+    }
+    if ($apppath == '//') {
+        $appok = 'KO';
+    }
+    if (is_dir($cfgpath)) {
+        $cfgok = 'OK';
+    }
+    if (file_exists($setpath)) {
+        $setok = 'OK';
+    }
+    if (file_exists($idxpath)) {
+        $idxok = 'OK';
+    } elseif (file_exists($id2path)) {
+        $idxok = 'OK';
+        $idxpath = $id2path;
+    }
+    $scopeCmdIn=array(
+        'mode'=>$defmod,
+        'cmd.php'=>$bincmd,
+        'mcp.path'=>$mcpath,
+        'adm.path'=>$admpath,
+        'adm.path.shell'=>$admpathS,
+        'adm.path.httpd'=>$admpathH,
+        'app.ok'=>$appok,
+        'app.path'=>$apppath,
+        'cfg.ok'=>$cfgok,
+        'cfg.path'=>$cfgpath,
+        'idx.ok'=>$idxok,
+        'idx.path'=>$idxpath,
+        'set.ok'=>$setok,
+        'set.path'=>$setpath
+    );
+    lnxmcp()->info('//////////////////////////////////////////////////////////' );
+    lnxmcp()->info('|-> PATH APP:'.$scopeCmdIn['app.path'].'('.$scopeCmdIn['app.ok'].')' );
+    lnxmcp()->info('|-> PATH IDX:'.$scopeCmdIn['idx.path'].'('.$scopeCmdIn['idx.ok'].')' );
+    lnxmcp()->info('|-> PATH CFG:'.$scopeCmdIn['cfg.path'].'('.$scopeCmdIn['cfg.ok'].')' );
+    lnxmcp()->info('|-> PATH STS:'.$scopeCmdIn['set.path'].'('.$scopeCmdIn['set.ok'].')' );
+    lnxmcp()->info('|-> PATH MCP:'.$scopeCmdIn['mcp.path'] );
+    lnxmcp()->info('|-> PATH ADM:'.$scopeCmdIn['adm.path'] );
+    lnxmcp()->info('|-> PATH ADS:'.$scopeCmdIn['adm.path.shell'] );
+    lnxmcp()->info('|-> PATH ADH:'.$scopeCmdIn['adm.path.httpd'] );
+    lnxmcp()->info('|-> PATH PHP:'.$scopeCmdIn['cmd.php'] );
+    lnxmcp()->info('|-> VERS PHP:'.PHP_VERSION );
+    lnxmcp()->info('|-> VERS SYS:'.PHP_OS );
+    lnxmcp()->info('|-> NAME SYS:'.$_SERVER['HOSTNAME'] );
+    lnxmcp()->info('//////////////////////////////////////////////////////////' );
+    foreach(lnxmcp()->getCfg() as $ck=>$cv){
+        if (stristr($ck,'app.mod.path')!=false){
+            lnxmcp()->info('|-> '.$ck.':'.$cv );
+        }
+    }
+    lnxmcp()->info('//////////////////////////////////////////////////////////' );
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
     lnxmcp()->debug( ".. Check File Arg");
     if ($chkmenu != null) {
         if (lnxmcp()->getCommon('chk:'.$chkmenu)!=null){
