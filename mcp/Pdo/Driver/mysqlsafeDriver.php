@@ -13,7 +13,7 @@ use \PDO;
  * @see [vendor]/mcp/Head.php  
  */
 
-class mysqlDriver extends pdoDriver {
+class mysqlsafeDriver extends pdoDriver {
 
 
     function __construct (\LinHUniX\Mcp\masterControlProgram &$mcp, array $scopeCtl, array $scopeIn)
