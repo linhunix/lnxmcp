@@ -289,8 +289,15 @@ class pdoService extends mcpBaseModelClass
             }
             $this->getMcp()->driver($env, true, $subscope, "Pdo", $subscope["driver"]);
             $dblist["app.Driver.".$env]=$subscope["driver"];
+            $deadlst=$this->getMcp()->getCfg('mcp.exitlist');
+            if (!is_array($deadlst)){
+                $deadlst=array();
+            }
+            $deadlst["app.Driver.".$env]='close';
+            $this->getMcp()->getCfg('mcp.exitlist',$deadlst);
         }
         $this->getMcp()->setCommon("PDO_DATABASES",$dblist);
+        
     }
     /**
      *  @param string $dbname database name 

@@ -63,6 +63,31 @@ if (function_exists('DumpAndExit') != true) {
  * @return number
  */
 function lnxShutdown() {
+    $deadlst=lnxmcp()->getCfg('mcp.exitlist');
+    if (is_array($deadlst)){
+        foreach($deadlst as $dk=>$da){
+            $dobj=lnxmcp()->getCfg($dk);
+            if ($dobj==null){
+                continue;
+            }
+            switch ($da){
+                case 'close';
+                    if (method_exists($dobj,'close')){
+                        $dobj->close();
+                    }
+                    $dobj=null;
+                break;
+                case 'null';
+                    $dobj=null;
+                break;
+                default:
+                    $dobj=null;
+                break;
+            }
+        }
+    }
+    gc_collect_cycles();
+    gc_collect_cycles();
     return 0;
 }
 /**

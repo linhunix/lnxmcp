@@ -969,4 +969,7 @@ class pdoDriver extends mcpBaseModelClass
 
         return $this->numRows($resultSet);
     }
+    function close(){
+        $this->PDO = null;
+    }
 }
