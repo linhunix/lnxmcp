@@ -260,10 +260,10 @@ class mcpRunHttp
         if ($this->mcpAdmRedirect($urlpth, $urlarr) == true) {
             LnxMcpExit('mcpAdmRedirect=>done');
         }
-        //// ADM CALL
-        if ($this->mcpPathConvert($urlpth, $urlarr) == true) {
-            LnxMcpExit('mcpPathConvert=>done');
-        }
+        //// PATH CONVERTER CALL
+        $this->mcpPathConvert($urlpth, $urlarr);
+        //// DO NOT NEED EXIT PATH CONVERT - BECAUSE CAN ADD ON PATH CONVERT CODE OR SEQUECE!!!!!!!!!!!!!
+        ////
         ///// MENU CALL
         $cfgpth = lnxmcp()->getResource('path.config');
         $catlist = $urlarr;
