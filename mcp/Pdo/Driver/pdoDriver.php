@@ -678,10 +678,10 @@ class pdoDriver extends mcpBaseModelClass
      * @param mixed $_table
      * @param mixed $run
      */
-    public function setRow($_fields, $_table, $run = true, $emptyval = false)
+    public function setRow($_fields, $_table, $run = true, $emptyval = false,$idvar = 'id')
     {
         if ((count($_fields) > 0) && ($_table != '')) {
-            $_stmt = $this->getSql($_fields, $_table, $emptyval);
+            $_stmt = $this->getSql($_fields, $_table, $emptyval,$idvar);
             if ($run) {
                 $_result = $this->executeWithRollback($_stmt);
             } else {
@@ -691,15 +691,14 @@ class pdoDriver extends mcpBaseModelClass
         if ($_result) {
             return $_result;
         }
-
         return true;
     }
 
     //GET SetRow SQL//todo need review
-    public function getSql($_fields, $_table, $emptyval = false)
+    public function getSql($_fields, $_table, $emptyval = false,$idvar = 'id')
     {
         $_stmt = '';
-        if ($_fields['id'] > 0) {
+        if ($_fields[$idvar] > 0) {
             $_stmt .= 'UPDATE `'.$_table.'` SET ';
             foreach ($_fields as $_key => $_val) {
                 if (($_val != '') or ($emptyval == true)) {
@@ -707,7 +706,7 @@ class pdoDriver extends mcpBaseModelClass
                 }
             }
             $_stmt = substr($_stmt, 0, strlen($_stmt) - 1);
-            $_stmt .= ' WHERE id = '.$_fields['id'].';';
+            $_stmt .= ' WHERE '.$idvar.' = '.$_fields[$idvar].';';
         } else {
             $_stmt = 'INSERT INTO `'.$_table.'` ( ';
             foreach ($_fields as $_key => $_val) {
@@ -726,7 +725,6 @@ class pdoDriver extends mcpBaseModelClass
             $_stmt = substr($_stmt, 0, strlen($_stmt) - 1);
             $_stmt .= ' );';
         }
-
         return $_stmt;
     }
 
