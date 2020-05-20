@@ -4,7 +4,7 @@ use LinHUniX\Mcp\Model\mcpBaseModelClass;
 /**
  * LinHUniX Web Application Framework.
  *
- * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @author Andrea Morello <lnxmcp@linhunix.com>
  * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
  *
@@ -58,7 +58,7 @@ class pharizeModController extends mcpBaseModelClass {
 <?php
 /**
  * LinHUniX Web Application Framework
- * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @author Andrea Morello <lnxmcp@linhunix.com>
  * @copyright LinHUniX L.t.d., 2018, UK
  * @license   GPL v3 See LICENSE.md
  * @link https://github.com/linhunix/lnxmcp/wiki

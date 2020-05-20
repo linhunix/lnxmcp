@@ -5,7 +5,7 @@
 
 NAME=lnxmcp
 VERSION=`cat VERSION`
-MAINTAINER=Andrea Morello <andrea.morello@linhunix.com>
+MAINTAINER=Andrea Morello <lnxmcp@linhunix.com>
 PACKAGENAME=lnxmcp
 PACKAGETYPE=rpm
 URL=https://github.com/linhunix/lnxmcp

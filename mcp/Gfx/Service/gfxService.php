@@ -3,7 +3,7 @@
 /**
  * LinHUniX Web Application Framework.
  *
- * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @author Andrea Morello <lnxmcp@linhunix.com>
  * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
  *
@@ -325,7 +325,7 @@ class gfxService extends mcpBaseModelClass
      *      var ["dest"] = dest file
      *      return void.
      *
-     * @author Andrea Morello <andrea.morello@linhunix.com>
+     * @author Andrea Morello <lnxmcp@linhunix.com>
      *
      * @version GIT:2018-v1
      *

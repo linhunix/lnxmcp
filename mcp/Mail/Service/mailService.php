@@ -4,7 +4,7 @@ namespace LinHUniX\Mail\Service;
 /*
  * LinHUniX Web Application Framework
  *
- * @author    Andrea Morello <andrea.morello@linhunix.com>
+ * @author    Andrea Morello <lnxmcp@linhunix.com>
  * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
  * @version   GIT:2018-v2
@@ -91,7 +91,7 @@ class mailService extends mcpBaseModelClass
      * @see FTConfig
      *
      * @example TestFTMail
-     * @assert ("andrea.morello@linhunix.com","TestMail","Demo Morselli") == true
+     * @assert ("lnxmcp@linhunix.com","TestMail","Demo Morselli") == true
      */
     public function stdMailWithDoc($to, $subject, $message, $attachDoc = array(), $additional_headers = null, $additional_parameters = null, $from = null)
     {
@@ -142,7 +142,7 @@ class mailService extends mcpBaseModelClass
      * @see FTConfig
      *
      * @example TestFTMail
-     * @assert ("andrea.morello@linhunix.com","TestMail","Demo Morselli") == true
+     * @assert ("lnxmcp@linhunix.com","TestMail","Demo Morselli") == true
      */
     public function stdMail($to, $subject, $message, $additional_headers = null, $additional_parameters = null, $from = null, $attachDoc = array(), $html = false)
     {
@@ -351,7 +351,7 @@ class mailService extends mcpBaseModelClass
     }
 
     /**
-     * @author Andrea Morello <andrea.morello@linhunix.com>
+     * @author Andrea Morello <lnxmcp@linhunix.com>
      *
      * @version GIT:2018-v1
      *

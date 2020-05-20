@@ -2,7 +2,7 @@
 /**
  * LinHUniX Web Application Framework
  *
- * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @author Andrea Morello <lnxmcp@linhunix.com>
  * @copyright LinHUniX L.t.d., 2018, UK
  * @license   Proprietary See LICENSE.md
  * @version GIT:2018-v2
@@ -63,7 +63,7 @@ class pdoService extends mcpBaseModelClass
      * var ["S"] = stored in session 
      * var ["G"] = stored in globals 
      * var ["J"] = stored in Json Cache 
-     * @author Andrea Morello <andrea.morello@linhunix.com>
+     * @author Andrea Morello <lnxmcp@linhunix.com>
      * @version GIT:2018-v1
      * @param Container $cfg Dipendecy injection for Pimple\Container
      * @param array $this->argIn temproraney array auto cleanable 

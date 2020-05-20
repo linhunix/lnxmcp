@@ -9,7 +9,7 @@ use LinHUniX\Mcp\Model\mcpBaseModelClass;
 
 /*
  * @copyright Content copyright to linhunix.com 2003-2018
- * @author Andrea Morello <andrea.morello@linhunix.com>
+ * @author Andrea Morello <lnxmcp@linhunix.com>
  * @version GIT:2018-v1
  * this new class implement the PDO mode to connect on databases;
  * @see [vendor]/mcp/Head.php
@@ -766,7 +766,7 @@ class pdoDriver extends mcpBaseModelClass
      * var ["Q"] = query
      * var ["V"] = contain the values that need to remplace on query scripts.
      *
-     * @author Andrea Morello <andrea.morello@linhunix.com>
+     * @author Andrea Morello <lnxmcp@linhunix.com>
      *
      * @version GIT:2018-v1
      *

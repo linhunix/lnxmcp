@@ -436,7 +436,7 @@ function mcpCheck($chkmenu = null)
     echo '#LNXMCPCHK# '.$resmsg.PHP_EOL;
     echo '#LNXMCPCHK# SUMMARY END'.PHP_EOL;
     lnxmcp()->mail(null,array(
-        "to"=>"andrea.morello@linhunix.com",
+        "to"=>"lnxmcp@linhunix.com",
         "from"=>"test@localhost",
         "subject"=>"lnxmcp - Run Text",
         "message"=>"Arg<hr>\n<pre>".print_r($chkarg,1)."</pre><hr>\n".$resmsg
