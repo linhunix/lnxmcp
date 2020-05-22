@@ -630,7 +630,7 @@ class mcpMenuClass
             }
             $text = str_ireplace($subblk, $lret, $text);
             if ($text==$textp){
-                lnxMcpExit("lnxmcp-x: Conversion Tag Corrupted!!! ");
+                lnxMcpExit("lnxmcp-x: Conversion Tag [".$subblk."] is Corrupted!!! ");
             }
         }
         /////////////////////////////////////////////////////////////////////////
@@ -752,7 +752,7 @@ class mcpMenuClass
                     $text = str_ireplace($subblk, $lret, $text);
             }
             if ($text==$textp){
-            lnxMcpExit("lnxmcp: Conversion Tag Corrupted!!! ");
+            lnxMcpExit("lnxmcp: Conversion Tag [".$subblk."] is Corrupted!!! ");
             }
 
         }
@@ -782,7 +782,7 @@ class mcpMenuClass
             $text = str_ireplace('['.$lcmdx.']', $lres, $text);
         }
         if ($textp==$text){
-            lnxMcpExit("lnxmcp-x:Conversion Tag Corrupted!!! ");
+            lnxMcpExit("[lnxmcp]:Conversion Tag [".$lcmdx."] is Corrupted!!! ");
         }
         /////////////////////////////////////////////////////////////////////////
         /// Label style tag (compaiblity mode)
@@ -809,7 +809,7 @@ class mcpMenuClass
                 $lres = ob_get_clean();
                 $text = str_ireplace('['.$lcmdx.']', $lres, $text);
                 if ($textp==$text){
-                    lnxMcpExit("Label:Conversion Tag Corrupted!!! ");
+                    lnxMcpExit("Label:Conversion Tag [".$lcmdx."] is Corrupted!!! ");
                 }
             }
         }
