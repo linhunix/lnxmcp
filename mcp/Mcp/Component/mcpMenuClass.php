@@ -599,6 +599,7 @@ class mcpMenuClass
                 $lres = $scopeInSub['blockIn'];
             }
             $lret = $lres;
+            $textp=$text;
             switch ($scopeCtl['block-type']) {
                 case 'javascript':
                     try {
@@ -628,6 +629,9 @@ class mcpMenuClass
                 $lret=$lretx;
             }
             $text = str_ireplace($subblk, $lret, $text);
+            if ($text==$textp){
+                lnxMcpExit("lnxmcp-x: Conversion Tag Corrupted!!! ");
+            }
         }
         /////////////////////////////////////////////////////////////////////////
         /// lnxmcp simple tag
@@ -726,6 +730,7 @@ class mcpMenuClass
                 $lres = $scopeInSub['blockIn'];
             }
             $lret = $lres;
+            $textp=$text;
             if ($showrem == true) {
                 $lret = "\n<!-- lnxmcp[".$lnxmcp_cnt.'] '.$lcmdx." !-->\n".$lres."\n<!-- /lnxmcp[".$lnxmcp_cnt."] !-->\n";
             }
@@ -746,6 +751,10 @@ class mcpMenuClass
                 default:
                     $text = str_ireplace($subblk, $lret, $text);
             }
+            if ($text==$textp){
+            lnxMcpExit("lnxmcp: Conversion Tag Corrupted!!! ");
+            }
+
         }
         /////////////////////////////////////////////////////////////////////////
         /// lnxmcp old style tag (compaiblity mode)
@@ -765,12 +774,19 @@ class mcpMenuClass
                     $lsin[$ck] = $cv;
                 }
             }
+            $textp=$text;
             ob_start();
             self::runTag($lcmd, $lsin);
             $lres = ob_get_contents();
             ob_end_clean();
             $text = str_ireplace('['.$lcmdx.']', $lres, $text);
         }
+        if ($textp==$text){
+            lnxMcpExit("lnxmcp-x:Conversion Tag Corrupted!!! ");
+        }
+        /////////////////////////////////////////////////////////////////////////
+        /// Label style tag (compaiblity mode)
+        /////////////////////////////////////////////////////////////////////////
         if ($label != null) {
             while (stripos($text, '['.$label.'-') !== false) {
                 $lp1 = stripos($text, '['.$label.'-');
@@ -787,13 +803,16 @@ class mcpMenuClass
                         $lsin[$ck] = $cv;
                     }
                 }
+                $textp=$text;
                 ob_start();
                 self::runTag($lcmd, $lsin);
                 $lres = ob_get_clean();
                 $text = str_ireplace('['.$lcmdx.']', $lres, $text);
+                if ($textp==$text){
+                    lnxMcpExit("Label:Conversion Tag Corrupted!!! ");
+                }
             }
         }
-
         return $text;
     }
 }
