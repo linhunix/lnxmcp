@@ -625,7 +625,7 @@ class mcpMenuClass
                 break;
             }
             if ($showrem == true) {
-                $lretx = "\n<!-- lnxmcp-x[".$lnxmcp_cnt.']['.$ltagx.'] '.$lcmdx." !-->\n".$lret."\n<!-- /lnxmcp-x[".$lnxmcp_cnt.']['.$ltagx."] !-->\n";
+                $lretx = "\n<!-- start-lnxmcp-x[".$lnxmcp_cnt.']['.$ltagx.'] '.$lcmdx." !-->\n".$lret."\n<!-- end-lnxmcp-x[".$lnxmcp_cnt.']['.$ltagx."] !-->\n";
                 $lret=$lretx;
             }
             $text = str_ireplace($subblk, $lret, $text);
@@ -732,7 +732,7 @@ class mcpMenuClass
             $lret = $lres;
             $textp=$text;
             if ($showrem == true) {
-                $lret = "\n<!-- lnxmcp[".$lnxmcp_cnt.'] '.$lcmdx." !-->\n".$lres."\n<!-- /lnxmcp[".$lnxmcp_cnt."] !-->\n";
+                $lret = "\n<!-- start-lnxmcp[".$lnxmcp_cnt.'] '.$lcmdx." !-->\n".$lres."\n<!-- end-lnxmcp[".$lnxmcp_cnt."] !-->\n";
             }
             switch ($scopeCtl['block-type']) {
                 case 'javascript':
