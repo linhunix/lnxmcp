@@ -51,7 +51,7 @@ final class mcpConvertClass
             $lp4 = stripos($text, '</'.$ltagx.'>', $lp2);
             $lcmdx = substr($text, ($lp2 + 1 ), ($lp3 - $lp2 -1 ));
             $lblcks = substr($text, ($lp3 + 1), ($lp4 - $lp3 -1));
-            $subblk = substr($text, ($lp1 ), ($lp4 - $lp1+strlen($ltagx)+3));
+            $subblk = substr($text, ($lp1 ), (($lp4 - $lp1)+(strlen($ltagx)+3)) );
             $scopeCtl = array();
             $scopeInSub = $scopeIn;
             $scopeInSub['blockIn'] = $lblcks;
@@ -131,7 +131,7 @@ final class mcpConvertClass
             if (isset($scopeCtl['type'])) {
                 lnxmcp()->info('TagConverter:runcommand by type: '.$scopeCtl['type']);
                 ob_start();
-                self::runcommand($scopeCtl, $scopeInSub);
+                lnxmcp()->runCommand($scopeCtl, $scopeInSub);
                 $lres = ob_get_contents();
                 ob_end_clean();
             } else {
@@ -170,7 +170,7 @@ final class mcpConvertClass
             }
             $text = str_ireplace($subblk, $lret, $text);
             if ($text==$textp){
-                lnxMcpExit("lnxmcp-x: Conversion Tag [".$subblk."] is Corrupted!!! ");
+                lnxMcpExit("lnxmcp-x: Conversion Tag [".$ltagx."][".$subblk."] is Corrupted!!! ");
             }
         }
         return $text;
@@ -267,7 +267,7 @@ final class mcpConvertClass
             if (isset($scopeCtl['type'])) {
                 lnxmcp()->info('TagConverter:runcommand by type: '.$scopeCtl['type']);
                 ob_start();
-                self::runcommand($scopeCtl, $scopeInSub);
+                lnxmcp()->runCommand($scopeCtl, $scopeInSub);
                 $lres = ob_get_contents();
                 ob_end_clean();
             } else {
@@ -326,7 +326,7 @@ final class mcpConvertClass
             }
             $textp=$text;
             ob_start();
-            self::runTag($lcmd, $lsin);
+            lnxmcp()->runTag($lcmd, $lsin);
             $lres = ob_get_contents();
             ob_end_clean();
             $text = str_ireplace('['.$lcmdx.']', $lres, $text);
@@ -360,7 +360,7 @@ final class mcpConvertClass
                 }
                 $textp=$text;
                 ob_start();
-                self::runTag($lcmd, $lsin);
+                lnxmcp()->runTag($lcmd, $lsin);
                 $lres = ob_get_clean();
                 $text = str_ireplace('['.$lcmdx.']', $lres, $text);
                 if ($textp==$text){
