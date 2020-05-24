@@ -2167,7 +2167,7 @@ final class masterControlProgram
             $label = $this->defapp;
         }
 
-        return mcpMenuClass::TagConverter($text, $scopeIn, $label);
+        return mcpConvertClass::TagConverter($text, $scopeIn, $label);
     }
 
     /////////////////////////////////////////////////////////////////////////////
