@@ -188,7 +188,7 @@ final class mcpConvertClass
             $lp3 = stripos($text, '</lnxmcp>', $lp2);
             $lcmdx = substr($text, ($lp1 + 8), ($lp2 - $lp1 - 9));
             $lblcks = substr($text, ($lp2 + 1), ($lp3 - $lp2 - 1));
-            $subblk = '<lnxmcp '.substr($text, ($lp1 + 8), ($lp3 - $lp1 - 8)).'</lnxmcp>';
+            $subblk = substr($text, ($lp1), ($lp3 - $lp1 + 8));
             $scopeCtl = array();
             $scopeInSub = $scopeIn;
             $scopeInSub['blockIn'] = $lblcks;
