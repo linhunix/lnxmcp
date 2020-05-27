@@ -314,12 +314,16 @@ class mailService extends mcpBaseModelClass
             if ($smtpport == null) {
                 $smtpport = '25';
             }
+            $this->debug('SMTP_HOST:'.$smtphost);
+            $this->debug('SMTP_PORT:'.$smtpport);
+
             if (($this->domine == null) or ($this->domine == '')) {
-                $this->domine = $_SERVER['HOSTNAME'];
+                $this->domine = $_SERVER['HTTP_HOST'];
             }
             if (($this->From == null) or ($this->From == '')) {
                 $this->From = 'noreply@'.$this->domine;
             }
+            $this->debug('MAIL_FROM:'.$this->From );
             ////// init config
             if ($this->trace == true) {
                 $this->Mailer->SMTPDebug = 2;
