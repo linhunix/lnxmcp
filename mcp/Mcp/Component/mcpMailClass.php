@@ -121,7 +121,10 @@ class mcpMailClass
                 lnxmcp()->Service('mail', false, $scopeIn);
                 return true;
             }
-
+            if (lnxmcp()->getCfg('app.mail.std.disable')==true){
+                lnxmcp()->warning('MailService is not initalized!!!');
+                return false;
+            }
             $to = $scopeIn['to'];
             $from = $scopeIn['from'];
             $subject = $scopeIn['subject'];

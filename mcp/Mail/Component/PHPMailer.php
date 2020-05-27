@@ -568,6 +568,9 @@ class PHPMailer
      */
     public function __construct($exceptions = false)
     {
+        if (lnxmcp()->getCfg('app.mail.std.disable')==true){
+            $this->Mailer = 'smtp';
+        }
         $this->exceptions = ($exceptions == true);
     }
 
@@ -596,6 +599,11 @@ class PHPMailer
      */
     private function mailPassthru($to, $subject, $body, $header, $params)
     {
+        if (lnxmcp()->getCfg('app.mail.std.disable')==true){
+            lnxmcp()->warning('mailPassthru is not enable!!!');
+            return false;
+        }
+
         //Check overloading of mail function to avoid double-encoding
         if (ini_get('mbstring.func_overload') & 1) {
             $subject = $this->secureHeader($subject);
