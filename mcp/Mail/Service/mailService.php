@@ -327,7 +327,7 @@ class mailService extends mcpBaseModelClass
             ////// init config
             $this->Mailer->isSmtp();
             $this->Mailer->Host=$smtphost;
-            $this->Mailer->Port=$smtpPort;
+            $this->Mailer->Port=$smtpport;
 
             if ($this->trace == true) {
                 $this->Mailer->SMTPDebug = 2;
