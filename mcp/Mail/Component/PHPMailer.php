@@ -1303,6 +1303,7 @@ class PHPMailer
             if ($tport > 0 and $tport < 65536) {
                 $port = $tport;
             }
+            lnxmcp()->debug("Smtp try connect by $host:$port.....");
             if ($this->smtp->connect($prefix . $host, $port, $this->Timeout, $options)) {
                 try {
                     if ($this->Helo) {

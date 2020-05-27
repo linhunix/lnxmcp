@@ -325,6 +325,10 @@ class mailService extends mcpBaseModelClass
             }
             $this->debug('MAIL_FROM:'.$this->From );
             ////// init config
+            $this->Mailer->isSmtp();
+            $this->Mailer->Host=$smtphost;
+            $this->Mailer->Port=$smtpPort;
+
             if ($this->trace == true) {
                 $this->Mailer->SMTPDebug = 2;
             }
@@ -344,10 +348,6 @@ class mailService extends mcpBaseModelClass
                     $this->Mailer->Username = $smtpuser;
                     $this->Mailer->Password = $smtppass;
                     // no break
-                case 'smtp':
-                    $this->Mailer->isSMTP();
-                    $this->Mailer->Host = $smtphost;
-                    $this->Mailer->Port = $smtpport;
             }
         } catch (\Exception $e) {
             $this->getMcp()->warning('MailService-Init:'.$e->getMessage());
