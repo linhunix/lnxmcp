@@ -23,6 +23,9 @@ final class mcpConvertClass
     * /////////////////////////////////////////////////////////////////////////
     */
     private static function baseconvert($text, $scopeIn = array()){
+        if (($text == null) or ($text=='')){
+            return $text;
+        }
         $text = str_replace('[scope-dump]', print_r($scopeIn, 1), $text);
         $text = str_replace('[common-dump]', print_r(lnxmcp()->getCommon(), 1), $text);
         foreach ($scopeIn as $sink => $sinv) {
@@ -42,6 +45,9 @@ final class mcpConvertClass
      *  /////////////////////////////////////////////////////////////////////////
      */
     private static function xtagconvert($text, $scopeIn = array()){
+        if (($text == null) or ($text=='')){
+            return $text;
+        }
         while (stripos($text, '<lnxmcp-x-') !== false) {
             self::$lnxmcp_cnt++;
             $lp1 = stripos($text, '<lnxmcp-x-');
@@ -181,6 +187,9 @@ final class mcpConvertClass
      * /////////////////////////////////////////////////////////////////////////
      */
     private static function simpletagconvert($text, $scopeIn = array()){
+        if (($text == null) or ($text=='')){
+            return $text;
+        }
         while (stripos($text, '<lnxmcp ') !== false) {
             self::$lnxmcp_cnt++;
             $lp1 = stripos($text, '<lnxmcp');
@@ -309,7 +318,11 @@ final class mcpConvertClass
      *  /////////////////////////////////////////////////////////////////////////
      */
     private static function oldtagconvert($text, $scopeIn = array()){
+        if (($text == null) or ($text=='')){
+            return $text;
+        }
         while (stripos($text, '[lnxmcp-') !== false) {
+            $textp=$text;
             $lp1 = stripos($text, '[lnxmcp-');
             $lp2 = stripos($text, ']', $lp1);
             $lcmdx = substr($text, ($lp1 + 1), ($lp2 - $lp1 - 1));
@@ -324,7 +337,6 @@ final class mcpConvertClass
                     $lsin[$ck] = $cv;
                 }
             }
-            $textp=$text;
             ob_start();
             lnxmcp()->runTag($lcmd, $lsin);
             $lres = ob_get_contents();
@@ -342,6 +354,9 @@ final class mcpConvertClass
      * /////////////////////////////////////////////////////////////////////////
      */
     private static function labelconvert($text, $scopeIn = array(), $label = null){
+        if (($text == null) or ($text=='')){
+            return $text;
+        }
         if ($label != null) {
             while (stripos($text, '['.$label.'-') !== false) {
                 $lp1 = stripos($text, '['.$label.'-');
