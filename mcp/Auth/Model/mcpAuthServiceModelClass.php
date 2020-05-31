@@ -15,6 +15,7 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
     protected $auth_grp;
     protected $auth_adm;
     protected $auth_name;
+    protected $auth_pwd;
     protected $auth_id;
     protected $auth_gdpr;
     protected $auth_allow;
@@ -123,7 +124,7 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
         if (isset($this->auth_allow[$role])){
             return true;
         }
-        if (isset($this->authd_enied['*']) or isset($this->auth_denied['all']) ){
+        if (isset($this->auth_denied['*']) or isset($this->auth_denied['all']) ){
             return false;
         }
         if (isset($this->auth_allow['*']) or isset($this->auth_allow['all']) ){
@@ -135,7 +136,8 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
     /**
      * setAuthSession
      */
-    protected function setAuthSession($id=0,$user='nobody',$group='nogroup',$isadm=false,$allow=array(),$denied=array(),$gdpr=false,$lock=false,$email='',$phone='',$address='',$extra=array()){
+    protected function setAuthSession($id=0,$user='nobody',$pwd='',$group='nogroup',$isadm=false,$allow=array(),$denied=array(),$gdpr=false,$lock=false,$email='',$phone='',$address='',$extra=array()){
+        $this->auth_pwd=$pwd;
         $this->auth_id=$id;
         $this->getMcp()->setCommon("userid",$this->getid());    
         $this->auth_name=$user;
@@ -164,10 +166,78 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
             $this->getMcp()->setCommon("useraddress",$this->getAddress());    
             $this->getMcp()->setCommon("userextra",$this->getExtra());    
         }
+        $this->auth_ssave();
     }
 
-
-
+    protected function setAuthArrSession($scopeauth=array()){
+        $id=0;
+        if (isset($scopeauth['id'])){
+            if (is_numeric($scopeauth['id'])){
+                $id=$scopeauth['id'];
+            }
+        }
+        $user='nobody';
+        if (isset($scopeauth['user'])){
+            $user=$scopeauth['user'];
+        }
+        $pwd='';
+        if (isset($scopeauth['pwd'])){
+            $pwd=$scopeauth['pwd'];
+        }
+        $group='nobody';
+        if (isset($scopeauth['group'])){
+            $group=$scopeauth['group'];
+        }
+        $isadm=false;
+        if (isset($scopeauth['isadm'])){
+            if ($scopeauth['isadm']==true){
+                $isadm=$scopeauth['isadm'];
+            }
+        }
+        $allow=array();
+        if (isset($scopeauth['allow'])){
+            if (is_array($scopeauth['allow'])){
+                $allow=$scopeauth['allow'];
+            }
+        }
+        $denied=array();
+        if (isset($scopeauth['denied'])){
+            if (is_array($scopeauth['denied'])){
+                $denied=$scopeauth['denied'];
+            }
+        }
+        $gdpr=false;
+        if (isset($scopeauth['gdpr'])){
+            if ($scopeauth['gdpr']==true){
+                $gdpr=$scopeauth['gdpr'];
+            }
+        }
+        $lock=false;
+        if (isset($scopeauth['lock'])){
+            if ($scopeauth['lock']==true){
+                $lock=$scopeauth['lock'];
+            }
+        }
+        $email='';
+        if (isset($scopeauth['email'])){
+            $email=$scopeauth['email'];
+        }
+        $phone='';
+        if (isset($scopeauth['phone'])){
+            $phone=$scopeauth['phone'];
+        }
+        $address='';
+        if (isset($scopeauth['address'])){
+            $address=$scopeauth['address'];
+        }
+        $extra=array();
+        if (isset($scopeauth['extra'])){
+            if (is_array($scopeauth['extra'])){
+                $extra=$scopeauth['extra'];
+            }
+        }
+        $this->setAuthSession($id,$user,$pwd,$group,$isadm,$allow,$denied,$gdpr,$lock,$email,$phone,$address,$extra);
+    }        
     //////////////////////////////////////////////////////////////////////
     // SERVICE INTEGRATION FUNCTION 
     //////////////////////////////////////////////////////////////////////
@@ -251,7 +321,9 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
      * @return void
      */
     public function auth_unluck(){
-        $this->auth_lock=false;
+        if ($this->getIsAdm()==true){
+            $this->auth_lock=false;
+        }
     }
      /**
      * function auth_unluck

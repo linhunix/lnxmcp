@@ -9,6 +9,7 @@
 namespace LinHUniX\Auth\Service;
 
 use LinHUniX\Mcp\Model\mcpServiceModelClass;
+use LinHUniX\Auth\Service\authCfgDriver;
 
 class authService extends mcpServiceModelClass
 {
@@ -21,18 +22,14 @@ class authService extends mcpServiceModelClass
 
     protected function moduleSingleTon() {
         $sercfg=$this->getCfg("app.auth.service");
-        if (!is_array($sercfg)){
-            $sercfg=array(
-                "type"=>"serviceCommon",
-                "module"=>"Nsql",
-                "ispreload"=>true,
-                "name"=>"authCfg"
-           );
+        if (is_array($sercfg)){
+            $this->authservice=$this->callCmd(
+                $sercfg,
+                $this->argIn
+            );
+        }else{
+            $this->authservice= new authcfgDriver($this->getMcp(),$this->argCfg,array());
         }
-        $this->authservice=$this->callCmd(
-            $sercfg,
-            $this->argIn
-        );
     }
 
 
