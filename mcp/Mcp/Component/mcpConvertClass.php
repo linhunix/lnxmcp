@@ -57,7 +57,7 @@ final class mcpConvertClass
             $lp4 = stripos($text, '</'.$ltagx.'>', $lp2);
             $lcmdx = substr($text, ($lp2 + 1 ), ($lp3 - $lp2 -1 ));
             $lblcks = substr($text, ($lp3 + 1), ($lp4 - $lp3 -1));
-            $subblk = substr($text, ($lp1 ), (($lp4 - $lp1)+(strlen($ltagx)+3)) );
+            $subblk = substr($text, ($lp1 ), (($lp4 - $lp1)+(strlen($ltagx)+4)) );
             $scopeCtl = array();
             $scopeInSub = $scopeIn;
             $scopeInSub['blockIn'] = $lblcks;
@@ -197,7 +197,7 @@ final class mcpConvertClass
             $lp3 = stripos($text, '</lnxmcp>', $lp2);
             $lcmdx = substr($text, ($lp1 + 8), ($lp2 - $lp1 - 9));
             $lblcks = substr($text, ($lp2 + 1), ($lp3 - $lp2 - 1));
-            $subblk = substr($text, ($lp1), ($lp3 - $lp1 + 8));
+            $subblk = substr($text, ($lp1), ($lp3 - $lp1 + 9));
             $scopeCtl = array();
             $scopeInSub = $scopeIn;
             $scopeInSub['blockIn'] = $lblcks;
