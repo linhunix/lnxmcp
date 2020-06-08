@@ -12,13 +12,14 @@
  */
 function lnxmcpChk($checkmenu = null)
 {
-    $mcpCheckFile = lnxmcp()->getCfg('mcp.path').'/../mcp_modules/Chk/Shell/mcpCheck.php';
+    $modpath=lnxmcp()->getCfg('mcp.path.module');
+    $mcpCheckFile = $modpath.'/Chk/Shell/mcpCheck.php';
     lnxmcp()->info('Try to load CheckModule:'.$mcpCheckFile);
     if (file_exists($mcpCheckFile)) {
         echo "load Check Env on $mcpCheckFile..\n";
         include_once $mcpCheckFile;
         echo "Run mcpCheck:\n";
-        $res=LinHUniX\McpModules\Chk\Shell\mcpCheck($checkmenu);
+        $res=LinHUniX\Chk\Shell\mcpCheck($checkmenu);
         echo "Check Complete!!\n";
         return $res;
     }

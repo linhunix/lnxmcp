@@ -76,23 +76,48 @@ class mcpModuleClass
     public static function useClass($classname){
         $extarr=array('.php','.inc.php','.class.php');
         $classpath=str_replace('\\',DIRECTORY_SEPARATOR,$classname);
+        $clsarr=explode('\\',$classname);
+        lnxmcp()->debug("useClass[0]:try load std class:".$classpath);
         $modpath=lnxmcp()->getCfg('app.path.module');
         foreach ($extarr as $ext){
             if (file_exists($modpath.DIRECTORY_SEPARATOR.$classpath.$ext)){
                 include_once ( $modpath.DIRECTORY_SEPARATOR.$classpath.$ext);
-                lnxmcp()->debug("load std class:". $modpath.DIRECTORY_SEPARATOR.$classpath.$ext);
+                lnxmcp()->debug("useClass[1]:load std class:". $modpath.DIRECTORY_SEPARATOR.$classpath.$ext);
                 return true;
+            }
+        }
+        if (lnxmcp()->getCfg('app.def')==$clsarr[0]){
+            $clsnarr=$clsarr;
+            array_shift($clsnarr);
+            $classnpath=implode(DIRECTORY_SEPARATOR,$clsnarr);
+            foreach ($extarr as $ext){
+                if (file_exists($modpath.DIRECTORY_SEPARATOR.$classnpath.$ext)){
+                    include_once ( $modpath.DIRECTORY_SEPARATOR.$classnpath.$ext);
+                    lnxmcp()->debug("useClass[1.5]:load std class:". $modpath.DIRECTORY_SEPARATOR.$classnpath.$ext);
+                    return true;
+                }
             }
         }
         $modpath=lnxmcp()->getCfg('mcp.path.module');
         foreach ($extarr as $ext){
             if (file_exists($modpath.DIRECTORY_SEPARATOR.$classpath.$ext)){
                 include_once ( $modpath.DIRECTORY_SEPARATOR.$classpath.$ext);
-                lnxmcp()->debug("load std class:". $modpath.DIRECTORY_SEPARATOR.$classpath.$ext);
+                lnxmcp()->debug("useClass[2]:load std class:". $modpath.DIRECTORY_SEPARATOR.$classpath.$ext);
                 return true;
             }
         }
-        $clsarr=explode('\\',$classname);
+        if ($clsarr[0]=='LinHUniX'){
+            $clsnarr=$clsarr;
+            array_shift($clsnarr);
+            $classnpath=implode(DIRECTORY_SEPARATOR,$clsnarr);
+            foreach ($extarr as $ext){
+                if (file_exists($modpath.DIRECTORY_SEPARATOR.$classnpath.$ext)){
+                    include_once ( $modpath.DIRECTORY_SEPARATOR.$classnpath.$ext);
+                    lnxmcp()->debug("useClass[2.5]:load std class:". $modpath.DIRECTORY_SEPARATOR.$classnpath.$ext);
+                    return true;
+                }
+            }
+        }
         if (count($clsarr)==3){
             $vnd=$clsarr[0];
             $mod=$clsarr[1];
@@ -102,7 +127,7 @@ class mcpModuleClass
                 foreach ($extarr as $ext){
                     if (file_exists($modpath.DIRECTORY_SEPARATOR.$ttl.$ext)){
                         include_once ( $modpath.DIRECTORY_SEPARATOR.$ttl.$ext);
-                        lnxmcp()->debug("load std class:". $modpath.DIRECTORY_SEPARATOR.$ttl.$ext);
+                        lnxmcp()->debug("useClass[3]:load std class:". $modpath.DIRECTORY_SEPARATOR.$ttl.$ext);
                         return true;
                     }
                 }        
@@ -118,7 +143,7 @@ class mcpModuleClass
                 foreach ($extarr as $ext){
                     if (file_exists($modpath.DIRECTORY_SEPARATOR.$typ.DIRECTORY_SEPARATOR.$ttl.$ext)){
                         include_once ( $modpath.DIRECTORY_SEPARATOR.$typ.DIRECTORY_SEPARATOR.$ttl.$ext);
-                        lnxmcp()->debug("load std class:". $modpath.DIRECTORY_SEPARATOR.$typ.DIRECTORY_SEPARATOR.$ttl.$ext);
+                        lnxmcp()->debug("useClass[4]:load std class:". $modpath.DIRECTORY_SEPARATOR.$typ.DIRECTORY_SEPARATOR.$ttl.$ext);
                         return true;
                     }
                 }        
@@ -127,7 +152,7 @@ class mcpModuleClass
             lnxmcp()->module($ttl, $modpath, true, array(), $mod, null, $vnd, $typ);
             return true;
         }
-        lnxmcp()->warning("Std class not found:". $classname);
+        lnxmcp()->warning("useClass[5]:Std class not found:". $classname);
         return false;
     }
 
