@@ -5,6 +5,12 @@
     "app.title":"LnxMcp - Test DashBoard",
     "app.copyright":"Unix European Company - 2019 (based on lnxmcp , ln4 and BOOTSTRAP.i386)",
     "app.logourl":"/ueclogo2.jpeg",
+    "app.auth.users":{
+        "admin":{
+            "pwd":"81dc9bdb52d04dc20036dbd8313ed055",
+            "isadmin":true
+        }
+    },
     "app.topmenu":{
         "Home":{
             "Login":"/login",
@@ -18,7 +24,7 @@
         },
         "About":"http://unix.eu.com"
     },
-    "app.gfx.default":["Base","Bs386"],
+    "app.gfx.default":["Base","Bs386","FndJq"],
     "mcp.web.api":true,
     "mcp.web.admin":true,
     "app.nsql.dbtype":"mysql"

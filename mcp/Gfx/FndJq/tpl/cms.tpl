@@ -5,7 +5,7 @@
             <div class="row column">
                 <br>
                 <?php lnxMcpTag("lnxmcp-logo");?>
-                <?php lnxMcpTag("adm-leftbar");?>
+                <?php lnxMcpTag("lnxmcp-std-site-leftmenu");?>
             </div>
         </div>
         <div class="off-canvas-content" data-off-canvas-content>

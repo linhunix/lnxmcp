@@ -111,11 +111,15 @@ class mcpServiceModelClass extends mcpBaseModelClass
         $cfgfile = ''.str_replace('\\', '_', $this->spacename);
         $this->debug('get config from '.$cfgfile);
         $cfgpath = $mcp->getCfg('app.path.config');
-        $cfgarr = lnxGetJsonFile($cfgfile, $cfgpath, 'json');
-        if (is_array($cfgarr)) {
-            foreach ($cfgarr as $k => $v) {
-                $this->argCfg[$k] = $v;
+        try{
+            $cfgarr = lnxGetJsonFile($cfgfile, $cfgpath, 'json');
+            if (is_array($cfgarr)) {
+                foreach ($cfgarr as $k => $v) {
+                    $this->argCfg[$k] = $v;
+                }
             }
+        }catch(\Exception $e){
+            $this->warning($cfgfile." non valido");
         }
     }
 }

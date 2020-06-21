@@ -28,7 +28,11 @@ class authService extends mcpServiceModelClass
                 $this->argIn
             );
         }else{
-            $this->authservice= new authcfgDriver($this->getMcp(),$this->argCfg,array());
+            $this->debug("load by default authcfgDriver");
+            $this->authservice=new authcfgDriver($this->mcp,$this->argCfg,array());
+            if ($this->authservice==null    ){
+                $this->warning("AuthService is null!!!!");
+            }
         }
     }
 
@@ -41,6 +45,11 @@ class authService extends mcpServiceModelClass
         $this->auth_sload();
     }
 
+    protected function sync(){
+        if ($this->authservice!=null){
+            $this->argOut=$this->authservice->sync($this->argIn);
+        }
+    }
 
     //////////////////////////////////////////////////////////////////////
     // CUSTOM FUNCTION 
@@ -53,9 +62,10 @@ class authService extends mcpServiceModelClass
      */
     protected function auth_setup(){
         if ($this->authservice==null){
-            $this->warning("authservice is null");
+            $this->warning("setup:authservice is null");
             return;
         }
+        $this->sync();
         $this->authservice->auth_setup();
     }
     /**
@@ -68,6 +78,7 @@ class authService extends mcpServiceModelClass
             $this->warning("authservice is null");
             return;
         }
+        $this->sync();
         $this->authservice->auth_login();
     }
     /**
@@ -80,6 +91,7 @@ class authService extends mcpServiceModelClass
             $this->warning("authservice is null");
             return;
         }
+        $this->sync();
         $this->authservice->auth_logout();
     }
      /**
@@ -92,6 +104,7 @@ class authService extends mcpServiceModelClass
             $this->warning("authservice is null");
             return;
         }
+        $this->sync();
         $this->authservice->auth_register();
     }
      /**
@@ -104,6 +117,7 @@ class authService extends mcpServiceModelClass
             $this->warning("authservice is null");
             return;
         }
+        $this->sync();
         $this->authservice->auth_unregister();
     }
      /**
@@ -116,6 +130,7 @@ class authService extends mcpServiceModelClass
             $this->warning("authservice is null");
             return;
         }
+        $this->sync();
         $this->authservice->auth_update();
     }
     /**
@@ -128,6 +143,7 @@ class authService extends mcpServiceModelClass
             $this->warning("authservice is null");
             return;
         }
+        $this->sync();
         $this->authservice->auth_recover();
     }
      /**
@@ -140,6 +156,7 @@ class authService extends mcpServiceModelClass
             $this->warning("authservice is null");
             return;
         }
+        $this->sync();
         $this->authservice->auth_unluck();
     }
      /**
@@ -152,6 +169,7 @@ class authService extends mcpServiceModelClass
             $this->warning("authservice is null");
             return;
         }
+        $this->sync();
         $this->authservice->auth_luck();
     }
      /**
@@ -164,6 +182,7 @@ class authService extends mcpServiceModelClass
             $this->warning("authservice is null");
             return;
         }
+        $this->sync();
         $this->authservice->auth_notify();
     }
     /**
@@ -176,6 +195,7 @@ class authService extends mcpServiceModelClass
             $this->warning("authservice is null");
             return;
         }
+        $this->sync();
         $this->authservice->auth_sload();
     }
     /**
@@ -188,6 +208,7 @@ class authService extends mcpServiceModelClass
             $this->warning("authservice is null");
             return;
         }
+        $this->sync();
         $this->authservice->auth_ssave();
     }
 

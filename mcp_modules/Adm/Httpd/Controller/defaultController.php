@@ -24,13 +24,44 @@ class defaultController extends mcpBaseModelClass {
                 "module"=> "Gfx",
                 "isPreload"=> false,
                 "ScopeInRewrite"=> array(
-                    "source"=> "Gfx/Bs386/tpl/lnxmcpadm",
-                    "mimetype"=> "text/html",
-                    "T"=> "DYN"
+                    "source"=> "Bs386",
+                    "T"=> "DEF"
                 )
             ),
             $_REQUEST
         );
-        LnxMcpExit();
+        if (lnxmcp()->getCommon('user')=='guest'){
+            $this->callCmd(
+                array(
+                    "type"=> "serviceCommon",
+                    "name"=>"gfx",
+                    "module"=> "Gfx",
+                    "isPreload"=> false,
+                    "ScopeInRewrite"=> array(
+                        "source"=> "Gfx/Bs386/tpl/admlogin",
+                        "mimetype"=> "text/html",
+                        "T"=> "DYN"
+                    )
+                ),
+                $_REQUEST
+            );
+            LnxMcpExit();
+        }else{
+            $this->callCmd(
+                array(
+                    "type"=> "serviceCommon",
+                    "name"=>"gfx",
+                    "module"=> "Gfx",
+                    "isPreload"=> false,
+                    "ScopeInRewrite"=> array(
+                        "source"=> "Gfx/Bs386/tpl/lnxmcpadm",
+                        "mimetype"=> "text/html",
+                        "T"=> "DYN"
+                    )
+                ),
+                $_REQUEST
+            );
+            LnxMcpExit();
+        }
     }
 }

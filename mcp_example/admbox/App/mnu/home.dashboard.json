@@ -5,7 +5,7 @@
         "module": "Gfx",
         "isPreload": false,
         "ScopeInRewrite": {
-            "source": "Gfx/Bs386/tpl/admin",
+            "source": "Gfx/FndJq/tpl/cms",
             "mimetype": "text/html",
             "T": "DYN"
         }

@@ -25,6 +25,7 @@ class authCfgDriver extends mcpAuthServiceModelClass {
      * @return void
      */
     protected function auth_setup(){
+        $this->debug('load auth user profiles');
         $this->CfgUser=$this->getCfg('app.auth.users');
     }
     /**
@@ -33,16 +34,28 @@ class authCfgDriver extends mcpAuthServiceModelClass {
      * @return void
      */
     public function auth_login(){
-        $user=$this->getArgIn('user');
-        $pass=$this->getArgIn('pass');
+        $this->debug(print_r($this->argIn,1));
+        if(!is_array($this->argIn)){
+            $this->argIn=$_REQUEST;
+        }
+        $user=$this->argIn['user'];
+        $pass=$this->argIn['pass'];
         $pmd5=md5($pass);
+        $this->debug('user:'.$user);
+        $this->debug('pass:'.$pass);
+        $this->debug('pmd5:'.$pmd5);
         if(isset($this->CfgUser[$user])) {
             if($this->CfgUser[$user]['pwd']==$pmd5){
+                $this->debug(print_r($this->CfgUser[$user],1));
                 $this->setAuthArrSession($this->CfgUser[$user]);
                 if ($this->getIsLocked()==true){
                     $this->auth_logout();
                 }
+            }else{
+                $this->debug('user and pass ko');
             }
+        }else{
+            $this->debug('user ko');
         }
     }
     /**
@@ -51,13 +64,20 @@ class authCfgDriver extends mcpAuthServiceModelClass {
      * @return void
      */
     public function auth_sload(){
-        if ($_SESSION['auth_user']){
+        if (isset($_SESSION['auth_user'])){
+            $this->debug('check session:'.$_SESSION['auth_user']);
             $user=$_SESSION['auth_user'];
-            $this->setAuthArrSession($this->CfgUser[$user]);
-            if ($this->getIsLocked()==true){
-                $this->auth_logout();
+            if (isset($this->CfgUser[$user])){
+                $this->setAuthArrSession($this->CfgUser[$user]);
+                if ($this->getIsLocked()==true){
+                    $this->auth_logout();
+                }
+                }else{
+                    $this->debug("session is null,try to login");
+                    $this->auth_login();
+                }
             }
-        }
+        
     }
     /**
      * function auth_ssave

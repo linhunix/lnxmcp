@@ -193,7 +193,7 @@ function mcpCheck($chkmenu = null)
     lnxmcp()->debug( ".. Verify Class is mcpCheckModel ");
     $resmsg="";
     $reschk=false;
-    if ($chkcls instanceof mcpCheckModel) {
+    if ($chkcls instanceof mcpCheckModelClass) {
         if ($chkcls->RunTest(lnxmcp(), $chkarg)) {
             $resmsg="TEST GO SUCCESS";
             $recchk=true;
@@ -201,7 +201,7 @@ function mcpCheck($chkmenu = null)
             $resmsg="TEST GO FAILED";
         }
     } else {
-        $resmsg="BAD CLASS is not mcpCheckModel";
+        $resmsg="BAD CLASS is not mcpCheckModelClass";
     }
     echo '#LNXMCPCHK# SUMMARY START'.PHP_EOL;
     echo '#LNXMCPCHK# TEST IS '.$chkmenu.PHP_EOL;

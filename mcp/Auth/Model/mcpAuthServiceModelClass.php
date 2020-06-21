@@ -243,7 +243,6 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
     //////////////////////////////////////////////////////////////////////
 
     protected function moduleSingleTon() {
-        $this->auth_setup();
     }
 
 
@@ -251,6 +250,7 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
     {
         $this->spacename = __NAMESPACE__;
         $this->classname = __CLASS__;
+        $this->auth_setup();
         $this->setAuthSession();
         $this->auth_sload();
     }
@@ -362,5 +362,11 @@ class mcpAuthServiceModelClass extends mcpServiceModelClass
     public function auth_ssave(){
 
     }
-
+/**
+ * Syncronize args from authservice and authdrive class
+ */
+    protected function sync($scopein){
+        $this->wseargIn=$scopein;
+        return $this->argOut;
+    }
 }

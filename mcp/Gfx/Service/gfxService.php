@@ -372,6 +372,14 @@ class gfxService extends mcpBaseModelClass
                 $source = $this->argIn['source'];
                 $this->argOut = $this->loadMenusCommon($source);
                 break;
+            case 'DEF':
+                if (!isset($this->argIn['source'])) {
+                    return;
+                }
+                $defpack=$this->argIn['source'];
+                $this->loadMenusCommon('Gfx/'.$defpack.'/mnu/default');
+                $this->loadTagsCommon('Gfx/'.$defpack.'/tag/default');
+               break;
             case 'IMG':
                 if (!isset($this->argIn['effect'])) {
                     return;

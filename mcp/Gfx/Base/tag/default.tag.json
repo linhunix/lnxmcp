@@ -64,6 +64,19 @@
             }
         }
     },
+    "lnxmcp-std-site-leftmenu": {
+        "theme": {
+            "type": "serviceCommon",
+            "name": "gfx",
+            "module": "Gfx",
+            "isPreload": false,
+            "ScopeInRewrite": {
+                "source": "Gfx/Base/tpl/stdsiteleftm",
+                "mimetype": "text/html",
+                "T": "DYN"
+            }
+        }
+    },
     "lnxmcp-std-foot": {
         "theme": {
             "type": "serviceCommon",

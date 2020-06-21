@@ -12,6 +12,19 @@ use LinHUniX\Mcp\Model\mcpBaseModelClass;
  */
 class initController extends mcpBaseModelClass {
     /**
+     * 
+     */
+    protected function checkctl($defmod,$defcmd){
+        $cmdfile = __DIR__.'/../'.$defmod.'/Controller/'.$defcmd.'Controller.php';
+        $this->getMcp()->debug($cmdfile);
+        if (file_exists($cmdfile)) {
+            echo '<!-- '.$defcmd."/".$cmdfile." !-->\n";
+            return true;
+        }
+        return false;
+    }
+
+    /**
      *  Ideally this method shuld be used to insert the model code and the other are to be used only as normal.
      */
     protected function moduleCore()
@@ -69,10 +82,7 @@ class initController extends mcpBaseModelClass {
             'set.ok'=>$setok,
             'set.path'=>$setpath
         );
-        $cmdfile = __DIR__.'/../'.$defmod.'/Controller/'.$defcmd.'Controller.php';
-        $this->getMcp()->debug($cmdfile);
-        if (file_exists($cmdfile)) {
-            echo '<!-- '.$defcmd."/".$cmdfile." !-->\n";
+        if($this->checkctl($defmod,$defcmd)){
             $this->getMcp()->controller($defcmd,false,$scopeCmdIn,'LnxMcpAdm'.$defmod,null,'LinHUniX');
         } else {
             echo "<!-- DEFAULT !-->\n";
